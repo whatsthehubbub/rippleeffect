@@ -1,0 +1,34 @@
+{% load url from future %}
+
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>{% block pagetitle %}{% endblock %} - Victory Boogie Woogie</title>
+
+	{% block extrahead %}{% endblock extrahead %}
+</head>
+	
+<body>
+
+<!-- HEADER -->
+<header id="header">
+	
+</header>
+<!-- END HEADER -->
+
+
+<!-- MAIN -->
+<div id="main">
+	{% block content %}{% endblock content %}
+</div>
+<!-- END MAIN -->
+
+<footer id="footer">
+</footer>
+
+
+</body>
+</html>
