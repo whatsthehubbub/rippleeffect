@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
-LOGFILE=/var/log/gunicorn/hello.log
+
+PROJDIR=/home/alper/rippleeffect
+
+LOGFILE=$PROJDIR/log/gunicorn.log
 LOGDIR=$(dirname $LOGFILE)
 
 NUM_WORKERS=3
@@ -9,7 +12,7 @@ NUM_WORKERS=3
 USER=alper
 GROUP=alper
 
-cd /home/alper/rippleeffect
+cd $PROJDIR
 source venv/bin/activate
 
 test -d $LOGDIR || mkdir -p $LOGDIR
