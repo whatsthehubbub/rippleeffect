@@ -3,6 +3,8 @@ set -e
 LOGFILE=/var/log/gunicorn/hello.log
 LOGDIR=$(dirname $LOGFILE)
 
+export RIPPLE_PRODUCTION=True
+
 NUM_WORKERS=3
 
 # user/group to run as
