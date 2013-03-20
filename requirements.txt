@@ -2,8 +2,9 @@ Django==1.5
 South==0.7.6
 distribute==0.6.28
 django-crispy-forms==1.2.3
-django-registration==0.8
-django-registration-email==0.5
+# django-registration==0.8
+# django-registration-email==0.5
+-e hg+https://bitbucket.org/eire1130/django-registration#egg=Package
 MySQL-python==1.2.4
 pytz==2013b
 wsgiref==0.1.2
