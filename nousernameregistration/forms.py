@@ -1,18 +1,12 @@
-"""
-Forms and validation code for user registration.
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
-Note that all of these forms assume Django's bundle default ``User``
-model; since it's not possible for a form to anticipate in advance the
-needs of custom user models, you will need to write your own forms if
-you're using a custom model.
-
-"""
-
-
-from django.contrib.auth.models import User
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
+from riskgame.models import *
+
+from email.utils import parseaddr
 
 class EmailUsernameRegistrationForm(forms.Form):
     email = forms.EmailField(label=_("E-mail"))
@@ -20,6 +14,22 @@ class EmailUsernameRegistrationForm(forms.Form):
                                 label=_("Password"))
     password2 = forms.CharField(widget=forms.PasswordInput,
                                 label=_("Password (again)"))
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '')
+
+        good_domains = ValidEmailDomain.objects.all().values_list('name', flat=True)
+        parsed_email_domain = parseaddr(email)[1]
+
+        if [domain for domain in good_domains if parsed_email_domain.endswith(domain)]:
+            pass # Email is valid for the website
+        else:
+            raise forms.ValidationError(_("This e-mail address is not valid for this website."))
+
+        if User.objects.filter(email__iexact=email):
+            raise forms.ValidationError(_("This e-mail address is already in use. Please supply a different e-mail address."))
+
+        return email
 
     def clean(self):
         """
@@ -44,23 +54,6 @@ class EmailUsernameRegistrationForm(forms.Form):
 #     tos = forms.BooleanField(widget=forms.CheckboxInput,
 #                              label=_(u'I have read and agree to the Terms of Service'),
 #                              error_messages={'required': _("You must agree to the terms to register")})
-
-
-# class RegistrationFormUniqueEmail(RegistrationForm):
-#     """
-#     Subclass of ``RegistrationForm`` which enforces uniqueness of
-#     email addresses.
-    
-#     """
-#     def clean_email(self):
-#         """
-#         Validate that the supplied email address is unique for the
-#         site.
-        
-#         """
-#         if User.objects.filter(email__iexact=self.cleaned_data['email']):
-#             raise forms.ValidationError(_("This email address is already in use. Please supply a different email address."))
-#         return self.cleaned_data['email']
 
 
 # class RegistrationFormNoFreeEmail(RegistrationForm):
