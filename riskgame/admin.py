@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from riskgame.models import EmailUser
+from riskgame.models import *
 
 
 class UserCreationForm(forms.ModelForm):
@@ -84,3 +84,15 @@ class EmailUserAdmin(UserAdmin):
     filter_horizontal = ()
 
 admin.site.register(EmailUser, EmailUserAdmin)
+
+
+
+class ValidEmailDomainAdmin(admin.ModelAdmin):
+    list_display = ('datecreated', 'name')
+admin.site.register(ValidEmailDomain, ValidEmailDomainAdmin)
+
+
+class GameAdmin(admin.ModelAdmin):
+    list_display = ('datecreated', 'started')
+admin.site.register(Game, GameAdmin)
+
