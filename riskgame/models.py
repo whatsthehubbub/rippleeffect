@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.utils import timezone
+from django.core.mail import send_mail
 
 
 class EmailUserManager(BaseUserManager):
@@ -38,6 +40,8 @@ class EmailUser(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
+    date_joined = models.DateTimeField(default=timezone.now)
+
     objects = EmailUserManager()
 
     USERNAME_FIELD = 'email'
@@ -69,6 +73,11 @@ class EmailUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
+    def email_user(self, subject, message, from_email=None):
+        """
+        Sends an email to this User.
+        """
+        send_mail(subject, message, from_email, [self.email])
 
 
 class ValidEmailDomain(models.Model):
