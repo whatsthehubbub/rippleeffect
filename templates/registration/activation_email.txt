@@ -1,1 +1,1 @@
-Activate here: http://{{ site }}/activate/{{ activation_key }}/
+Activate here: http://{{ site }}{% url 'registration_activate' activation_key %}
