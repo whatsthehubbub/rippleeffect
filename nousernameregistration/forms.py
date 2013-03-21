@@ -7,13 +7,12 @@ from django.utils.translation import ugettext_lazy as _
 from riskgame.models import *
 
 from email.utils import parseaddr
+from passwords.fields import PasswordField
 
 class EmailUsernameRegistrationForm(forms.Form):
     email = forms.EmailField(label=_("E-mail"))
-    password1 = forms.CharField(widget=forms.PasswordInput,
-                                label=_("Password"))
-    password2 = forms.CharField(widget=forms.PasswordInput,
-                                label=_("Password (again)"))
+    password1 = PasswordField(label=_("Password"))
+    password2 = PasswordField(label=_("Password (again)"))
 
     def clean_email(self):
         email = self.cleaned_data.get('email', '')
