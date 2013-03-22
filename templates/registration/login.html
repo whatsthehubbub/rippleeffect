@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block pagetitle %}Log in{% endblock %}
 
+{% block content %}
+<h2>Log in</h2>
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
@@ -23,6 +25,6 @@
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
-or <a href="{% url 'registration_register' %}">register</a>
+<p>Or <a href="{% url 'registration_register' %}">register</a></p>
 
 {% endblock %}

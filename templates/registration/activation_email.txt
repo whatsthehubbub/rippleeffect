@@ -1,1 +1,7 @@
-Activate here: http://{{ site }}{% url 'registration_activate' activation_key %}
+Hello,
+
+To activate your Ripple Effect account, please go here: http://{{ site }}{% url 'registration_activate' activation_key %}
+
+Kind regards, your friendly Ripple Effect e-mail robot
+
+(You're receiving this message because someone signed up for Ripple Effect using this e-mail address. If this wasn't you, you can ignore this message.)

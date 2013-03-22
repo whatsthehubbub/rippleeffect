@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
-{% block pagetitle %}Activation complete{% endblock pagetitle %}
+{% block pagetitle %}Account activated{% endblock pagetitle %}
 
 {% block content %}
-	Activation has been succesful. <a href="{% url 'index' %}">Log in</a>.
+	<h2>Account activated</h2>
+	<p>You've succesfully activated your Ripple Effect account. Please <a href="{% url 'index' %}">log in</a> to continue.</p>
 {% endblock content %}

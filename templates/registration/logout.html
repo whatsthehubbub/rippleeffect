@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
+{% block pagetitle %}Logged out{% endblock %}
+
 {% block content %}
 
-	{{ title }} <br><br>Go <a href="{% url 'index' %}">home</a>.
+	<p>You've succesfully logged out. <a href="{% url 'index' %}">Log in</a> again?</p>
 
 {% endblock %}

@@ -1,4 +1,11 @@
 {% extends "base.html" %}
 {% load url from future %}
 
-{% block content %}Welcome to Ripple Effect. <a href="{% url 'auth_logout' %}">Log out</a>{% endblock %}
+{% block pagetitle %}Home{% endblock %}
+
+{% block content %}
+	<h2>Home</h2>
+	<ul>
+		<li><a href="{% url 'auth_logout' %}">Log out</a></li>
+	</ul>
+{% endblock %}
