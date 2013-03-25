@@ -20,6 +20,8 @@ def index(request):
 def pre_launch(request):
     t = loader.get_template('riskgame/pre_launch.html')
 
-    c = RequestContext(request, {})
+    c = RequestContext(request, {
+        'game': Game.objects.get_latest_game()
+    })
 
     return HttpResponse(t.render(c))
