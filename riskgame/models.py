@@ -94,8 +94,14 @@ class Team(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
 
+    name = models.CharField(max_length=255, default='a')
+
     # Open means a team can accept new players
     open = models.BooleanField(default=True)
+
+    goal_zero_score = models.IntegerField(default=0)
+    resource_score = models.IntegerField(default=0)
+    victory_points = models.IntegerField(default=0)
 
     def __unicode__(self):
         return 'Team is open? %s' % str(self.open)
@@ -126,12 +132,25 @@ class TeamJoinRequest(models.Model):
         return 'Request from %s to %s' % (str(self.player), self.team)
 
 
+class GameManager(models.Manager):
+    def get_latest_game(self):
+        # This is the active game
+        # TODO cache this call
+        games = Game.objects.all().order_by('-datecreated')
+
+        if games:
+            return games[0]
+        else:
+            return Game.objects.create()
+
 class Game(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
 
     # Used to turn on/off the pre launch screen
     started = models.BooleanField(default=False)
+
+    objects = GameManager()
 
     def __unicode__(self):
         return str(self.id)
