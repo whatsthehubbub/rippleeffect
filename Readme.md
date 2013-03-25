@@ -27,7 +27,7 @@ To get a list of available commands
 
 To run your django dev server:
 
-	fab runserver
+	fab runserver	# serves django app on localhost:8000
 
 To sync your DB:
 
