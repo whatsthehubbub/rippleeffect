@@ -90,6 +90,33 @@ class ValidEmailDomain(models.Model):
         return self.name
 
 
+class Team(models.Model):
+    datecreated = models.DateTimeField(auto_now_add=True)
+    datechanged = models.DateTimeField(auto_now=True)
+
+    # Open means a team can accept new players
+    open = models.BooleanField(default=True)
+
+class Player(models.Model):
+    datecreated = models.DateTimeField(auto_now_add=True)
+    datechanged = models.DateTimeField(auto_now=True)
+
+    user = models.OneToOneField(EmailUser)
+
+    team = models.ForeignKey(Team, null=True, blank=True)
+
+    # TODO add team role
+
+class TeamJoinRequest(models.Model):
+    datecreated = models.DateTimeField(auto_now_add=True)
+    datechanged = models.DateTimeField(auto_now=True)
+
+    team = models.ForeignKey(Team)
+    player = models.ForeignKey(Player)
+
+    # TODO fold invitations in here too?
+
+
 class Game(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
