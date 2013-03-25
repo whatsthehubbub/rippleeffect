@@ -97,6 +97,9 @@ class Team(models.Model):
     # Open means a team can accept new players
     open = models.BooleanField(default=True)
 
+    def __unicode__(self):
+        return 'Team is open? %s' % str(self.open)
+
 class Player(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
@@ -107,6 +110,9 @@ class Player(models.Model):
 
     # TODO add team role
 
+    def __unicode__(self):
+        return str(self.user)
+
 class TeamJoinRequest(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
@@ -115,6 +121,9 @@ class TeamJoinRequest(models.Model):
     player = models.ForeignKey(Player)
 
     # TODO fold invitations in here too?
+
+    def __unicode__(self):
+        return 'Request from %s to %s' % (str(self.player), self.team)
 
 
 class Game(models.Model):

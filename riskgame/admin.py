@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
@@ -91,6 +90,17 @@ class ValidEmailDomainAdmin(admin.ModelAdmin):
     list_display = ('datecreated', 'name')
 admin.site.register(ValidEmailDomain, ValidEmailDomainAdmin)
 
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ('open', )
+admin.site.register(Team, TeamAdmin)
+
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ('user', 'team')
+admin.site.register(Player, PlayerAdmin)
+
+class TeamJoinRequestAdmin(admin.ModelAdmin):
+    list_display = ('team', 'player')
+admin.site.register(TeamJoinRequest, TeamJoinRequestAdmin)
 
 class GameAdmin(admin.ModelAdmin):
     list_display = ('datecreated', 'started')
