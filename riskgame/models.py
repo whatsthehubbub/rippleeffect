@@ -3,7 +3,6 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.utils import timezone
 from django.core.mail import send_mail
 
-
 class EmailUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
@@ -147,10 +146,12 @@ class Game(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
 
-    # Used to turn on/off the pre launch screen
-    started = models.BooleanField(default=False)
+    datestart = models.DateTimeField()
 
     objects = GameManager()
 
     def __unicode__(self):
         return str(self.id)
+
+    def started(self):
+        return timezone.now() > self.datestart
