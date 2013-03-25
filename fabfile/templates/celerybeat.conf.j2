@@ -1,0 +1,10 @@
+[program:celerybeat]
+command={{virtualenv}}/bin/python {{home}}/manage.py celerybeat --schedule=/var/run/celerybeat-schedule --loglevel=INFO
+directory={{home}}
+user=vagrant
+numprocs=1
+stdout_logfile={{log_home}}/celerybeat.log
+redirect_stderr=true
+autostart=true
+autorestart=true
+startsecs=10

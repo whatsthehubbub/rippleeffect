@@ -30,9 +30,19 @@ def install_requirements():
 
 def configure_workers():
     "configure celery workers"
+    # upload supervisord config for celery worker
     upload_template(
         'celery.conf.j2',
         '/etc/supervisor/conf.d/celery.conf',
+        env,
+        template_dir='fabfile/templates',
+        use_jinja=True,
+        use_sudo=True,
+    )
+    # upload supervisord config for celerybeat
+    upload_template(
+        'celerybeat.conf.j2',
+        '/etc/supervisor/conf.d/celerybeat.conf',
         env,
         template_dir='fabfile/templates',
         use_jinja=True,
