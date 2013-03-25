@@ -91,7 +91,7 @@ class ValidEmailDomainAdmin(admin.ModelAdmin):
 admin.site.register(ValidEmailDomain, ValidEmailDomainAdmin)
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('open', )
+    list_display = ('name', 'open', 'goal_zero_score', 'resource_score', 'victory_points')
 admin.site.register(Team, TeamAdmin)
 
 class PlayerAdmin(admin.ModelAdmin):
