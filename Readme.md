@@ -44,3 +44,13 @@ To run a celery worker in the foreground
 To run a django interactive shell
 
 	fab shell
+
+To shutdown your virtual machine
+
+	vagrant halt
+
+To startup your virtual machine
+
+	vagrant up
+
+The vagrant commands should be executed in the directory which contains the `Vagrantfile`
