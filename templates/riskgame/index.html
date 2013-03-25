@@ -5,7 +5,15 @@
 
 {% block content %}
 	<h2>Home</h2>
-	<ul>
-		<li><a href="{% url 'auth_logout' %}">Log out</a></li>
-	</ul>
+
+	{% for team in teams %}
+		{{ team.id }} - {{ team.name }}
+
+		{% if team.open %}
+			<br>The team is still open for new players.
+		{% endif %}
+
+	{% empty %}
+		There aren't any teams yet.
+	{% endfor %}
 {% endblock %}

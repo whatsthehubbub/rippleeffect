@@ -4,11 +4,15 @@ from django.template import RequestContext, loader
 
 from django.contrib.auth.decorators import login_required
 
+from riskgame.models import *
+
 @login_required
 def index(request):
     t = loader.get_template('riskgame/index.html')
     
-    c = RequestContext(request, {})
+    c = RequestContext(request, {
+        'teams': Team.objects.all()
+    })
 
     return HttpResponse(t.render(c))
 
