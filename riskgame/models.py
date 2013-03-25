@@ -109,6 +109,12 @@ class Player(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
 
+    name = models.CharField(max_length=255, default='')
+    onelinebio = models.CharField(max_length=140, default='')
+    role = models.CharField(max_length=255, choices=(("OFFICE", "Office"), ("FRONTLINE", "Frontline")), default="OFFICE")
+
+    receive_email = models.BooleanField(default=True)
+
     user = models.OneToOneField(EmailUser)
 
     team = models.ForeignKey(Team, null=True, blank=True)
