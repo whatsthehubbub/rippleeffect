@@ -3,10 +3,21 @@ South==0.7.6
 distribute==0.6.28
 django-crispy-forms==1.2.3
 # django-registration==0.8
--e hg+https://bitbucket.org/ubernostrum/django-registration#egg=Package
+#-e hg+https://bitbucket.org/ubernostrum/django-registration#egg=Package
 MySQL-python==1.2.4
 pytz==2013b
 wsgiref==0.1.2
 gunicorn==0.17.2
 django-passwords==0.2.0
 py-bcrypt==0.3
+# celery-related requirements
+amqp==1.0.10
+anyjson==0.3.3
+argparse==1.2.1
+billiard==2.7.3.22
+celery==3.0.16
+django-celery==3.0.11
+django-celery-with-redis==3.0
+kombu==2.5.8
+python-dateutil==1.5
+redis==2.7.2
