@@ -1,0 +1,9 @@
+[program:celery]
+command={{virtualenv}}/bin/python {{home}}/manage.py celery worker --loglevel=INFO
+directory={{home}}
+user=vagrant
+autostart=true
+autorestart=true
+stdout_logfile={{log_home}}/celery.log
+redirect_stderr=true
+stopsignal=QUIT
