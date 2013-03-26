@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.forms import ModelForm
 from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field
@@ -72,14 +73,33 @@ class TeamDetail(DetailView):
     context_object_name = 'team'
 
 @login_required
+@require_POST
 def request_team_join(request, pk):
-    if request.method == "POST":
-        player = request.user.get_or_create_player()
-        team = Team.objects.get(id=pk)
+    player = request.user.get_or_create_player()
+    team = Team.objects.get(id=pk)
 
-        TeamJoinRequest.objects.create(team=team, player=player)
+    TeamJoinRequest.objects.create(team=team, player=player)
 
-        return HttpResponse('join requested')
+    return HttpResponseRedirect(reverse('team_detail', args=[player.team.id]))
+
+@login_required
+@require_POST
+def accept_team_join(request, pk):
+    join_request = TeamJoinRequest.objects.get(id=request.POST.get('join_request_id', ''))
+
+    print join_request
+
+    print request.user.get_or_create_player()
+    print join_request.team.leader
+
+    if request.user.get_or_create_player() == join_request.team.leader:
+        player = join_request.player
+        player.team = join_request.team
+        player.save()
+
+        join_request.delete()
+
+        return HttpResponseRedirect(reverse('team_detail', args=[player.team.id]))
 
 
 @login_required

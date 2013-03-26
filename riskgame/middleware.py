@@ -24,3 +24,15 @@ class PreLaunchMiddleware(object):
                 return None
             else:
                 return HttpResponseRedirect(reverse('pre_launch'))
+
+from django.contrib.auth import get_user_model
+
+class ImpersonateMiddleware(object):
+    def process_request(self, request):
+        if request.user.is_authenticated() and request.user.is_admin and "impersonate" in request.GET:
+            request.session['impersonate_email'] = request.GET["impersonate"]
+        elif "unimpersonate" in request.GET:
+            del request.session['impersonate_email']
+
+        if request.user.is_authenticated() and request.user.is_admin and 'impersonate_email' in request.session:
+            request.user = get_user_model().objects.get(email=request.session['impersonate_email'])

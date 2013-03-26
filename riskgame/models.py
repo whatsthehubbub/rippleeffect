@@ -117,6 +117,9 @@ class Team(models.Model):
     def get_absolute_url(self):
         return ('team_detail', [self.id])
 
+    def get_join_requests(self):
+        return TeamJoinRequest.objects.filter(team=self, invite=False)
+
 class Player(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
