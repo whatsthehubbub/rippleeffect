@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 
 from riskgame.views import TeamDetail
+from django.views.generic.base import TemplateView
 
 urlpatterns = patterns('',
     url(r'^$', 'riskgame.views.index', name='index'),
@@ -8,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^pre/launch/$', 'riskgame.views.pre_launch', name='pre_launch'),
 
     url(r'^team/(?P<pk>\d+)/$', TeamDetail.as_view(), name='team_detail'),
+    url(r'^dummy/$', TemplateView.as_view(template_name='riskgame/dummy.html'), name='dummy')
 )
