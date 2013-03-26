@@ -7,7 +7,7 @@
 	<h2>Home</h2>
 
 	{% for team in teams %}
-		{{ team.id }} - {{ team.name }}
+		<a href="{% url 'team_detail' team.id %}">{{ team.id }} - {{ team.name }}</a>
 
 		{% if team.open %}
 			<br>The team is still open for new players.

@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.template import RequestContext, loader
 # from django.core.urlresolvers import reverse
 
+from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 
 from riskgame.models import *
@@ -25,3 +26,9 @@ def pre_launch(request):
     })
 
     return HttpResponse(t.render(c))
+
+
+class TeamDetail(DetailView):
+    model = Team
+    template_name = 'riskgame/team_detail.html'
+    context_object_name = 'team'
