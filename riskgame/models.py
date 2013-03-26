@@ -78,6 +78,12 @@ class EmailUser(AbstractBaseUser):
         """
         send_mail(subject, message, from_email, [self.email])
 
+    def get_or_create_player(self):
+        try:
+            return Player.objects.get(user=self)
+        except Player.DoesNotExist:
+            return Player.objects.create(user=self)
+
 
 class ValidEmailDomain(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -101,6 +107,8 @@ class Team(models.Model):
     goal_zero_score = models.IntegerField(default=0)
     resource_score = models.IntegerField(default=0)
     victory_points = models.IntegerField(default=0)
+
+    leader = models.ForeignKey('Player', null=True, related_name='ledteam')
 
     def __unicode__(self):
         return 'Team is open? %s' % str(self.open)
@@ -131,7 +139,8 @@ class TeamJoinRequest(models.Model):
     team = models.ForeignKey(Team)
     player = models.ForeignKey(Player)
 
-    # TODO fold invitations in here too?
+    # If this is true, it is an invitation, otherwise a player has requested to join themselves
+    invite = models.BooleanField(default=False)
 
     def __unicode__(self):
         return 'Request from %s to %s' % (str(self.player), self.team)

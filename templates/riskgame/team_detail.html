@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-	team detail
-
 	{{ team }}
+
+
+	<form method="POST" action="{% url 'request_team_join' team.id %}">
+		{% csrf_token %}
+		<input type="submit" value="request join">
+	</form>
+
 {% endblock content %}
 

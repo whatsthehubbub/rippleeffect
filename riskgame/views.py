@@ -32,3 +32,12 @@ class TeamDetail(DetailView):
     model = Team
     template_name = 'riskgame/team_detail.html'
     context_object_name = 'team'
+
+def request_team_join(request, pk):
+    if request.method == "POST":
+        player = request.user.get_or_create_player()
+        team = Team.objects.get(id=pk)
+
+        TeamJoinRequest.objects.create(team=team, player=player)
+
+        return HttpResponse('join requested')
