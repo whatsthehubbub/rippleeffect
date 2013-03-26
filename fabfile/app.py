@@ -37,7 +37,8 @@ def prepare_directories():
 def install_requirements():
     "installs app's required packages"
     with cd(env.home):
-        virtualenv('pip install -r requirements.txt')
+        for line in open('requirements.txt','r'):
+            virtualenv('pip install %s' % line)
 
 def configure_workers():
     "configure celery workers"
