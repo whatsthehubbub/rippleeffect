@@ -12,7 +12,7 @@ Dev Environment Setup
 =====================
 1. Download and install [VirtualBox for OSX](http://download.virtualbox.org/virtualbox/4.2.10/VirtualBox-4.2.10-84104-OSX.dmg)
 2. Download and install [vagrant for OSX](http://files.vagrantup.com/packages/67bd4d30f7dbefa7c0abc643599f0244986c38c8/Vagrant.dmg)
-3. Install [fabric](http://docs.fabfile.org) `sudo pip install fabric`
+3. Install [fabric](http://docs.fabfile.org) `sudo pip install --upgrade fabric==1.6.0`
 4. Checkout the repository `git clone git@github.com:whatsthehubbub/rippleeffect.git && cd rippleeffect`
 5. Bootstrap the dev environment `fab bootstrap` (you may want to grab a coffee)
 
