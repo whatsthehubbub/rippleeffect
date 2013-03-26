@@ -7,19 +7,26 @@
 	<h2>Home</h2>
 
 	{% for team in teams %}
+	<p>
 		<a href="{% url 'team_detail' team.id %}">{{ team.id }} - {{ team.name }}</a>
 
 		{% if team.open %}
 			<br>The team is still open for new players.
 		{% endif %}
-
+	</p>
 	{% empty %}
 		There aren't any teams yet.
 	{% endfor %}
 
 
-	<p>Create team; <br>
-	{% crispy create_team_form %}
+	{% with player.get_led_team as led_team %}
+	    
+	    {% if led_team %}
+	    	You are the leader of team: <a href="{{ led_team.get_absolute_url }}">{{ led_team }}</a>
+	    {% else %}
+	    	<p>Create team: <br>
+			{% crispy create_team_form %}
+	    {% endif %}
+	{% endwith %}
 
-	Player: {{ player }}
 {% endblock %}

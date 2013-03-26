@@ -80,3 +80,14 @@ def request_team_join(request, pk):
         TeamJoinRequest.objects.create(team=team, player=player)
 
         return HttpResponse('join requested')
+
+
+@login_required
+def players(request):
+    t = loader.get_template('riskgame/players.html')
+    
+    c = RequestContext(request, {
+        'players': Player.objects.all()
+    })
+
+    return HttpResponse(t.render(c))

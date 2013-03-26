@@ -1,13 +1,29 @@
 {% extends "base.html" %}
+{% load riskgame_extras %}
 
 {% block content %}
-	{{ team }}
+	<p>Name: {{ team.name }}</p>
 
-	{% if team.open %}
-		<form method="POST" action="{% url 'request_team_join' team.id %}">
-			{% csrf_token %}
-			<input type="submit" value="request join">
-		</form>
+	<p>Open: {{ team.open }}</p>
+
+	<p>Team leader: {{ team.leader }}</p>
+
+	{% if team.open and not player == team.leader %}
+
+		{% comment %} TODO also catch the case where you have been invited to join the team{% endcomment %}
+
+		{% if player|requested_join:team %}
+			You have requested to join this team.
+		{% else %}
+			<form method="POST" action="{% url 'request_team_join' team.id %}">
+				{% csrf_token %}
+				<input type="submit" value="request join">
+			</form>
+		{% endif %}
+	{% endif %}
+
+	{% if player == team.leader %}
+		You are the team leader. TODO invite players
 	{% endif %}
 
 {% endblock content %}

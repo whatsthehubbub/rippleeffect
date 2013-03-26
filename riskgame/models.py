@@ -111,7 +111,11 @@ class Team(models.Model):
     leader = models.ForeignKey('Player', null=True, related_name='ledteam')
 
     def __unicode__(self):
-        return 'Team is open? %s' % str(self.open)
+        return self.name or self.id
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('team_detail', [self.id])
 
 class Player(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -131,6 +135,12 @@ class Player(models.Model):
 
     def __unicode__(self):
         return str(self.user)
+
+    def get_led_team(self):
+        try:
+            return Team.objects.get(leader=self)
+        except Team.DoesNotExist:
+            return None
 
 class TeamJoinRequest(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
