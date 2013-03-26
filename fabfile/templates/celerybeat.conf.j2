@@ -1,5 +1,5 @@
 [program:celerybeat]
-command={{virtualenv}}/bin/python {{home}}/manage.py celerybeat --schedule=/var/run/celerybeat-schedule --loglevel=INFO
+command={{virtualenv}}/bin/python {{home}}/manage.py celerybeat --schedule=/var/lib/celery/celerybeat-schedule --loglevel=INFO
 directory={{home}}
 user=vagrant
 numprocs=1

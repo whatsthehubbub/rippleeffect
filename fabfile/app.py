@@ -18,10 +18,21 @@ def prepare_virtualenv():
 
 def prepare_directories():
     "creates, chmod's, chown's required directories"
+    # prepare logging directory
     if run('test -d %(log_home)s' % env, warn_only=True).failed:
         sudo('mkdir -p %(log_home)s' % env)
         sudo('chown %(app_user)s:%(app_user)s %(log_home)s' % env)
         sudo('chmod 755 %(log_home)s' % env)
+    
+    # prepare celerybeat-schedule directory
+    celery_dir = '/var/lib/celery'
+    if run('test -d %s' % celery_dir, warn_only=True).failed:
+        sudo('mkdir %s -p ' % celery_dir)
+        sudo('chown %(app_user)s:%(app_user)s %(dir)s' % {
+            'dir': celery_dir,
+            'app_user': env.app_user,
+        })
+        sudo('chmod 755 %s' % celery_dir)
 
 def install_requirements():
     "installs app's required packages"
