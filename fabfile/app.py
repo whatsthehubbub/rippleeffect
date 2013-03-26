@@ -71,6 +71,6 @@ def stop_worker():
 
 def is_worker_running():
     "indicates if a celery worker is running"
-    res = run('pgrep -fl [c]elery | wc -l')
+    res = run('pgrep -fl "[c]elery\s" | wc -l')
     return int(res) > 0
 
