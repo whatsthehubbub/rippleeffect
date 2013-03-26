@@ -3,9 +3,13 @@ from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 
 from django.forms import ModelForm
-from django.views.generic import DetailView
+
 from django.contrib.auth.decorators import login_required
+
+from django.views.generic import DetailView
 from django.views.decorators.http import require_POST
+
+from django.utils.translation import ugettext_lazy as _
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Field
@@ -50,7 +54,7 @@ class CreateTeamform(ModelForm):
         self.helper.layout = Layout(
             Field('name', css_class='input-block-level', placeholder='Name'),
             FormActions(
-                Submit('submit', 'Verzenden', css_class='btn')
+                Submit('submit', _('Send'), css_class='btn')
             )
         )
 

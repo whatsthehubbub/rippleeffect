@@ -1,7 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
-from django.utils import timezone
 from django.core.mail import send_mail
+
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 class EmailUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -10,7 +12,7 @@ class EmailUserManager(BaseUserManager):
         birth and password.
         """
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError(_('Users must have an email address'))
 
         user = self.model(
             email=EmailUserManager.normalize_email(email)
@@ -34,7 +36,7 @@ class EmailUserManager(BaseUserManager):
 
 
 class EmailUser(AbstractBaseUser):
-    email = models.EmailField(verbose_name='E-mail address', max_length=255, unique=True, db_index=True)
+    email = models.EmailField(verbose_name=_('E-mail address'), max_length=255, unique=True, db_index=True)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -126,7 +128,7 @@ class Player(models.Model):
 
     name = models.CharField(max_length=255, default='')
     onelinebio = models.CharField(max_length=140, default='')
-    role = models.CharField(max_length=255, choices=(("OFFICE", "Office"), ("FRONTLINE", "Frontline")), default="OFFICE")
+    role = models.CharField(max_length=255, choices=(("OFFICE", _("Office")), ("FRONTLINE", _("Frontline"))), default="OFFICE")
 
     receive_email = models.BooleanField(default=True)
 
