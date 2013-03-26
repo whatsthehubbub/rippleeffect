@@ -3,11 +3,12 @@
 {% block content %}
 	{{ team }}
 
-
-	<form method="POST" action="{% url 'request_team_join' team.id %}">
-		{% csrf_token %}
-		<input type="submit" value="request join">
-	</form>
+	{% if team.open %}
+		<form method="POST" action="{% url 'request_team_join' team.id %}">
+			{% csrf_token %}
+			<input type="submit" value="request join">
+		</form>
+	{% endif %}
 
 {% endblock content %}
 

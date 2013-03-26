@@ -99,7 +99,7 @@ class Team(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
 
-    name = models.CharField(max_length=255, default='a')
+    name = models.CharField(max_length=255, default='')
 
     # Open means a team can accept new players
     open = models.BooleanField(default=True)

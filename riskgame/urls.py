@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^pre/launch/$', 'riskgame.views.pre_launch', name='pre_launch'),
 
     url(r'^team/(?P<pk>\d+)/$', TeamDetail.as_view(), name='team_detail'),
+    url(r'^team/create/$', 'riskgame.views.team_create', name='team_create'),
     url(r'^team/(?P<pk>\d+)/join/request/$', 'riskgame.views.request_team_join', name='request_team_join'),
     url(r'^dummy/$', TemplateView.as_view(template_name='riskgame/dummy.html'), name='dummy')
 )

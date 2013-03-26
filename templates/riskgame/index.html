@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load url from future %}
+{% load crispy_forms_tags %}
 
 {% block pagetitle %}Home{% endblock %}
 
@@ -16,6 +16,10 @@
 	{% empty %}
 		There aren't any teams yet.
 	{% endfor %}
+
+
+	<p>Create team; <br>
+	{% crispy create_team_form %}
 
 	Player: {{ player }}
 {% endblock %}
