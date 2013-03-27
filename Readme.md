@@ -1,13 +1,3 @@
-do a deploy:
-
-
-* ssh into the server
-* git pull
-* source venv/bin/activate
-* export RIPPLE_PRODUCTION=True
-* < do other actions >
-* sudo service rippleeffect stop; sudo service rippleeffect start;
-
 Dev Environment Setup
 =====================
 1. Download and install [VirtualBox for OSX](http://download.virtualbox.org/virtualbox/4.2.10/VirtualBox-4.2.10-84104-OSX.dmg)
@@ -18,12 +8,22 @@ Dev Environment Setup
 
 Dev Environment Usage
 =====================
-Your dev environment runs a VirtualBox instance. You can interface with your VM using the [vagrant](http://docs.vagrantup.com/v2/getting-started/index.html) command. The commands you'll most often use are `vagrant up` and `vagrant halt`.
+Your dev environment runs a VirtualBox instance where the checkout you just did is mapped into. Any files you change on your machine are mirrored into the virtual machine and vice versa. The dev server runs on the virtual machine and forwards its ports to your local machine.
+
+You can interface with your VM using the [vagrant](http://docs.vagrantup.com/v2/getting-started/index.html) command. The commands you'll most often use are `vagrant up` and `vagrant halt`.
+
+To be up and running do this:
+
+* vagrant up
+* fab syncdb; fab migrate; fab runserver;
+* Access your environment with: http:127.0.0.1:8000
+
+When you're done stop your virtual machine with `vagrant halt` though you shouldn't really notice it and it will disappear on next reboot.
+
 
 To get a list of available commands
 
 	fab -l
-
 
 To run your django dev server:
 
@@ -54,3 +54,14 @@ To startup your virtual machine
 	vagrant up
 
 The vagrant commands should be executed in the directory which contains the `Vagrantfile`
+
+
+Tech Trial Deployment
+=====================
+
+* ssh into the server
+* git pull
+* source venv/bin/activate
+* export RIPPLE_PRODUCTION=True
+* < do other actions >
+* sudo service rippleeffect stop; sudo service rippleeffect start;
