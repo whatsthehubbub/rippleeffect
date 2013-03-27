@@ -165,12 +165,12 @@ class GameManager(models.Manager):
     def get_latest_game(self):
         # This is the active game
         # TODO cache this call
-        games = Game.objects.all().order_by('-datecreated')
+        games = Game.objects.all().order_by('-datestart')
 
         if games:
             return games[0]
         else:
-            return Game.objects.create()
+            return Game.objects.create(datestart=timezone.now())
 
 class Game(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
