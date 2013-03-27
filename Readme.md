@@ -19,6 +19,11 @@ To be up and running do this:
 * fab syncdb; fab migrate; fab runserver;
 * Access your environment at: http://127.0.0.1:8000
 
+This process does not create a superuser. To create one:
+* fab shell;
+* from riskgame.models import EmailUser
+* EmailUser.objects.create_superuser('admin@email.com', 'admin')
+
 When you're done stop your virtual machine with `vagrant halt` though you shouldn't really notice it and it will disappear on next reboot.
 
 
