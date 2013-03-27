@@ -14,6 +14,7 @@ You can interface with your VM using the [vagrant](http://docs.vagrantup.com/v2/
 
 To be up and running do this:
 
+* git pull
 * vagrant up
 * fab syncdb; fab migrate; fab runserver;
 * Access your environment at: http://127.0.0.1:8000
