@@ -16,7 +16,7 @@ To be up and running do this:
 
 * vagrant up
 * fab syncdb; fab migrate; fab runserver;
-* Access your environment with: http:127.0.0.1:8000
+* Access your environment at: http://127.0.0.1:8000
 
 When you're done stop your virtual machine with `vagrant halt` though you shouldn't really notice it and it will disappear on next reboot.
 
