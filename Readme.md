@@ -16,7 +16,8 @@ To be up and running do this:
 
 * git pull
 * vagrant up
-* fab syncdb; fab migrate; fab runserver;
+* fab syncdb; fab migrate; fab app.install_requirements (You d'not have to do these every time, but it can't hurt to do them regularly.)
+* fab runserver;
 * Access your environment at: http://127.0.0.1:8000
 
 This process does not create a superuser. To create one:

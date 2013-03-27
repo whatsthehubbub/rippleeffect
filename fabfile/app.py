@@ -34,6 +34,8 @@ def prepare_directories():
         })
         sudo('chmod 755 %s' % celery_dir)
 
+@task
+@roles('dev')
 def install_requirements():
     "installs app's required packages"
     with cd(env.home):
