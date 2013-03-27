@@ -59,6 +59,10 @@ To startup your virtual machine
 
 	vagrant up
 
+To drop into a shell on your virtual machine
+
+	vagrant ssh
+
 The vagrant commands should be executed in the directory which contains the `Vagrantfile`
 
 
