@@ -16,4 +16,14 @@ urlpatterns = patterns('',
     url(r'^dummy/$', TemplateView.as_view(template_name='riskgame/dummy.html'), name='dummy'),
 
     url(r'^players/$', 'riskgame.views.players', name='players'),
+
+    url(r'^play/$', 'riskgame.views.play', name='play'),
+    url(r'^play/prep/$', 'riskgame.views.play_prep', name='play_prep'),
+    url(r'^play/start/day/$', 'riskgame.views.play_start_day', name='play_start_day'),
+
+    url(r'^play/inspect/$', 'riskgame.views.play_inspect', name='play_inspect'),
+    url(r'^play/invest/$', 'riskgame.views.play_invest', name='play_invest'),
+    url(r'^play/gather/$', 'riskgame.views.play_gather', name='play_gather'),
+    url(r'^play/prevent/$', 'riskgame.views.play_prevent', name='play_prevent'),
+    url(r'^play/pump/$', 'riskgame.views.play_pump', name='play_pump'),
 )

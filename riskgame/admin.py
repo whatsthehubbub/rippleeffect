@@ -90,12 +90,16 @@ class ValidEmailDomainAdmin(admin.ModelAdmin):
     list_display = ('datecreated', 'name')
 admin.site.register(ValidEmailDomain, ValidEmailDomainAdmin)
 
+class TeamPlayerAdmin(admin.ModelAdmin):
+    list_display = ('role', 'team', 'player', 'gather_pile', 'risk_pile', )
+admin.site.register(TeamPlayer, TeamPlayerAdmin)
+
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'leader', 'open', 'goal_zero_score', 'resource_score', 'victory_points')
+    list_display = ('name', 'leader', 'open')
 admin.site.register(Team, TeamAdmin)
 
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('user', 'team')
+    list_display = ('user', )
 admin.site.register(Player, PlayerAdmin)
 
 class TeamJoinRequestAdmin(admin.ModelAdmin):

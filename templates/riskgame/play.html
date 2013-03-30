@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+	
+	<p><a href="{% url 'play_prep' %}">Prep new game</a> | <a href="{% url 'play_start_day' %}">start new day</a></p>
+
+
+	{% if messages %}
+		<h3>Messages</h3>
+		<ul class="messages">
+		    {% for message in messages %}
+		    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		    {% endfor %}
+		</ul>
+	{% endif %}
+
+	<h3>Team</h3>
+
+	{% for mate in teammates %}
+		<li>{{ mate.player }} {% ifequal mate.player player %}(YOU!){% endifequal %}</li>
+	{% endfor %}
+
+	<p>Actions left: {{ teamplayer.team.action_points }}</p>
+
+	<p>Goal zero markers: {{ teamplayer.team.goal_zero_markers }}</p>
+
+	<p>Score: {{ teamplayer.team.score }}</p>
+
+	<p>Gather pile cards: {{ teamplayer.gather_pile }}<br>
+	Gathering markers: {{ teamplayer.gather_markers }}</p>
+
+	<p>Risk pile cards: {{ teamplayer.risk_pile }}<br>
+		Prevention markers: {{ teamplayer.prevent_markers }}</p>
+
+	<form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
+		<input type="hidden" name="pile" value="gather">
+		<input type="submit" value="Inspect (gather)">
+	</form>
+
+	<form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
+		<input type="hidden" name="pile" value="risk">
+		<input type="submit" value="Inspect (risk)">
+	</form>
+
+	<form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
+		<input type="hidden" name="pile" value="gather">
+		<input type="submit" value="Invest (resource)">
+	</form>
+
+	<form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
+		<input type="hidden" name="pile" value="risk">
+		<input type="submit" value="Invest (safety)">
+	</form>
+
+	<form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
+		<input type="submit" value="Gather">
+	</form>
+
+	<form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
+		<input type="submit" value="Prevent">
+	</form>
+
+	<form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
+		<input type="submit" value="Pump (free)">
+	</form>
+
+{% endblock content %}

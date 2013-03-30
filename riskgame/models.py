@@ -5,6 +5,8 @@ from django.core.mail import send_mail
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+import random
+
 class EmailUserManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
@@ -95,6 +97,145 @@ class ValidEmailDomain(models.Model):
     def __unicode__(self):
         return self.name
 
+class TeamPlayer(models.Model):
+    datecreated = models.DateTimeField(auto_now_add=True)
+    datechanged = models.DateTimeField(auto_now=True)
+
+    role = models.CharField(max_length=255, default='office', choices=(('office', 'office'), ('frontline', 'frontline')))
+
+    # 0 = no resource
+    # 1 = resource
+    gather_pile = models.CommaSeparatedIntegerField(max_length=255, default='', blank=True)
+    gather_markers = models.IntegerField(default=0)
+
+    # 0 = safety
+    # 1 = incident
+    risk_pile = models.CommaSeparatedIntegerField(max_length=255, default='', blank=True)
+    prevent_markers = models.IntegerField(default=0)
+
+    team = models.ForeignKey('Team')
+    player = models.ForeignKey('Player')
+
+    def __unicode__(self):
+        return str(self.id)
+
+    def startPiles(self):
+        self.gather_pile = '0,1'
+        self.risk_pile = '0,1'
+
+    def addGatherCard(self, val):
+        if val == 0 or val == 1:
+            pile = self.gather_pile.split(',')
+            pile.append(str(val))
+            self.gather_pile = ','.join(pile)
+
+    def addRiskCard(self, val):
+        if val == 0 or val == 1:
+            pile = self.risk_pile.split(',')
+            pile.append(str(val))
+            self.risk_pile = ','.join(pile)
+
+    def inspect(self, p):
+        if p == 'gather':
+            pile = self.gather_pile
+        elif p == 'risk':
+            pile = self.risk_pile
+
+        pile = pile.split(',')
+
+        half = len(pile) / 2 + (len(pile) % 2 and 0 or 1)
+
+        result = pile[:half]
+
+        random.shuffle(pile)
+
+        save_value = ','.join(pile)
+
+        if p == 'gather':
+            self.gather_pile = save_value
+        elif p == 'risk':
+            self.risk_pile = save_value
+
+        return result
+        
+    def invest(self, p):
+        # TODO can also add other values to piles for decay
+        # refactor out adding type of card to certain pile
+        if p == 'gather':
+            pile = self.gather_pile
+            add = '1'
+        elif p == 'risk':
+            pile = self.risk_pile
+            add = '0'
+
+        pile = pile.split(',')
+        pile.append(add)
+
+        random.shuffle(pile)
+        pile.pop(0)
+
+        save_value = ','.join(pile)
+
+        if p == 'gather':
+            self.gather_pile = save_value
+        elif p == 'risk':
+            self.risk_pile = save_value
+
+    def gather(self):
+        self.gather_markers += 1
+
+    def prevent(self):
+        self.prevent_markers += 1
+
+    def pump(self):
+        # Steps to go through the gather pile
+        gathersteps = self.gather_markers
+        # Steps to go through the risk pile
+        risksteps = self.gather_markers
+
+        pile = self.gather_pile.split(',')
+        oil = 0 # Units of oil pumped
+
+        while gathersteps > 0:
+            if pile:
+                output = pile.pop(0)
+
+                if output == '1':
+                    oil += 1
+                    # Do an extra pump for every oil we pump
+                    gathersteps += 1 
+
+            gathersteps -= 1
+
+        self.gather_markers = 0
+
+        self.gather_pile = ','.join(pile)
+
+        # Now do the same with the risk pile
+
+        pile = self.risk_pile.split(',')
+        risks = 0
+
+        while risksteps > 0:
+            if pile:
+                output = pile.pop(0)
+
+                if output == '1':
+                    risks += 1
+
+                    # Do an extra risk resolve for every risk we get
+                    risksteps += 1
+
+            risksteps -= 1
+
+        self.risk_pile = ','.join(pile)
+
+        # If there are more risks than prevent markers, bad things will happen
+        result = (oil, risks, self.prevent_markers)
+
+        self.prevent_markers = max(0, self.prevent_markers - risks)
+
+        return result
 
 class Team(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -105,11 +246,14 @@ class Team(models.Model):
     # Open means a team can accept new players
     open = models.BooleanField(default=True)
 
-    goal_zero_score = models.IntegerField(default=0)
-    resource_score = models.IntegerField(default=0)
-    victory_points = models.IntegerField(default=0)
+    goal_zero_markers = models.IntegerField(default=0)
+    action_points = models.IntegerField(default=0)
+
+    score = models.IntegerField(default=0)
 
     leader = models.ForeignKey('Player', null=True, related_name='ledteam')
+
+    players = models.ManyToManyField('Player', through='TeamPlayer')
 
     def __unicode__(self):
         return self.name or self.id
@@ -126,16 +270,11 @@ class Player(models.Model):
     datechanged = models.DateTimeField(auto_now=True)
 
     name = models.CharField(max_length=255, default='')
-    onelinebio = models.CharField(max_length=140, default='')
-    role = models.CharField(max_length=255, choices=(("OFFICE", _("Office")), ("FRONTLINE", _("Frontline"))), default="OFFICE")
+    onelinebio = models.CharField(max_length=140, default='', blank=True)
 
     receive_email = models.BooleanField(default=True)
 
     user = models.OneToOneField(EmailUser)
-
-    team = models.ForeignKey(Team, null=True, blank=True)
-
-    # TODO add team role
 
     def __unicode__(self):
         return str(self.user)
