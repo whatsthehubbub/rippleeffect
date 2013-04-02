@@ -8,6 +8,20 @@
 	
 	<title>{% block pagetitle %}{% endblock %} - Ripple Effect</title>
 
+    {#<head>#}
+    {#    <link href="/stylesheets/normalize.css" media="screen, projector, print" rel="stylesheet" type="text/css" />#}
+    {#    <link href="/stylesheets/app.css" media="screen, projector, print" rel="stylesheet" type="text/css" />#}
+    {#</head>#}
+
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/app.css" />
+
+    <script src="{{ STATIC_URL }}javascripts/vendor/custom.modernizr.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/vendor/jquery.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/site.js"></script>
+
 	{% block extrahead %}{% endblock extrahead %}
 </head>
 	

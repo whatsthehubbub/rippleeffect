@@ -78,3 +78,14 @@ Tech Trial Deployment
 * export RIPPLE_PRODUCTION=True
 * < do other actions >
 * sudo service rippleeffect stop; sudo service rippleeffect start;
+
+
+Editing CSS and Javascript
+==========================
+
+CSS is written in SCSS, Javascript is written in Coffeescript. It's important to only edit
+the .scss and .coffee source files, otherwise your changes will be lost on a subsequent
+compile. The easiest way to compile these files on your local machine is to use
+Fire.app (http://fireapp.handlino.com/) and watch the 'static' folder (be sure to issue a
+'clean and compile' when you add a new file, otherwise it won't be seen).
+
