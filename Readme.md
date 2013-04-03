@@ -17,9 +17,9 @@ To be up and running do this:
 
 * git pull
 * vagrant up
+* fab app.install_requirements (only when new packages have been added)
 * fab syncdb (only once on every new database)
 * fab migrate (only when the database schema has been changed)
-* fab app.install_requirements (only when new packages have been added)
 * fab runserver;
 * Access your environment at: http://127.0.0.1:8000
 
