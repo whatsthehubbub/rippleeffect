@@ -13,7 +13,7 @@ def change_days():
     from riskgame.models import Team
 
     # For all Teams without a check datetime update their day
-    teams = Team.objects.filter(Q(check_next=None) | Q(check_next__gte=timezone.now()))
+    teams = Team.objects.filter(Q(check_next=None) | Q(check_next__lte=timezone.now()))
 
     for team in teams:
         team.update_current_day()
