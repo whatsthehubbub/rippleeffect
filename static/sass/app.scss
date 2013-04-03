@@ -1,16 +1,36 @@
 //==== Global variables ====
 
 // Fonts
-$ff-light: 'DIN-Light';
-$ff-regular: 'DIN-Regular';
-$ff-medium: 'DIN-Medium';
-$ff-bold: 'DIN-Bold';
+$ff-light: 'DIN-Light', "Helvetica", Helvetica, Arial, sans-serif;;
+$ff-regular: 'DIN-Regular', "Helvetica", Helvetica, Arial, sans-serif;;
+$ff-medium: 'DIN-Medium', "Helvetica", Helvetica, Arial, sans-serif;;
+$ff-bold: 'DIN-Bold', "Helvetica", Helvetica, Arial, sans-serif;;
 
 // Colors
 $black: #262626;
 $dark-grey: #808080;
 $off-white: #f2f2f2;
 $white: #fff;
+
+$red: #f37341;
+$orange: #f7cd77;
+$green: #45ba7f;
+
+//==== Global mixins ====
+
+// easy retina images
+@mixin image-2x($image, $width, $height) {
+  @media (min--moz-device-pixel-ratio: 1.3),
+         (-o-min-device-pixel-ratio: 2.6/2),
+         (-webkit-min-device-pixel-ratio: 1.3),
+         (min-device-pixel-ratio: 1.3),
+         (min-resolution: 1.3dppx) {
+    background-image: url($image);
+    background-size: $width $height;
+  }
+}
+
+
 
 //==== Global Foundation Settings ====
 @import "settings";
@@ -20,6 +40,9 @@ $white: #fff;
 @import "foundation";
 @import "grid"; // the IE8 grid
 
+//==== Specific styles ====
+@import "modules/shared";
+@import "modules/pregame-landing";
 
 
 

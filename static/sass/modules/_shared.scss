@@ -1,0 +1,40 @@
+// Shared helper classes and misc styles
+
+html, body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+.white-bg {
+  background: transparent url('../img/trans-white-bg.png');
+}
+
+.green-bg {
+  background-color: $green;
+}
+
+a.small.btn{
+  @include button(
+      0,
+      $green,
+      0,
+      false,
+      false,
+      false);
+  text-transform: uppercase;
+  padding: 0 14px;
+  margin-bottom:12px;
+  font-family: $ff-regular;
+  font-size: 14px;
+  height: 36px;
+  line-height: 36px;
+}
+
+.clearfix { *zoom: 1; }
+.clearfix:before, .row:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+

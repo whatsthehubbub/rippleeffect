@@ -15,9 +15,9 @@
 // $em-base: 16px;
 
 // We use these to control various global styles
-// $body-bg: #fff;
+$body-bg: $off-white;
 $body-font-color: $black;
-$body-font-family: $ff-regular, "Helvetica", Helvetica, Arial, sans-serif;
+$body-font-family: $ff-regular;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
@@ -85,7 +85,7 @@ $global-radius: 0;
 //
 
 // We use these to control header font styles
-$header-font-family: $ff-regular, "Helvetica", Helvetica, Arial, sans-serif;
+$header-font-family: $ff-regular;
 $header-font-weight: normal;
 // $header-font-style: normal;
 // $header-font-color: #222;
@@ -237,7 +237,7 @@ $header-font-weight: normal;
 // We use these to build padding for buttons.
 // $button-med: emCalc(12px);
 // $button-tny: emCalc(7px);
-// $button-sml: emCalc(9px);
+$button-sml: emCalc(9px);
 // $button-lrg: emCalc(16px);
 
 // We use this to control the display property.
@@ -248,9 +248,9 @@ $header-font-weight: normal;
 // $button-font-family: inherit;
 // $button-font-color: #fff;
 // $button-font-color-alt: #333;
-// $button-font-med: emCalc(16px);
+$button-font-med: emCalc(18px);
 // $button-font-tny: emCalc(11px);
-// $button-font-sml: emCalc(13px);
+$button-font-sml: emCalc(14px);
 // $button-font-lrg: emCalc(20px);
 // $button-font-weight: bold;
 // $button-font-align: center;
@@ -259,8 +259,8 @@ $header-font-weight: normal;
 // $button-function-factor: 10%;
 
 // We use these to control button border styles.
-// $button-border-width: 1px;
-// $button-border-style: solid;
+$button-border-width: 0;
+$button-border-style: none;
 // $button-border-color: darken($primary-color, $button-function-factor);
 
 // We use this to set the default radius used throughout the core.

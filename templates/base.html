@@ -1,57 +1,29 @@
 {% load url from future %}
-
 <!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	
-	<title>{% block pagetitle %}{% endblock %} - Ripple Effect</title>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    {#<head>#}
-    {#    <link href="/stylesheets/normalize.css" media="screen, projector, print" rel="stylesheet" type="text/css" />#}
-    {#    <link href="/stylesheets/app.css" media="screen, projector, print" rel="stylesheet" type="text/css" />#}
-    {#</head>#}
+        <title>{% block pagetitle %}{% endblock %} - Ripple Effect</title>
 
-    <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/app.css" />
 
-    <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize.css" />
-    <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/app.css" />
+        <script src="{{ STATIC_URL }}javascripts/vendor/custom.modernizr.js"></script>
+        <script src="{{ STATIC_URL }}javascripts/vendor/jquery.js"></script>
+        <script src="{{ STATIC_URL }}javascripts/site.js"></script>
 
-    <script src="{{ STATIC_URL }}javascripts/vendor/custom.modernizr.js"></script>
-    <script src="{{ STATIC_URL }}javascripts/vendor/jquery.js"></script>
-    <script src="{{ STATIC_URL }}javascripts/site.js"></script>
+        {% block extrahead %}{% endblock extrahead %}
 
-	{% block extrahead %}{% endblock extrahead %}
-</head>
-	
-<body>
+    </head>
 
-<!-- HEADER -->
-<header id="header">
-		<h1>Ripple Effect</h1>
-
-		<a href="{% url 'index' %}">Home</a> | <a href="{% url 'players' %}">Players</a>
-
-		You are: {{ player }}
-			
-		<ul>
-			<li><a href="{% url 'auth_logout' %}">Log out</a></li>
-		</ul>
-</header>
-<!-- END HEADER -->
-
-
-<!-- MAIN -->
-<div id="main">
-	{% block content %}{% endblock content %}
-</div>
-<!-- END MAIN -->
-
-<footer id="footer">
-	<p></p>
-</footer>
-
-
-</body>
+    <body>
+        <div id="main">
+            {% block content %}{% endblock content %}
+        </div>
+    </body>
 </html>
