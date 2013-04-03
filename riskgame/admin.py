@@ -115,7 +115,7 @@ class EpisodeAdmin(admin.ModelAdmin):
 admin.site.register(Episode, EpisodeAdmin)
 
 class EpisodeDayAdmin(admin.ModelAdmin):
-    list_display = ('datecreated', 'episode', 'end')
+    list_display = ('datecreated', 'episode', 'end', 'next')
 admin.site.register(EpisodeDay, EpisodeDayAdmin)
 
 class NotificationAdmin(admin.ModelAdmin):

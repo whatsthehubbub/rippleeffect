@@ -183,6 +183,8 @@ class EpisodeDay(models.Model):
     # The time when each day starts, localized on our datetime.
     end = models.DateTimeField()
 
+    next = models.ForeignKey('self', null=True, blank=True)
+
     def __unicode__(self):
         return str(self.id)
 
@@ -361,21 +363,28 @@ class Team(models.Model):
 
     def update_current_day(self):
         team_local_now = datetime.datetime.now(self.leader.timezone)
+        naive_team_local_now = team_local_now.replace(tzinfo=None)
 
-        game = Game.objects.get_latest_game()
+        print 'ntln', naive_team_local_now
 
-        if not self.currentDay and team_local_now > game.start:
-            # Set to the first day
-            # TODO check for game over, game pre-start
-            days = EpisodeDay.objects.all().order_by('end')
-            self.currentDay = days[0]
-        elif team_local_now >= self.currentDay.end:
-            # Current day is over, move to the next day
-            days_left = EpisodeDay.objects.filter(end__gte=team_local_now).order_by('end')
+        if self.currentDay:
+            naive_day_end = self.currentDay.end.replace(tzinfo=None)
 
-            # TODO check for game over
+            print 'nde', naive_day_end
 
-            self.currentDay = days_left[0]
+            if naive_team_local_now >= naive_day_end:
+                self.currentDay = self.currentDay.next
+        else:
+            game = Game.objects.get_latest_game()
+            naive_game_start = game.start.replace(tzinfo=None)
+
+            print 'ngs', naive_game_start
+
+            if naive_team_local_now > naive_game_start:
+                # Set to the first day
+                # TODO check for game over, game pre-start
+                days = EpisodeDay.objects.all().order_by('end')
+                self.currentDay = days[0]
 
         # Else we stay on the current day and update our check_next value
         # TODO increase the check next value
@@ -464,16 +473,34 @@ class Game(models.Model):
     def over(self):
         pass # TODO 
 
-    def initialize(self):
-        episodes = [Episode.objects.create(), Episode.objects.create()]
+    def initialize(self, start=None, episodeCount=2, weekLength=7, dayLengthInMinutes=10):
 
-        weekLength = 7
+        if not start:
+            start = datetime.datetime.now()
+        
+        self.start = start.replace(tzinfo=timezone.utc)
+        self.save()
+
+        Team.objects.all().update(currentDay=None)
+        Team.objects.all().update(check_next=None)
+
+        Episode.objects.all().delete()
+        EpisodeDay.objects.all().delete()
+
+        episodes = [Episode.objects.create() for epCounter in range(episodeCount)]
 
         counter = 1
 
-        dayLengthInMinutes = 10
+        previousDay = None
 
         for episode in episodes:
             for dayCounter in range(weekLength):
-                EpisodeDay.objects.create(episode=episode, end=self.start+datetime.timedelta(minutes=dayLengthInMinutes*counter))
+                day = EpisodeDay.objects.create(episode=episode, end=self.start+datetime.timedelta(minutes=dayLengthInMinutes*counter))
+
+                if previousDay:
+                    previousDay.next = day
+                    previousDay.save()
+
+                previousDay = day
+
                 counter += 1
