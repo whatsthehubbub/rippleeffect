@@ -14,7 +14,7 @@ def virtualenv(command):
 def prepare_virtualenv():
     "installs app's virtualenv"
     if not exists(env.virtualenv):
-        run('virtualenv %(virtualenv)s --distribute' % env)
+        sudo('virtualenv %(virtualenv)s --distribute' % env)
 
 def prepare_directories():
     "creates, chmod's, chown's required directories"
