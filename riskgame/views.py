@@ -22,26 +22,27 @@ from riskgame.models import *
 
 import random
 
-@login_required
+
 def index(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('home'))
+
     t = loader.get_template('riskgame/index.html')
     
     c = RequestContext(request, {
-        'teams': Team.objects.all(),
-        'create_team_form': CreateTeamform()
     })
 
     return HttpResponse(t.render(c))
 
 
-def pre_launch(request):
-    t = loader.get_template('riskgame/pre_launch.html')
+# def pre_launch(request):
+#     t = loader.get_template('riskgame/pre_launch.html')
 
-    c = RequestContext(request, {
-        'game': Game.objects.get_latest_game()
-    })
+#     c = RequestContext(request, {
+#         'game': Game.objects.get_latest_game()
+#     })
 
-    return HttpResponse(t.render(c))
+#     return HttpResponse(t.render(c))
 
 
 class CreateTeamform(ModelForm):
