@@ -123,7 +123,7 @@ def players(request):
     return HttpResponse(t.render(c))
 
 @login_required
-def play(request):
+def home(request):
     t = loader.get_template('riskgame/play.html')
 
     player = request.user.get_or_create_player()
@@ -167,7 +167,7 @@ def play_prep(request):
 
     Team.objects.filter(id=team.id).update(action_points=0)
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def play_start_day(request):
@@ -184,7 +184,7 @@ def play_start_day(request):
     Team.objects.filter(id=team.id).update(action_points=4*playerCount)
     Team.objects.filter(id=team.id).update(goal_zero_markers=F('goal_zero_markers')+1)
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def play_inspect(request):
@@ -203,7 +203,7 @@ def play_inspect(request):
 
             messages.add_message(request, messages.INFO, "Inspected %s and found: %s" % (pile, ' '.join(result)))
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 
 @login_required
@@ -224,7 +224,7 @@ def play_invest(request):
             # Add message
             messages.add_message(request, messages.INFO, "Invested in pile %s" % pile)
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 
 @login_required
@@ -241,7 +241,7 @@ def play_gather(request):
 
         messages.add_message(request, messages.INFO, "Placed gather token.")
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def play_prevent(request):
@@ -257,7 +257,7 @@ def play_prevent(request):
 
         messages.add_message(request, messages.INFO, "Placed prevent token.")
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def play_pump(request):
@@ -279,4 +279,22 @@ def play_pump(request):
 
         messages.add_message(request, messages.INFO, "Pumped %d units of oil." % oil)
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
+
+
+def player_unsubscribe(request, h):
+    try:
+        player = Player.objects.get(emails_unsubscribe_hash=h)
+        
+        player.receive_email = False
+        player.update_unsubscribe_hash()
+        
+        player.save()
+
+        logging.info("Unsubscribed player %s from further e-mails." % player.email())
+    except:
+        logging.error("Player with hash %s does not exist to unsubscribe", h)
+
+    # TODO put a unsubscribe succesful template here
+
+    return HttpResponseRedirect(reverse('index'))

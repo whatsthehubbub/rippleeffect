@@ -95,7 +95,7 @@ class TeamPlayerAdmin(admin.ModelAdmin):
 admin.site.register(TeamPlayer, TeamPlayerAdmin)
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'leader', 'open')
+    list_display = ('name', 'leader', 'open', 'currentDay', 'check_next')
 admin.site.register(Team, TeamAdmin)
 
 class PlayerAdmin(admin.ModelAdmin):
@@ -110,3 +110,14 @@ class GameAdmin(admin.ModelAdmin):
     list_display = ('datecreated', 'started')
 admin.site.register(Game, GameAdmin)
 
+class EpisodeAdmin(admin.ModelAdmin):
+    list_display = ('datecreated', )
+admin.site.register(Episode, EpisodeAdmin)
+
+class EpisodeDayAdmin(admin.ModelAdmin):
+    list_display = ('datecreated', 'episode', 'end')
+admin.site.register(EpisodeDay, EpisodeDayAdmin)
+
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('datecreated', 'team', 'player')
+admin.site.register(Notification, NotificationAdmin)

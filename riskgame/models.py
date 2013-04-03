@@ -2,10 +2,20 @@ from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.mail import send_mail
 
+from django.core.urlresolvers import reverse
+from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from timezone_field import TimeZoneField
+
 import random
+import datetime
+
+import logging
+logger = logging.getLogger('ripple')
+
+
 
 class EmailUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -96,6 +106,86 @@ class ValidEmailDomain(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+from django.core.mail import EmailMessage
+
+class NotificationManager(models.Manager):
+    def create_new_assignment_notification(self, team, player):
+        return Notification.objects.create(identifier='player-new-assignment', team=team, player=player, message='', email=True)
+
+
+class Notification(models.Model):
+    datecreated = models.DateTimeField(auto_now_add=True)
+    datechanged = models.DateTimeField(auto_now=True)
+
+    identifier = models.CharField(max_length=255)
+
+    team = models.ForeignKey('Team')
+    player = models.ForeignKey('Player')
+
+    email = models.BooleanField(default=False)
+
+    message = models.TextField()
+
+    objects = NotificationManager()
+
+    def save(self, *args, **kwargs):
+        # Do e-mail sending here only if this is a new object
+        if self.pk is None:
+            self.send_email()
+
+        super(Notification, self).save(*args, **kwargs)
+
+    def send_email(self):
+        if self.email and self.player.receive_email:
+            subject = self.get_subject()
+            from_email = settings.DEFAULT_FROM_EMAIL
+            to_email = self.player.user.email
+
+            content = self.message + '<br><br>' + self.get_email_footer()
+
+            try:
+                msg = EmailMessage(subject, content, from_email, [to_email])
+                msg.content_subtype = 'html'
+                msg.send()
+                logger.info('Sent e-mail to %s', to_email)
+            except:
+                logger.error('Could not send e-mail to %s', to_email)
+
+    def get_email_footer(self):
+        if not self.player.emails_unsubscribe_hash:
+            self.player.update_unsubscribe_hash()
+            self.player.save()
+
+        return '''<a href="http://playrippleeffect.com%s">Unsubscribe</a>.''' % reverse('player_unsubscribe', args=(self.player.emails_unsubscribe_hash,))
+
+    def get_subject(self):
+        # TODO modify subjects based on notification type
+        if self.identifier == 'bla':
+            return ''
+        else:
+            return 'New notification from Ripple Effect'
+
+class Episode(models.Model):
+    datecreated = models.DateTimeField(auto_now_add=True)
+    datechanged = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return str(self.id)
+
+class EpisodeDay(models.Model):
+    datecreated = models.DateTimeField(auto_now_add=True)
+    datechanged = models.DateTimeField(auto_now=True)
+
+    episode = models.ForeignKey(Episode)
+
+    # The time when each day starts, localized on our datetime.
+    end = models.DateTimeField()
+
+    def __unicode__(self):
+        return str(self.id)
+
 
 class TeamPlayer(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -255,6 +345,10 @@ class Team(models.Model):
 
     players = models.ManyToManyField('Player', through='TeamPlayer')
 
+    # Which day we are at currently and when to check again for a move
+    currentDay = models.ForeignKey("EpisodeDay", null=True, blank=True)
+    check_next = models.DateTimeField(null=True, blank=True)
+
     def __unicode__(self):
         return self.name or self.id
 
@@ -265,6 +359,30 @@ class Team(models.Model):
     def get_join_requests(self):
         return TeamJoinRequest.objects.filter(team=self, invite=False)
 
+    def update_current_day(self):
+        team_local_now = datetime.datetime.now(self.leader.timezone)
+
+        game = Game.objects.get_latest_game()
+
+        if not self.currentDay and team_local_now > game.start:
+            # Set to the first day
+            # TODO check for game over, game pre-start
+            days = EpisodeDay.objects.all().order_by('end')
+            self.currentDay = days[0]
+        elif team_local_now >= self.currentDay.end:
+            # Current day is over, move to the next day
+            days_left = EpisodeDay.objects.filter(end__gte=team_local_now).order_by('end')
+
+            # TODO check for game over
+
+            self.currentDay = days_left[0]
+
+        # Else we stay on the current day and update our check_next value
+        # TODO increase the check next value
+        self.check_next = timezone.now() + datetime.timedelta(minutes=1)
+        self.save()
+
+
 class Player(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
@@ -273,8 +391,15 @@ class Player(models.Model):
     onelinebio = models.CharField(max_length=140, default='', blank=True)
 
     receive_email = models.BooleanField(default=True)
+    emails_unsubscribe_hash = models.CharField(max_length=255, blank=True)
+
+    timezone = TimeZoneField(default="Europe/Amsterdam")
 
     user = models.OneToOneField(EmailUser)
+
+    def update_unsubscribe_hash(self):
+        import uuid
+        self.emails_unsubscribe_hash = uuid.uuid4().hex
 
     def __unicode__(self):
         return str(self.user)
@@ -284,6 +409,9 @@ class Player(models.Model):
             return Team.objects.get(leader=self)
         except Team.DoesNotExist:
             return None
+
+    def email(self):
+        return self.user.email
 
 class TeamJoinRequest(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -303,23 +431,45 @@ class GameManager(models.Manager):
     def get_latest_game(self):
         # This is the active game
         # TODO cache this call
-        games = Game.objects.all().order_by('-datestart')
+        games = Game.objects.all().order_by('-start')
 
         if games:
             return games[0]
         else:
-            return Game.objects.create(datestart=timezone.now())
+            return Game.objects.create(start=timezone.now())
 
+# Maybe remove the game class altogether TODO
 class Game(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
 
-    datestart = models.DateTimeField()
-
     objects = GameManager()
+
+    start = models.DateTimeField()
 
     def __unicode__(self):
         return str(self.id)
 
     def started(self):
-        return timezone.now() > self.datestart
+        try:
+            first_day = EpisodeDay.objects.all().order_by('start')[0]
+            if timezone.now() > first_day.start:
+                return True
+        except:
+            logger.error("Could not retrieve the first EpisodeDay.")
+
+        return False
+
+    def initialize(self):
+        episodes = [Episode.objects.create(), Episode.objects.create()]
+
+        weekLength = 7
+
+        counter = 1
+
+        dayLengthInMinutes = 10
+
+        for episode in episodes:
+            for dayCounter in range(weekLength):
+                EpisodeDay.objects.create(episode=episode, end=self.start+datetime.timedelta(minutes=dayLengthInMinutes*counter))
+                counter += 1
