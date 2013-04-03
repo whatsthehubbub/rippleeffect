@@ -124,7 +124,7 @@ def players(request):
 
 @login_required
 def home(request):
-    t = loader.get_template('riskgame/play.html')
+    t = loader.get_template('riskgame/home-office.html')
 
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
