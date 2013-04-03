@@ -451,6 +451,7 @@ class Game(models.Model):
         return str(self.id)
 
     def started(self):
+        # TODO this is timezone dependent for a team
         try:
             first_day = EpisodeDay.objects.all().order_by('start')[0]
             if timezone.now() > first_day.start:
@@ -459,6 +460,9 @@ class Game(models.Model):
             logger.error("Could not retrieve the first EpisodeDay.")
 
         return False
+
+    def over(self):
+        pass # TODO 
 
     def initialize(self):
         episodes = [Episode.objects.create(), Episode.objects.create()]
