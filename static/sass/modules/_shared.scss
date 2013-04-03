@@ -6,8 +6,18 @@ html, body {
   padding: 0;
   margin: 0;
   -webkit-font-smoothing: antialiased;
+  font-size: 18px;
 }
 
+h3 {
+  font-family: $ff-medium;
+  margin: 0 0 12px 0;
+  font-size: 18px;
+}
+
+.text-center {
+  text-align: center;
+}
 
 .white-bg {
   background: transparent url('../img/trans-white-bg.png');
