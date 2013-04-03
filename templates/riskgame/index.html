@@ -21,7 +21,7 @@
 	{% endfor %}
 
 
-	{% with player.get_led_team as led_team %}
+{# 	{% with player.get_led_team as led_team %}
 	    
 	    {% if led_team %}
 	    	You are the leader of team: <a href="{{ led_team.get_absolute_url }}">{{ led_team }}</a>
@@ -29,6 +29,6 @@
 	    	<p>Create team: <br>
 			{% crispy create_team_form %}
 	    {% endif %}
-	{% endwith %}
+	{% endwith %} #}
 
 {% endblock %}

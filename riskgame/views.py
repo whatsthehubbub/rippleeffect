@@ -165,7 +165,6 @@ def play_prep(request):
         tp.save()
 
     Team.objects.filter(id=team.id).update(action_points=0)
-    Team.objects.filter(id=team.id).update(goal_zero_markers=1)
 
     return HttpResponseRedirect(reverse('play'))
 
