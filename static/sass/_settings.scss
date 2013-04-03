@@ -15,14 +15,14 @@
 // $em-base: 16px;
 
 // We use these to control various global styles
-// $body-bg: #fff;
-// $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-bg: $off-white;
+$body-font-color: $black;
+$body-font-family: $ff-regular;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
 // We use this to control font-smoothing
-// $font-smoothing: antialiased;
+$font-smoothing: antialiased;
 
 // We use these to control text direction settings
 // $text-direction: ltr;
@@ -34,7 +34,7 @@
 // $success-color: #5da423;
 
 // We use these to make sure border radius matches unless we want it different.
-// $global-radius: 3px;
+$global-radius: 0;
 // $global-rounded: 1000px;
 
 // We use these to control inset shadow shiny edges and depressions.
@@ -85,8 +85,8 @@
 //
 
 // We use these to control header font styles
-// $header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-// $header-font-weight: bold;
+$header-font-family: $ff-regular;
+$header-font-weight: normal;
 // $header-font-style: normal;
 // $header-font-color: #222;
 // $header-line-height: 1.4;
@@ -237,7 +237,7 @@
 // We use these to build padding for buttons.
 // $button-med: emCalc(12px);
 // $button-tny: emCalc(7px);
-// $button-sml: emCalc(9px);
+$button-sml: emCalc(9px);
 // $button-lrg: emCalc(16px);
 
 // We use this to control the display property.
@@ -248,9 +248,9 @@
 // $button-font-family: inherit;
 // $button-font-color: #fff;
 // $button-font-color-alt: #333;
-// $button-font-med: emCalc(16px);
+$button-font-med: emCalc(18px);
 // $button-font-tny: emCalc(11px);
-// $button-font-sml: emCalc(13px);
+$button-font-sml: emCalc(14px);
 // $button-font-lrg: emCalc(20px);
 // $button-font-weight: bold;
 // $button-font-align: center;
@@ -259,8 +259,8 @@
 // $button-function-factor: 10%;
 
 // We use these to control button border styles.
-// $button-border-width: 1px;
-// $button-border-style: solid;
+$button-border-width: 0;
+$button-border-style: none;
 // $button-border-color: darken($primary-color, $button-function-factor);
 
 // We use this to set the default radius used throughout the core.

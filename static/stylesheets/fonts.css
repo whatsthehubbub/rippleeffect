@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'DIN-Light';
+  src: url("../fonts/DINWeb-Bold.eot");
+  src: url("../fonts/DINWeb-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/DINWeb-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'DIN-Regular';
+  src: url("../fonts/DINWeb-Bold.eot");
+  src: url("../fonts/DINWeb-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/DINWeb-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'DIN-Medium';
+  src: url("../fonts/DINWeb-Bold.eot");
+  src: url("../fonts/DINWeb-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/DINWeb-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: 'DIN-Bold';
+  src: url("../fonts/DINWeb-Bold.eot");
+  src: url("../fonts/DINWeb-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/DINWeb-Bold.woff") format("woff");
+}
