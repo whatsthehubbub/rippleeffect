@@ -1,8 +1,36 @@
-// Global Foundation Settings
+//==== Global variables ====
+
+// Fonts
+$ff-light: 'DIN-Light';
+$ff-regular: 'DIN-Regular';
+$ff-medium: 'DIN-Medium';
+$ff-bold: 'DIN-Bold';
+
+// Colors
+$black: #262626;
+$dark-grey: #808080;
+$off-white: #f2f2f2;
+$white: #fff;
+
+//==== Global Foundation Settings ====
 @import "settings";
 
-// Comment out this import if you are customizing you imports below
+//==== Core imports ====
+@import "fonts";
 @import "foundation";
+@import "grid"; // the IE8 grid
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Import specific parts of Foundation by commenting the import "foundation"
 // and uncommenting what you want below. You must uncomment the following if customizing
