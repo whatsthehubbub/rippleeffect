@@ -18,6 +18,12 @@ def prepare_virtualenv():
 
 def prepare_directories():
     "creates, chmod's, chown's required directories"
+    # prepare home directory
+    if run('test -d %(home)s' % env, warn_only=True).failed:
+        sudo('mkdir -p %(home)s' % env)
+        sudo('chown %(app_user)s:%(app_user)s %(home)s' % env)
+        sudo('chmod 755 %(home)s' % env)
+    
     # prepare logging directory
     if run('test -d %(log_home)s' % env, warn_only=True).failed:
         sudo('mkdir -p %(log_home)s' % env)
