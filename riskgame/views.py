@@ -137,6 +137,10 @@ def home(request):
     return HttpResponse(t.render(c))
 
 @login_required
+def team(request):
+    pass # Show own team
+
+@login_required
 def play_prep(request):
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
