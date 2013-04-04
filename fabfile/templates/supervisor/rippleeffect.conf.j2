@@ -2,7 +2,7 @@
 command={{virtualenv}}/bin/uwsgi
     --home {{virtualenv}}
     --module {{project_name}}.wsgi:application
-    --socket :3033
+    --socket 127.0.0.1:3033
     --master
     --pidfile /tmp/{{project_name}}.pid
     --workers 5
