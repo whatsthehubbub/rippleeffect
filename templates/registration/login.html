@@ -21,25 +21,26 @@
                 <input type="hidden" name="next" value="{{ next }}" />
 
                 <div class="row">
-                    <div class="large-12 columns">
-                        <!--{{ form.username.label_tag }}-->
+                    <div class="large-12 columns large-collapse placeholder-container" data-placeholder="email address">
                         {{ form.username }}
+                        <!--{{ form.username.label_tag }}-->
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="large-12 columns">
-                        <!--{{ form.password.label_tag }}-->
+                    <div class="large-12 columns large-collapse placeholder-container" data-placeholder="password">
                         {{ form.password }}
+                        <!--{{ form.password.label_tag }}-->
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="small-4 columns">
+                    <div class="large-4 columns large-collapse">
                         <input type="submit" value="Sign in" class="medium btn" />
                     </div>
-                    <div class="small-8 columns">
-                        <a href="#" class="right inline">Help, I forgot my password!</a>
+                    <div class="large-8 columns large-collapse">
+                        <a href="#" class="inline right">Help, I forgot my password!</a>
+                        <!--<a href="{% url 'registration_register' %}" class="left inline">Or sign up</a>-->
                     </div>
                 </div>
 
@@ -47,8 +48,5 @@
 
         </div>
     </div>
-
-
-<p>Or <a href="{% url 'registration_register' %}">register</a></p>
 
 {% endblock %}

@@ -14,18 +14,19 @@
 
     <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/app.css" />
+    <!--[if lt IE 9]><link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/ie.css" /><![endif]-->
 
     <script src="{{ STATIC_URL }}javascripts/vendor/custom.modernizr.js"></script>
-    <script src="{{ STATIC_URL }}javascripts/vendor/jquery.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/vendor/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/vendor/jquery.watermark.min.js"></script>
     <script src="{{ STATIC_URL }}javascripts/site.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/forms.js"></script>
 
     {% block extrahead %}{% endblock extrahead %}
 
 </head>
 
-<body>
-<div id="lobby">
+<body id="lobby">
     {% block content %}{% endblock content %}
-</div>
 </body>
 </html>
