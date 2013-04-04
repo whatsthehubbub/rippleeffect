@@ -34,35 +34,27 @@ def virtualenv(command, user=None):
 
 def prepare_virtualenv():
     "installs app's virtualenv"
-    if not exists(env.virtualenv):
-        sudo('virtualenv %(virtualenv)s --distribute' % env)
+    if not files.exists(env.virtualenv):
+        _prepare_dir(env.virtualenv)
+        sudo('virtualenv %(virtualenv)s --distribute' % env, user=env.app_user)
+
+def _prepare_dir(directory):
+    user = env.app_user
+    if run('test -d %(directory)s' % locals(), warn_only=True).failed:
+        sudo('mkdir -p %(directory)s' % locals())
+        sudo('chown %(user)s:%(user)s %(directory)s' % locals())
+        sudo('chmod 755 %(directory)s' % locals())
 
 def prepare_directories():
     "creates, chmod's, chown's required directories"
     # prepare home directory
-    if run('test -d %(home)s' % env, warn_only=True).failed:
-        sudo('mkdir -p %(home)s' % env)
-        sudo('chown %(app_user)s:%(app_user)s %(home)s' % env)
-        sudo('chmod 755 %(home)s' % env)
-    
+    _prepare_dir(env.home)
     # prepare logging directory
-    if run('test -d %(log_home)s' % env, warn_only=True).failed:
-        sudo('mkdir -p %(log_home)s' % env)
-        sudo('chown %(app_user)s:%(app_user)s %(log_home)s' % env)
-        sudo('chmod 755 %(log_home)s' % env)
-    
+    _prepare_dir(env.log_home)
     # prepare celerybeat-schedule directory
-    celery_dir = '/var/lib/celery'
-    if run('test -d %s' % celery_dir, warn_only=True).failed:
-        sudo('mkdir %s -p ' % celery_dir)
-        sudo('chown %(app_user)s:%(app_user)s %(dir)s' % {
-            'dir': celery_dir,
-            'app_user': env.app_user,
-        })
-        sudo('chmod 755 %s' % celery_dir)
+    _prepare_dir('/var/lib/celery')
 
 @task
-@roles('dev')
 def install_requirements():
     "installs app's required packages"
     for package in packages:
@@ -93,6 +85,7 @@ def configure_workers():
         use_sudo=True,
     )
     restart_supervisor()
+
 
 def start_worker():
     "start celery background worker"
