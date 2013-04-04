@@ -65,6 +65,20 @@ def install_requirements():
             virtualenv('pip install %s' % line, user=env.app_user)
 
 
+def configure_app():
+    "configure app server"
+    files.upload_template(
+        'uwsgi/rippleeffect.ini',
+        '/etc/uwsgi/apps-available/rippleeffect.ini',
+        env,
+        template_dir='fabfile/templates',
+        use_jinja=True,
+        use_sudo=True,
+    )
+    sudo('ln -s /etc/uwsgi/apps-available/rippleeffect.ini /etc/uwsgi/apps-enabled/rippleeffect.ini',
+         warn_only=True)
+
+
 def configure_workers():
     "configure celery workers"
     # upload supervisord config for celery worker
