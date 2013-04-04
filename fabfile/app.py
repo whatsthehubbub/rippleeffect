@@ -4,8 +4,6 @@ from .supervisor import restart_supervisor
 
 packages = (
     'libmysqlclient-dev=5.5.29-0ubuntu0.12.04.2',
-    'uwsgi=1.0.3+dfsg-1ubuntu0.1',
-    'uwsgi-plugin-python=1.0.3+dfsg-1ubuntu0.1',
 )
 
 def install_app():
@@ -68,15 +66,13 @@ def install_requirements():
 def configure_app():
     "configure app server"
     files.upload_template(
-        'uwsgi/rippleeffect.ini',
-        '/etc/uwsgi/apps-available/rippleeffect.ini',
+        'supervisor/rippleeffect.conf.j2',
+        '/etc/supervisor/conf.d/rippleeffect.conf',
         env,
         template_dir='fabfile/templates',
         use_jinja=True,
         use_sudo=True,
     )
-    sudo('ln -s /etc/uwsgi/apps-available/rippleeffect.ini /etc/uwsgi/apps-enabled/rippleeffect.ini',
-         warn_only=True)
 
 
 def configure_workers():
