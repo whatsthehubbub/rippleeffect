@@ -1,5 +1,5 @@
 from fabric.api import *
-from fabric.contrib.files import exists, upload_template
+from fabric.contrib import files
 from .supervisor import restart_supervisor
 
 def install_app():
