@@ -411,6 +411,10 @@ class Team(models.Model):
         Team.objects.filter(id=self.id).update(action_points=4*playerCount)
         Team.objects.filter(id=self.id).update(goal_zero_markers=F('goal_zero_markers')+1)
 
+        # At the start of a day reset all the markers for a team
+        TeamPlayer.objects(team=self).update(gather_markers=0)
+        TeamPlayer.objects(team=self).update(prevent_markers=0)
+
     # def update_current_day(self):
     #     team_local_now = datetime.datetime.now(self.leader.timezone)
     #     naive_team_local_now = team_local_now.replace(tzinfo=None)
