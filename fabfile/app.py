@@ -14,8 +14,11 @@ def install_app():
     install_requirements()
     configure_workers()
 
-def virtualenv(command):
-    return run('source ' + env.virtualenv + '/bin/activate && ' + command)
+def virtualenv(command, user=None):
+    if user:
+        return sudo('source ' + env.virtualenv + '/bin/activate && '+command, user=user)
+    else:
+        return run('source ' + env.virtualenv + '/bin/activate && ' + command)
 
 def prepare_virtualenv():
     "installs app's virtualenv"
