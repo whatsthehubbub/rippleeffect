@@ -2,6 +2,12 @@ from fabric.api import *
 from fabric.contrib import files
 from .supervisor import restart_supervisor
 
+packages = (
+    'libmysqlclient-dev=5.5.29-0ubuntu0.12.04.2',
+    'uwsgi=1.0.3+dfsg-1ubuntu0.1',
+    'uwsgi-plugin-python=1.0.3+dfsg-1ubuntu0.1',
+)
+
 def install_app():
     prepare_directories()
     prepare_virtualenv()
@@ -44,6 +50,9 @@ def prepare_directories():
 @roles('dev')
 def install_requirements():
     "installs app's required packages"
+    for package in packages:
+        sudo('apt-get install %s --assume-yes' % package)
+    
     with cd(env.home):
         for line in open('requirements.txt','r'):
             virtualenv('pip install %s' % line)
