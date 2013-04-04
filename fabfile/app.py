@@ -1,5 +1,6 @@
 from fabric.api import *
 from fabric.contrib import files
+from .nginx import configure_site, reload_nginx
 from .supervisor import restart_supervisor
 
 packages = (
@@ -11,6 +12,7 @@ def install_app():
     prepare_directories()
     prepare_virtualenv()
     install_requirements()
+    configure_site()
     configure_workers()
 
 def create_app_user():
