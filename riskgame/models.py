@@ -7,8 +7,6 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from timezone_field import TimeZoneField
-
 import random
 import datetime
 
@@ -183,13 +181,22 @@ class EpisodeDay(models.Model):
 
     episode = models.ForeignKey(Episode)
 
-    # The time when each day starts, localized on our datetime.
+    current = models.BooleanField(default=False)
     end = models.DateTimeField()
 
     next = models.ForeignKey('self', null=True, blank=True)
 
     def __unicode__(self):
         return str(self.id)
+
+    def start(self):
+        if self.episode.first_day == self:
+            # We are at the start of an episode
+
+            logger.info("Starting episode %s", str(self.episode))
+
+
+        logger.info("Starting day %s", str(self))
 
 
 class TeamPlayer(models.Model):
@@ -252,7 +259,7 @@ class TeamPlayer(models.Model):
             self.risk_pile = save_value
 
         return result
-        
+
     def invest(self, p):
         # TODO can also add other values to piles for decay
         # refactor out adding type of card to certain pile
@@ -298,7 +305,7 @@ class TeamPlayer(models.Model):
                 if output == '1':
                     oil += 1
                     # Do an extra pump for every oil we pump
-                    gathersteps += 1 
+                    gathersteps += 1
 
             gathersteps -= 1
 
@@ -350,6 +357,7 @@ class Team(models.Model):
 
     players = models.ManyToManyField('Player', through='TeamPlayer')
 
+    # TODO both these fields can probably be removed for a global timezoned game
     # Which day we are at currently and when to check again for a move
     currentDay = models.ForeignKey("EpisodeDay", null=True, blank=True)
     check_next = models.DateTimeField(null=True, blank=True)
@@ -456,31 +464,27 @@ class Game(models.Model):
     objects = GameManager()
 
     start = models.DateTimeField()
+    end = models.DateTimeField()
 
     def __unicode__(self):
         return str(self.id)
 
     def started(self):
-        # TODO this is timezone dependent for a team
-        try:
-            first_day = EpisodeDay.objects.all().order_by('start')[0]
-            if timezone.now() > first_day.start:
-                return True
-        except:
-            logger.error("Could not retrieve the first EpisodeDay.")
-
-        return False
+        return timezone.now() > self.start
 
     def over(self):
-        pass # TODO 
+        return timezone.now() > self.end
+
+    def active(self):
+        return self.started() and not self.over()
 
     def initialize(self, start=None, episodeCount=2, weekLength=7, dayLengthInMinutes=10):
 
         if not start:
             start = timezone.now()
-        
+
         self.start = start
-        self.save()
+
 
         Team.objects.all().update(currentDay=None)
         Team.objects.all().update(check_next=None)
@@ -513,3 +517,6 @@ class Game(models.Model):
                     first_day = False
 
                 counter += 1
+
+        self.end = previousDay.end # Previous day when we come out of the loop is the last day
+        self.save()

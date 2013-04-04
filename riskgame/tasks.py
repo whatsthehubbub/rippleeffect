@@ -1,19 +1,36 @@
 from celery import task
 
 from django.utils import timezone
-from django.db.models import Q
+
+from riskgame.models import Game, EpisodeDay
 
 import logging
-logger = logging.getLogger('sake')
+logger = logging.getLogger('riskgame')
 
 @task()
 def change_days():
-    from riskgame.models import Team
+    game = Game.objects.get_latest_game()
 
-    # For all Teams without a check datetime update their day
-    teams = Team.objects.filter(Q(check_next=None) | Q(check_next__lte=timezone.now()))
+    if game.active():
+        if not EpisodeDay.objects.filter(current=True).exists():
+            first_day = EpisodeDay.objects.all().order_by('end')[0]
+            first_day.current = True
+            first_day.save()
 
-    for team in teams:
-        team.update_current_day()
+            first_day.start()
 
-        logger.info("Updating current day for team %s", str(team))
+            return first_day
+        else:
+            current_day = EpisodeDay.objects.get(current=True)
+
+            if timezone.now() > current_day.end:
+                current_day.current = False
+                current_day.save()
+
+                next_day = current_day.next
+                next_day.current = True
+                next_day.save()
+
+                next_day.start()
+
+                return next_day

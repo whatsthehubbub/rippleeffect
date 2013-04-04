@@ -23,17 +23,17 @@ class UserCreationForm(forms.ModelForm):
 
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords don't match")
-        
+
         return password2
 
     def save(self, commit=True):
         # Save the provided password in hashed format
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-        
+
         if commit:
             user.save()
-        
+
         return user
 
 
@@ -70,14 +70,14 @@ class EmailUserAdmin(UserAdmin):
         ('Permissions', {'fields': ('is_admin',)}),
         ('Important dates', {'fields': ('last_login',)}),
     )
-    
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2')}
         ),
     )
-    
+
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
@@ -115,7 +115,7 @@ class EpisodeAdmin(admin.ModelAdmin):
 admin.site.register(Episode, EpisodeAdmin)
 
 class EpisodeDayAdmin(admin.ModelAdmin):
-    list_display = ('datecreated', 'episode', 'end', 'next')
+    list_display = ('datecreated', 'episode', 'current', 'end', 'next')
 admin.site.register(EpisodeDay, EpisodeDayAdmin)
 
 class NotificationAdmin(admin.ModelAdmin):
