@@ -111,7 +111,7 @@ class GameAdmin(admin.ModelAdmin):
 admin.site.register(Game, GameAdmin)
 
 class EpisodeAdmin(admin.ModelAdmin):
-    list_display = ('datecreated', )
+    list_display = ('datecreated', 'first_day')
 admin.site.register(Episode, EpisodeAdmin)
 
 class EpisodeDayAdmin(admin.ModelAdmin):

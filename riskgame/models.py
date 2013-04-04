@@ -124,6 +124,7 @@ class Notification(models.Model):
     team = models.ForeignKey('Team')
     player = models.ForeignKey('Player')
 
+    # Whether to send this notification by e-mail or not
     email = models.BooleanField(default=False)
 
     message = models.TextField()
@@ -170,6 +171,8 @@ class Notification(models.Model):
 class Episode(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
+
+    first_day = models.ForeignKey('EpisodeDay', related_name='+', null=True)
 
     def __unicode__(self):
         return str(self.id)
@@ -402,8 +405,6 @@ class Player(models.Model):
     receive_email = models.BooleanField(default=True)
     emails_unsubscribe_hash = models.CharField(max_length=255, blank=True)
 
-    timezone = TimeZoneField(default="Europe/Amsterdam")
-
     user = models.OneToOneField(EmailUser)
 
     def update_unsubscribe_hash(self):
@@ -476,9 +477,9 @@ class Game(models.Model):
     def initialize(self, start=None, episodeCount=2, weekLength=7, dayLengthInMinutes=10):
 
         if not start:
-            start = datetime.datetime.now()
+            start = timezone.now()
         
-        self.start = start.replace(tzinfo=timezone.utc)
+        self.start = start
         self.save()
 
         Team.objects.all().update(currentDay=None)
@@ -494,6 +495,8 @@ class Game(models.Model):
         previousDay = None
 
         for episode in episodes:
+            first_day = True
+
             for dayCounter in range(weekLength):
                 day = EpisodeDay.objects.create(episode=episode, end=self.start+datetime.timedelta(minutes=dayLengthInMinutes*counter))
 
@@ -502,5 +505,11 @@ class Game(models.Model):
                     previousDay.save()
 
                 previousDay = day
+
+                if first_day:
+                    episode.first_day = day
+                    episode.save()
+
+                    first_day = False
 
                 counter += 1
