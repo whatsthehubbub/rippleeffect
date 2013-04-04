@@ -62,7 +62,8 @@ def install_requirements():
     
     with cd(env.home):
         for line in open('requirements.txt','r'):
-            virtualenv('pip install %s' % line)
+            virtualenv('pip install %s' % line, user=env.app_user)
+
 
 def configure_workers():
     "configure celery workers"
