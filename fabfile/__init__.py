@@ -19,8 +19,8 @@ env.key_filename = os.path.expanduser('~/.vagrant.d/insecure_private_key')
 env.virtualenv   = '/home/vagrant/venv'
 env.home         = '/home/vagrant/rippleeffect'
 env.project_name = 'rippleeffect'
-env.project_home = os.path.join(env.home,env.project_name)
-env.log_home     = os.path.join('/var/log/',env.project_name)
+env.project_home = os.path.join(env.home, env.project_name)
+env.log_home     = os.path.join('/var/log/', env.project_name)
 env.app_user     = 'vagrant'
 
 def virtualenv(command):
@@ -49,7 +49,7 @@ def runworker():
         stop_worker()
     # start foreground worker
     with cd(env.home):
-        virtualenv('python manage.py celery worker --loglevel=INFO')
+        virtualenv('python manage.py celery worker --loglevel=INFO -B')
 
 @task
 @roles('dev')
@@ -77,7 +77,7 @@ def migrate():
 def bootstrap():
     "provision local development server"
     local('vagrant up')
-    
+
     install_base_packages()
     # install_nginx()
     install_mysql()
