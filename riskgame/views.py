@@ -28,7 +28,7 @@ def index(request):
         return HttpResponseRedirect(reverse('home'))
 
     t = loader.get_template('riskgame/index.html')
-    
+
     c = RequestContext(request, {
     })
 
@@ -115,7 +115,7 @@ def accept_team_join(request, pk):
 @login_required
 def players(request):
     t = loader.get_template('riskgame/players.html')
-    
+
     c = RequestContext(request, {
         'players': Player.objects.all()
     })
@@ -146,30 +146,7 @@ def play_prep(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    playerCount = team.players.count()
-
-    gatherCards = (3*playerCount) * [0] + (3*playerCount) * [1]
-    riskCards = (4*playerCount) * [0] + (2*playerCount) * [1]
-
-    # Shuffle both piles
-    random.shuffle(gatherCards)
-    random.shuffle(riskCards)
-
-    for tp in team.teamplayer_set.all():
-        tp.startPiles()
-
-        tp.gather_markers = 0
-        tp.prevent_markers = 0
-
-        # Add 6 gather cards
-        # Add 6 risk cards
-        for counter in range(6):
-            tp.addGatherCard(gatherCards.pop())
-            tp.addRiskCard(riskCards.pop())
-
-        tp.save()
-
-    Team.objects.filter(id=team.id).update(action_points=0)
+    team.start_episode()
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -183,10 +160,7 @@ def play_start_day(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    playerCount = team.players.count()
-
-    Team.objects.filter(id=team.id).update(action_points=4*playerCount)
-    Team.objects.filter(id=team.id).update(goal_zero_markers=F('goal_zero_markers')+1)
+    team.start_day()
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -289,10 +263,10 @@ def play_pump(request):
 def player_unsubscribe(request, h):
     try:
         player = Player.objects.get(emails_unsubscribe_hash=h)
-        
+
         player.receive_email = False
         player.update_unsubscribe_hash()
-        
+
         player.save()
 
         logging.info("Unsubscribed player %s from further e-mails." % player.email())

@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import F
+
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.mail import send_mail
 
@@ -195,6 +197,11 @@ class EpisodeDay(models.Model):
 
             logger.info("Starting episode %s", str(self.episode))
 
+            for team in Team.objects.all():
+                team.start_episode()
+
+        for team in Team.objects.all():
+            team.start_day()
 
         logger.info("Starting day %s", str(self))
 
@@ -372,35 +379,67 @@ class Team(models.Model):
     def get_join_requests(self):
         return TeamJoinRequest.objects.filter(team=self, invite=False)
 
-    def update_current_day(self):
-        team_local_now = datetime.datetime.now(self.leader.timezone)
-        naive_team_local_now = team_local_now.replace(tzinfo=None)
+    def start_episode(self):
+        playerCount = self.players.count()
 
-        print 'ntln', naive_team_local_now
+        gatherCards = (3*playerCount) * [0] + (3*playerCount) * [1]
+        riskCards = (4*playerCount) * [0] + (2*playerCount) * [1]
 
-        if self.currentDay:
-            naive_day_end = self.currentDay.end.replace(tzinfo=None)
+        # Shuffle both piles
+        random.shuffle(gatherCards)
+        random.shuffle(riskCards)
 
-            print 'nde', naive_day_end
+        for tp in self.teamplayer_set.all():
+            tp.startPiles()
 
-            if naive_team_local_now >= naive_day_end:
-                self.currentDay = self.currentDay.next
-        else:
-            game = Game.objects.get_latest_game()
-            naive_game_start = game.start.replace(tzinfo=None)
+            tp.gather_markers = 0
+            tp.prevent_markers = 0
 
-            print 'ngs', naive_game_start
+            # Add 6 gather cards
+            # Add 6 risk cards
+            for counter in range(6):
+                tp.addGatherCard(gatherCards.pop())
+                tp.addRiskCard(riskCards.pop())
 
-            if naive_team_local_now > naive_game_start:
-                # Set to the first day
-                # TODO check for game over, game pre-start
-                days = EpisodeDay.objects.all().order_by('end')
-                self.currentDay = days[0]
+            tp.save()
 
-        # Else we stay on the current day and update our check_next value
-        # TODO increase the check next value
-        self.check_next = timezone.now() + datetime.timedelta(minutes=1)
-        self.save()
+        Team.objects.filter(id=self.id).update(action_points=0)
+
+    def start_day(self):
+        playerCount = self.players.count()
+
+        Team.objects.filter(id=self.id).update(action_points=4*playerCount)
+        Team.objects.filter(id=self.id).update(goal_zero_markers=F('goal_zero_markers')+1)
+
+    # def update_current_day(self):
+    #     team_local_now = datetime.datetime.now(self.leader.timezone)
+    #     naive_team_local_now = team_local_now.replace(tzinfo=None)
+
+    #     print 'ntln', naive_team_local_now
+
+    #     if self.currentDay:
+    #         naive_day_end = self.currentDay.end.replace(tzinfo=None)
+
+    #         print 'nde', naive_day_end
+
+    #         if naive_team_local_now >= naive_day_end:
+    #             self.currentDay = self.currentDay.next
+    #     else:
+    #         game = Game.objects.get_latest_game()
+    #         naive_game_start = game.start.replace(tzinfo=None)
+
+    #         print 'ngs', naive_game_start
+
+    #         if naive_team_local_now > naive_game_start:
+    #             # Set to the first day
+    #             # TODO check for game over, game pre-start
+    #             days = EpisodeDay.objects.all().order_by('end')
+    #             self.currentDay = days[0]
+
+    #     # Else we stay on the current day and update our check_next value
+    #     # TODO increase the check next value
+    #     self.check_next = timezone.now() + datetime.timedelta(minutes=1)
+    #     self.save()
 
 
 class Player(models.Model):
