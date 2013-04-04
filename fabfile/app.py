@@ -75,8 +75,8 @@ def install_requirements():
 def configure_workers():
     "configure celery workers"
     # upload supervisord config for celery worker
-    upload_template(
-        'celery.conf.j2',
+    files.upload_template(
+        'supervisor/celery.conf.j2',
         '/etc/supervisor/conf.d/celery.conf',
         env,
         template_dir='fabfile/templates',
@@ -84,8 +84,8 @@ def configure_workers():
         use_sudo=True,
     )
     # upload supervisord config for celerybeat
-    upload_template(
-        'celerybeat.conf.j2',
+    files.upload_template(
+        'supervisor/celerybeat.conf.j2',
         '/etc/supervisor/conf.d/celerybeat.conf',
         env,
         template_dir='fabfile/templates',
