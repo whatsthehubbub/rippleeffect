@@ -131,7 +131,8 @@ def home(request):
 
     c = RequestContext(request, {
         'teamplayer': teamplayer,
-        'teammates': teamplayer.team.teamplayer_set.all()
+        'teammates': teamplayer.team.teamplayer_set.all(),
+        'currentDay': EpisodeDay.objects.get(current=True)
     })
 
     return HttpResponse(t.render(c))
