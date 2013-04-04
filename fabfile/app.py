@@ -9,10 +9,22 @@ packages = (
 )
 
 def install_app():
+    create_app_user()
     prepare_directories()
     prepare_virtualenv()
     install_requirements()
     configure_workers()
+
+def create_app_user():
+    if files.contains('/etc/passwd',env.app_user):
+        return
+    
+    sudo('useradd %(app_user)s --create-home --shell /bin/bash' % env)
+    
+    # let deploy user switch to app_user without password
+    sudo_line = 'deploy  ALL=(%(app_user)s) NOPASSWD: ALL' % env
+    if not files.contains('/etc/sudoers', sudo_line):
+        files.append('/etc/sudoers', sudo_line, use_sudo=True)
 
 def virtualenv(command, user=None):
     if user:
