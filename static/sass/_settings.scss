@@ -28,7 +28,7 @@ $font-smoothing: antialiased;
 // $text-direction: ltr;
 
 // We use these as default colors throughout
-// $primary-color: #2ba6cb;
+$primary-color: $dark-grey;
 // $secondary-color: #e9e9e9;
 // $alert-color: #c60f13;
 // $success-color: #5da423;
@@ -189,21 +189,21 @@ $h3-font-size: emCalc(18px);
 
 // We use these to style the labels in different ways
 // $label-pointer: pointer;
-// $label-font-size: emCalc(14px);
-// $label-font-weight: 500;
+$label-font-size: emCalc(18px);
+$label-font-weight: normal;
 // $label-font-color: lighten(#000, 30%);
 // $label-bottom-margin: emCalc(3px);
 // $input-font-family: inherit;
-// $input-font-color: rgba(0,0,0,0.75);
-// $input-font-size: emCalc(14px);
-// $input-bg-color: #fff;
-// $input-focus-bg-color: darken(#fff, 2%);
-// $input-border-color: darken(#fff, 20%);
-// $input-focus-border-color: darken(#fff, 40%);
-// $input-border-style: solid;
-// $input-border-width: 1px;
-// $input-disabled-bg: #ddd;
-// $input-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+$input-font-color: $black;
+$input-font-size: emCalc(18px);
+$input-bg-color: $off-white;
+$input-focus-bg-color: transparent;
+$input-border-color: $off-white;
+$input-focus-border-color: $off-white;
+$input-border-style: solid;
+$input-border-width: 4px;
+//$input-disabled-bg: #ddd;
+$input-box-shadow: none; //inset 0 1px 2px rgba(0,0,0,0.1);
 
 // We use these to style the fieldset border and spacing.
 // $fieldset-border-style: solid;
@@ -252,7 +252,7 @@ $button-font-med: emCalc(18px);
 // $button-font-tny: emCalc(11px);
 $button-font-sml: emCalc(14px);
 // $button-font-lrg: emCalc(20px);
-// $button-font-weight: bold;
+$button-font-weight: normal;
 // $button-font-align: center;
 
 // We use these to control various hover effects.

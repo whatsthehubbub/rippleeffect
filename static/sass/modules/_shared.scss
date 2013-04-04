@@ -1,12 +1,27 @@
 // Shared helper classes and misc styles
 
+//==== Layout overrides and tweaks ====
+
+* {
+  -webkit-font-smoothing: antialiased;
+}
+
 html, body {
   height: 100%;
   width: 100%;
   padding: 0;
   margin: 0;
-  -webkit-font-smoothing: antialiased;
   font-size: 18px;
+}
+
+//==== Global Typography ====
+
+a, a:link, a:visited {
+  text-decoration: underline;
+}
+
+a:hover {
+  color: $red;
 }
 
 h3 {
@@ -14,6 +29,8 @@ h3 {
   margin: 0 0 12px 0;
   font-size: 18px;
 }
+
+//==== Helper classes ====
 
 .text-center {
   text-align: center;
@@ -25,6 +42,11 @@ h3 {
 
 .green-bg {
   background-color: $green;
+}
+
+.gutter-double-pad {
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 a.small.btn{
