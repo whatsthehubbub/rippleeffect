@@ -12,6 +12,7 @@ html, body {
   padding: 0;
   margin: 0;
   font-size: 18px;
+  line-height: 24px;
 }
 
 //==== Global Typography ====
@@ -47,6 +48,10 @@ h3 {
 .gutter-double-pad {
   padding-left: 24px;
   padding-right: 24px;
+}
+
+.bottom-double-pad {
+  padding-bottom: 24px;
 }
 
 a.small.btn{
