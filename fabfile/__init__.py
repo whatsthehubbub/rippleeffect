@@ -7,7 +7,8 @@ from nginx import install_nginx
 from mysql import install_mysql
 from redis import install_redis
 from python import install_python, install_virtualenv
-from app import install_app, start_worker, stop_worker, is_worker_running
+from app import (install_app, restart_celerybeat,
+                 start_worker, stop_worker, is_worker_running)
 from supervisor import install_supervisor
 
 
@@ -35,6 +36,8 @@ def runserver():
     if is_worker_running() is False:
         print(cyan('starting background worker'))
         start_worker()
+    # restart celerybeat
+    restart_celerybeat()
     # start the django dev server
     with cd(env.home):
         virtualenv('python manage.py runserver 0.0.0.0:8000')
