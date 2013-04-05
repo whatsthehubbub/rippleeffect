@@ -7,6 +7,7 @@ packages = (
     'libmysqlclient-dev=5.5.29-0ubuntu0.12.04.2',
 )
 
+
 def install_app():
     create_app_user()
     prepare_directories()
@@ -25,6 +26,28 @@ def create_app_user():
     sudo_line = 'deploy  ALL=(%(app_user)s) NOPASSWD: ALL' % env
     if not files.contains('/etc/sudoers', sudo_line):
         files.append('/etc/sudoers', sudo_line, use_sudo=True)
+    
+    # update the app user's ssh config
+    files.upload_template(
+        'ssh/config',
+        '/home/%(app_user)s/.ssh/config' % env,
+        env,
+        template_dir='fabfile/templates',
+        use_sudo=True,
+        mode=644,
+    )
+    sudo('chown %(app_user)s:%(app_user)s /home/%(app_user)s/.ssh/config' % env)
+    
+    # update the app user's ssh known_hosts
+    files.upload_template(
+        'ssh/config',
+        '/home/%(app_user)s/.ssh/known_hosts' % env,
+        env,
+        template_dir='fabfile/templates',
+        use_sudo=True,
+        mode=644,
+    )
+    sudo('chown %(app_user)s:%(app_user)s /home/%(app_user)s/.ssh/known_hosts' % env)
 
 def virtualenv(command, user=None):
     if user:
