@@ -26,6 +26,12 @@ input[type="submit"] {
   padding-right: 12px;
 }
 
+input[type="password"] {
+  // some versions of IE8 are unable to fall back to a system for in order to display the dots
+  // in the password field.
+  font-family: arial !important;
+}
+
 input.medium.btn{
   @include button(
       0,
