@@ -24,7 +24,6 @@ env.key_filename = os.path.expanduser('~/.vagrant.d/insecure_private_key')
 env.host_string  = 'vagrant@127.0.0.1:2222'
 env.virtualenv   = '/home/vagrant/venv'
 env.home         = '/home/vagrant/rippleeffect'
-env.project_name = 'rippleeffect'
 env.log_home     = '/var/log/rippleeffect'
 env.app_user     = 'vagrant'
 
