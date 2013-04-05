@@ -20,8 +20,6 @@ from crispy_forms.bootstrap import FormActions
 
 from riskgame.models import *
 
-import random
-
 
 def index(request):
     if request.user.is_authenticated():
@@ -171,9 +169,7 @@ def play_inspect(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    if team.action_points:
-        Team.objects.filter(id=team.id).update(action_points=F('action_points')-1)
-
+    if Team.objects.filter(pk=team.pk, action_points__gt=0).update(action_points=F('action_points')-1):
         pile = request.POST.get('pile', '')
 
         if pile:
@@ -191,9 +187,7 @@ def play_invest(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    if team.action_points:
-        Team.objects.filter(id=team.id).update(action_points=F('action_points')-1)
-
+    if Team.objects.filter(pk=team.pk, action_points__gt=0).update(action_points=F('action_points')-1):
         pile = request.POST.get('pile', '')
 
         if pile:
@@ -212,9 +206,7 @@ def play_gather(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    if team.action_points:
-        Team.objects.filter(id=team.id).update(action_points=F('action_points')-1)
-
+    if Team.objects.filter(pk=team.pk, action_points__gt=0).update(action_points=F('action_points')-1):
         teamplayer.gather()
         teamplayer.save()
 
@@ -228,9 +220,7 @@ def play_prevent(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    if team.action_points:
-        Team.objects.filter(id=team.id).update(action_points=F('action_points')-1)
-
+    if Team.objects.filter(pk=team.pk, action_points__gt=0).update(action_points=F('action_points')-1):
         teamplayer.prevent()
         teamplayer.save()
 
