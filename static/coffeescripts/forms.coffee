@@ -7,4 +7,4 @@ $ ->
   # we then use the watermark plugin to apply the placeholder text
   $('.placeholder-container').each (i, el) ->
     $el = $(el)
-    $el.find(':nth-child(1)').watermark($el.data('placeholder'))
+    $el.find(':nth-child(1)').watermark($el.data('placeholder'), {useNative: false})
