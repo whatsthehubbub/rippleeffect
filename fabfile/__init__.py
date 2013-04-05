@@ -7,7 +7,9 @@ from nginx import install_nginx
 from mysql import install_mysql
 from redis import install_redis
 from python import install_python, install_virtualenv
-from app import install_app, start_worker, stop_worker, is_worker_running
+from app import (install_app, restart_app, restart_worker,
+                 start_worker, stop_worker, is_worker_running,
+                 install_requirements)
 from supervisor import install_supervisor
 
 
@@ -32,6 +34,12 @@ def virtualenv(command):
     "virtualenv wrapper function"
     return run('source ' + env.virtualenv + '/bin/activate && ' + command)
 
+def git_pull(branch=None):
+    with cd(env.home):
+        sudo('git pull', user=env.app_user)
+        if branch:
+            sudo('git checkout %s' % branch, user=env.app_user)
+    
 @task
 def staging():
     """
@@ -88,6 +96,25 @@ def migrate():
     "run south migrations"
     with cd(env.home):
         virtualenv('python manage.py migrate')
+
+@task
+def deploy(branch='master'):
+    """full deploy
+    
+    checkout latest code (optionally specify branch)
+    update app requirements
+    reload app server
+    reload celery workers
+    """
+    git_pull(branch)
+    install_requirements()
+    restart_app()
+    restart_worker()
+
+@task
+def deploy_soft(branch='master'):
+    "checkout latest source, but don't deploy"
+    git_pull(branch)
 
 @task
 @roles('dev')
