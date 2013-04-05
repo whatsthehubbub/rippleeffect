@@ -128,6 +128,18 @@ def configure_workers():
     restart_supervisor()
 
 
+def start_app():
+    "start rippleeffect uwsgi app"
+    sudo('supervisorctl start rippleeffect')
+
+def stop_app():
+    "stop rippleeffect uwsgi app"
+    sudo('supervisorctl stop rippleeffect')
+
+def restart_app():
+    "restart rippleeffect uwsgi app"
+    sudo('supervisorctl restart rippleeffect')
+
 def start_worker():
     "start celery background worker"
     sudo('supervisorctl start celery')
@@ -135,6 +147,10 @@ def start_worker():
 def stop_worker():
     "stop celery background worker"
     sudo('supervisorctl stop celery')
+
+def restart_worker():
+    "restart celery background worker"
+    sudo('supervisorctl restart celery')
 
 def is_worker_running():
     "indicates if a celery worker is running"
