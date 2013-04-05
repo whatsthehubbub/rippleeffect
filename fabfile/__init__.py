@@ -14,18 +14,39 @@ from supervisor import install_supervisor
 env.roledefs = {
     'dev': ['vagrant@127.0.0.1:2222'],
 }
-# add vagrant keyfile
+
+# global env settings
+env.code_repo = 'git@github.com:whatsthehubbub/rippleeffect.git'
+env.project_name = 'rippleeffect'
+
+# default - dev server settings
 env.key_filename = os.path.expanduser('~/.vagrant.d/insecure_private_key')
+env.host_string  = 'vagrant@127.0.0.1:2222'
 env.virtualenv   = '/home/vagrant/venv'
 env.home         = '/home/vagrant/rippleeffect'
 env.project_name = 'rippleeffect'
-env.project_home = os.path.join(env.home,env.project_name)
-env.log_home     = os.path.join('/var/log/',env.project_name)
+env.log_home     = '/var/log/rippleeffect'
 env.app_user     = 'vagrant'
+
 
 def virtualenv(command):
     "virtualenv wrapper function"
     return run('source ' + env.virtualenv + '/bin/activate && ' + command)
+
+@task
+def staging():
+    """
+    Use environment for staging server
+    """
+    env.key_filename   = os.path.expanduser('~/.ssh/id_rsa.pub')
+    env.host_string    = 'deploy@95.138.180.97'
+    # app settings
+    env.project_domain = 'playrippleeffect.com'
+    env.app_user       = 'rippleeffect'
+    env.home           = '/var/app/rippleeffect'
+    env.log_home       = '/var/log/rippleeffect'
+    env.virtualenv     = '/var/env/rippleeffect'
+
 
 @task
 @roles('dev')
@@ -52,21 +73,18 @@ def runworker():
         virtualenv('python manage.py celery worker --loglevel=INFO')
 
 @task
-@roles('dev')
 def shell():
     "run django interactive shell"
     with cd(env.home):
         virtualenv('python manage.py shell')
 
 @task
-@roles('dev')
 def syncdb():
     "run django syncdb"
     with cd(env.home):
         virtualenv('python manage.py syncdb')
 
 @task
-@roles('dev')
 def migrate():
     "run south migrations"
     with cd(env.home):
