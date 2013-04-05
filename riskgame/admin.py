@@ -91,11 +91,11 @@ class ValidEmailDomainAdmin(admin.ModelAdmin):
 admin.site.register(ValidEmailDomain, ValidEmailDomainAdmin)
 
 class TeamPlayerAdmin(admin.ModelAdmin):
-    list_display = ('role', 'team', 'player', 'gather_pile', 'risk_pile', )
+    list_display = ('role', 'team', 'player', 'gather_pile', 'risk_pile', 'episode_events')
 admin.site.register(TeamPlayer, TeamPlayerAdmin)
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'leader', 'open', 'currentDay', 'check_next')
+    list_display = ('name', 'leader', 'open')
 admin.site.register(Team, TeamAdmin)
 
 class PlayerAdmin(admin.ModelAdmin):

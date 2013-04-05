@@ -174,6 +174,8 @@ class Episode(models.Model):
 
     first_day = models.ForeignKey('EpisodeDay', related_name='+', null=True)
 
+    number = models.IntegerField(default=0)
+
     def __unicode__(self):
         return str(self.id)
 
@@ -198,10 +200,10 @@ class EpisodeDay(models.Model):
             logger.info("Starting episode %s", str(self.episode))
 
             for team in Team.objects.all():
-                team.start_episode()
+                team.start_episode(self.episode)
 
         for team in Team.objects.all():
-            team.start_day()
+            team.start_day(self)
 
         logger.info("Starting day %s", str(self))
 
@@ -221,6 +223,8 @@ class TeamPlayer(models.Model):
     # 1 = incident
     risk_pile = models.CommaSeparatedIntegerField(max_length=255, default='', blank=True)
     prevent_markers = models.IntegerField(default=0)
+
+    episode_events = models.CommaSeparatedIntegerField(max_length=255, default='', blank=True)
 
     team = models.ForeignKey('Team')
     player = models.ForeignKey('Player')
@@ -364,11 +368,6 @@ class Team(models.Model):
 
     players = models.ManyToManyField('Player', through='TeamPlayer')
 
-    # TODO both these fields can probably be removed for a global timezoned game
-    # Which day we are at currently and when to check again for a move
-    currentDay = models.ForeignKey("EpisodeDay", null=True, blank=True)
-    check_next = models.DateTimeField(null=True, blank=True)
-
     def __unicode__(self):
         return self.name or self.id
 
@@ -379,9 +378,10 @@ class Team(models.Model):
     def get_join_requests(self):
         return TeamJoinRequest.objects.filter(team=self, invite=False)
 
-    def start_episode(self):
+    def start_episode(self, episode):
         playerCount = self.players.count()
 
+        # Stack both piles at the start of each episode
         gatherCards = (3*playerCount) * [0] + (3*playerCount) * [1]
         riskCards = (4*playerCount) * [0] + (2*playerCount) * [1]
 
@@ -403,48 +403,81 @@ class Team(models.Model):
 
             tp.save()
 
+        # Set action points to zero (these will be replenished on day start)
         Team.objects.filter(id=self.id).update(action_points=0)
 
-    def start_day(self):
+        # For each TeamPlayer store the events they will be receiving this episode
+
+        # Day lists start out empty
+        day_lists = [[0] * playerCount for counter in range(7)]
+
+        # Events have integer values
+        # 0 = No event
+        # 1 = Rain, team
+        # 2 = Hard wind, team
+        # 3 = High market, team
+        # 4 = High waves, player
+        # 5 = Lightning, player
+
+
+        def putEventInList(lists, day, event):
+            for index in range(day, len(lists)):
+                day_list = lists[index]
+
+                if 0 in day_list:
+                    # There is an empty spot in this day list
+                    # Remove the empty spot and append the event
+                    day_list.remove(0)
+                    day_list.append(event)
+
+                    # If we don't find a 0 in the day list, this will automatically go to the next one
+                    break
+
+
+        # First one high market event on day 2
+        day_lists[1][0] = 3 # It doesn't matter where we put this
+
+        # Then three high wave events distributed in days 4,5,6
+        for counter in range(playerCount):
+            putEventInList(day_lists, random.randint(3, 5), 4)
+
+        # Then three hard wind events distributed in days 4,5,6
+        for counter in range(playerCount):
+            putEventInList(day_lists, random.randint(3, 5), 2)
+
+        # Then three lightning events distributed in potentially days 3,4,5,6
+        for counter in range(playerCount):
+            putEventInList(day_lists, random.randint(2, 5), 5)
+
+        # Then three rain events distributed potentially over in days 2,3,4,5,6,7
+        for counter in range(playerCount):
+            putEventInList(day_lists, random.randint(1, 6), 1)
+
+        # Randomize the lists per day
+        [random.shuffle(day_list) for day_list in day_lists]
+
+        print 'events', day_lists
+
+        index = 0
+        for tp in self.teamplayer_set.all():
+            # Stringify and slice them for each player
+            player_events = [str(eventStack[index]) for eventStack in day_lists]
+
+            tp.episode_events = ','.join(player_events)
+            tp.save()
+
+            index += 1
+
+
+    def start_day(self, day):
         playerCount = self.players.count()
 
         Team.objects.filter(id=self.id).update(action_points=4*playerCount)
         Team.objects.filter(id=self.id).update(goal_zero_markers=F('goal_zero_markers')+1)
 
         # At the start of a day reset all the markers for a team
-        TeamPlayer.objects(team=self).update(gather_markers=0)
-        TeamPlayer.objects(team=self).update(prevent_markers=0)
-
-    # def update_current_day(self):
-    #     team_local_now = datetime.datetime.now(self.leader.timezone)
-    #     naive_team_local_now = team_local_now.replace(tzinfo=None)
-
-    #     print 'ntln', naive_team_local_now
-
-    #     if self.currentDay:
-    #         naive_day_end = self.currentDay.end.replace(tzinfo=None)
-
-    #         print 'nde', naive_day_end
-
-    #         if naive_team_local_now >= naive_day_end:
-    #             self.currentDay = self.currentDay.next
-    #     else:
-    #         game = Game.objects.get_latest_game()
-    #         naive_game_start = game.start.replace(tzinfo=None)
-
-    #         print 'ngs', naive_game_start
-
-    #         if naive_team_local_now > naive_game_start:
-    #             # Set to the first day
-    #             # TODO check for game over, game pre-start
-    #             days = EpisodeDay.objects.all().order_by('end')
-    #             self.currentDay = days[0]
-
-    #     # Else we stay on the current day and update our check_next value
-    #     # TODO increase the check next value
-    #     self.check_next = timezone.now() + datetime.timedelta(minutes=1)
-    #     self.save()
-
+        TeamPlayer.objects.filter(team=self).update(gather_markers=0)
+        TeamPlayer.objects.filter(team=self).update(prevent_markers=0)
 
 class Player(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -528,14 +561,14 @@ class Game(models.Model):
 
         self.start = start
 
-
-        Team.objects.all().update(currentDay=None)
-        Team.objects.all().update(check_next=None)
+        TeamPlayer.objects.all().update(gather_pile='')
+        TeamPlayer.objects.all().update(risk_pile='')
+        TeamPlayer.objects.all().update(episode_events='')
 
         Episode.objects.all().delete()
         EpisodeDay.objects.all().delete()
 
-        episodes = [Episode.objects.create() for epCounter in range(episodeCount)]
+        episodes = [Episode.objects.create(number=epCounter+1) for epCounter in range(episodeCount)]
 
         counter = 1
 
