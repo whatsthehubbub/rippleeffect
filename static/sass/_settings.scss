@@ -12,29 +12,29 @@
 //
 
 // This is the default html and body font-size for the base em value.
-// $em-base: 16px;
+$em-base: 18px;
 
 // We use these to control various global styles
-// $body-bg: #fff;
-// $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-bg: $off-white;
+$body-font-color: $black;
+$body-font-family: $ff-regular;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
 // We use this to control font-smoothing
-// $font-smoothing: antialiased;
+$font-smoothing: antialiased;
 
 // We use these to control text direction settings
 // $text-direction: ltr;
 
 // We use these as default colors throughout
-// $primary-color: #2ba6cb;
+$primary-color: $dark-grey;
 // $secondary-color: #e9e9e9;
 // $alert-color: #c60f13;
 // $success-color: #5da423;
 
 // We use these to make sure border radius matches unless we want it different.
-// $global-radius: 3px;
+$global-radius: 0;
 // $global-rounded: 1000px;
 
 // We use these to control inset shadow shiny edges and depressions.
@@ -85,8 +85,8 @@
 //
 
 // We use these to control header font styles
-// $header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-// $header-font-weight: bold;
+$header-font-family: $ff-regular;
+$header-font-weight: normal;
 // $header-font-style: normal;
 // $header-font-color: #222;
 // $header-line-height: 1.4;
@@ -97,7 +97,7 @@
 // We use these to control header font sizes
 // $h1-font-size: emCalc(44px);
 // $h2-font-size: emCalc(37px);
-// $h3-font-size: emCalc(27px);
+$h3-font-size: emCalc(18px);
 // $h4-font-size: emCalc(23px);
 // $h5-font-size: emCalc(18px);
 // $h6-font-size: 1em;
@@ -185,25 +185,25 @@
 //
 
 // We use this to set the base for lots of form spacing and positioning styles
-// $form-spacing: emCalc(16px);
+$form-spacing: emCalc(24px);
 
 // We use these to style the labels in different ways
 // $label-pointer: pointer;
-// $label-font-size: emCalc(14px);
-// $label-font-weight: 500;
+$label-font-size: emCalc(18px);
+$label-font-weight: normal;
 // $label-font-color: lighten(#000, 30%);
 // $label-bottom-margin: emCalc(3px);
 // $input-font-family: inherit;
-// $input-font-color: rgba(0,0,0,0.75);
-// $input-font-size: emCalc(14px);
-// $input-bg-color: #fff;
-// $input-focus-bg-color: darken(#fff, 2%);
-// $input-border-color: darken(#fff, 20%);
-// $input-focus-border-color: darken(#fff, 40%);
-// $input-border-style: solid;
-// $input-border-width: 1px;
-// $input-disabled-bg: #ddd;
-// $input-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+$input-font-color: $black;
+$input-font-size: emCalc(18px);
+$input-bg-color: $off-white;
+$input-focus-bg-color: transparent;
+$input-border-color: $off-white;
+$input-focus-border-color: $off-white;
+$input-border-style: solid;
+$input-border-width: 4px;
+//$input-disabled-bg: #ddd;
+$input-box-shadow: none; //inset 0 1px 2px rgba(0,0,0,0.1);
 
 // We use these to style the fieldset border and spacing.
 // $fieldset-border-style: solid;
@@ -237,7 +237,7 @@
 // We use these to build padding for buttons.
 // $button-med: emCalc(12px);
 // $button-tny: emCalc(7px);
-// $button-sml: emCalc(9px);
+$button-sml: emCalc(9px);
 // $button-lrg: emCalc(16px);
 
 // We use this to control the display property.
@@ -248,19 +248,19 @@
 // $button-font-family: inherit;
 // $button-font-color: #fff;
 // $button-font-color-alt: #333;
-// $button-font-med: emCalc(16px);
+$button-font-med: emCalc(18px);
 // $button-font-tny: emCalc(11px);
-// $button-font-sml: emCalc(13px);
+$button-font-sml: emCalc(14px);
 // $button-font-lrg: emCalc(20px);
-// $button-font-weight: bold;
+$button-font-weight: normal;
 // $button-font-align: center;
 
 // We use these to control various hover effects.
 // $button-function-factor: 10%;
 
 // We use these to control button border styles.
-// $button-border-width: 1px;
-// $button-border-style: solid;
+$button-border-width: 0;
+$button-border-style: none;
 // $button-border-color: darken($primary-color, $button-function-factor);
 
 // We use this to set the default radius used throughout the core.

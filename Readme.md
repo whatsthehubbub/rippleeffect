@@ -2,6 +2,7 @@ Dev Environment Setup
 =====================
 1. Download and install [VirtualBox for OSX](http://download.virtualbox.org/virtualbox/4.2.10/VirtualBox-4.2.10-84104-OSX.dmg)
 2. Download and install [vagrant for OSX](http://files.vagrantup.com/packages/67bd4d30f7dbefa7c0abc643599f0244986c38c8/Vagrant.dmg)
+3. Get the "Command Line Tools for Xcode":https://developer.apple.com/downloads or "Xcode":http://itunes.apple.com/us/app/xcode/id497799835
 3. Install [fabric](http://docs.fabfile.org) and Jinja `sudo pip install --upgrade fabric==1.6.0 jinja2`
 4. Checkout the repository `git clone git@github.com:whatsthehubbub/rippleeffect.git && cd rippleeffect`
 5. Bootstrap the dev environment `fab bootstrap` (you may want to grab a coffee)
@@ -16,9 +17,9 @@ To be up and running do this:
 
 * git pull
 * vagrant up
+* fab app.install_requirements (only when new packages have been added)
 * fab syncdb (only once on every new database)
 * fab migrate (only when the database schema has been changed)
-* fab app.install_requirements (only when new packages have been added)
 * fab runserver;
 * Access your environment at: http://127.0.0.1:8000
 
@@ -26,6 +27,8 @@ This process does not create a superuser. To create one:
 * fab shell;
 * from riskgame.models import EmailUser
 * EmailUser.objects.create_superuser('admin@email.com', 'password')
+To create a new game that starts from now and runs with 10 minute days:
+* Game.objects.get_latest_game().initialize()
 
 When you're done stop your virtual machine with `vagrant halt` though you shouldn't really notice it and it will disappear on next reboot.
 

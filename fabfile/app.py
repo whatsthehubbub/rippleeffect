@@ -161,3 +161,6 @@ def is_worker_running():
     res = run('pgrep -fl "[c]elery\s" | wc -l')
     return int(res) > 0
 
+def restart_celerybeat():
+    "restarts celerybeat process"
+    sudo('supervisorctl restart celerybeat')

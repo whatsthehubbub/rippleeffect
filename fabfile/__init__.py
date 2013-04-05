@@ -9,7 +9,7 @@ from redis import install_redis
 from python import install_python, install_virtualenv
 from app import (install_app, restart_app, restart_worker,
                  start_worker, stop_worker, is_worker_running,
-                 install_requirements)
+                 install_requirements, restart_celerybeat)
 from supervisor import install_supervisor
 
 
@@ -63,6 +63,8 @@ def runserver():
     if is_worker_running() is False:
         print(cyan('starting background worker'))
         start_worker()
+    # restart celerybeat
+    restart_celerybeat()
     # start the django dev server
     with cd(env.home):
         virtualenv('python manage.py runserver 0.0.0.0:8000')
@@ -77,7 +79,7 @@ def runworker():
         stop_worker()
     # start foreground worker
     with cd(env.home):
-        virtualenv('python manage.py celery worker --loglevel=INFO')
+        virtualenv('python manage.py celery worker --loglevel=INFO -B')
 
 @task
 def shell():
@@ -121,7 +123,7 @@ def deploy_soft(branch='master'):
 def bootstrap():
     "provision local development server"
     local('vagrant up')
-    
+
     install_base_packages()
     # install_nginx()
     install_mysql()
