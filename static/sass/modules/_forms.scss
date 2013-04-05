@@ -1,0 +1,62 @@
+// Form styles
+
+.form-errors {
+  background-color: $red;
+  padding: 18px 36px;
+  color: $white;
+  margin-bottom: 12px;
+}
+
+.watermark {
+  color: $dark-grey !important;
+}
+
+input[type="text"], input[type="password"], input[type="date"],
+input[type="datetime"], input[type="datetime-local"], input[type="month"],
+input[type="week"], input[type="email"], input[type="number"], input[type="search"],
+input[type="tel"], input[type="time"], input[type="url"], input[type="button"],
+input[type="submit"] {
+  height: 52px;
+  line-height: 20px;
+  font-size: 18px;
+  font-family: $ff-medium;
+  margin-bottom:12px;
+  margin-top: 12px;
+  padding-left: 8px;
+  padding-right: 12px;
+}
+
+input[type="password"] {
+  // some versions of IE8 are unable to fall back to a system for in order to display the dots
+  // in the password field.
+  font-family: arial !important;
+}
+
+input.medium.btn{
+  @include button(
+      0,
+      $green,
+      0,
+      false,
+      false,
+      true);
+  padding: 0 14px;
+  width: 100%;
+  height: 52px;
+  line-height:52px;
+  font-size: 18px;
+  margin-bottom:12px;
+  margin-top: 12px;
+  font-family: $ff-medium;
+}
+
+form {
+
+  // single line
+  .inline {
+    margin-bottom:12px;
+    margin-top: 12px;
+    line-height: 52px;
+  }
+
+}

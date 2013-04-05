@@ -20,28 +20,27 @@ from crispy_forms.bootstrap import FormActions
 
 from riskgame.models import *
 
-import random
 
-@login_required
 def index(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('home'))
+
     t = loader.get_template('riskgame/index.html')
-    
+
     c = RequestContext(request, {
-        'teams': Team.objects.all(),
-        'create_team_form': CreateTeamform()
     })
 
     return HttpResponse(t.render(c))
 
 
-def pre_launch(request):
-    t = loader.get_template('riskgame/pre_launch.html')
+# def pre_launch(request):
+#     t = loader.get_template('riskgame/pre_launch.html')
 
-    c = RequestContext(request, {
-        'game': Game.objects.get_latest_game()
-    })
+#     c = RequestContext(request, {
+#         'game': Game.objects.get_latest_game()
+#     })
 
-    return HttpResponse(t.render(c))
+#     return HttpResponse(t.render(c))
 
 
 class CreateTeamform(ModelForm):
@@ -114,7 +113,7 @@ def accept_team_join(request, pk):
 @login_required
 def players(request):
     t = loader.get_template('riskgame/players.html')
-    
+
     c = RequestContext(request, {
         'players': Player.objects.all()
     })
@@ -122,18 +121,23 @@ def players(request):
     return HttpResponse(t.render(c))
 
 @login_required
-def play(request):
-    t = loader.get_template('riskgame/play.html')
+def home(request):
+    t = loader.get_template('riskgame/home-office.html')
 
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
 
     c = RequestContext(request, {
         'teamplayer': teamplayer,
-        'teammates': teamplayer.team.teamplayer_set.all()
+        'teammates': teamplayer.team.teamplayer_set.all(),
+        'currentDay': EpisodeDay.objects.get(current=True)
     })
 
     return HttpResponse(t.render(c))
+
+@login_required
+def team(request):
+    pass # Show own team
 
 @login_required
 def play_prep(request):
@@ -141,33 +145,9 @@ def play_prep(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    playerCount = team.players.count()
+    team.start_episode()
 
-    gatherCards = (3*playerCount) * [0] + (3*playerCount) * [1]
-    riskCards = (4*playerCount) * [0] + (2*playerCount) * [1]
-
-    # Shuffle both piles
-    random.shuffle(gatherCards)
-    random.shuffle(riskCards)
-
-    for tp in team.teamplayer_set.all():
-        tp.startPiles()
-
-        tp.gather_markers = 0
-        tp.prevent_markers = 0
-
-        # Add 6 gather cards
-        # Add 6 risk cards
-        for counter in range(6):
-            tp.addGatherCard(gatherCards.pop())
-            tp.addRiskCard(riskCards.pop())
-
-        tp.save()
-
-    Team.objects.filter(id=team.id).update(action_points=0)
-    Team.objects.filter(id=team.id).update(goal_zero_markers=1)
-
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def play_start_day(request):
@@ -179,12 +159,9 @@ def play_start_day(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    playerCount = team.players.count()
+    team.start_day()
 
-    Team.objects.filter(id=team.id).update(action_points=4*playerCount)
-    Team.objects.filter(id=team.id).update(goal_zero_markers=F('goal_zero_markers')+1)
-
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def play_inspect(request):
@@ -192,9 +169,7 @@ def play_inspect(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    if team.action_points:
-        Team.objects.filter(id=team.id).update(action_points=F('action_points')-1)
-
+    if Team.objects.filter(pk=team.pk, action_points__gt=0).update(action_points=F('action_points')-1):
         pile = request.POST.get('pile', '')
 
         if pile:
@@ -203,7 +178,7 @@ def play_inspect(request):
 
             messages.add_message(request, messages.INFO, "Inspected %s and found: %s" % (pile, ' '.join(result)))
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 
 @login_required
@@ -212,9 +187,7 @@ def play_invest(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    if team.action_points:
-        Team.objects.filter(id=team.id).update(action_points=F('action_points')-1)
-
+    if Team.objects.filter(pk=team.pk, action_points__gt=0).update(action_points=F('action_points')-1):
         pile = request.POST.get('pile', '')
 
         if pile:
@@ -224,7 +197,7 @@ def play_invest(request):
             # Add message
             messages.add_message(request, messages.INFO, "Invested in pile %s" % pile)
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 
 @login_required
@@ -233,15 +206,13 @@ def play_gather(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    if team.action_points:
-        Team.objects.filter(id=team.id).update(action_points=F('action_points')-1)
-
+    if Team.objects.filter(pk=team.pk, action_points__gt=0).update(action_points=F('action_points')-1):
         teamplayer.gather()
         teamplayer.save()
 
         messages.add_message(request, messages.INFO, "Placed gather token.")
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def play_prevent(request):
@@ -249,15 +220,13 @@ def play_prevent(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    if team.action_points:
-        Team.objects.filter(id=team.id).update(action_points=F('action_points')-1)
-
+    if Team.objects.filter(pk=team.pk, action_points__gt=0).update(action_points=F('action_points')-1):
         teamplayer.prevent()
         teamplayer.save()
 
         messages.add_message(request, messages.INFO, "Placed prevent token.")
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def play_pump(request):
@@ -279,4 +248,22 @@ def play_pump(request):
 
         messages.add_message(request, messages.INFO, "Pumped %d units of oil." % oil)
 
-    return HttpResponseRedirect(reverse('play'))
+    return HttpResponseRedirect(reverse('home'))
+
+
+def player_unsubscribe(request, h):
+    try:
+        player = Player.objects.get(emails_unsubscribe_hash=h)
+
+        player.receive_email = False
+        player.update_unsubscribe_hash()
+
+        player.save()
+
+        logging.info("Unsubscribed player %s from further e-mails." % player.email())
+    except:
+        logging.error("Player with hash %s does not exist to unsubscribe", h)
+
+    # TODO put a unsubscribe succesful template here
+
+    return HttpResponseRedirect(reverse('index'))

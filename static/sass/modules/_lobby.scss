@@ -1,0 +1,37 @@
+#lobby {
+
+  background-image: url('../img/bg-landing.jpg');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+
+  header {
+    width: 320px;
+    margin: 56px auto 8px auto;
+
+    h1 a {
+      display:block;
+      background: url('../img/logo.png') no-repeat top center;
+      @include image-2x('../img/logo2x.png', 218px, 129px);
+      text-indent: -9999em;
+      margin: 0;
+      padding: 0;
+      height: 129px
+
+    }
+
+  }
+
+  .sheet {
+    @extend .white-bg;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    padding: 24px 0 12px 0;
+
+  }
+
+
+
+
+
+
+}

@@ -1,0 +1,40 @@
+{% load url from future %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <title>{% block pagetitle %}{% endblock %} - Ripple Effect</title>
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/app.css" />
+    <!--[if lt IE 9]><link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/ie.css" /><![endif]-->
+
+    <script src="{{ STATIC_URL }}javascripts/vendor/custom.modernizr.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/vendor/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/vendor/jquery.watermark.min.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/site.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/forms.js"></script>
+
+    {% block extrahead %}{% endblock extrahead %}
+
+</head>
+
+<body id="lobby">
+    {% block content %}{% endblock content %}
+
+    <footer class="tiny-footer white-bg clearfix">
+        <a class="hubbub" href="http://hubbub.eu">Hubbub</a>
+        <a class="shell" href="http://www.shell.com">Shell</a>
+        <span>+</span>
+    </footer>
+
+    {% include "partials/analytics.html" %}
+</body>
+</html>

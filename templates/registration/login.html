@@ -1,30 +1,52 @@
-{% extends "base.html" %}
+{% extends "base-lobby.html" %}
 
-{% block pagetitle %}Log in{% endblock %}
+{% block pagetitle %}Sign in{% endblock %}
 
 {% block content %}
-<h2>Log in</h2>
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+    {% include "partials/lobby-logo-header.html" %}
 
-<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
+    <div class="row">
+        <div class="sheet large-6 large-centered columns">
 
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
+            <h3 class="text-center">Sign in and play</h3>
 
-<p>Or <a href="{% url 'registration_register' %}">register</a></p>
+            {% if form.errors %}
+                <div class="form-errors">
+                    Invalid email address or password. Try again.
+                </div>
+            {% endif %}
+
+            <form method="post" class="gutter-double-pad" action="{% url 'django.contrib.auth.views.login' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}" />
+
+                <div class="row">
+                    <div class="large-12 columns large-collapse placeholder-container" data-placeholder="email address">
+                        {{ form.username }}
+                        <!--{{ form.username.label_tag }}-->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="large-12 columns large-collapse placeholder-container" data-placeholder="password">
+                        {{ form.password }}
+                        <!--{{ form.password.label_tag }}-->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="large-4 columns large-collapse">
+                        <input type="submit" value="Sign in" class="medium btn" />
+                    </div>
+                    <div class="large-8 columns large-collapse">
+                        <a href="{% url 'auth_password_reset' %}" class="inline right">Help, I forgot my password!</a>
+                        <!--<a href="{% url 'registration_register' %}" class="left inline">Or sign up</a>-->
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
 
 {% endblock %}

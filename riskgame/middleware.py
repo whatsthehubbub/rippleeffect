@@ -7,23 +7,23 @@
 #         if not request.META['HTTP_HOST'].startswith('127.') and not request.META['HTTP_HOST'].startswith('www.'):
 #             return HttpResponsePermanentRedirect('http://www.gidsgame.nl')
 
-from riskgame.models import Game
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.conf import settings
+# from riskgame.models import Game
+# from django.core.urlresolvers import reverse
+# from django.http import HttpResponseRedirect
+# from django.conf import settings
 
-class PreLaunchMiddleware(object):
-    def process_request(self, request):
-        game = Game.objects.get_latest_game()
+# class PreLaunchMiddleware(object):
+#     def process_request(self, request):
+#         game = Game.objects.get_latest_game()
 
-        if request.path.startswith(settings.STATIC_URL) or request.path.startswith('/admin') or request.path.startswith('/accounts/login') or request.path.startswith(reverse('pre_launch')):
-            return None
+#         if request.path.startswith(settings.STATIC_URL) or request.path.startswith('/admin') or request.path.startswith('/accounts/login') or request.path.startswith(reverse('pre_launch')):
+#             return None
 
-        if not game.started: # Pre launch situation
-            if request.user.is_authenticated():
-                return None
-            else:
-                return HttpResponseRedirect(reverse('pre_launch'))
+#         if not game.started: # Pre launch situation
+#             if request.user.is_authenticated():
+#                 return None
+#             else:
+#                 return HttpResponseRedirect(reverse('pre_launch'))
 
 from django.contrib.auth import get_user_model
 

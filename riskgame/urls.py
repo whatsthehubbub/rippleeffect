@@ -6,8 +6,9 @@ from django.views.generic.base import TemplateView
 urlpatterns = patterns('',
     url(r'^$', 'riskgame.views.index', name='index'),
 
-    url(r'^pre/launch/$', 'riskgame.views.pre_launch', name='pre_launch'),
+    # url(r'^pre/launch/$', 'riskgame.views.pre_launch', name='pre_launch'),
 
+    url(r'^team/$', 'riskgame.views.team', name='team'),
     url(r'^team/(?P<pk>\d+)/$', TeamDetail.as_view(), name='team_detail'),
     url(r'^team/create/$', 'riskgame.views.team_create', name='team_create'),
     url(r'^team/(?P<pk>\d+)/join/request/$', 'riskgame.views.request_team_join', name='request_team_join'),
@@ -17,7 +18,9 @@ urlpatterns = patterns('',
 
     url(r'^players/$', 'riskgame.views.players', name='players'),
 
-    url(r'^play/$', 'riskgame.views.play', name='play'),
+    url(r'^players/(\S+?)/unsubscribe/$', 'riskgame.views.player_unsubscribe', name='player_unsubscribe'),
+
+    url(r'^home/$', 'riskgame.views.home', name='home'),
     url(r'^play/prep/$', 'riskgame.views.play_prep', name='play_prep'),
     url(r'^play/start/day/$', 'riskgame.views.play_start_day', name='play_start_day'),
 
