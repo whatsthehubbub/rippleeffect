@@ -16,6 +16,23 @@ import logging
 logger = logging.getLogger('ripple')
 
 
+# Events have integer values
+# 0 = No event
+# 1 = Rain, team
+# 2 = Hard wind, team
+# 3 = High market, team
+# 4 = High waves, player
+# 5 = Lightning, player
+
+def enum(**enums):
+    enums = dict(enums)
+    rev = dict((value, key) for key, value in enums.iteritems())
+    enums['reverse'] = rev
+
+    return type('Enum', (), enums)
+
+Events = enum(NO_EVENT='0', RAIN='1', HARD_WIND='2', HIGH_MARKET='3', HIGH_WAVES='4', LIGHTNING='5')
+
 
 class EmailUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -185,6 +202,8 @@ class EpisodeDay(models.Model):
 
     episode = models.ForeignKey(Episode)
 
+    number = models.IntegerField(default=0)
+
     current = models.BooleanField(default=False)
     end = models.DateTimeField()
 
@@ -225,6 +244,8 @@ class TeamPlayer(models.Model):
     prevent_markers = models.IntegerField(default=0)
 
     episode_events = models.CommaSeparatedIntegerField(max_length=255, default='', blank=True)
+
+    active_events = models.CommaSeparatedIntegerField(max_length=255, blank=True, default='')
 
     team = models.ForeignKey('Team')
     player = models.ForeignKey('Player')
@@ -350,6 +371,23 @@ class TeamPlayer(models.Model):
 
         return result
 
+    def get_event_for_day(self, day):
+        if self.episode_events:
+            return self.episode_events.split(',')[day.number-1]
+
+    def add_active_event(self, event):
+        new_events = self.active_events.split(',')
+        new_events.append(event)
+
+        self.active_events = ','.join(new_events)
+
+    def clear_active_events(self):
+        self.active_events = ''
+
+    def is_event_active(self, event):
+        return event in self.active_events.split(',')
+
+
 class Team(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
@@ -367,6 +405,8 @@ class Team(models.Model):
     leader = models.ForeignKey('Player', null=True, related_name='ledteam')
 
     players = models.ManyToManyField('Player', through='TeamPlayer')
+
+    active_events = models.CommaSeparatedIntegerField(max_length=255, blank=True, default='')
 
     def __unicode__(self):
         return self.name or self.id
@@ -409,25 +449,16 @@ class Team(models.Model):
         # For each TeamPlayer store the events they will be receiving this episode
 
         # Day lists start out empty
-        day_lists = [[0] * playerCount for counter in range(7)]
-
-        # Events have integer values
-        # 0 = No event
-        # 1 = Rain, team
-        # 2 = Hard wind, team
-        # 3 = High market, team
-        # 4 = High waves, player
-        # 5 = Lightning, player
-
+        day_lists = [[Events.NO_EVENT] * playerCount for counter in range(7)]
 
         def putEventInList(lists, day, event):
             for index in range(day, len(lists)):
                 day_list = lists[index]
 
-                if 0 in day_list:
+                if '0' in day_list:
                     # There is an empty spot in this day list
                     # Remove the empty spot and append the event
-                    day_list.remove(0)
+                    day_list.remove('0')
                     day_list.append(event)
 
                     # If we don't find a 0 in the day list, this will automatically go to the next one
@@ -435,33 +466,31 @@ class Team(models.Model):
 
 
         # First one high market event on day 2
-        day_lists[1][0] = 3 # It doesn't matter where we put this
+        day_lists[1][0] = Events.HIGH_MARKET # It doesn't matter where we put this
 
         # Then three high wave events distributed in days 4,5,6
         for counter in range(playerCount):
-            putEventInList(day_lists, random.randint(3, 5), 4)
+            putEventInList(day_lists, random.randint(3, 5), Events.HIGH_WAVES)
 
         # Then three hard wind events distributed in days 4,5,6
         for counter in range(playerCount):
-            putEventInList(day_lists, random.randint(3, 5), 2)
+            putEventInList(day_lists, random.randint(3, 5), Events.HARD_WIND)
 
         # Then three lightning events distributed in potentially days 3,4,5,6
         for counter in range(playerCount):
-            putEventInList(day_lists, random.randint(2, 5), 5)
+            putEventInList(day_lists, random.randint(2, 5), Events.LIGHTNING)
 
         # Then three rain events distributed potentially over in days 2,3,4,5,6,7
         for counter in range(playerCount):
-            putEventInList(day_lists, random.randint(1, 6), 1)
+            putEventInList(day_lists, random.randint(1, 6), Events.RAIN)
 
         # Randomize the lists per day
         [random.shuffle(day_list) for day_list in day_lists]
 
-        print 'events', day_lists
-
         index = 0
         for tp in self.teamplayer_set.all():
             # Stringify and slice them for each player
-            player_events = [str(eventStack[index]) for eventStack in day_lists]
+            player_events = [eventStack[index] for eventStack in day_lists]
 
             tp.episode_events = ','.join(player_events)
             tp.save()
@@ -478,6 +507,41 @@ class Team(models.Model):
         # At the start of a day reset all the markers for a team
         TeamPlayer.objects.filter(team=self).update(gather_markers=0)
         TeamPlayer.objects.filter(team=self).update(prevent_markers=0)
+
+        # Draw event cards which can be either active for the player or for the team
+        self.clear_active_events()
+
+        for tp in self.teamplayer_set.all():
+            tp.clear_active_events()
+
+            event = tp.get_event_for_day(day)
+
+            if event == Events.HIGH_MARKET:
+                self.add_active_event(Events.HIGH_MARKET)
+            elif event == Events.HIGH_WAVES:
+                tp.add_active_event(Events.HIGH_WAVES)
+            elif event == Events.HARD_WIND:
+                self.add_active_event(Events.HARD_WIND)
+            elif event == Events.LIGHTNING:
+                tp.add_active_event(Events.LIGHTNING)
+            elif event == Events.RAIN:
+                tp.add_active_event(Events.RAIN)
+
+            tp.save()
+        self.save()
+
+    def add_active_event(self, event):
+        new_events = self.active_events.split(',')
+        new_events.append(event)
+
+        self.active_events = ','.join(new_events)
+
+    def clear_active_events(self):
+        self.active_events = ''
+
+    def is_event_active(self, event):
+        return event in self.active_events.split(',')
+
 
 class Player(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -561,6 +625,8 @@ class Game(models.Model):
 
         self.start = start
 
+        Team.objects.all().update(goal_zero_markers=0)
+
         TeamPlayer.objects.all().update(gather_pile='')
         TeamPlayer.objects.all().update(risk_pile='')
         TeamPlayer.objects.all().update(episode_events='')
@@ -570,7 +636,7 @@ class Game(models.Model):
 
         episodes = [Episode.objects.create(number=epCounter+1) for epCounter in range(episodeCount)]
 
-        counter = 1
+        counter = 0
 
         previousDay = None
 
@@ -578,7 +644,7 @@ class Game(models.Model):
             first_day = True
 
             for dayCounter in range(weekLength):
-                day = EpisodeDay.objects.create(episode=episode, end=self.start+datetime.timedelta(minutes=dayLengthInMinutes*counter))
+                day = EpisodeDay.objects.create(episode=episode, number=(counter%7)+1, end=self.start+datetime.timedelta(minutes=dayLengthInMinutes*(counter+1)))
 
                 if previousDay:
                     previousDay.next = day

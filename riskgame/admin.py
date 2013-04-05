@@ -91,11 +91,11 @@ class ValidEmailDomainAdmin(admin.ModelAdmin):
 admin.site.register(ValidEmailDomain, ValidEmailDomainAdmin)
 
 class TeamPlayerAdmin(admin.ModelAdmin):
-    list_display = ('role', 'team', 'player', 'gather_pile', 'risk_pile', 'episode_events')
+    list_display = ('role', 'team', 'player', 'gather_pile', 'risk_pile', 'episode_events', 'active_events')
 admin.site.register(TeamPlayer, TeamPlayerAdmin)
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'leader', 'open')
+    list_display = ('name', 'leader', 'open', 'action_points', 'goal_zero_markers', 'active_events')
 admin.site.register(Team, TeamAdmin)
 
 class PlayerAdmin(admin.ModelAdmin):
@@ -111,11 +111,11 @@ class GameAdmin(admin.ModelAdmin):
 admin.site.register(Game, GameAdmin)
 
 class EpisodeAdmin(admin.ModelAdmin):
-    list_display = ('datecreated', 'first_day')
+    list_display = ('datecreated', 'first_day', 'number')
 admin.site.register(Episode, EpisodeAdmin)
 
 class EpisodeDayAdmin(admin.ModelAdmin):
-    list_display = ('datecreated', 'episode', 'current', 'end', 'next')
+    list_display = ('datecreated', 'episode', 'number', 'current', 'end', 'next')
 admin.site.register(EpisodeDay, EpisodeDayAdmin)
 
 class NotificationAdmin(admin.ModelAdmin):
