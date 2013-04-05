@@ -77,6 +77,11 @@ def prepare_directories():
     # prepare celerybeat-schedule directory
     _prepare_dir('/var/lib/celery')
 
+def clone_repo():
+    "do the initial git clone"
+    with cd(env.home), cd('..'):
+        sudo('git clone %(code_repo)s' % env,user=env.app_user)
+
 @task
 def install_requirements():
     "installs app's required packages"
