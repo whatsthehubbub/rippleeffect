@@ -27,6 +27,8 @@ This process does not create a superuser. To create one:
 * fab shell;
 * from riskgame.models import EmailUser
 * EmailUser.objects.create_superuser('admin@email.com', 'password')
+To create a new game that starts from now and runs with 10 minute days:
+* Game.objects.get_latest_game().initialize()
 
 When you're done stop your virtual machine with `vagrant halt` though you shouldn't really notice it and it will disappear on next reboot.
 
