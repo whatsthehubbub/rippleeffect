@@ -127,10 +127,13 @@ def home(request):
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
 
+    Notification.objects.create_new_signed_in_notification(teamplayer.team, player)
+
     c = RequestContext(request, {
         'teamplayer': teamplayer,
         'teammates': teamplayer.team.teamplayer_set.all(),
-        'currentDay': EpisodeDay.objects.get(current=True)
+        'currentDay': EpisodeDay.objects.get(current=True),
+        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')
     })
 
     return HttpResponse(t.render(c))
@@ -176,6 +179,12 @@ def play_inspect(request):
             result = teamplayer.inspect(pile)
             teamplayer.save()
 
+            if pile == 'gather':
+                Notification.objects.create_inspected_production_notification(team, player)
+            elif pile == 'risk':
+                Notification.objects.create_inspected_safety_notification(team, player)
+
+            # TODO remove these messages
             messages.add_message(request, messages.INFO, "Inspected %s and found: %s" % (pile, ' '.join(result)))
 
     return HttpResponseRedirect(reverse('home'))
@@ -193,6 +202,11 @@ def play_invest(request):
         if pile:
             teamplayer.invest(pile)
             teamplayer.save()
+
+            if pile == 'gather':
+                Notification.objects.create_improved_production_notification(team, player)
+            elif pile == 'risk':
+                Notification.objects.create_improved_safety_notification(team, player)
 
             # Add message
             messages.add_message(request, messages.INFO, "Invested in pile %s" % pile)

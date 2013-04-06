@@ -128,8 +128,23 @@ class ValidEmailDomain(models.Model):
 from django.core.mail import EmailMessage
 
 class NotificationManager(models.Manager):
-    def create_new_assignment_notification(self, team, player):
-        return Notification.objects.create(identifier='player-new-assignment', team=team, player=player, message='', email=True)
+    def create_new_signed_in_notification(self, team, player):
+        return Notification.objects.create(identifier='player-signed-in', team=team, player=player, message='signed in', email=False)
+
+    def create_inspected_safety_notification(self, team, player):
+        return Notification.objects.create(identifier='player-inspected-safety', team=team, player=player, message='inspected safety', email=False)
+
+    def create_inspected_production_notification(self, team, player):
+        return Notification.objects.create(identifier='player-inspected-production', team=team, player=player, message='inspected production', email=False)
+
+    def create_received_player_event_notification(self, team, player):
+        return Notification.objects.create(identifier='received-player-event', team=team, player=player, message='received the bla event', email=False)
+
+    def create_improved_safety_notification(self, team, player):
+        return Notification.objects.create(identifier='player-improved-safety', team=team, player=player, message='improved safety', email=False)
+
+    def create_improved_production_notification(self, team, player):
+        return Notification.objects.create(identifier='player-improved-production', team=team, player=player, message='improved production', email=False)
 
 
 class Notification(models.Model):
@@ -142,6 +157,7 @@ class Notification(models.Model):
     player = models.ForeignKey('Player')
 
     # Whether to send this notification by e-mail or not
+    # TODO probably needs to differentiate about who to e-mail
     email = models.BooleanField(default=False)
 
     message = models.TextField()
