@@ -10,12 +10,21 @@ packages = (
 )
 
 
-def install_app():
-    create_app_user()
+def install_app(develop=False):
+    """install app & requirements
+    
+    develop=True will install for a dev box
+    """
+    if not develop:
+        create_app_user()
+    
     prepare_directories()
     prepare_virtualenv()
     install_requirements()
-    configure_site()
+    
+    if not develop:
+        configure_site()
+    
     configure_workers()
 
 def create_app_user():
@@ -74,7 +83,7 @@ def prepare_directories():
     "creates, chmod's, chown's required directories"
     # prepare home directory
     _prepare_dir(env.home)
-    sudo('ln -s %(home)s /home/%(app_user)s/' % env, user=env.app_user)
+    sudo('ln -s %(home)s /home/%(app_user)s/' % env, user=env.app_user, warn_only=True)
     # prepare logging directory
     _prepare_dir(env.log_home)
     # prepare celerybeat-schedule directory
