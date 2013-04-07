@@ -74,6 +74,7 @@ def prepare_directories():
     "creates, chmod's, chown's required directories"
     # prepare home directory
     _prepare_dir(env.home)
+    sudo('ln -s %(home)s /home/%(app_user)s/' % env, user=env.app_user)
     # prepare logging directory
     _prepare_dir(env.log_home)
     # prepare celerybeat-schedule directory
