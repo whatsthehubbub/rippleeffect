@@ -157,14 +157,6 @@ def stop():
     stop_worker()
     stop_celerybeat()
 
-@task
-def restart():
-    "restart app & workers"
-    stop()
-    start()
-
-restart_app = restart
-
 def start_uwsgi():
     "start rippleeffect uwsgi app"
     sudo('supervisorctl start %(project_name)s' % env)
