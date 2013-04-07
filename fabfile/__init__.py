@@ -34,11 +34,6 @@ def virtualenv(command):
     "virtualenv wrapper function"
     return run('source ' + env.virtualenv + '/bin/activate && ' + command)
 
-def git_pull(branch=None):
-    with cd(env.home):
-        sudo('git pull', user=env.app_user)
-        if branch:
-            sudo('git checkout %s' % branch, user=env.app_user)
     
 @task
 def staging():
@@ -127,9 +122,12 @@ def deploy(branch='master'):
     restart_worker()
 
 @task
-def deploy_soft(branch='master'):
-    "checkout latest source, but don't deploy"
-    git_pull(branch)
+def git_pull(branch=None):
+    "git pull code from repo to server"
+    with cd(env.home):
+        sudo('git pull', user=env.app_user)
+        if branch:
+            sudo('git checkout %s' % branch, user=env.app_user)
 
 @task
 @roles('dev')
