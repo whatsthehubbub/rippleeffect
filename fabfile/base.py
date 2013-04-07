@@ -50,13 +50,14 @@ def create_deploy_user():
 def automate_security_updates():
     "enable automatic installation of security updates"
     sudo('apt-get install unattended-upgrades')
-    """
-    > /etc/apt/apt.conf.d/10periodic
-    APT::Periodic::Update-Package-Lists "1";
-    APT::Periodic::Download-Upgradeable-Packages "1";
-    APT::Periodic::AutocleanInterval "7";
-    APT::Periodic::Unattended-Upgrade "1";
-    """
+    files.upload_template(
+        'apt/10periodic',
+        '/etc/apt/apt.conf.d/10periodic',
+        env,
+        template_dir='fabfile/templates',
+        use_sudo=True,
+        mode=644,
+    )
     # TODO: checkout apticron for email alerts
 
 
@@ -110,5 +111,6 @@ def harden_server():
 def provision_base_server():
     upgrade_system()
     install_base_packages()
+    automate_security_updates()
     create_deploy_user()
     
