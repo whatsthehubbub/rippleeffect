@@ -78,6 +78,17 @@ To view a full list of available commands:
 
     fab --list
 
+To deploy simple app updates:
+
+    fab staging deploy  # deploy the master branch to staging
+        
+To deploy more complex updates:
+
+    fab staging git_pull migrate reload  # pull code, run migrations, reload app in staging
+    
+    # pull develop branch, install requirements & reload app in staging
+    fab staging git_pull:develop app.install_requirements reload
+
 To tail the application logs:
     
     fab staging logs    # tail the staging app log
