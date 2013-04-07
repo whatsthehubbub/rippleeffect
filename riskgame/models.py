@@ -579,17 +579,20 @@ class Team(models.Model):
     def start_day(self, day):
         playerCount = self.players.count()
 
-        Team.objects.filter(id=self.id).update(action_points=4*playerCount)
-        Team.objects.filter(id=self.id).update(goal_zero_markers=F('goal_zero_markers')+1)
+        Team.objects.filter(pk=self.pk).update(action_points=4*playerCount)
+        Team.objects.filter(pk=self.pk).update(goal_zero_markers=F('goal_zero_markers')+1)
 
         # At the start of a day reset all the markers for a team
         TeamPlayer.objects.filter(team=self).update(gather_markers=0)
         TeamPlayer.objects.filter(team=self).update(prevent_markers=0)
 
         # Draw event cards which can be either active for the player or for the team
+
+        # Active events for teams are cleared at the statr of a day
         self.clear_active_events()
 
         for tp in self.teamplayer_set.all():
+            # Active events for all players are cleared at the start of a day
             tp.clear_active_events()
 
             event = tp.get_event_for_day(day)

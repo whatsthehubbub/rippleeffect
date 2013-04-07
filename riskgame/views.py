@@ -144,6 +144,7 @@ def team(request):
 
 @login_required
 def play_prep(request):
+    # TODO remove these functions
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
