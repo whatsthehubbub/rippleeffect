@@ -143,20 +143,38 @@ def status():
 
 @task
 def start():
-    "start rippleeffect uwsgi app"
-    sudo('supervisorctl start rippleeffect')
+    "start app & workers"
+    start_celerybeat()
+    start_worker()
+    start_uwsgi()
 
 @task
 def stop():
-    "stop rippleeffect uwsgi app"
-    sudo('supervisorctl stop rippleeffect')
+    "stop app & workers"
+    stop_uwsgi()
+    time.sleep(3)   # wait for workers to finish up
+    stop_worker()
+    stop_celerybeat()
 
 @task
 def restart():
-    "restart rippleeffect uwsgi app"
-    sudo('supervisorctl restart rippleeffect')
+    "restart app & workers"
+    stop()
+    start()
 
 restart_app = restart
+
+def start_uwsgi():
+    "start rippleeffect uwsgi app"
+    sudo('supervisorctl start %(project_name)s' % env)
+
+def stop_uwsgi():
+    "stop rippleeffect uwsgi app"
+    sudo('supervisorctl stop %(project_name)s' % env)
+
+def restart_uwsgi():
+    "restart rippleeffect uwsgi app"
+    sudo('supervisorctl restart %(project_name)s' % env)
 
 def start_worker():
     "start celery background worker"
@@ -174,6 +192,14 @@ def is_worker_running():
     "indicates if a celery worker is running"
     res = run('pgrep -fl "[c]elery\s" | wc -l')
     return int(res) > 0
+
+def start_celerybeat():
+    "restarts celerybeat process"
+    sudo('supervisorctl start celerybeat')
+
+def stop_celerybeat():
+    "restarts celerybeat process"
+    sudo('supervisorctl stop celerybeat')
 
 def restart_celerybeat():
     "restarts celerybeat process"
