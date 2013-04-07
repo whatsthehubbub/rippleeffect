@@ -3,13 +3,13 @@ from fabric.api import *
 from fabric.colors import cyan
 
 from base import install_base_packages
+import app
 from nginx import install_nginx
 from mysql import install_mysql
 from redis import install_redis
 from python import install_python, install_virtualenv
-from app import (install_app, restart_app, restart_worker,
+from app import (install_app,install_requirements, restart_celerybeat,
                  start_worker, stop_worker, is_worker_running,
-                 install_requirements, restart_celerybeat)
 from supervisor import install_supervisor
 
 
@@ -108,18 +108,16 @@ def migrate():
         virtualenv('python manage.py migrate')
 
 @task
-def deploy(branch='master'):
+def deploy():
     """full deploy
     
-    checkout latest code (optionally specify branch)
-    update app requirements
-    reload app server
-    reload celery workers
+    checkout master branch
+    #update app requirements
+    reload app server & workers
     """
-    git_pull(branch)
+    git_pull()
     #install_requirements()
-    restart_app()
-    restart_worker()
+    reload()
 
 @task
 def git_pull(branch=None):
@@ -128,6 +126,12 @@ def git_pull(branch=None):
         sudo('git pull', user=env.app_user)
         if branch:
             sudo('git checkout %s' % branch, user=env.app_user)
+
+@task
+def reload():
+    "reload app & workers"
+    app.stop()
+    app.start()
 
 @task
 @roles('dev')
