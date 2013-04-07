@@ -521,9 +521,6 @@ class Team(models.Model):
 
             tp.save()
 
-        # Set action points to zero (these will be replenished on day start)
-        Team.objects.filter(id=self.id).update(action_points=0)
-
         # For each TeamPlayer store the events they will be receiving this episode
 
         # Day lists start out empty
@@ -575,17 +572,12 @@ class Team(models.Model):
 
             index += 1
 
+        # Do these updates in the end to prevent them from being overwritten
+        # Set action points to zero (these will be replenished on day start)
+        Team.objects.filter(id=self.id).update(action_points=0)
+
 
     def start_day(self, day):
-        playerCount = self.players.count()
-
-        Team.objects.filter(pk=self.pk).update(action_points=4*playerCount)
-        Team.objects.filter(pk=self.pk).update(goal_zero_markers=F('goal_zero_markers')+1)
-
-        # At the start of a day reset all the markers for a team
-        TeamPlayer.objects.filter(team=self).update(gather_markers=0)
-        TeamPlayer.objects.filter(team=self).update(prevent_markers=0)
-
         # Draw event cards which can be either active for the player or for the team
 
         # Active events for teams are cleared at the statr of a day
@@ -626,6 +618,16 @@ class Team(models.Model):
 
             tp.save()
         self.save()
+
+        # Put these after the save to prevent the stale model to overwrite the new values
+        playerCount = self.players.count()
+
+        Team.objects.filter(pk=self.pk).update(action_points=4*playerCount)
+        Team.objects.filter(pk=self.pk).update(goal_zero_markers=F('goal_zero_markers')+1)
+
+        # At the start of a day reset all the markers for a team
+        TeamPlayer.objects.filter(team=self).update(gather_markers=0)
+        TeamPlayer.objects.filter(team=self).update(prevent_markers=0)
 
     def add_active_event(self, event):
         new_events = self.active_events.split(',')
@@ -730,6 +732,8 @@ class Game(models.Model):
 
         Episode.objects.all().delete()
         EpisodeDay.objects.all().delete()
+
+        Notification.objects.all().delete()
 
         episodes = [Episode.objects.create(number=epCounter+1) for epCounter in range(episodeCount)]
 

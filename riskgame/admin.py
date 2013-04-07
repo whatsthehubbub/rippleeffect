@@ -119,5 +119,5 @@ class EpisodeDayAdmin(admin.ModelAdmin):
 admin.site.register(EpisodeDay, EpisodeDayAdmin)
 
 class NotificationAdmin(admin.ModelAdmin):
-    list_display = ('datecreated', 'team', 'player')
+    list_display = ('datecreated', 'team', 'player', 'identifier')
 admin.site.register(Notification, NotificationAdmin)
