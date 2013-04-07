@@ -129,22 +129,34 @@ from django.core.mail import EmailMessage
 
 class NotificationManager(models.Manager):
     def create_new_signed_in_notification(self, team, player):
-        return Notification.objects.create(identifier='player-signed-in', team=team, player=player, message='signed in', email=False)
+        return Notification.objects.create(identifier='player-signed-in', team=team, player=player)
 
     def create_inspected_safety_notification(self, team, player):
-        return Notification.objects.create(identifier='player-inspected-safety', team=team, player=player, message='inspected safety', email=False)
+        return Notification.objects.create(identifier='player-inspected-safety', team=team, player=player)
 
     def create_inspected_production_notification(self, team, player):
-        return Notification.objects.create(identifier='player-inspected-production', team=team, player=player, message='inspected production', email=False)
+        return Notification.objects.create(identifier='player-inspected-production', team=team, player=player)
 
-    def create_received_player_event_notification(self, team, player):
-        return Notification.objects.create(identifier='received-player-event', team=team, player=player, message='received the bla event', email=False)
+    def create_received_rain_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-rain-event', team=team, player=player)
+    
+    def create_received_hardwind_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-hardwind-event', team=team, player=player)
+    
+    def create_received_highmarket_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-highmarket-event', team=team, player=player)
+
+    def create_received_highwaves_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-highwaves-event', team=team, player=player)
+
+    def create_received_lightning_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-lightning-event', team=team, player=player)
 
     def create_improved_safety_notification(self, team, player):
-        return Notification.objects.create(identifier='player-improved-safety', team=team, player=player, message='improved safety', email=False)
+        return Notification.objects.create(identifier='player-improved-safety', team=team, player=player)
 
     def create_improved_production_notification(self, team, player):
-        return Notification.objects.create(identifier='player-improved-production', team=team, player=player, message='improved production', email=False)
+        return Notification.objects.create(identifier='player-improved-production', team=team, player=player)
 
 
 class Notification(models.Model):
@@ -159,8 +171,6 @@ class Notification(models.Model):
     # Whether to send this notification by e-mail or not
     # TODO probably needs to differentiate about who to e-mail
     email = models.BooleanField(default=False)
-
-    message = models.TextField()
 
     objects = NotificationManager()
 
@@ -177,7 +187,7 @@ class Notification(models.Model):
             from_email = settings.DEFAULT_FROM_EMAIL
             to_email = self.player.user.email
 
-            content = self.message + '<br><br>' + self.get_email_footer()
+            content = self.get_message() + '<br><br>' + self.get_email_footer()
 
             try:
                 msg = EmailMessage(subject, content, from_email, [to_email])
@@ -193,6 +203,29 @@ class Notification(models.Model):
             self.player.save()
 
         return '''<a href="http://playrippleeffect.com%s">Unsubscribe</a>.''' % reverse('player_unsubscribe', args=(self.player.emails_unsubscribe_hash,))
+
+    def get_message(self):
+        """Messages are not stored in the database for parametrizability and translatability."""
+        if self.identifier == 'player-signed-in':
+            return 'signed in'
+        elif self.identifier == 'player-inspected-safety':
+            return 'inspected safety'
+        elif self.identifier == 'player-inspected-production':
+            return 'inspected production'
+        elif self.identifier == 'player-improved-safety':
+            return 'improved safety'
+        elif self.identifier == 'player-improved-production':
+            return 'improved production'
+        elif self.identifier == 'player-received-rainevent':
+            return 'received the rain event, affecting the whole team'
+        elif self.identifier == 'player-received-hardwind-event':
+            return 'received the hard wind event, affecting the whole team'
+        elif self.identifier == 'player-received-highmarket-event':
+            return 'received the high market event, affecting the whole team'
+        elif self.identifier == 'player-received-highwaves-event':
+            return 'received the high waves event'
+        elif self.identifier == 'player-received-lightning-event':
+            return 'received the lightning event'
 
     def get_subject(self):
         # TODO modify subjects based on notification type
@@ -393,7 +426,7 @@ class TeamPlayer(models.Model):
         self.risk_pile = ','.join(pile)
 
         # TODO add decay to both piles
-        
+
         # If there are more risks than prevent markers, bad things will happen
         result = (oil, risks, self.prevent_markers)
 
@@ -548,14 +581,24 @@ class Team(models.Model):
 
             if event == Events.HIGH_MARKET:
                 self.add_active_event(Events.HIGH_MARKET)
+
+                Notification.objects.create_received_highmarket_event_notification(self, tp.player)
             elif event == Events.HIGH_WAVES:
                 tp.add_active_event(Events.HIGH_WAVES)
+
+                Notification.objects.create_received_highwaves_event_notification(self, tp.player)
             elif event == Events.HARD_WIND:
                 self.add_active_event(Events.HARD_WIND)
+
+                Notification.objects.create_received_hardwind_event_notification(self, tp.player)
             elif event == Events.LIGHTNING:
                 tp.add_active_event(Events.LIGHTNING)
+
+                Notification.objects.create_received_lightning_event_notification(self, tp.player)
             elif event == Events.RAIN:
-                tp.add_active_event(Events.RAIN)
+                self.add_active_event(Events.RAIN)
+
+                Notification.objects.create_received_rain_event_notification(self, tp.player)
 
             tp.save()
         self.save()

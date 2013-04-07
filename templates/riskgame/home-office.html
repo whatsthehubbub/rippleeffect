@@ -23,7 +23,7 @@
 	<h3>Notifications</h3>
 
 	{% for notification in notifications %}
-		<li>{{ notification.player }} {{ notification.message }} {{ notification.datecreated|timesince }} ago</li>
+		<li>{{ notification.player }} {{ notification.get_message }} {{ notification.datecreated|timesince }} ago</li>
 	{% endfor %}
 
 	<p>Current day: {{ currentDay }}, episode: {{ currentDay.episode }}</p>
