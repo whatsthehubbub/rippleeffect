@@ -1,4 +1,6 @@
+import time
 from fabric.api import *
+from fabric.colors import cyan, red
 from fabric.contrib import files
 from .nginx import configure_site, reload_nginx
 from .supervisor import restart_supervisor
@@ -126,6 +128,18 @@ def configure_workers():
         use_sudo=True,
     )
     restart_supervisor()
+
+
+@task
+def status():
+    "show status of uwsgi app & celery workers"
+    procs = sudo('supervisorctl status')
+    
+    print(cyan("Application Status (%(host_string)s)" % env,bold=True))
+    print(cyan("="*80,bold=True))
+    for proc in procs.split('\n'):
+        color = cyan if 'RUNNING' in proc else red
+        print(color(proc,bold=True))
 
 @task
 def start():
