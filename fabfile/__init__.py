@@ -2,8 +2,8 @@ import os.path
 from fabric.api import *
 from fabric.colors import cyan
 
-from base import install_base_packages
 import app
+from base import install_base_packages, provision_base_server
 from nginx import install_nginx
 from mysql import install_mysql
 from redis import install_redis
@@ -148,3 +148,13 @@ def bootstrap():
     install_virtualenv()
     install_app(develop=True)
 
+@task
+def provision_server():
+    "provision a server for staging / production"
+    provision_base_server()
+    install_nginx()
+    install_redis()
+    install_supervisor()
+    install_python()
+    install_virtualenv()
+    install_app()
