@@ -132,7 +132,7 @@ def configure_workers():
 
 @task
 def status():
-    "show status of uwsgi app & celery workers"
+    "show status of app & workers"
     procs = sudo('supervisorctl status')
     
     print(cyan("Application Status (%(host_string)s)" % env,bold=True))
