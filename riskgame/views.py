@@ -254,7 +254,10 @@ def play_pump(request):
     if risks > preventions:
         # We have an incident
         Team.objects.filter(id=team.id).update(goal_zero_markers=0)
-        Team.objects.filter(id=team.id).update(action_points=0)
+
+        # Lose all your action points if the hard wind event is active
+        if team.is_event_active(Events.HARD_WIND):
+            Team.objects.filter(id=team.id).update(action_points=0)
 
         messages.add_message(request, messages.INFO, "Hit an incident because the number of risks %d was more than the preventions %d." % (risks, preventions))
     else:

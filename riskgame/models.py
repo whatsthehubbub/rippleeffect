@@ -313,7 +313,7 @@ class TeamPlayer(models.Model):
 
     def invest(self, p):
         """Invests in target p pile."""
-        
+
         if p == 'gather':
             add = '1'
         elif p == 'risk':
@@ -392,6 +392,8 @@ class TeamPlayer(models.Model):
 
         self.risk_pile = ','.join(pile)
 
+        # TODO add decay to both piles
+        
         # If there are more risks than prevent markers, bad things will happen
         result = (oil, risks, self.prevent_markers)
 
