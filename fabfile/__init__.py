@@ -146,4 +146,5 @@ def bootstrap():
     install_supervisor()
     install_python()
     install_virtualenv()
-    install_app()
+    install_app(develop=True)
+
