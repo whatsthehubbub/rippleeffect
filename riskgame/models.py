@@ -312,27 +312,36 @@ class TeamPlayer(models.Model):
         return result
 
     def invest(self, p):
-        # TODO can also add other values to piles for decay
-        # refactor out adding type of card to certain pile
+        """Invests in target p pile."""
+        
         if p == 'gather':
-            pile = self.gather_pile
             add = '1'
         elif p == 'risk':
-            pile = self.risk_pile
             add = '0'
 
+        self.put_and_discard(add, p)
+
+    def put_and_discard(self, value, target):
+        """Puts a value in target pile and discards a random value."""
+        if target == 'gather':
+            pile = self.gather_pile
+        elif target == 'risk':
+            pile = self.risk_pile
+
         pile = pile.split(',')
-        pile.append(add)
+        pile.append(value)
 
         random.shuffle(pile)
         pile.pop(0)
 
         save_value = ','.join(pile)
 
-        if p == 'gather':
+        if target == 'gather':
             self.gather_pile = save_value
-        elif p == 'risk':
+        elif target == 'risk':
             self.risk_pile = save_value
+
+
 
     def gather(self):
         self.gather_markers += 1
