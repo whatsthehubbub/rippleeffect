@@ -355,7 +355,7 @@ class TeamPlayer(models.Model):
         self.put_and_discard(add, p)
 
     def put_and_discard(self, value, target):
-        """Puts a value in target pile and discards a random value."""
+        """Puts a value in target pile, shuffles and discards a random value."""
         if target == 'gather':
             pile = self.gather_pile
         elif target == 'risk':
@@ -373,8 +373,6 @@ class TeamPlayer(models.Model):
             self.gather_pile = save_value
         elif target == 'risk':
             self.risk_pile = save_value
-
-
 
     def gather(self):
         self.gather_markers += 1
@@ -450,6 +448,22 @@ class TeamPlayer(models.Model):
     def is_event_active(self, event):
         return event in self.active_events.split(',')
 
+    def hit_by_lightning(self):
+        # TODO make function for taking the top card off a pile (drawing)
+        effect = False
+
+        pile = self.risk_pile.split(',')
+
+        top_card = pile.pop(0)
+
+        if top_card == '1':
+            Team.objects.filter(id=self.team.id).update(action_points=0)
+            effect = True
+
+        self.risk_pile = ','.join(pile)
+
+        return effect
+
 
 class Team(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -485,6 +499,7 @@ class Team(models.Model):
         playerCount = self.players.count()
 
         # Stack both piles at the start of each episode
+        # TODO already change the 0s and 1s here to strings
         gatherCards = (3*playerCount) * [0] + (3*playerCount) * [1]
         riskCards = (4*playerCount) * [0] + (2*playerCount) * [1]
 
@@ -586,6 +601,8 @@ class Team(models.Model):
             elif event == Events.HIGH_WAVES:
                 tp.add_active_event(Events.HIGH_WAVES)
 
+                tp.put_and_discard('1', 'risk')
+
                 Notification.objects.create_received_highwaves_event_notification(self, tp.player)
             elif event == Events.HARD_WIND:
                 self.add_active_event(Events.HARD_WIND)
@@ -593,6 +610,10 @@ class Team(models.Model):
                 Notification.objects.create_received_hardwind_event_notification(self, tp.player)
             elif event == Events.LIGHTNING:
                 tp.add_active_event(Events.LIGHTNING)
+
+                effect = tp.hit_by_lightning()
+
+                # TODO make notification parametric based on effect
 
                 Notification.objects.create_received_lightning_event_notification(self, tp.player)
             elif event == Events.RAIN:
