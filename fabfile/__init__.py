@@ -8,8 +8,8 @@ from nginx import install_nginx
 from mysql import install_mysql
 from redis import install_redis
 from python import install_python, install_virtualenv
-from app import (install_app,install_requirements, restart_celerybeat,
-                 start_worker, stop_worker, is_worker_running,
+from app import (install_app, restart_celerybeat,
+                 start_worker, stop_worker, is_worker_running)
 from supervisor import install_supervisor
 
 
@@ -116,7 +116,7 @@ def deploy():
     reload app server & workers
     """
     git_pull()
-    #install_requirements()
+    #app.install_requirements()
     reload()
 
 @task
