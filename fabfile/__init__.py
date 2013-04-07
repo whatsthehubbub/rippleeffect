@@ -40,8 +40,16 @@ def staging():
     """
     Use environment for staging server
     """
-    env.key_filename   = os.path.expanduser('~/.ssh/id_rsa.pub')
+    prod()
     env.host_string    = 'deploy@95.138.180.97'
+
+@task
+def prod():
+    """
+    Use environment for production server
+    """
+    env.key_filename   = os.path.expanduser('~/.ssh/id_rsa.pub')
+    env.host_string    = None
     # app settings
     env.project_domain = 'playrippleeffect.com'
     env.app_user       = 'rippleeffect'
