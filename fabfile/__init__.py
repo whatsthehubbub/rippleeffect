@@ -54,6 +54,19 @@ def staging():
     env.log_home       = '/var/log/rippleeffect'
     env.virtualenv     = '/var/env/rippleeffect'
 
+@task
+def logs(proc='uwsgi'):
+    """tails logfile for speficied proc
+    
+    possible procs are:
+    nginx, uwsgi, celery, celerybeat, redis
+    """
+    if proc in ('celery','celerybeat','uwsgi'):
+        run('tail -f %s/%s.log' % (env.log_home,proc))
+    elif proc == 'nginx':
+        sudo('tail -f /var/log/nginx/%(project_name)s.log' % env)
+    elif proc == 'redis':
+        sudo('tail -f /var/log/redis/redis-server.log')
 
 @task
 @roles('dev')

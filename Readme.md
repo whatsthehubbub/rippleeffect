@@ -72,6 +72,19 @@ To drop into a shell on your virtual machine
 The vagrant commands should be executed in the directory which contains the `Vagrantfile`
 
 
+Staging Deployment
+==================
+To view a full list of available commands:
+
+    fab --list
+
+To tail the application logs:
+    
+    fab staging logs    # tail the staging app log
+    fab staging logs:nginx  # tail the staging webserver log
+    fab staging logs:celery # tail the celery worker log
+    fab --display logs  # for more information
+
 Tech Trial Deployment
 =====================
 
