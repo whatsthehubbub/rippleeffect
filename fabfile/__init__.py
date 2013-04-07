@@ -109,7 +109,7 @@ def deploy(branch='master'):
     reload celery workers
     """
     git_pull(branch)
-    install_requirements()
+    #install_requirements()
     restart_app()
     restart_worker()
 
