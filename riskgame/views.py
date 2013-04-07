@@ -261,7 +261,11 @@ def play_pump(request):
 
         messages.add_message(request, messages.INFO, "Hit an incident because the number of risks %d was more than the preventions %d." % (risks, preventions))
     else:
-        Team.objects.filter(id=team.id).update(score=F('score') + (oil * 100))
+        high_market_modifier = 1
+        if team.is_event_active(Events.HIGH_MARKET):
+            high_market_modifier = 2
+
+        Team.objects.filter(id=team.id).update(score=F('score') + (team.goal_zero_markers * oil * high_market_modifier * 100))
 
         messages.add_message(request, messages.INFO, "Pumped %d units of oil." % oil)
 
