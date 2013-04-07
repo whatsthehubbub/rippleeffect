@@ -295,6 +295,9 @@ class TeamPlayer(models.Model):
 
         half = len(pile) / 2 + (len(pile) % 2 and 0 or 1)
 
+        if self.team.is_event_active(Events.RAIN):
+            half -= 1
+
         result = pile[:half]
 
         random.shuffle(pile)
