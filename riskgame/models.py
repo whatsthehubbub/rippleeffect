@@ -477,7 +477,7 @@ class Team(models.Model):
     goal_zero_markers = models.IntegerField(default=0)
     action_points = models.IntegerField(default=0)
 
-    score = models.IntegerField(default=0)
+    victory_points = models.IntegerField(default=0)
 
     leader = models.ForeignKey('Player', null=True, related_name='ledteam')
 

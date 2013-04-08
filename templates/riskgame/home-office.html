@@ -33,7 +33,7 @@
 	<p>Team event: {{ teamplayer.team.active_events }}<br>
 	Actions left: {{ teamplayer.team.action_points }}<br>
 	Goal zero markers: {{ teamplayer.team.goal_zero_markers }}<br>
-	Score: {{ teamplayer.team.score }}</p>
+	Score: {{ teamplayer.team.victory_points }}</p>
 
 	{% for mate in teammates %}
 		<li>{{ mate.player }} {% ifequal mate.player player %}(YOU!){% endifequal %}</li>

@@ -266,7 +266,7 @@ def play_pump(request):
         if team.is_event_active(Events.HIGH_MARKET):
             high_market_modifier = 2
 
-        Team.objects.filter(id=team.id).update(score=F('score') + (team.goal_zero_markers * oil * high_market_modifier * 100))
+        Team.objects.filter(id=team.id).update(victory_points=F('victory_points') + (team.goal_zero_markers * oil * high_market_modifier * 100))
 
         messages.add_message(request, messages.INFO, "Pumped %d units of oil." % oil)
 
