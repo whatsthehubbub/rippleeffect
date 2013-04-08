@@ -128,8 +128,41 @@ class ValidEmailDomain(models.Model):
 from django.core.mail import EmailMessage
 
 class NotificationManager(models.Manager):
-    def create_new_assignment_notification(self, team, player):
-        return Notification.objects.create(identifier='player-new-assignment', team=team, player=player, message='', email=True)
+    def create_new_signed_in_notification(self, team, player):
+        return Notification.objects.create(identifier='player-signed-in', team=team, player=player)
+
+    def create_inspected_safety_notification(self, team, player):
+        return Notification.objects.create(identifier='player-inspected-safety', team=team, player=player)
+
+    def create_inspected_production_notification(self, team, player):
+        return Notification.objects.create(identifier='player-inspected-production', team=team, player=player)
+
+    def create_received_rain_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-rain-event', team=team, player=player)
+    
+    def create_received_hardwind_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-hardwind-event', team=team, player=player)
+    
+    def create_received_highmarket_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-highmarket-event', team=team, player=player)
+
+    def create_received_highwaves_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-highwaves-event', team=team, player=player)
+
+    def create_received_lightning_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-lightning-event', team=team, player=player)
+
+    def create_improved_safety_notification(self, team, player):
+        return Notification.objects.create(identifier='player-improved-safety', team=team, player=player)
+
+    def create_improved_production_notification(self, team, player):
+        return Notification.objects.create(identifier='player-improved-production', team=team, player=player)
+
+    def create_retrieved_success_notification(self, team, player, resources, points):
+        return Notification.objects.create(identifier='player-retrieved-success', team=team, player=player, resources_retrieved=resources, points_scored=points)
+
+    def create_retrieved_failure_notification(self, team, player):
+        return Notification.objects.create(identifier='player-retrieved-failure', team=team, player=player)
 
 
 class Notification(models.Model):
@@ -142,9 +175,12 @@ class Notification(models.Model):
     player = models.ForeignKey('Player')
 
     # Whether to send this notification by e-mail or not
+    # TODO probably needs to differentiate about who to e-mail
     email = models.BooleanField(default=False)
 
-    message = models.TextField()
+    # Fields to store data so we can parametrize notifications
+    resources_retrieved = models.IntegerField(default=0)
+    points_scored = models.IntegerField(default=0)
 
     objects = NotificationManager()
 
@@ -161,7 +197,7 @@ class Notification(models.Model):
             from_email = settings.DEFAULT_FROM_EMAIL
             to_email = self.player.user.email
 
-            content = self.message + '<br><br>' + self.get_email_footer()
+            content = self.get_message() + '<br><br>' + self.get_email_footer()
 
             try:
                 msg = EmailMessage(subject, content, from_email, [to_email])
@@ -177,6 +213,33 @@ class Notification(models.Model):
             self.player.save()
 
         return '''<a href="http://playrippleeffect.com%s">Unsubscribe</a>.''' % reverse('player_unsubscribe', args=(self.player.emails_unsubscribe_hash,))
+
+    def get_message(self):
+        """Messages are not stored in the database for parametrizability and translatability."""
+        if self.identifier == 'player-signed-in':
+            return 'signed in'
+        elif self.identifier == 'player-inspected-safety':
+            return 'inspected safety'
+        elif self.identifier == 'player-inspected-production':
+            return 'inspected production'
+        elif self.identifier == 'player-improved-safety':
+            return 'improved safety'
+        elif self.identifier == 'player-improved-production':
+            return 'improved production'
+        elif self.identifier == 'player-received-rainevent':
+            return 'received the rain event, affecting the whole team'
+        elif self.identifier == 'player-received-hardwind-event':
+            return 'received the hard wind event, affecting the whole team'
+        elif self.identifier == 'player-received-highmarket-event':
+            return 'received the high market event, affecting the whole team'
+        elif self.identifier == 'player-received-highwaves-event':
+            return 'received the high waves event'
+        elif self.identifier == 'player-received-lightning-event':
+            return 'received the lightning event'
+        elif self.identifier == 'player-retrieved-success':
+            return 'retrieved %d resources and scored %d points' % (self.resources_retrieved, self.points_scored)
+        elif self.identifier == 'player-retrieved-failure':
+            return 'tried to retrieve resources but triggered an incident'
 
     def get_subject(self):
         # TODO modify subjects based on notification type
@@ -279,6 +342,9 @@ class TeamPlayer(models.Model):
 
         half = len(pile) / 2 + (len(pile) % 2 and 0 or 1)
 
+        if self.team.is_event_active(Events.RAIN):
+            half -= 1
+
         result = pile[:half]
 
         random.shuffle(pile)
@@ -293,26 +359,33 @@ class TeamPlayer(models.Model):
         return result
 
     def invest(self, p):
-        # TODO can also add other values to piles for decay
-        # refactor out adding type of card to certain pile
+        """Invests in target p pile."""
+
         if p == 'gather':
-            pile = self.gather_pile
             add = '1'
         elif p == 'risk':
-            pile = self.risk_pile
             add = '0'
 
+        self.put_and_discard(add, p)
+
+    def put_and_discard(self, value, target):
+        """Puts a value in target pile, shuffles and discards a random value."""
+        if target == 'gather':
+            pile = self.gather_pile
+        elif target == 'risk':
+            pile = self.risk_pile
+
         pile = pile.split(',')
-        pile.append(add)
+        pile.append(value)
 
         random.shuffle(pile)
         pile.pop(0)
 
         save_value = ','.join(pile)
 
-        if p == 'gather':
+        if target == 'gather':
             self.gather_pile = save_value
-        elif p == 'risk':
+        elif target == 'risk':
             self.risk_pile = save_value
 
     def gather(self):
@@ -329,10 +402,13 @@ class TeamPlayer(models.Model):
 
         pile = self.gather_pile.split(',')
         oil = 0 # Units of oil pumped
+        reflow = [] # What we are going to put back in the deck
 
         while gathersteps > 0:
             if pile:
                 output = pile.pop(0)
+
+                reflow.append(output)
 
                 if output == '1':
                     oil += 1
@@ -341,18 +417,22 @@ class TeamPlayer(models.Model):
 
             gathersteps -= 1
 
+        # We pump until everything is empty. Even if there are more markers than there are in the pile.
         self.gather_markers = 0
 
-        self.gather_pile = ','.join(pile)
+        self.gather_pile = ','.join(pile + reflow)
 
         # Now do the same with the risk pile
 
         pile = self.risk_pile.split(',')
         risks = 0
+        reflow = []
 
         while risksteps > 0:
             if pile:
                 output = pile.pop(0)
+
+                reflow.append(output)
 
                 if output == '1':
                     risks += 1
@@ -362,7 +442,11 @@ class TeamPlayer(models.Model):
 
             risksteps -= 1
 
-        self.risk_pile = ','.join(pile)
+        self.risk_pile = ','.join(pile + reflow)
+
+        # Both piles decay and are shuffled
+        self.put_and_discard('0', 'gather')
+        self.put_and_discard('1', 'risk')
 
         # If there are more risks than prevent markers, bad things will happen
         result = (oil, risks, self.prevent_markers)
@@ -387,6 +471,22 @@ class TeamPlayer(models.Model):
     def is_event_active(self, event):
         return event in self.active_events.split(',')
 
+    def hit_by_lightning(self):
+        # TODO make function for taking the top card off a pile (drawing)
+        effect = False
+
+        pile = self.risk_pile.split(',')
+
+        top_card = pile.pop(0)
+
+        if top_card == '1':
+            Team.objects.filter(id=self.team.id).update(action_points=0)
+            effect = True
+
+        self.risk_pile = ','.join(pile)
+
+        return effect
+
 
 class Team(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -400,7 +500,11 @@ class Team(models.Model):
     goal_zero_markers = models.IntegerField(default=0)
     action_points = models.IntegerField(default=0)
 
-    score = models.IntegerField(default=0)
+    victory_points = models.IntegerField(default=0)
+    victory_points_episode = models.IntegerField(default=0)
+
+    resources_collected = models.IntegerField(default=0)
+    resources_collected_episode = models.IntegerField(default=0)
 
     leader = models.ForeignKey('Player', null=True, related_name='ledteam')
 
@@ -422,6 +526,7 @@ class Team(models.Model):
         playerCount = self.players.count()
 
         # Stack both piles at the start of each episode
+        # TODO already change the 0s and 1s here to strings
         gatherCards = (3*playerCount) * [0] + (3*playerCount) * [1]
         riskCards = (4*playerCount) * [0] + (2*playerCount) * [1]
 
@@ -443,9 +548,6 @@ class Team(models.Model):
 
             tp.save()
 
-        # Set action points to zero (these will be replenished on day start)
-        Team.objects.filter(id=self.id).update(action_points=0)
-
         # For each TeamPlayer store the events they will be receiving this episode
 
         # Day lists start out empty
@@ -465,23 +567,28 @@ class Team(models.Model):
                     break
 
 
-        # First one high market event on day 2
-        day_lists[1][0] = Events.HIGH_MARKET # It doesn't matter where we put this
+        if episode.number == 1:
+            for counter in range(playerCount):
+                putEventInList(day_lists, random.randint(2, 6), Events.HIGH_WAVES)
 
-        # Then three high wave events distributed in days 4,5,6
-        for counter in range(playerCount):
-            putEventInList(day_lists, random.randint(3, 5), Events.HIGH_WAVES)
+            putEventInList(day_lists, random.randint(3, 6), Events.RAIN)
 
-        # Then three hard wind events distributed in days 4,5,6
-        for counter in range(playerCount):
+        elif episode.number == 2:
+            # First one high market event on day 2
+            day_lists[1][0] = Events.HIGH_MARKET # It doesn't matter where we put this
+
+            # Then high wave events distributed in days 4,5,6
+            for counter in range(playerCount):
+                putEventInList(day_lists, random.randint(3, 5), Events.HIGH_WAVES)
+
+            # Then one hard wind events distributed in days 4,5,6
             putEventInList(day_lists, random.randint(3, 5), Events.HARD_WIND)
 
-        # Then three lightning events distributed in potentially days 3,4,5,6
-        for counter in range(playerCount):
-            putEventInList(day_lists, random.randint(2, 5), Events.LIGHTNING)
+            # Then lightning events distributed in potentially days 3,4,5,6
+            for counter in range(playerCount):
+                putEventInList(day_lists, random.randint(2, 5), Events.LIGHTNING)
 
-        # Then three rain events distributed potentially over in days 2,3,4,5,6,7
-        for counter in range(playerCount):
+            # Then one rain event distributed potentially over in days 2,3,4,5,6,7
             putEventInList(day_lists, random.randint(1, 6), Events.RAIN)
 
         # Randomize the lists per day
@@ -497,38 +604,66 @@ class Team(models.Model):
 
             index += 1
 
+        # Do these updates in the end to prevent them from being overwritten
+        # Set action points to zero (these will be replenished on day start)
+        Team.objects.filter(pk=self.pk).update(action_points=0)
+
+        # Set the per episode scores to 0 again
+        Team.objects.filter(pk=self.pk).update(resources_collected_episode=0)
+        Team.objects.filter(pk=self.pk).update(victory_points_episode=0)
+
 
     def start_day(self, day):
-        playerCount = self.players.count()
-
-        Team.objects.filter(id=self.id).update(action_points=4*playerCount)
-        Team.objects.filter(id=self.id).update(goal_zero_markers=F('goal_zero_markers')+1)
-
-        # At the start of a day reset all the markers for a team
-        TeamPlayer.objects.filter(team=self).update(gather_markers=0)
-        TeamPlayer.objects.filter(team=self).update(prevent_markers=0)
-
         # Draw event cards which can be either active for the player or for the team
+
+        # Active events for teams are cleared at the statr of a day
         self.clear_active_events()
 
         for tp in self.teamplayer_set.all():
+            # Active events for all players are cleared at the start of a day
             tp.clear_active_events()
 
             event = tp.get_event_for_day(day)
 
             if event == Events.HIGH_MARKET:
                 self.add_active_event(Events.HIGH_MARKET)
+
+                Notification.objects.create_received_highmarket_event_notification(self, tp.player)
             elif event == Events.HIGH_WAVES:
                 tp.add_active_event(Events.HIGH_WAVES)
+
+                tp.put_and_discard('1', 'risk')
+
+                Notification.objects.create_received_highwaves_event_notification(self, tp.player)
             elif event == Events.HARD_WIND:
                 self.add_active_event(Events.HARD_WIND)
+
+                Notification.objects.create_received_hardwind_event_notification(self, tp.player)
             elif event == Events.LIGHTNING:
                 tp.add_active_event(Events.LIGHTNING)
+
+                effect = tp.hit_by_lightning()
+
+                # TODO make notification parametric based on effect
+
+                Notification.objects.create_received_lightning_event_notification(self, tp.player)
             elif event == Events.RAIN:
-                tp.add_active_event(Events.RAIN)
+                self.add_active_event(Events.RAIN)
+
+                Notification.objects.create_received_rain_event_notification(self, tp.player)
 
             tp.save()
         self.save()
+
+        # Put these after the save to prevent the stale model to overwrite the new values
+        playerCount = self.players.count()
+
+        Team.objects.filter(pk=self.pk).update(action_points=4*playerCount)
+        Team.objects.filter(pk=self.pk).update(goal_zero_markers=F('goal_zero_markers')+1)
+
+        # At the start of a day reset all the markers for a team
+        TeamPlayer.objects.filter(team=self).update(gather_markers=0)
+        TeamPlayer.objects.filter(team=self).update(prevent_markers=0)
 
     def add_active_event(self, event):
         new_events = self.active_events.split(',')
@@ -633,6 +768,8 @@ class Game(models.Model):
 
         Episode.objects.all().delete()
         EpisodeDay.objects.all().delete()
+
+        Notification.objects.all().delete()
 
         episodes = [Episode.objects.create(number=epCounter+1) for epCounter in range(episodeCount)]
 

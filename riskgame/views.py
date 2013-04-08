@@ -127,10 +127,13 @@ def home(request):
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
 
+    Notification.objects.create_new_signed_in_notification(teamplayer.team, player)
+
     c = RequestContext(request, {
         'teamplayer': teamplayer,
         'teammates': teamplayer.team.teamplayer_set.all(),
-        'currentDay': EpisodeDay.objects.get(current=True)
+        'currentDay': EpisodeDay.objects.get(current=True),
+        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')
     })
 
     return HttpResponse(t.render(c))
@@ -141,6 +144,7 @@ def team(request):
 
 @login_required
 def play_prep(request):
+    # TODO remove these functions
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
@@ -176,6 +180,12 @@ def play_inspect(request):
             result = teamplayer.inspect(pile)
             teamplayer.save()
 
+            if pile == 'gather':
+                Notification.objects.create_inspected_production_notification(team, player)
+            elif pile == 'risk':
+                Notification.objects.create_inspected_safety_notification(team, player)
+
+            # TODO remove these messages
             messages.add_message(request, messages.INFO, "Inspected %s and found: %s" % (pile, ' '.join(result)))
 
     return HttpResponseRedirect(reverse('home'))
@@ -193,6 +203,11 @@ def play_invest(request):
         if pile:
             teamplayer.invest(pile)
             teamplayer.save()
+
+            if pile == 'gather':
+                Notification.objects.create_improved_production_notification(team, player)
+            elif pile == 'risk':
+                Notification.objects.create_improved_safety_notification(team, player)
 
             # Add message
             messages.add_message(request, messages.INFO, "Invested in pile %s" % pile)
@@ -240,11 +255,28 @@ def play_pump(request):
     if risks > preventions:
         # We have an incident
         Team.objects.filter(id=team.id).update(goal_zero_markers=0)
-        Team.objects.filter(id=team.id).update(action_points=0)
+
+        # Lose all your action points if the hard wind event is active
+        if team.is_event_active(Events.HARD_WIND):
+            Team.objects.filter(id=team.id).update(action_points=0)
+
+        Notification.objects.create_retrieved_failure_notification(team, player)
 
         messages.add_message(request, messages.INFO, "Hit an incident because the number of risks %d was more than the preventions %d." % (risks, preventions))
     else:
-        Team.objects.filter(id=team.id).update(score=F('score') + (oil * 100))
+        high_market_modifier = 1
+        if team.is_event_active(Events.HIGH_MARKET):
+            high_market_modifier = 2
+
+        points_scored = team.goal_zero_markers * oil * high_market_modifier * 100
+
+        Team.objects.filter(id=team.id).update(resources_collected=F('resources_collected') + oil)
+        Team.objects.filter(id=team.id).update(resources_collected_episode=F('resources_collected_episode') + oil)
+
+        Team.objects.filter(id=team.id).update(victory_points=F('victory_points') + points_scored)
+        Team.objects.filter(id=team.id).update(victory_points_episode=F('victory_points_episode') + points_scored)
+
+        Notification.objects.create_retrieved_success_notification(team, player, oil, points_scored)
 
         messages.add_message(request, messages.INFO, "Pumped %d units of oil." % oil)
 

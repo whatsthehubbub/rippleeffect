@@ -20,19 +20,29 @@
 		</ul>
 	{% endif %}
 
+	<h3>Notifications</h3>
+
+	{% for notification in notifications %}
+		<li>{{ notification.player }} {{ notification.get_message }} {{ notification.datecreated|timesince }} ago</li>
+	{% endfor %}
+
 	<p>Current day: {{ currentDay }}, episode: {{ currentDay.episode }}</p>
 
 	<h3>Team</h3>
+
+	<p>Team event: {{ teamplayer.team.active_events }}<br>
+	Actions left: {{ teamplayer.team.action_points }}<br>
+	Goal zero markers: {{ teamplayer.team.goal_zero_markers }}<br>
+	Score: {{ teamplayer.team.victory_points_episode }} / {{ teamplayer.team.victory_points }}<br>
+	Resources: {{ teamplayer.team.resources_collected_episode }} / {{ teamplayer.team.resources_collected }}</p>
 
 	{% for mate in teammates %}
 		<li>{{ mate.player }} {% ifequal mate.player player %}(YOU!){% endifequal %}</li>
 	{% endfor %}
 
-	<p>Actions left: {{ teamplayer.team.action_points }}</p>
+	<h3>You</h3>
 
-	<p>Goal zero markers: {{ teamplayer.team.goal_zero_markers }}</p>
-
-	<p>Score: {{ teamplayer.team.score }}</p>
+	<p>Event: {{ teamplayer.active_events }}</p>
 
 	<p>Gather pile cards: {{ teamplayer.gather_pile }}<br>
 	Gathering markers: {{ teamplayer.gather_markers }}</p>
