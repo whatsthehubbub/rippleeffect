@@ -540,22 +540,29 @@ class Team(models.Model):
                     break
 
 
-        # First one high market event on day 2
-        day_lists[1][0] = Events.HIGH_MARKET # It doesn't matter where we put this
+        if episode.number == 1:
+            for counter in range(playerCount):
+                putEventInList(day_lists, random.randint(2, 6), Events.HIGH_WAVES)
 
-        # Then high wave events distributed in days 4,5,6
-        for counter in range(playerCount):
-            putEventInList(day_lists, random.randint(3, 5), Events.HIGH_WAVES)
+            putEventInList(day_lists, random.randint(3, 6), Events.RAIN)
 
-        # Then one hard wind events distributed in days 4,5,6
-        putEventInList(day_lists, random.randint(3, 5), Events.HARD_WIND)
+        elif episode.number == 2:
+            # First one high market event on day 2
+            day_lists[1][0] = Events.HIGH_MARKET # It doesn't matter where we put this
 
-        # Then lightning events distributed in potentially days 3,4,5,6
-        for counter in range(playerCount):
-            putEventInList(day_lists, random.randint(2, 5), Events.LIGHTNING)
+            # Then high wave events distributed in days 4,5,6
+            for counter in range(playerCount):
+                putEventInList(day_lists, random.randint(3, 5), Events.HIGH_WAVES)
 
-        # Then one rain events distributed potentially over in days 2,3,4,5,6,7
-        putEventInList(day_lists, random.randint(1, 6), Events.RAIN)
+            # Then one hard wind events distributed in days 4,5,6
+            putEventInList(day_lists, random.randint(3, 5), Events.HARD_WIND)
+
+            # Then lightning events distributed in potentially days 3,4,5,6
+            for counter in range(playerCount):
+                putEventInList(day_lists, random.randint(2, 5), Events.LIGHTNING)
+
+            # Then one rain event distributed potentially over in days 2,3,4,5,6,7
+            putEventInList(day_lists, random.randint(1, 6), Events.RAIN)
 
         # Randomize the lists per day
         [random.shuffle(day_list) for day_list in day_lists]
