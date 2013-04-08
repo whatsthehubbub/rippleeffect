@@ -158,6 +158,12 @@ class NotificationManager(models.Manager):
     def create_improved_production_notification(self, team, player):
         return Notification.objects.create(identifier='player-improved-production', team=team, player=player)
 
+    def create_retrieved_success_notification(self, team, player, resources, points):
+        return Notification.objects.create(identifier='player-retrieved-success', team=team, player=player, resources_retrieved=resources, points_scored=points)
+
+    def create_retrieved_failure_notification(self, team, player):
+        return Notification.objects.create(identifier='player-retrieved-failure', team=team, player=player)
+
 
 class Notification(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -171,6 +177,10 @@ class Notification(models.Model):
     # Whether to send this notification by e-mail or not
     # TODO probably needs to differentiate about who to e-mail
     email = models.BooleanField(default=False)
+
+    # Fields to store data so we can parametrize notifications
+    resources_retrieved = models.IntegerField(default=0)
+    points_scored = models.IntegerField(default=0)
 
     objects = NotificationManager()
 
@@ -226,6 +236,10 @@ class Notification(models.Model):
             return 'received the high waves event'
         elif self.identifier == 'player-received-lightning-event':
             return 'received the lightning event'
+        elif self.identifier == 'player-retrieved-success':
+            return 'retrieved %d resources and scored %d points' % (self.resources_retrieved, self.points_scored)
+        elif self.identifier == 'player-retrieved-failure':
+            return 'tried to retrieve resources but triggered an incident'
 
     def get_subject(self):
         # TODO modify subjects based on notification type

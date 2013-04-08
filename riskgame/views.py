@@ -260,13 +260,19 @@ def play_pump(request):
         if team.is_event_active(Events.HARD_WIND):
             Team.objects.filter(id=team.id).update(action_points=0)
 
+        Notification.objects.create_retrieved_failure_notification(team, player)
+
         messages.add_message(request, messages.INFO, "Hit an incident because the number of risks %d was more than the preventions %d." % (risks, preventions))
     else:
         high_market_modifier = 1
         if team.is_event_active(Events.HIGH_MARKET):
             high_market_modifier = 2
 
-        Team.objects.filter(id=team.id).update(victory_points=F('victory_points') + (team.goal_zero_markers * oil * high_market_modifier * 100))
+        points_scored = team.goal_zero_markers * oil * high_market_modifier * 100
+
+        Team.objects.filter(id=team.id).update(victory_points=F('victory_points') + points_scored)
+
+        Notification.objects.create_retrieved_success_notification(team, player, oil, points_scored)
 
         messages.add_message(request, messages.INFO, "Pumped %d units of oil." % oil)
 
