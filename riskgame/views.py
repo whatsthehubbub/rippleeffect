@@ -225,6 +225,8 @@ def play_gather(request):
         teamplayer.gather()
         teamplayer.save()
 
+        Notification.objects.create_gather_notification(team, player)
+
         messages.add_message(request, messages.INFO, "Placed gather token.")
 
     return HttpResponseRedirect(reverse('home'))
@@ -238,6 +240,8 @@ def play_prevent(request):
     if Team.objects.filter(pk=team.pk, action_points__gt=0).update(action_points=F('action_points')-1):
         teamplayer.prevent()
         teamplayer.save()
+
+        Notification.objects.create_prevent_notification(team, player)
 
         messages.add_message(request, messages.INFO, "Placed prevent token.")
 

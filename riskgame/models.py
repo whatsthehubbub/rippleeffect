@@ -131,12 +131,14 @@ class NotificationManager(models.Manager):
     def create_new_signed_in_notification(self, team, player):
         return Notification.objects.create(identifier='player-signed-in', team=team, player=player)
 
+    # Inspect notifications
     def create_inspected_safety_notification(self, team, player):
         return Notification.objects.create(identifier='player-inspected-safety', team=team, player=player)
 
     def create_inspected_production_notification(self, team, player):
         return Notification.objects.create(identifier='player-inspected-production', team=team, player=player)
 
+    # Event notifications
     def create_received_rain_event_notification(self, team, player):
         return Notification.objects.create(identifier='player-received-rain-event', team=team, player=player)
     
@@ -152,12 +154,21 @@ class NotificationManager(models.Manager):
     def create_received_lightning_event_notification(self, team, player):
         return Notification.objects.create(identifier='player-received-lightning-event', team=team, player=player)
 
+    # Improvement notifications
     def create_improved_safety_notification(self, team, player):
         return Notification.objects.create(identifier='player-improved-safety', team=team, player=player)
 
     def create_improved_production_notification(self, team, player):
         return Notification.objects.create(identifier='player-improved-production', team=team, player=player)
 
+    # Place marker notifications
+    def create_gather_notification(self, team, player):
+        return Notification.objects.create(identifier='player-gather', team=team, player=player)
+
+    def create_prevent_notification(self, team, player):
+        return Notification.objects.create(identifier='player-prevent', team=team, player=player)
+
+    # Pump notifications
     def create_retrieved_success_notification(self, team, player, resources, points):
         return Notification.objects.create(identifier='player-retrieved-success', team=team, player=player, resources_retrieved=resources, points_scored=points)
 
@@ -240,6 +251,10 @@ class Notification(models.Model):
             return 'retrieved %d resources and scored %d points' % (self.resources_retrieved, self.points_scored)
         elif self.identifier == 'player-retrieved-failure':
             return 'tried to retrieve resources but triggered an incident'
+        elif self.identifier == 'player-gather':
+            return 'placed a gather'
+        elif self.identifier == 'player-prevent':
+            return 'placed a barrier'
 
     def get_subject(self):
         # TODO modify subjects based on notification type
