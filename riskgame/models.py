@@ -501,6 +501,10 @@ class Team(models.Model):
     action_points = models.IntegerField(default=0)
 
     victory_points = models.IntegerField(default=0)
+    victory_points_episode = models.IntegerField(default=0)
+
+    resources_collected = models.IntegerField(default=0)
+    resources_collected_episode = models.IntegerField(default=0)
 
     leader = models.ForeignKey('Player', null=True, related_name='ledteam')
 
@@ -602,7 +606,11 @@ class Team(models.Model):
 
         # Do these updates in the end to prevent them from being overwritten
         # Set action points to zero (these will be replenished on day start)
-        Team.objects.filter(id=self.id).update(action_points=0)
+        Team.objects.filter(pk=self.pk).update(action_points=0)
+
+        # Set the per episode scores to 0 again
+        Team.objects.filter(pk=self.pk).update(resources_collected_episode=0)
+        Team.objects.filter(pk=self.pk).update(victory_points_episode=0)
 
 
     def start_day(self, day):

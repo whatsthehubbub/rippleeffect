@@ -270,7 +270,11 @@ def play_pump(request):
 
         points_scored = team.goal_zero_markers * oil * high_market_modifier * 100
 
+        Team.objects.filter(id=team.id).update(resources_collected=F('resources_collected') + oil)
+        Team.objects.filter(id=team.id).update(resources_collected_episode=F('resources_collected_episode') + oil)
+
         Team.objects.filter(id=team.id).update(victory_points=F('victory_points') + points_scored)
+        Team.objects.filter(id=team.id).update(victory_points_episode=F('victory_points_episode') + points_scored)
 
         Notification.objects.create_retrieved_success_notification(team, player, oil, points_scored)
 
