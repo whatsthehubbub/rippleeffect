@@ -6,17 +6,22 @@
 
   header {
     width: 320px;
-    margin: 56px auto 8px auto;
+    margin: 0 auto;
 
-    h1 a {
-      display:block;
-      background: url('../img/logo.png') no-repeat top center;
-      @include image-2x('../img/logo2x.png', 218px, 129px);
-      text-indent: -9999em;
+    h1 {
       margin: 0;
-      padding: 0;
-      height: 129px
+      padding: 56px 0 8px 0;
 
+      a {
+        display:block;
+        background: url('../img/logo.png') no-repeat top center;
+        @include image-2x('../img/logo2x.png', 218px, 129px);
+        text-indent: -9999em;
+        margin: 0;
+        padding: 0;
+        height: 129px
+
+      }
     }
 
   }
