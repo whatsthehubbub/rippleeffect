@@ -12,7 +12,7 @@
 	</p>
 
 	{% if messages %}
-		<h3>Messages</h3>
+		<h3>Action result</h3>
 		<ul class="messages">
 		    {% for message in messages %}
 		    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
@@ -20,7 +20,7 @@
 		</ul>
 	{% endif %}
 
-	<p>Current day: {{ currentDay }}, episode: {{ currentDay.episode }}</p>
+	<p>Episode {{ currentDay.episode }} Turn {{ currentDay.number }}</p>
 
 	<h3>Team</h3>
 
@@ -61,10 +61,6 @@
 		<input type="submit" value="Improve safety">
 	</form>
 
-	<form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
-		<input type="submit" value="Create barrier">
-	</form>
-
 	<h4>Production</h4>
 
 	<ul>
@@ -83,12 +79,18 @@
 		<input type="submit" value="Improve production">
 	</form>
 
+	<h4>Doing it</h4>
+
+	<form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
+		<input type="submit" value="Erect barrier">
+	</form>
+
 	<form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
 		<input type="submit" value="Plan production">
 	</form>
 
 	<form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
-		<input type="submit" value="Produce resources">
+		<input type="submit" value="Do production">
 	</form>
 
 	<h3>Notifications</h3>
