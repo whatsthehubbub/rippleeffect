@@ -44,10 +44,10 @@
 
 	<p>Event: {{ teamplayer.active_events }}</p>
 
-	<p>Gather pile cards: {{ teamplayer.gather_pile }}<br>
+	<p>Gather pile cards: Hidden. <!--{{ teamplayer.gather_pile }}--><br>
 	Gathering markers: {{ teamplayer.gather_markers }}</p>
 
-	<p>Risk pile cards: {{ teamplayer.risk_pile }}<br>
+	<p>Risk pile cards: Hidden. <!--{{ teamplayer.risk_pile }}--><br>
 		Prevention markers: {{ teamplayer.prevent_markers }}</p>
 
 	<form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
