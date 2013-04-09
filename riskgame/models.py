@@ -744,7 +744,8 @@ class GameManager(models.Manager):
         if games:
             return games[0]
         else:
-            return Game.objects.create(start=timezone.now())
+            # Creates an invalid game.
+            return Game.objects.create(start=timezone.now(), end=timezone.now())
 
 # Maybe remove the game class altogether TODO
 class Game(models.Model):
