@@ -34,3 +34,10 @@ def change_days():
                 next_day.start()
 
                 return next_day
+
+@task()
+def test_task():
+    from datetime import datetime
+    cyan = lambda text: "\033[1;36m%s\033[0m" % text
+    print(cyan('[test_task:%s] processing task' % str(datetime.now())))
+    
