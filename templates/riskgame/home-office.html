@@ -1,15 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h1>Ripple Effect</h1>
 	
-	<p><a href="{% url 'play_prep' %}">Prep new game</a> | <a href="{% url 'play_start_day' %}">start new day</a></p>
+	<!--<p><a href="{% url 'play_prep' %}">Prep new game</a> | <a href="{% url 'play_start_day' %}">start new day</a></p>-->
 
-	<p>
-		<a href="{% url 'home' %}">Home</a> |
-		<a href="{% url 'players' %}">Players</a> |
-		<a href="{% url 'team' %}">Team</a> |
-		<a href="{% url 'auth_logout' %}">Sign out</a>
-	</p>
+	<ul>
+		<li><a href="{% url 'home' %}">Home</a></li>
+		<li><a href="{% url 'team' %}">Team</a></li>
+		<li><a href="">Profile</a></li>
+		<li><a href="{% url 'auth_logout' %}">Sign out</a></li>
+	</ul>
+
+	<h2>Home</h2>
 
 	{% if messages %}
 		<h3>Action result</h3>
@@ -27,7 +30,7 @@
 	<ul>
 		<li>Team event: {{ teamplayer.team.active_events }}</li>
 		<li>Actions: {{ teamplayer.team.action_points }}</li>
-		<li>Goal zero: {{ teamplayer.team.goal_zero_markers }}</li>
+		<li>Goal zero: {{ teamplayer.team.goal_zero_markers }} currently / x longest so far</li>
 		<li>Points: {{ teamplayer.team.victory_points_episode }} this episode / {{ teamplayer.team.victory_points }} in total</li>
 		<li>Resources: {{ teamplayer.team.resources_collected_episode }} this episode / {{ teamplayer.team.resources_collected }} in total</li>
 	</ul>
@@ -79,18 +82,18 @@
 		<input type="submit" value="Improve production">
 	</form>
 
-	<h4>Doing it</h4>
+	<h4>Retrieval</h4>
 
 	<form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
-		<input type="submit" value="Erect barrier">
+		<input type="submit" value="Raise barrier">
 	</form>
 
 	<form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
-		<input type="submit" value="Plan production">
+		<input type="submit" value="Plan retrieval">
 	</form>
 
 	<form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
-		<input type="submit" value="Do production">
+		<input type="submit" value="Retrieve resources">
 	</form>
 
 	<h3>Notifications</h3>
