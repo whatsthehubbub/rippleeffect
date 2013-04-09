@@ -2,14 +2,14 @@ import os.path
 from fabric.api import *
 from fabric.colors import cyan
 
-from base import install_base_packages
+import app
+from base import install_base_packages, provision_base_server
 from nginx import install_nginx
 from mysql import install_mysql
 from redis import install_redis
 from python import install_python, install_virtualenv
-from app import (install_app, restart_app, restart_worker,
-                 start_worker, stop_worker, is_worker_running,
-                 install_requirements, restart_celerybeat)
+from app import (install_app, restart_celerybeat,
+                 start_worker, stop_worker, is_worker_running)
 from supervisor import install_supervisor
 
 
@@ -34,19 +34,22 @@ def virtualenv(command):
     "virtualenv wrapper function"
     return run('source ' + env.virtualenv + '/bin/activate && ' + command)
 
-def git_pull(branch=None):
-    with cd(env.home):
-        sudo('git pull', user=env.app_user)
-        if branch:
-            sudo('git checkout %s' % branch, user=env.app_user)
     
 @task
 def staging():
     """
     Use environment for staging server
     """
-    env.key_filename   = os.path.expanduser('~/.ssh/id_rsa.pub')
+    prod()
     env.host_string    = 'deploy@95.138.180.97'
+
+@task
+def prod():
+    """
+    Use environment for production server
+    """
+    env.key_filename   = os.path.expanduser('~/.ssh/id_rsa.pub')
+    env.host_string    = None
     # app settings
     env.project_domain = 'playrippleeffect.com'
     env.app_user       = 'rippleeffect'
@@ -54,6 +57,19 @@ def staging():
     env.log_home       = '/var/log/rippleeffect'
     env.virtualenv     = '/var/env/rippleeffect'
 
+@task
+def logs(proc='uwsgi'):
+    """tails logfile for speficied proc
+    
+    possible procs are:
+    nginx, uwsgi, celery, celerybeat, redis
+    """
+    if proc in ('celery','celerybeat','uwsgi'):
+        run('tail -f %s/%s.log' % (env.log_home,proc))
+    elif proc == 'nginx':
+        sudo('tail -f /var/log/nginx/%(project_name)s.log' % env)
+    elif proc == 'redis':
+        sudo('tail -f /var/log/redis/redis-server.log')
 
 @task
 @roles('dev')
@@ -100,23 +116,30 @@ def migrate():
         virtualenv('python manage.py migrate')
 
 @task
-def deploy(branch='master'):
+def deploy():
     """full deploy
     
-    checkout latest code (optionally specify branch)
-    update app requirements
-    reload app server
-    reload celery workers
+    checkout master branch
+    #update app requirements
+    reload app server & workers
     """
-    git_pull(branch)
-    install_requirements()
-    restart_app()
-    restart_worker()
+    git_pull()
+    #app.install_requirements()
+    reload()
 
 @task
-def deploy_soft(branch='master'):
-    "checkout latest source, but don't deploy"
-    git_pull(branch)
+def git_pull(branch=None):
+    "git pull code from repo to server"
+    with cd(env.home):
+        sudo('git pull', user=env.app_user)
+        if branch:
+            sudo('git checkout %s' % branch, user=env.app_user)
+
+@task
+def reload():
+    "reload app & workers"
+    app.stop()
+    app.start()
 
 @task
 @roles('dev')
@@ -127,6 +150,17 @@ def bootstrap():
     install_base_packages()
     # install_nginx()
     install_mysql()
+    install_redis()
+    install_supervisor()
+    install_python()
+    install_virtualenv()
+    install_app(develop=True)
+
+@task
+def provision_server():
+    "provision a server for staging / production"
+    provision_base_server()
+    install_nginx()
     install_redis()
     install_supervisor()
     install_python()

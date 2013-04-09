@@ -1,4 +1,6 @@
+import time
 from fabric.api import *
+from fabric.colors import cyan, red
 from fabric.contrib import files
 from .nginx import configure_site, reload_nginx
 from .supervisor import restart_supervisor
@@ -8,12 +10,21 @@ packages = (
 )
 
 
-def install_app():
-    create_app_user()
+def install_app(develop=False):
+    """install app & requirements
+    
+    develop=True will install for a dev box
+    """
+    if not develop:
+        create_app_user()
+    
     prepare_directories()
     prepare_virtualenv()
     install_requirements()
-    configure_site()
+    
+    if not develop:
+        configure_site()
+    
     configure_workers()
 
 def create_app_user():
@@ -72,6 +83,7 @@ def prepare_directories():
     "creates, chmod's, chown's required directories"
     # prepare home directory
     _prepare_dir(env.home)
+    sudo('ln -s %(home)s /home/%(app_user)s/' % env, user=env.app_user, warn_only=True)
     # prepare logging directory
     _prepare_dir(env.log_home)
     # prepare celerybeat-schedule directory
@@ -127,22 +139,44 @@ def configure_workers():
     )
     restart_supervisor()
 
+
+@task
+def status():
+    "show status of app & workers"
+    procs = sudo('supervisorctl status')
+    
+    print(cyan("Application Status (%(host_string)s)" % env,bold=True))
+    print(cyan("="*80,bold=True))
+    for proc in procs.split('\n'):
+        color = cyan if 'RUNNING' in proc else red
+        print(color(proc,bold=True))
+
 @task
 def start():
-    "start rippleeffect uwsgi app"
-    sudo('supervisorctl start rippleeffect')
+    "start app & workers"
+    start_celerybeat()
+    start_worker()
+    start_uwsgi()
 
 @task
 def stop():
+    "stop app & workers"
+    stop_uwsgi()
+    time.sleep(3)   # wait for workers to finish up
+    stop_worker()
+    stop_celerybeat()
+
+def start_uwsgi():
+    "start rippleeffect uwsgi app"
+    sudo('supervisorctl start %(project_name)s' % env)
+
+def stop_uwsgi():
     "stop rippleeffect uwsgi app"
-    sudo('supervisorctl stop rippleeffect')
+    sudo('supervisorctl stop %(project_name)s' % env)
 
-@task
-def restart():
+def restart_uwsgi():
     "restart rippleeffect uwsgi app"
-    sudo('supervisorctl restart rippleeffect')
-
-restart_app = restart
+    sudo('supervisorctl restart %(project_name)s' % env)
 
 def start_worker():
     "start celery background worker"
@@ -160,6 +194,14 @@ def is_worker_running():
     "indicates if a celery worker is running"
     res = run('pgrep -fl "[c]elery\s" | wc -l')
     return int(res) > 0
+
+def start_celerybeat():
+    "restarts celerybeat process"
+    sudo('supervisorctl start celerybeat')
+
+def stop_celerybeat():
+    "restarts celerybeat process"
+    sudo('supervisorctl stop celerybeat')
 
 def restart_celerybeat():
     "restarts celerybeat process"
