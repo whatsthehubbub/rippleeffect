@@ -72,6 +72,40 @@ To drop into a shell on your virtual machine
 The vagrant commands should be executed in the directory which contains the `Vagrantfile`
 
 
+Staging Deployment
+==================
+To view a full list of available commands:
+
+    fab --list
+
+To deploy simple app updates:
+
+    fab staging deploy  # deploy the master branch to staging
+        
+To deploy more complex updates:
+
+    fab staging git_pull migrate reload  # pull code, run migrations, reload app in staging
+    
+    # pull develop branch, install requirements & reload app in staging
+    fab staging git_pull:develop app.install_requirements reload
+
+To tail the application logs:
+    
+    fab staging logs    # tail the staging app log
+    fab staging logs:nginx  # tail the staging webserver log
+    fab staging logs:celery # tail the celery worker log
+    fab --display logs  # for more information
+
+
+Production Deployment
+=====================
+To spinup a new server:
+
+1. In the [control panel](https://mycloud.rackspace.co.uk/a/alper/#new), create a new server from the saved image `appserver`.
+2. Deploy the latest code to the server: `fab prod deploy deploy@<ip-address>`
+3. In the [control panel](https://mycloud.rackspace.co.uk/a/alper/load_balancers#rax%3Aload-balancer%2CcloudLoadBalancers%2CLON/60541), add the server to the load balancer.
+
+
 Tech Trial Deployment
 =====================
 

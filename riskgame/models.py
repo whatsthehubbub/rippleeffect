@@ -252,9 +252,9 @@ class Notification(models.Model):
         elif self.identifier == 'player-retrieved-failure':
             return 'tried to retrieve resources but triggered an incident'
         elif self.identifier == 'player-gather':
-            return 'placed a gather'
+            return 'planned retrieval'
         elif self.identifier == 'player-prevent':
-            return 'placed a barrier'
+            return 'raised a barrier'
 
     def get_subject(self):
         # TODO modify subjects based on notification type
