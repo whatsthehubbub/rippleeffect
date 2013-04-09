@@ -126,3 +126,16 @@ compile. The easiest way to compile these files on your local machine is to use
 Fire.app (http://fireapp.handlino.com/) and watch the 'static' folder (be sure to issue a
 'clean and compile' when you add a new file, otherwise it won't be seen).
 
+Setting up your Vista/IE8 image
+===============================
+
+To be able to access your local host from the virtual machine, you'll need to add a host-only network:
+
+* Open your VirtualBox preferences
+* Go to Network
+* This is probably empty, [click to add a new one](https://dl.dropbox.com/s/zmru0yh2y9vlqj9/2013-04-08_at_17.56.50.png)
+* Then, open the newly added network's settings and [note down the IP address](https://dl.dropbox.com/s/qx9y4p865tnpdya/2013-04-08_at_17.58.01.png)
+* Close these settings and open the settings of the virtual machine. Go to network again. Adapter 1 should be set NAT. [Make sure Adapter 2 is set to the host-only adapter you just created](https://dl.dropbox.com/s/od48vxbl90jp5wf/2013-04-08_at_18.00.09.png). 
+* Now, launch your image. Open the windows explorer and [navigate to Windows\System32\drivers\etc](https://dl.dropbox.com/s/9xnels3daeak2la/2013-04-08_at_18.05.45.png) and open the hosts file with Notepad.
+* Make sure the IP address pointing to local hosts [is the one you noted down earlier](https://dl.dropbox.com/s/c5az3cukdhm5e2c/2013-04-08_at_18.06.23%20%281%29.png).
+* Save the file, launch Internet Explorer and [open your locally running Ripple Effect website](https://dl.dropbox.com/s/tfwd0iapolxsmn4/2013-04-08_at_18.07.22.png) through the same IP address with :8000 appended.

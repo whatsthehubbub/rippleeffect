@@ -94,37 +94,21 @@ footer.tiny-footer {
   position: fixed;
   bottom: 0;
   right: 0;
-  width: 100px;
+  width: 125px;
   height: 50px;
 
   a {
-    display: block;
-    float: left;
-    width: 50px;
-    height: 50px;
-    text-indent: -9999em;
+
   }
 
   a.hubbub {
     background: url('../img/hubbub-small.png') no-repeat left center;
     @include image-2x('../img/hubbub-small@2x.png', 50px, 50px);
-  }
-
-  a.shell {
-    background: url('../img/shell-small.png') no-repeat right center;
-    @include image-2x('../img/shell-small@2x.png', 50px, 50px);
-  }
-
-  span {
-    position:  absolute;
+    padding-left:50px;
+    display: block;
+    float: left;
     height: 50px;
-    line-height: 50px;
-    color: $dark-grey;
-    font-size: 18px;
-    font-family: $ff-medium;
-    width: 10px;
-    margin-left: -55px;
-
+    text-indent: -9999em;
   }
 
   h3 {
@@ -149,21 +133,7 @@ footer.tiny-footer {
     }
   }
 
-  h3#hubbub {
-    padding-left: 50px;
-    background: url('../img/hubbub-small.png') no-repeat left center;
-    @include image-2x('../img/hubbub-small@2x.png', 50px, 50px);
-    float: left;
 
-  }
-
-  h3#shell {
-    padding-right: 50px;
-    background: url('../img/shell-small.png') no-repeat right center;
-    @include image-2x('../img/shell-small@2x.png', 50px, 50px);
-    float: right;
-
-  }
 
 }
 

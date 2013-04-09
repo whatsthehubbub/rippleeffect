@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon" />
+
     <title>{% block pagetitle %}{% endblock %} - Ripple Effect</title>
 
     <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize.css" />
@@ -30,9 +32,7 @@
     {% block content %}{% endblock content %}
 
     <footer class="tiny-footer white-bg clearfix">
-        <a class="hubbub" href="http://hubbub.eu">Hubbub</a>
-        <a class="shell" href="http://www.shell.com">Shell</a>
-        <span>+</span>
+        <h3><a class="hubbub" href="http://hubbub.eu">Hubbub</a> for <a href="http://shell.com">Shell</a></h3>
     </footer>
 
     {% include "partials/analytics.html" %}

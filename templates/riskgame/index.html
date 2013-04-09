@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon" />
+
     <title>Ripple Effect</title>
 
     <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize.css" />
@@ -26,15 +28,14 @@
         <header>
             <a href="{% url 'auth_login' %}" class="small signin btn">Sign in</a>
             <h1>Ripple Effect</h1>
-            <h2>a safety game</h2>
+            <h2>A Game of Resources and Risks</h2>
         </header>
 
         <article class="white-bg">Coming Soon</article>
     </div>
 
     <footer id="pregame-footer" class="white-bg clearfix">
-        <h3 id="hubbub"><a href="http://hubbub.eu">A Hubbub game</a></h3>
-        <h3 id="shell"><a href="http://www.shell.com">Commissioned by Shell</a></h3>
+        <h3 id="hubbub">A <a href="http://hubbub.eu">Hubbub</a> game, commissioned by <a href="http://shell.com">Shell</a></h3>
     </footer>
 
     {% include "partials/analytics.html" %}
