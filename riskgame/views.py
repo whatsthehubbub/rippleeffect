@@ -127,7 +127,7 @@ def home(request):
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
 
-    Notification.objects.create_new_signed_in_notification(teamplayer.team, player)
+    # Notification.objects.create_new_signed_in_notification(teamplayer.team, player)
 
     c = RequestContext(request, {
         'teamplayer': teamplayer,
