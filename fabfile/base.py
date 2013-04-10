@@ -1,4 +1,3 @@
-import os.path
 from fabric.api import *
 from fabric.colors import cyan
 from fabric.contrib import files
@@ -26,7 +25,7 @@ def create_deploy_user():
     "creates deployment user"
     username = 'deploy'
     # create deploy user & home without password
-    if files.contains('/etc/passwd',username):
+    if files.contains('/etc/passwd', username):
         return
     
     sudo('useradd %s --create-home --shell /bin/bash' % username)
@@ -34,7 +33,7 @@ def create_deploy_user():
     # create authorized_keys & upload public key
     sudo('mkdir -p /home/deploy/.ssh')
     sudo('chmod 700 /home/deploy/.ssh')
-    pub_key = open(env.key_filename,'rb').read()
+    pub_key = open(env.key_filename, 'rb').read()
     files.append('/home/%s/.ssh/authorized_keys' % username, pub_key, use_sudo=True)
 
     # update authorized_keys permissions
@@ -113,4 +112,3 @@ def provision_base_server():
     install_base_packages()
     automate_security_updates()
     create_deploy_user()
-    
