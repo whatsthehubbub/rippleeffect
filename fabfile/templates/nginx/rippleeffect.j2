@@ -1,6 +1,6 @@
 server {
     listen      80;
-    server_name {{project_domain}};
+    server_name {{project_domain}} www.{{project_domain}};
     access_log  /var/log/nginx/{{project_name}}.log;
     
     if ($http_x_forwarded_proto != https) {
