@@ -23,7 +23,7 @@
 		</ul>
 	{% endif %}
 
-	<p>Episode {{ currentDay.episode }} Turn {{ currentDay.number }}</p>
+	<p>Episode {{ currentDay.episode }} Turn {{ currentDay.number }} ({{ currentDay.end|timeuntil }} left)</p>
 
 	<h3>Team</h3>
 
@@ -44,6 +44,8 @@
 	</ul>
 
 	<h3>You</h3>
+
+	<p>Your role: Office.</p>
 
 	<p>Event: {{ teamplayer.active_events }}</p>
 
