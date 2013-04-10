@@ -28,7 +28,7 @@ def install_app(develop=False):
     configure_workers()
 
 def create_app_user():
-    if files.contains('/etc/passwd',env.app_user):
+    if files.contains('/etc/passwd', env.app_user):
         return
     
     sudo('useradd %(app_user)s --create-home --shell /bin/bash' % env)
@@ -92,7 +92,7 @@ def prepare_directories():
 def clone_repo():
     "do the initial git clone"
     with cd(env.home), cd('..'):
-        sudo('git clone %(code_repo)s' % env,user=env.app_user)
+        sudo('git clone %(code_repo)s' % env, user=env.app_user)
 
 @task
 def install_requirements():
@@ -101,7 +101,7 @@ def install_requirements():
         sudo('apt-get install %s --assume-yes' % package)
     
     with cd(env.home):
-        for line in open('requirements.txt','r'):
+        for line in open('requirements.txt', 'r'):
             virtualenv('pip install %s' % line, user=env.app_user)
 
 
@@ -145,11 +145,11 @@ def status():
     "show status of app & workers"
     procs = sudo('supervisorctl status')
     
-    print(cyan("Application Status (%(host_string)s)" % env,bold=True))
-    print(cyan("="*80,bold=True))
+    print(cyan("Application Status (%(host_string)s)" % env, bold=True))
+    print(cyan("="*80, bold=True))
     for proc in procs.split('\n'):
         color = cyan if 'RUNNING' in proc else red
-        print(color(proc,bold=True))
+        print(color(proc, bold=True))
 
 @task
 def start():

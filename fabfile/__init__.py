@@ -64,8 +64,8 @@ def logs(proc='uwsgi'):
     possible procs are:
     nginx, uwsgi, celery, celerybeat, redis
     """
-    if proc in ('celery','celerybeat','uwsgi'):
-        run('tail -f %s/%s.log' % (env.log_home,proc))
+    if proc in ('celery', 'celerybeat','uwsgi'):
+        run('tail -f %s/%s.log' % (env.log_home, proc))
     elif proc == 'nginx':
         sudo('tail -f /var/log/nginx/%(project_name)s.log' % env)
     elif proc == 'redis':
