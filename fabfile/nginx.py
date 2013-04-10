@@ -8,7 +8,7 @@ def install_nginx():
 def configure_site():
     "configure an nginx site"
     files.upload_template(
-        'nginx/%s.j2' % sitename,
+        'nginx/rippleeffect.j2',
         '/etc/nginx/sites-available/%(project_name)s' % env,
         env,
         template_dir='fabfile/templates',
