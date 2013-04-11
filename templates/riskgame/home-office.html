@@ -7,8 +7,11 @@
 
 	<ul>
 		<li><a href="{% url 'home' %}">Home</a></li>
-		<li><a href="{% url 'team' %}">Team</a></li>
-		<li><a href="">Profile</a></li>
+		<li><a href="{% url 'team' %}">Your team</a></li>
+		<li><a href="">Your profile</a></li>
+		<li><a href="">Notifications</a></li>
+		<li><a href="">All teams</a></li>
+		<li><a href=""></a></li>
 		<li><a href="{% url 'auth_logout' %}">Sign out</a></li>
 	</ul>
 
@@ -33,7 +36,7 @@
 		<li>Goal zero: {{ teamplayer.team.goal_zero_markers }} currently / x longest this game</li>
 		<li>Points: {{ teamplayer.team.victory_points_episode }} this episode / {{ teamplayer.team.victory_points }} this game</li>
 		<li>Resources: {{ teamplayer.team.resources_collected_episode }} this episode / {{ teamplayer.team.resources_collected }} this game</li>
-		<li>Indidents: 0 this episode / 0 this game</li>
+		<li>Incidents: 0 this episode / 0 this game</li>
 	</ul>
 
 	<h4>Team members</h4>
