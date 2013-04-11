@@ -2,8 +2,6 @@
 
 {% block content %}
 <h1>Ripple Effect</h1>
-	
-	<!--<p><a href="{% url 'play_prep' %}">Prep new game</a> | <a href="{% url 'play_start_day' %}">start new turn</a></p>-->
 
 	<ul>
 		<li><a href="{% url 'home' %}">Home</a></li>
@@ -105,5 +103,14 @@
 			<li>{{ notification.player }} {{ notification.get_message }} {{ notification.datecreated|timesince }} ago</li>
 		{% endfor %}
 	</ul>
+
+	<h3>Start a new game</h3>
+
+	<form method="POST" action="{% url 'game_start' %}">
+		{% csrf_token %}
+		{{ startform.as_p }}
+		<input type="submit">
+	</form>
+
 
 {% endblock content %}

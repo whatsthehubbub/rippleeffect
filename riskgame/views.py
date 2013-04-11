@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
 
-from django.forms import ModelForm
+from django import forms
 
 from django.db.models import F
 
@@ -43,7 +43,7 @@ def index(request):
 #     return HttpResponse(t.render(c))
 
 
-class CreateTeamform(ModelForm):
+class CreateTeamform(forms.ModelForm):
     class Meta:
         model = Team
         fields = ('name', )
@@ -133,7 +133,9 @@ def home(request):
         'teamplayer': teamplayer,
         'teammates': teamplayer.team.teamplayer_set.all(),
         'currentDay': EpisodeDay.objects.get(current=True),
-        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')
+        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
+
+        'startform': GameStartForm()
     })
 
     return HttpResponse(t.render(c))
@@ -142,28 +144,21 @@ def home(request):
 def team(request):
     pass # Show own team
 
-@login_required
-def play_prep(request):
-    # TODO remove these functions
-    player = request.user.get_or_create_player()
-    teamplayer = TeamPlayer.objects.get(player=player)
-    team = teamplayer.team
-
-    team.start_episode()
-
-    return HttpResponseRedirect(reverse('home'))
+class GameStartForm(forms.Form):
+    turn_minutes = forms.IntegerField(initial=10)
 
 @login_required
-def play_start_day(request):
-    """Do the actions at the start of the day.
+def game_start(request):
+    if request.method == 'POST':
+        form = GameStartForm(request.POST)
 
-    For now: adding new action points, and incrementing the goal zero
-    marker."""
-    player = request.user.get_or_create_player()
-    teamplayer = TeamPlayer.objects.get(player=player)
-    team = teamplayer.team
+        if form.is_valid():
+            minutes = form.cleaned_data.get('turn_minutes', 10)
 
-    team.start_day()
+            Game.objects.get_latest_game().initialize(dayLengthInMinutes=minutes)
+
+            from riskgame.tasks import change_days
+            change_days()
 
     return HttpResponseRedirect(reverse('home'))
 
