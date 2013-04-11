@@ -55,6 +55,11 @@
 		<input type="submit" value="Inspect risks">
 	</form>
 
+	<form method="POST" action="{% url 'frontline_event' %}"> {% csrf_token %}
+		{{ targetform.as_p }}
+		<input type="submit" value="Inspect event">
+	</form>
+
 	<h3>Notifications</h3>
 
 	<ul>

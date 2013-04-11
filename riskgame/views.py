@@ -202,6 +202,20 @@ def inspect_event(request):
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
 
+    form = FrontLineForm(teamplayer, request.POST)
+
+    if form.is_valid():
+        if Team.objects.filter(pk=teamplayer.team.pk, frontline_action_points__gt=0).update(frontline_action_points=F('frontline_action_points')-1):
+            target = form.cleaned_data.get('target')
+
+            # Get next event
+
+            currentDay = EpisodeDay.objects.get(current=True)
+            event = target.get_event_for_day(currentDay.next)
+
+            messages.add_message(request, messages.INFO, "Inspected event for player %s and found: %s" % (str(target.player), event))
+    return HttpResponseRedirect(reverse('home'))
+
 
 # Office actions
 
