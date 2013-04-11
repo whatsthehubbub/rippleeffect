@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}Home{% endblock %}
+
+{% block content %}
+<h1>Ripple Effect</h1>
+
+	<ul>
+		<li><a href="{% url 'home' %}">Home</a></li>
+		<li><a href="{% url 'team' %}">Team</a></li>
+		<li><a href="">Profile</a></li>
+		<li><a href="{% url 'auth_logout' %}">Sign out</a></li>
+	</ul>
+
+	<h2>Home</h2>
+
+	{% if messages %}
+		<h3>Action result</h3>
+		<ul class="messages">
+		    {% for message in messages %}
+		    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		    {% endfor %}
+		</ul>
+	{% endif %}
+
+	<p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({{ currentDay.end|timeuntil }} left)</p>
+
+	<h3>Team</h3>
+
+	<ul>
+		<li>Team event: {{ teamplayer.team.active_events }}</li>
+		<li>Actions: {{ teamplayer.team.action_points }} office / 00 frontline</li>
+		<li>Goal zero: {{ teamplayer.team.goal_zero_markers }} currently / x longest this game</li>
+		<li>Points: {{ teamplayer.team.victory_points_episode }} this episode / {{ teamplayer.team.victory_points }} this game</li>
+		<li>Resources: {{ teamplayer.team.resources_collected_episode }} this episode / {{ teamplayer.team.resources_collected }} this game</li>
+		<li>Indidents: 0 this episode / 0 this game</li>
+	</ul>
+
+	<h4>Team members</h4>
+	
+	<ul>
+	{% for mate in teammates %}
+		<li>{{ mate.player }} {% ifequal mate.player player %}(YOU!){% endifequal %}</li>
+	{% endfor %}
+	</ul>
+
+	<h3>You</h3>
+
+	<p>Your role: Office.</p>
+
+	<p>Event: {{ teamplayer.active_events }}</p>
+
+	<h4>Safety</h4>
+
+	<ul>
+		<li>Safety status: hidden. <!--{{ teamplayer.risk_pile }}--></li>
+		<li>Barriers: {{ teamplayer.prevent_markers }}</li>
+	</ul>
+
+	<form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
+		<input type="hidden" name="pile" value="risk">
+		<input type="submit" value="Inspect safety">
+	</form>
+
+	<form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
+		<input type="hidden" name="pile" value="risk">
+		<input type="submit" value="Improve safety">
+	</form>
+
+	<h4>Production</h4>
+
+	<ul>
+		<li>Production status: hidden. <!--{{ teamplayer.gather_pile }}--></li>
+		<li>Planned production: {{ teamplayer.gather_markers }}</li>
+	</ul>
+
+
+	<form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
+		<input type="hidden" name="pile" value="gather">
+		<input type="submit" value="Inspect production">
+	</form>
+
+	<form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
+		<input type="hidden" name="pile" value="gather">
+		<input type="submit" value="Improve production">
+	</form>
+
+	<h4>Retrieval</h4>
+
+	<form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
+		<input type="submit" value="Raise barrier">
+	</form>
+
+	<form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
+		<input type="submit" value="Plan retrieval">
+	</form>
+
+	<form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
+		<input type="submit" value="Retrieve resources">
+	</form>
+
+	<h3>Notifications</h3>
+
+	<ul>
+		{% for notification in notifications %}
+			<li>{{ notification.player }} {{ notification.get_message }} {{ notification.datecreated|timesince }} ago</li>
+		{% endfor %}
+	</ul>
+
+	<h3>Start a new game</h3>
+
+	<form method="POST" action="{% url 'game_start' %}">
+		{% csrf_token %}
+		{{ startform.as_p }}
+		<input type="submit">
+	</form>
+
+
+{% endblock content %}
