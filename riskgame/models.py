@@ -129,9 +129,6 @@ class ValidEmailDomain(models.Model):
 from django.core.mail import EmailMessage
 
 class NotificationManager(models.Manager):
-    def create_new_signed_in_notification(self, team, player):
-        return Notification.objects.create(identifier='player-signed-in', team=team, player=player)
-
     # Inspect notifications
     def create_inspected_safety_notification(self, team, player):
         return Notification.objects.create(identifier='player-inspected-safety', team=team, player=player)
@@ -228,9 +225,7 @@ class Notification(models.Model):
 
     def get_message(self):
         """Messages are not stored in the database for parametrizability and translatability."""
-        if self.identifier == 'player-signed-in':
-            return 'signed in'
-        elif self.identifier == 'player-inspected-safety':
+        if self.identifier == 'player-inspected-safety':
             return 'inspected safety'
         elif self.identifier == 'player-inspected-production':
             return 'inspected production'

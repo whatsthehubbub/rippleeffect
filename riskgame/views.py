@@ -122,21 +122,20 @@ def players(request):
 
 @login_required
 def home(request):
-    t = loader.get_template('riskgame/home-office.html')
-
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
 
-    # Notification.objects.create_new_signed_in_notification(teamplayer.team, player)
+    if teamplayer.role == 'office':
+        t = loader.get_template('riskgame/home-office.html')
 
-    c = RequestContext(request, {
-        'teamplayer': teamplayer,
-        'teammates': teamplayer.team.teamplayer_set.all(),
-        'currentDay': EpisodeDay.objects.get(current=True),
-        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
+        c = RequestContext(request, {
+            'teamplayer': teamplayer,
+            'teammates': teamplayer.team.teamplayer_set.all(),
+            'currentDay': EpisodeDay.objects.get(current=True),
+            'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
 
-        'startform': GameStartForm()
-    })
+            'startform': GameStartForm()
+        })
 
     return HttpResponse(t.render(c))
 
