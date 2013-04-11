@@ -17,8 +17,8 @@ class TestGame(object):
         player1 = Player.objects.create(user=user1)
         player2 = Player.objects.create(user=user2)
 
-        teamplayer1 = TeamPlayer.objects.create(team=team, player=player1)
-        teamplayer2 = TeamPlayer.objects.create(team=team, player=player2)
+        TeamPlayer.objects.create(team=team, player=player1)
+        TeamPlayer.objects.create(team=team, player=player2)
 
         # Start the first day
         from riskgame.tasks import change_days
