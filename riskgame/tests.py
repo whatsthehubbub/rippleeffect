@@ -4,9 +4,6 @@ import nose.tools as nt
 # from django.utils import timezone
 # import datetime
 
-import logging
-logging.getLogger('south').setLevel(logging.CRITICAL)
-
 class TestGameInitialize(object):
     @classmethod
     def setupAll(self):
