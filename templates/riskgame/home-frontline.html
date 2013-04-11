@@ -29,7 +29,7 @@
 
 	<ul>
 		<li>Team event: {{ teamplayer.team.active_events }}</li>
-		<li>Actions: {{ teamplayer.team.action_points }} office / 00 frontline</li>
+		<li>Actions: {{ teamplayer.team.action_points }} office / {{ teamplayer.team.frontline_action_points }} frontline</li>
 		<li>Goal zero: {{ teamplayer.team.goal_zero_markers }} currently / x longest this game</li>
 		<li>Points: {{ teamplayer.team.victory_points_episode }} this episode / {{ teamplayer.team.victory_points }} this game</li>
 		<li>Resources: {{ teamplayer.team.resources_collected_episode }} this episode / {{ teamplayer.team.resources_collected }} this game</li>
@@ -40,63 +40,19 @@
 	
 	<ul>
 	{% for mate in teammates %}
-		<li>{{ mate.player }} {% ifequal mate.player player %}(YOU!){% endifequal %}</li>
+		<li>{{ mate.player }} - {{ mate.role }} {% ifequal mate.player player %}(YOU!){% endifequal %}</li>
 	{% endfor %}
 	</ul>
 
 	<h3>You</h3>
 
-	<p>Your role: Office.</p>
+	<p>Your role: Frontline.</p>
 
-	<p>Event: {{ teamplayer.active_events }}</p>
+	<h3>Actions</h3>
 
-	<h4>Safety</h4>
-
-	<ul>
-		<li>Safety status: hidden. <!--{{ teamplayer.risk_pile }}--></li>
-		<li>Barriers: {{ teamplayer.prevent_markers }}</li>
-	</ul>
-
-	<form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
-		<input type="hidden" name="pile" value="risk">
-		<input type="submit" value="Inspect safety">
-	</form>
-
-	<form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
-		<input type="hidden" name="pile" value="risk">
-		<input type="submit" value="Improve safety">
-	</form>
-
-	<h4>Production</h4>
-
-	<ul>
-		<li>Production status: hidden. <!--{{ teamplayer.gather_pile }}--></li>
-		<li>Planned production: {{ teamplayer.gather_markers }}</li>
-	</ul>
-
-
-	<form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
-		<input type="hidden" name="pile" value="gather">
-		<input type="submit" value="Inspect production">
-	</form>
-
-	<form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
-		<input type="hidden" name="pile" value="gather">
-		<input type="submit" value="Improve production">
-	</form>
-
-	<h4>Retrieval</h4>
-
-	<form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
-		<input type="submit" value="Raise barrier">
-	</form>
-
-	<form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
-		<input type="submit" value="Plan retrieval">
-	</form>
-
-	<form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
-		<input type="submit" value="Retrieve resources">
+	<form method="POST" action="{% url 'frontline_risks' %}"> {% csrf_token %}
+		{{ targetform.as_p }}
+		<input type="submit" value="Inspect risks">
 	</form>
 
 	<h3>Notifications</h3>

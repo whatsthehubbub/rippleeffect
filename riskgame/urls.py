@@ -29,4 +29,7 @@ urlpatterns = patterns('',
     url(r'^play/gather/$', 'riskgame.views.play_gather', name='play_gather'),
     url(r'^play/prevent/$', 'riskgame.views.play_prevent', name='play_prevent'),
     url(r'^play/pump/$', 'riskgame.views.play_pump', name='play_pump'),
+
+    url(r'^frontline/risks/$', 'riskgame.views.inspect_risks', name='frontline_risks'),
+    url(r'^frontline/event/$', 'riskgame.views.inspect_event', name='frontline_event'),
 )

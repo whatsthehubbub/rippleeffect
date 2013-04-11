@@ -120,6 +120,12 @@ def players(request):
 
     return HttpResponse(t.render(c))
 
+class FrontLineForm(forms.Form):
+    def __init__(self, teamplayer, *args, **kwargs):
+        super(FrontLineForm, self).__init__(*args, **kwargs)
+
+        self.fields['target'] = forms.ModelChoiceField(queryset=teamplayer.team.teamplayer_set.filter(role='office'))
+
 @login_required
 def home(request):
     player = request.user.get_or_create_player()
@@ -138,6 +144,8 @@ def home(request):
         t = loader.get_template('riskgame/home-office.html')
     elif teamplayer.role == 'frontline':
         t = loader.get_template('riskgame/home-frontline.html')
+
+        c['targetform'] = FrontLineForm(teamplayer)
 
     return HttpResponse(t.render(c))
 
@@ -162,6 +170,40 @@ def game_start(request):
             change_days()
 
     return HttpResponseRedirect(reverse('home'))
+
+# Frontline actions
+
+@login_required
+@require_POST
+def inspect_risks(request):
+    player = request.user.get_or_create_player()
+    teamplayer = TeamPlayer.objects.get(player=player)
+
+    form = FrontLineForm(teamplayer, request.POST)
+
+    if form.is_valid():
+        if Team.objects.filter(pk=teamplayer.team.pk, frontline_action_points__gt=0).update(frontline_action_points=F('frontline_action_points')-1):
+            target = form.cleaned_data.get('target')
+
+            result = target.inspect('risk')
+
+            result += (8-len(result)) * ['?']
+
+            # TODO Create notification
+
+            messages.add_message(request, messages.INFO, "Inspected risk for player %s and found: %s" % (str(target.player), ' '.join(result)))
+
+    return HttpResponseRedirect(reverse('home'))
+
+
+@login_required
+@require_POST
+def inspect_event(request):
+    player = request.user.get_or_create_player()
+    teamplayer = TeamPlayer.objects.get(player=player)
+
+
+# Office actions
 
 @login_required
 def play_inspect(request):

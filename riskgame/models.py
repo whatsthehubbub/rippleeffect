@@ -325,7 +325,7 @@ class TeamPlayer(models.Model):
     player = models.ForeignKey('Player')
 
     def __unicode__(self):
-        return str(self.id)
+        return str(self.player)
 
     def startPiles(self):
         self.gather_pile = '0,1'
@@ -510,7 +510,9 @@ class Team(models.Model):
     open = models.BooleanField(default=True)
 
     goal_zero_markers = models.IntegerField(default=0)
+
     action_points = models.IntegerField(default=0)
+    frontline_action_points = models.IntegerField(default=0)
 
     victory_points = models.IntegerField(default=0)
     victory_points_episode = models.IntegerField(default=0)
@@ -619,6 +621,7 @@ class Team(models.Model):
         # Do these updates in the end to prevent them from being overwritten
         # Set action points to zero (these will be replenished on day start)
         Team.objects.filter(pk=self.pk).update(action_points=0)
+        Team.objects.filter(pk=self.pk).update(frontline_action_points=0)
 
         # Set the per episode scores to 0 again
         Team.objects.filter(pk=self.pk).update(resources_collected_episode=0)
@@ -671,6 +674,8 @@ class Team(models.Model):
         playerCount = self.players.filter(role='office').count()
 
         Team.objects.filter(pk=self.pk).update(action_points=4*playerCount)
+        Team.objects.filter(pk=self.pk).update(frontline_action_points=2*playerCount)
+
         Team.objects.filter(pk=self.pk).update(goal_zero_markers=F('goal_zero_markers')+1)
 
         # At the start of a day reset all the markers for a team
