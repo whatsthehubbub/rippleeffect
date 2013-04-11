@@ -1,16 +1,34 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
+from riskgame.models import *
+import nose.tools as nt
 
-Replace this with more appropriate tests for your application.
-"""
+# from django.utils import timezone
+# import datetime
 
-from django.test import TestCase
+class TestGame(object):
+    def setup(self):
+        game = Game.objects.get_latest_game()
+        game.initialize()
 
+        team = Team.objects.create()
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+        user1 = EmailUser.objects.create(email='nobody@example.com')
+        user2 = EmailUser.objects.create(email='somebody@example.com')
+
+        player1 = Player.objects.create(user=user1)
+        player2 = Player.objects.create(user=user2)
+
+        teamplayer1 = TeamPlayer.objects.create(team=team, player=player1)
+        teamplayer2 = TeamPlayer.objects.create(team=team, player=player2)
+
+        # Start the first day
+        from riskgame.tasks import change_days
+        change_days()
+
+    def test_inspect(self):
+        inspect_result = TeamPlayer.objects.all()[0].inspect('gather')
+
+        print inspect_result
+        nt.assert_equal(len(inspect_result), 4)
+
+    def teardown(self):
+        pass
