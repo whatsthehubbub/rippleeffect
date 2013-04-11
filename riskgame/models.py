@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 
 import random
 import datetime
+import math
 
 import logging
 logger = logging.getLogger('ripple')
@@ -355,7 +356,8 @@ class TeamPlayer(models.Model):
 
         pile = pile.split(',')
 
-        half = len(pile) / 2 + (len(pile) % 2 and 0 or 1)
+        # Need to get half rounded up
+        half = int(math.ceil(float(len(pile)) / 2.0))
 
         if self.team.is_event_active(Events.RAIN):
             half -= 1
