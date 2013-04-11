@@ -126,7 +126,8 @@ def player_profile(request, pk):
     t = loader.get_template('riskgame/player_profile.html')
 
     c = RequestContext(request, {
-        'player': player
+        'player': player,
+        'teamplayer': TeamPlayer.objects.get(player=player)
     })
 
     return HttpResponse(t.render(c))
