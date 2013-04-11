@@ -125,17 +125,19 @@ def home(request):
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
 
+    c = RequestContext(request, {
+        'teamplayer': teamplayer,
+        'teammates': teamplayer.team.teamplayer_set.all(),
+        'currentDay': EpisodeDay.objects.get(current=True),
+        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
+
+        'startform': GameStartForm()
+    })
+
     if teamplayer.role == 'office':
         t = loader.get_template('riskgame/home-office.html')
-
-        c = RequestContext(request, {
-            'teamplayer': teamplayer,
-            'teammates': teamplayer.team.teamplayer_set.all(),
-            'currentDay': EpisodeDay.objects.get(current=True),
-            'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
-
-            'startform': GameStartForm()
-        })
+    elif teamplayer.role == 'frontline':
+        t = loader.get_template('riskgame/home-frontline.html')
 
     return HttpResponse(t.render(c))
 
