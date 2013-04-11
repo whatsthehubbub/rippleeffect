@@ -779,6 +779,11 @@ class Game(models.Model):
         self.start = start
 
         Team.objects.all().update(goal_zero_markers=0)
+        Team.objects.all().update(action_points=0)
+        Team.objects.all().update(victory_points=0)
+        Team.objects.all().update(victory_points_episode=0)
+        Team.objects.all().update(resources_collected=0)
+        Team.objects.all().update(resources_collected_episode=0)
 
         TeamPlayer.objects.all().update(gather_pile='')
         TeamPlayer.objects.all().update(risk_pile='')
