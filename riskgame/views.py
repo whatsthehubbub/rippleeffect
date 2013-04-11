@@ -120,6 +120,22 @@ def players(request):
 
     return HttpResponse(t.render(c))
 
+def player_profile(request, pk):
+    player = Player.objects.get(pk=pk)
+
+    t = loader.get_template('riskgame/player_profile.html')
+
+    c = RequestContext(request, {
+        'player': player
+    })
+
+    return HttpResponse(t.render(c))
+
+def player_profile_own(request):
+    player = request.user.get_or_create_player()
+
+    return HttpResponseRedirect(reverse('player_profile', args=[player.pk]))
+
 class FrontLineForm(forms.Form):
     def __init__(self, teamplayer, *args, **kwargs):
         super(FrontLineForm, self).__init__(*args, **kwargs)
