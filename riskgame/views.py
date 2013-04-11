@@ -175,6 +175,8 @@ def play_inspect(request):
             result = teamplayer.inspect(pile)
             teamplayer.save()
 
+            result += (8-len(result)) * ['?']
+
             if pile == 'gather':
                 Notification.objects.create_inspected_production_notification(team, player)
             elif pile == 'risk':
