@@ -535,7 +535,7 @@ class Team(models.Model):
         return TeamJoinRequest.objects.filter(team=self, invite=False)
 
     def start_episode(self, episode):
-        playerCount = self.players.count()
+        playerCount = self.players.filter(role='office').count()
 
         # Stack both piles at the start of each episode
         # TODO already change the 0s and 1s here to strings
@@ -546,7 +546,7 @@ class Team(models.Model):
         random.shuffle(gatherCards)
         random.shuffle(riskCards)
 
-        for tp in self.teamplayer_set.all():
+        for tp in self.teamplayer_set.filter(role='office'):
             tp.startPiles()
 
             tp.gather_markers = 0
@@ -607,7 +607,7 @@ class Team(models.Model):
         [random.shuffle(day_list) for day_list in day_lists]
 
         index = 0
-        for tp in self.teamplayer_set.all():
+        for tp in self.teamplayer_set.filter(role='office'):
             # Stringify and slice them for each player
             player_events = [eventStack[index] for eventStack in day_lists]
 
@@ -668,7 +668,7 @@ class Team(models.Model):
         self.save()
 
         # Put these after the save to prevent the stale model to overwrite the new values
-        playerCount = self.players.count()
+        playerCount = self.players.filter(role='office').count()
 
         Team.objects.filter(pk=self.pk).update(action_points=4*playerCount)
         Team.objects.filter(pk=self.pk).update(goal_zero_markers=F('goal_zero_markers')+1)
