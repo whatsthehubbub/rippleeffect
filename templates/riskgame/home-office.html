@@ -5,15 +5,7 @@
 {% block content %}
 <h1>Ripple Effect</h1>
 
-	<ul>
-		<li><a href="{% url 'home' %}">Home</a></li>
-		<li><a href="{% url 'team' %}">Your team</a></li>
-		<li><a href="{% url 'player_profile_own' %}">Your profile</a></li>
-		<li><a href="">Notifications</a></li>
-		<li><a href="">All teams</a></li>
-		<li><a href=""></a></li>
-		<li><a href="{% url 'auth_logout' %}">Sign out</a></li>
-	</ul>
+	{% include "partials/navigation.html" %}
 
 	<h2>Home</h2>
 

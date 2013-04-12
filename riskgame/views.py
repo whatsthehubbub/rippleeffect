@@ -109,6 +109,13 @@ def accept_team_join(request, pk):
 
         return HttpResponseRedirect(reverse('team_detail', args=[player.team.id]))
 
+@login_required
+def team_your(request):
+    player = request.user.get_or_create_player()
+    teamplayer = TeamPlayer.objects.get(player=player)
+
+    return HttpResponseRedirect(reverse('team_detail', args=[teamplayer.team.pk]))
+
 
 @login_required
 def players(request):
