@@ -43,36 +43,36 @@ def index(request):
 #     return HttpResponse(t.render(c))
 
 
-class CreateTeamform(forms.ModelForm):
-    class Meta:
-        model = Team
-        fields = ('name', )
+# class CreateTeamform(forms.ModelForm):
+#     class Meta:
+#         model = Team
+#         fields = ('name', )
 
-    def __init__(self, *args, **kwargs):
-        self.helper = FormHelper()
+#     def __init__(self, *args, **kwargs):
+#         self.helper = FormHelper()
 
-        self.helper.form_class = 'form'
-        self.helper.form_action = reverse('team_create')
-        self.helper.form_method = 'post'
+#         self.helper.form_class = 'form'
+#         self.helper.form_action = reverse('team_create')
+#         self.helper.form_method = 'post'
 
-        self.helper.layout = Layout(
-            Field('name', css_class='input-block-level', placeholder='Name'),
-            FormActions(
-                Submit('submit', _('Send'), css_class='btn')
-            )
-        )
+#         self.helper.layout = Layout(
+#             Field('name', css_class='input-block-level', placeholder='Name'),
+#             FormActions(
+#                 Submit('submit', _('Send'), css_class='btn')
+#             )
+#         )
 
-        super(CreateTeamform, self).__init__(*args, **kwargs)
+#         super(CreateTeamform, self).__init__(*args, **kwargs)
 
-@login_required
-def team_create(request):
-    if request.method == "POST":
-        name = request.POST.get('name', '')
+# @login_required
+# def team_create(request):
+#     if request.method == "POST":
+#         name = request.POST.get('name', '')
 
-        player = request.user.get_or_create_player()
-        Team.objects.create(name=name, leader=player)
+#         player = request.user.get_or_create_player()
+#         Team.objects.create(name=name, leader=player)
 
-        return HttpResponseRedirect(reverse('index'))
+#         return HttpResponseRedirect(reverse('index'))
 
 
 class TeamDetail(DetailView):
@@ -80,34 +80,34 @@ class TeamDetail(DetailView):
     template_name = 'riskgame/team_detail.html'
     context_object_name = 'team'
 
-@login_required
-@require_POST
-def request_team_join(request, pk):
-    player = request.user.get_or_create_player()
-    team = Team.objects.get(id=pk)
+# @login_required
+# @require_POST
+# def request_team_join(request, pk):
+#     player = request.user.get_or_create_player()
+#     team = Team.objects.get(id=pk)
 
-    TeamJoinRequest.objects.create(team=team, player=player)
+#     TeamJoinRequest.objects.create(team=team, player=player)
 
-    return HttpResponseRedirect(reverse('team_detail', args=[player.team.id]))
+#     return HttpResponseRedirect(reverse('team_detail', args=[player.team.id]))
 
-@login_required
-@require_POST
-def accept_team_join(request, pk):
-    join_request = TeamJoinRequest.objects.get(id=request.POST.get('join_request_id', ''))
+# @login_required
+# @require_POST
+# def accept_team_join(request, pk):
+#     join_request = TeamJoinRequest.objects.get(id=request.POST.get('join_request_id', ''))
 
-    print join_request
+#     print join_request
 
-    print request.user.get_or_create_player()
-    print join_request.team.leader
+#     print request.user.get_or_create_player()
+#     print join_request.team.leader
 
-    if request.user.get_or_create_player() == join_request.team.leader:
-        player = join_request.player
-        player.team = join_request.team
-        player.save()
+#     if request.user.get_or_create_player() == join_request.team.leader:
+#         player = join_request.player
+#         player.team = join_request.team
+#         player.save()
 
-        join_request.delete()
+#         join_request.delete()
 
-        return HttpResponseRedirect(reverse('team_detail', args=[player.team.id]))
+#         return HttpResponseRedirect(reverse('team_detail', args=[player.team.id]))
 
 @login_required
 def team_your(request):
@@ -152,24 +152,43 @@ class FrontLineForm(forms.Form):
 
 @login_required
 def home(request):
-    player = request.user.get_or_create_player()
-    teamplayer = TeamPlayer.objects.get(player=player)
+    game = Game.objects.get_latest_game()
 
-    c = RequestContext(request, {
-        'teamplayer': teamplayer,
-        'teammates': teamplayer.team.teamplayer_set.all(),
-        'currentDay': EpisodeDay.objects.get(current=True),
-        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
+    if timezone.now() < game.start:
+        # Pre game
 
-        'startform': GameStartForm()
-    })
+        t = loader.get_template('riskgame/home-pregame.html')
 
-    if teamplayer.role == 'office':
-        t = loader.get_template('riskgame/home-office.html')
-    elif teamplayer.role == 'frontline':
-        t = loader.get_template('riskgame/home-frontline.html')
+        c = RequestContext(request, {
+            'game': game
+        })
 
-        c['targetform'] = FrontLineForm(teamplayer)
+    if game.over():
+        t = loader.get_template('riskgame/home-postgame.html')
+
+        c = RequestContext(request, {
+            
+        })
+
+    if game.active():
+        player = request.user.get_or_create_player()
+        teamplayer = TeamPlayer.objects.get(player=player)
+
+        c = RequestContext(request, {
+            'teamplayer': teamplayer,
+            'teammates': teamplayer.team.teamplayer_set.all(),
+            'currentDay': EpisodeDay.objects.get(current=True),
+            'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
+
+            'startform': GameStartForm()
+        })
+
+        if teamplayer.role == 'office':
+            t = loader.get_template('riskgame/home-office.html')
+        elif teamplayer.role == 'frontline':
+            t = loader.get_template('riskgame/home-frontline.html')
+
+            c['targetform'] = FrontLineForm(teamplayer)
 
     return HttpResponse(t.render(c))
 
