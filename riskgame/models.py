@@ -671,7 +671,7 @@ class Team(models.Model):
         self.save()
 
         # Put these after the save to prevent the stale model to overwrite the new values
-        playerCount = self.players.filter(role='office').count()
+        playerCount = self.teamplayer_set.filter(role='office').count()
 
         Team.objects.filter(pk=self.pk).update(action_points=4*playerCount)
         Team.objects.filter(pk=self.pk).update(frontline_action_points=2*playerCount)
