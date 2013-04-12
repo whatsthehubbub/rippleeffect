@@ -24,14 +24,7 @@
 
 	<h3>Team</h3>
 
-	<ul>
-		<li>Team event: {{ teamplayer.team.active_events }}</li>
-		<li>Actions: {{ teamplayer.team.action_points }} office / {{ teamplayer.team.frontline_action_points }} frontline</li>
-		<li>Goal zero: {{ teamplayer.team.goal_zero_markers }} currently / x longest this game</li>
-		<li>Points: {{ teamplayer.team.victory_points_episode }} this episode / {{ teamplayer.team.victory_points }} this game</li>
-		<li>Resources: {{ teamplayer.team.resources_collected_episode }} this episode / {{ teamplayer.team.resources_collected }} this game</li>
-		<li>Indidents: x this episode / x this game</li>
-	</ul>
+	{% include "partials/team_stats.html" %}
 
 	<h4>Team members</h4>
 	
