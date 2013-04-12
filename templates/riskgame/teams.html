@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+	
+	{% for team in teams %}
+		<li>
+			{{ team.name }} - {{ team.victory_points }}
+		</li>
+	{% endfor %}
+
+{% endblock content %}

@@ -174,8 +174,14 @@ def home(request):
     return HttpResponse(t.render(c))
 
 @login_required
-def team(request):
-    pass # Show own team
+def teams(request):
+    t = loader.get_template('riskgame/teams.html')
+
+    c = RequestContext(request, {
+        'teams': Team.objects.all()
+    })
+
+    return HttpResponse(t.render(c))
 
 class GameStartForm(forms.Form):
     turn_minutes = forms.IntegerField(initial=10)

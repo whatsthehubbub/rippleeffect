@@ -8,7 +8,7 @@ urlpatterns = patterns('',
 
     # url(r'^pre/launch/$', 'riskgame.views.pre_launch', name='pre_launch'),
 
-    url(r'^teams/$', 'riskgame.views.team', name='team'),
+    url(r'^teams/$', 'riskgame.views.teams', name='teams'),
     url(r'^teams/(?P<pk>\d+)/$', TeamDetail.as_view(), name='team_detail'),
     url(r'^teams/your/$', 'riskgame.views.team_your', name="team_your"),
     # url(r'^teams/create/$', 'riskgame.views.team_create', name='team_create'),
