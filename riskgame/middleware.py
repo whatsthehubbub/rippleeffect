@@ -1,11 +1,11 @@
-# from django.http import HttpResponsePermanentRedirect
+from django.http import HttpResponsePermanentRedirect
 
-# class WWWRedirectMiddleware(object):
-#     def process_request(self, request):
-#         # Check that we're not on the dev server
-#         # And check if there isn't www in front of the URL
-#         if not request.META['HTTP_HOST'].startswith('127.') and not request.META['HTTP_HOST'].startswith('www.'):
-#             return HttpResponsePermanentRedirect('http://www.gidsgame.nl')
+class WWWRedirectMiddleware(object):
+    def process_request(self, request):
+        # Check that we're not on the dev server
+        # And check if there isn't www in front of the URL
+        if not request.META['HTTP_HOST'].startswith('127.') and not request.META['HTTP_HOST'].startswith('www.'):
+            return HttpResponsePermanentRedirect('http://www.playrippleeffect.com')
 
 # from riskgame.models import Game
 # from django.core.urlresolvers import reverse
@@ -31,7 +31,7 @@ class ImpersonateMiddleware(object):
     def process_request(self, request):
         if request.user.is_authenticated() and request.user.is_admin and "impersonate" in request.GET:
             request.session['impersonate_email'] = request.GET["impersonate"]
-        elif "unimpersonate" in request.GET:
+        elif "unimpersonate" in request.GET and 'impersonate_email' in request.session:
             del request.session['impersonate_email']
 
         if request.user.is_authenticated() and request.user.is_admin and 'impersonate_email' in request.session:
