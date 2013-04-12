@@ -116,6 +116,12 @@ def migrate():
         virtualenv('python manage.py migrate')
 
 @task
+def collectstatic():
+    "collect static files"
+    with cd(env.home):
+        virtualenv('python manage.py collectstatic')
+
+@task
 def deploy():
     """full deploy
     
