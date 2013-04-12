@@ -219,6 +219,23 @@ def home(request):
     return HttpResponse(t.render(c))
 
 @login_required
+@require_POST
+def close_dialog(request):
+    player = request.user.get_or_create_player()
+    teamplayer = TeamPlayer.objects.get(player=player)
+
+    dialog = request.POST.get('dialog', '')
+
+    if dialog == 'start_game':
+        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_game_start=False)
+    elif dialog == 'start_episode':
+        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_game_start=False)
+    elif dialog == 'start_turn':
+        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_game_start=False)
+
+    return HttpResponseRedirect(reverse('home'))
+
+@login_required
 def teams(request):
     t = loader.get_template('riskgame/teams.html')
 
