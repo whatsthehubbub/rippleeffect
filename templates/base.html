@@ -30,5 +30,28 @@
 
         {% if current_player %}{% include "partials/intercom.html" %}{% endif %}
         {% include "partials/analytics.html" %}
+
+        <script>
+          document.write('<script src="{{ STATIC_URL}}javascripts' +
+          ('__proto__' in {} ? '/vendor/zepto' : '/vendor/jquery') +
+          '.js"><\/script>')
+          </script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.alerts.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.clearing.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.cookie.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.dropdown.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.forms.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.joyride.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.magellan.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.orbit.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.placeholder.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.reveal.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.section.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.tooltips.js"></script>
+          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.topbar.js"></script>
+          <script>
+          $(document).foundation();
+          </script>
     </body>
 </html>
