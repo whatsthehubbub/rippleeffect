@@ -7,10 +7,12 @@
 
 	<p>Points: {{ team.victory_points }}</p>
 
+	<p>Resources collected: {{ team.resources_collected }}</p>
+
 	<h2>{% trans "Players" %}</h2>
 
 	{% for player in team.teamplayer_set.all %}
-		<li>{{ player }} - {{ player.role }}</li>
+		<li><a href="{{ player.get_absolute_url }}">{{ player }}</a> - {{ player.role }}</li>
 	{% endfor %}
 
 {% endblock content %}
