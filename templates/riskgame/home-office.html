@@ -62,36 +62,36 @@
 		<input type="submit" value="Improve safety">
 	</form>
 
-	<h4>Production</h4>
+	<h4>Production quality</h4>
 
 	<ul>
-		<li>Production status: hidden. <!--{{ teamplayer.gather_pile }}--></li>
+		<li>Production quality status: hidden. <!--{{ teamplayer.gather_pile }}--></li>
 		<li>Planned production: {{ teamplayer.gather_markers }}</li>
 	</ul>
 
 
 	<form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
 		<input type="hidden" name="pile" value="gather">
-		<input type="submit" value="Inspect production">
+		<input type="submit" value="Inspect production quality">
 	</form>
 
 	<form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
 		<input type="hidden" name="pile" value="gather">
-		<input type="submit" value="Improve production">
+		<input type="submit" value="Improve production quality">
 	</form>
 
-	<h4>Retrieval</h4>
+	<h4>Resource production</h4>
 
 	<form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
-		<input type="submit" value="Raise barrier">
+		<input type="submit" value="Place recovery barrier">
 	</form>
 
 	<form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
-		<input type="submit" value="Plan retrieval">
+		<input type="submit" value="Plan resource production">
 	</form>
 
 	<form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
-		<input type="submit" value="Retrieve resources">
+		<input type="submit" value="Produce resources">
 	</form>
 
 	<h3>Notifications</h3>

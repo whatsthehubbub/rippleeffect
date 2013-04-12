@@ -19,10 +19,10 @@ logger = logging.getLogger('ripple')
 
 # Events have integer values
 # 0 = No event
-# 1 = Rain, team
-# 2 = Hard wind, team
+# 1 = Poor vision, team
+# 2 = Tornado, team
 # 3 = High market, team
-# 4 = High waves, player
+# 4 = Increased risk, player
 # 5 = Lightning, player
 
 def enum(**enums):
@@ -235,29 +235,29 @@ class Notification(models.Model):
         if self.identifier == 'player-inspected-safety':
             return 'inspected safety'
         elif self.identifier == 'player-inspected-production':
-            return 'inspected production'
+            return 'inspected production quality'
         elif self.identifier == 'player-improved-safety':
             return 'improved safety'
         elif self.identifier == 'player-improved-production':
-            return 'improved production'
+            return 'improved production quality'
         elif self.identifier == 'player-received-rainevent':
-            return 'received the rain event, affecting the whole team'
+            return 'received the poor vision event, affecting the whole team'
         elif self.identifier == 'player-received-hardwind-event':
-            return 'received the hard wind event, affecting the whole team'
+            return 'received the tornado event, affecting the whole team'
         elif self.identifier == 'player-received-highmarket-event':
             return 'received the high market event, affecting the whole team'
         elif self.identifier == 'player-received-highwaves-event':
-            return 'received the high waves event'
+            return 'received the increased risk event'
         elif self.identifier == 'player-received-lightning-event':
             return 'received the lightning event'
         elif self.identifier == 'player-retrieved-success':
-            return 'retrieved %d resources and scored %d points' % (self.resources_retrieved, self.points_scored)
+            return 'produced %d resources and scored %d points' % (self.resources_retrieved, self.points_scored)
         elif self.identifier == 'player-retrieved-failure':
-            return 'tried to retrieve resources but triggered an incident'
+            return 'tried to produce resources but triggered an incident'
         elif self.identifier == 'player-gather':
-            return 'planned retrieval'
+            return 'planned resource production'
         elif self.identifier == 'player-prevent':
-            return 'raised a barrier'
+            return 'placed a recovery barrier'
         elif self.identifier == 'frontline-safety':
             return "inspected another player's safety"
         elif self.identifier == 'frontline-event':
