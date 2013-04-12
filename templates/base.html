@@ -28,6 +28,7 @@
             {% block content %}{% endblock content %}
         </div>
 
+        {% if player %}{% include "partials/intercom.html" %}{% endif %}
         {% include "partials/analytics.html" %}
     </body>
 </html>
