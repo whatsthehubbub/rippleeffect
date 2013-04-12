@@ -699,6 +699,7 @@ class Team(models.Model):
         Team.objects.filter(pk=self.pk).update(frontline_action_points=2*playerCount)
 
         Team.objects.filter(pk=self.pk).update(goal_zero_markers=F('goal_zero_markers')+1)
+        Team.objects.filter(pk=self.pk).update(goal_zero_streak=max(F('goal_zero_markers'), F('goal_zero_streak')))
 
         # At the start of a day reset all the markers for a team
         TeamPlayer.objects.filter(team=self).update(gather_markers=0)
