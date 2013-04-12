@@ -8,7 +8,7 @@ server {
     }
     
     location /static {
-        alias {{home}}/static/;
+        alias {{home}}/staticroot/;
     }
     location / {
         include uwsgi_params;
