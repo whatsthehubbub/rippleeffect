@@ -405,6 +405,7 @@ def play_pump(request):
 
     if risks > preventions:
         # We have an incident
+        Team.objects.filter(pk=team.pk).update(goal_zero_streak=max(team.goal_zero_markers, team.goal_zero_streak))
         Team.objects.filter(pk=team.pk).update(goal_zero_markers=0)
 
         # Lose all your action points if the hard wind event is active

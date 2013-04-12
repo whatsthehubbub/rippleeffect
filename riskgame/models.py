@@ -525,6 +525,7 @@ class Team(models.Model):
     open = models.BooleanField(default=True)
 
     goal_zero_markers = models.IntegerField(default=0)
+    goal_zero_streak = models.IntegerField(default=0)
 
     action_points = models.IntegerField(default=0)
     frontline_action_points = models.IntegerField(default=0)
@@ -803,6 +804,7 @@ class Game(models.Model):
         self.start = start
 
         Team.objects.all().update(goal_zero_markers=0)
+        Team.objects.all().update(goal_zero_streak=0)
         Team.objects.all().update(action_points=0)
         Team.objects.all().update(victory_points=0)
         Team.objects.all().update(victory_points_episode=0)
