@@ -144,6 +144,32 @@ def player_profile_own(request):
 
     return HttpResponseRedirect(reverse('player_profile', args=[player.pk]))
 
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Player
+        fields = ('name', 'receive_email')
+
+def player_profile_edit(request):
+    t = loader.get_template('riskgame/player_profile_edit.html')
+
+    player = request.user.get_or_create_player()
+
+    if request.method == "POST":
+        profileform = ProfileForm(request.POST, instance=player)
+
+        if profileform.is_valid():
+            profileform.save()
+
+            return HttpResponseRedirect(reverse('player_profile_own'))
+    else:
+        profileform = ProfileForm(instance=player)
+
+    c = RequestContext(request, {
+        'profileform': profileform
+    })
+
+    return HttpResponse(t.render(c))
+
 class FrontLineForm(forms.Form):
     def __init__(self, teamplayer, *args, **kwargs):
         super(FrontLineForm, self).__init__(*args, **kwargs)
