@@ -700,7 +700,6 @@ class Player(models.Model):
     datechanged = models.DateTimeField(auto_now=True)
 
     name = models.CharField(max_length=255, default='')
-    onelinebio = models.CharField(max_length=140, default='', blank=True)
 
     receive_email = models.BooleanField(default=True)
     emails_unsubscribe_hash = models.CharField(max_length=255, blank=True)
