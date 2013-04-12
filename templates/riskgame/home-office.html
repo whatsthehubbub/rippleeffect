@@ -26,13 +26,13 @@
 		</ul>
 	{% endif %}
 
-	<p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({{ currentDay.end|timeuntil }} left)</p>
+	<p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({% if currentDay.end|timeuntil != "0 minutes" %}{{ currentDay.end|timeuntil }}{% else %}less than a minute{% endif %} left)</p>
 
 	<h3>Team</h3>
 
 	<ul>
 		<li>Team event: {{ teamplayer.team.active_events }}</li>
-		<li>Actions: {{ teamplayer.team.action_points }} office / xx frontline</li>
+		<li>Actions: {{ teamplayer.team.action_points }} office / {{ teamplayer.team.frontline_action_points }} frontline</li>
 		<li>Goal zero: {{ teamplayer.team.goal_zero_markers }} currently / x longest this game</li>
 		<li>Points: {{ teamplayer.team.victory_points_episode }} this episode / {{ teamplayer.team.victory_points }} this game</li>
 		<li>Resources: {{ teamplayer.team.resources_collected_episode }} this episode / {{ teamplayer.team.resources_collected }} this game</li>

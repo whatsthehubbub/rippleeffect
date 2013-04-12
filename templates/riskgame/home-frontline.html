@@ -23,7 +23,7 @@
 		</ul>
 	{% endif %}
 
-	<p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({{ currentDay.end|timeuntil }} left)</p>
+	<p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({% if currentDay.end|timeuntil != "0 minutes" %}{{ currentDay.end|timeuntil }}{% else %}less than a minute{% endif %} left)</p>
 
 	<h3>Team</h3>
 
@@ -33,14 +33,14 @@
 		<li>Goal zero: {{ teamplayer.team.goal_zero_markers }} currently / x longest this game</li>
 		<li>Points: {{ teamplayer.team.victory_points_episode }} this episode / {{ teamplayer.team.victory_points }} this game</li>
 		<li>Resources: {{ teamplayer.team.resources_collected_episode }} this episode / {{ teamplayer.team.resources_collected }} this game</li>
-		<li>Indidents: 0 this episode / 0 this game</li>
+		<li>Indidents: x this episode / x this game</li>
 	</ul>
 
 	<h4>Team members</h4>
 	
 	<ul>
 	{% for mate in teammates %}
-		<li>{{ mate.player }} - {{ mate.role }} {% ifequal mate.player player %}(YOU!){% endifequal %}</li>
+		<li>{{ mate.player }} - {{ mate.role }} {% ifequal mate.player player %}(You!){% endifequal %}</li>
 	{% endfor %}
 	</ul>
 
@@ -75,6 +75,5 @@
 		{{ startform.as_p }}
 		<input type="submit">
 	</form>
-
 
 {% endblock content %}
