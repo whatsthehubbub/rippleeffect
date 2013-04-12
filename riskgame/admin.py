@@ -95,7 +95,7 @@ class TeamPlayerAdmin(admin.ModelAdmin):
 admin.site.register(TeamPlayer, TeamPlayerAdmin)
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name', 'leader', 'open', 'action_points', 'frontline_action_points', 'goal_zero_markers', 'goal_zero_streaek', 'active_events')
+    list_display = ('name', 'leader', 'open', 'action_points', 'frontline_action_points', 'goal_zero_markers', 'goal_zero_streak', 'active_events')
 admin.site.register(Team, TeamAdmin)
 
 class PlayerAdmin(admin.ModelAdmin):

@@ -716,6 +716,12 @@ class Team(models.Model):
     def is_event_active(self, event):
         return event in self.active_events.split(',')
 
+    def get_office_players(self):
+        return self.teamplayer_set.filter(role='office')
+
+    def get_frontline_players(self):
+        return self.teamplayer_set.filter(role='frontline')
+
 
 class Player(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
