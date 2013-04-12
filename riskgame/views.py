@@ -264,7 +264,7 @@ def inspect_risks(request):
 
             result += (8-len(result)) * ['?']
 
-            # TODO Create notification
+            Notification.objects.create_frontline_safety_notification(teamplayer.team, player)
 
             messages.add_message(request, messages.INFO, "Inspected risk for player %s and found: %s" % (str(target.player), ' '.join(result)))
 
@@ -284,9 +284,10 @@ def inspect_event(request):
             target = form.cleaned_data.get('target')
 
             # Get next event
-
             currentDay = EpisodeDay.objects.get(current=True)
             event = target.get_event_for_day(currentDay.next)
+
+            Notification.objects.create_frontline_event_notification(teamplayer.team, player)
 
             messages.add_message(request, messages.INFO, "Inspected event for player %s and found: %s" % (str(target.player), event))
     return HttpResponseRedirect(reverse('home'))

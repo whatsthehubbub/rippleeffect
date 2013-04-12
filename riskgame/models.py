@@ -129,6 +129,13 @@ class ValidEmailDomain(models.Model):
 from django.core.mail import EmailMessage
 
 class NotificationManager(models.Manager):
+    # Inspect frontline notifications
+    def create_frontline_safety_notification(self, team, player):
+        return Notification.objects.create(identifier='frontline-safety', team=team, player=player)
+
+    def create_frontline_event_notification(self, team, player):
+        return Notification.objects.create(identifier='frontline-event', team=team, player=player)
+
     # Inspect notifications
     def create_inspected_safety_notification(self, team, player):
         return Notification.objects.create(identifier='player-inspected-safety', team=team, player=player)
@@ -251,6 +258,10 @@ class Notification(models.Model):
             return 'planned retrieval'
         elif self.identifier == 'player-prevent':
             return 'raised a barrier'
+        elif self.identifier == 'frontline-safety':
+            return "inspected another player's safety"
+        elif self.identifier == 'frontline-event':
+            return "inspected another player's event"
 
     def get_subject(self):
         # TODO modify subjects based on notification type
