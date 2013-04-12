@@ -332,6 +332,10 @@ class TeamPlayer(models.Model):
 
     active_events = models.CommaSeparatedIntegerField(max_length=255, blank=True, default='')
 
+    show_game_start = models.BooleanField(default=False)
+    show_episode_start = models.BooleanField(default=False)
+    show_turn_start = models.BooleanField(default=False)
+
     team = models.ForeignKey('Team')
     player = models.ForeignKey('Player')
 
@@ -548,6 +552,12 @@ class Team(models.Model):
         return TeamJoinRequest.objects.filter(team=self, invite=False)
 
     def start_episode(self, episode):
+        if episode.number == 1:
+            # Game start
+            self.teamplayer_set.update(show_game_start=True)
+
+        self.teamplayer_set.update(show_episode_start=True)
+        
         playerCount = self.teamplayer_set.filter(role='office').count()
 
         # Stack both piles at the start of each episode

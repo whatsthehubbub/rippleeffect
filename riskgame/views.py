@@ -204,7 +204,7 @@ def home(request):
             'teamplayer': teamplayer,
             'teammates': teamplayer.team.teamplayer_set.all(),
             'currentDay': EpisodeDay.objects.get(current=True),
-            'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
+            'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')[:25],
         })
 
         if teamplayer.role == 'office':
