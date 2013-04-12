@@ -5,49 +5,13 @@
 {% block content %}
 	<p>Name: {{ team.name }}</p>
 
-	<p>Open: {{ team.open }}</p>
-
-	<p>{% blocktrans with team.leader as leader %}Team leader: {{ leader }}{% endblocktrans %}</p>
+	<p>Points: {{ team.victory_points }}</p>
 
 	<h2>{% trans "Players" %}</h2>
 
-	{% for player in team.player_set.all %}
+	{% for player in team.teamplayer_set.all %}
 		<li>{{ player }} - {{ player.role }}</li>
 	{% endfor %}
-
-
-	{% if player == team.leader %}
-		<h2>Join requests</h2>
-
-		{% for join_request in team.get_join_requests %}
-			<li>{{ join_request }}
-				<form method="POST" action="{% url 'accept_team_join' team.id %}">
-					{% csrf_token %}
-					<input type="hidden" name="join_request_id" value="{{ join_request.id }}">
-					<input type="submit" value="accept request">
-				</form>
-			</li>
-		{% endfor %}
-	{% endif %}
-
-	<hr>
-	{% if team.open and not player == team.leader %}
-
-		{% comment %} TODO also catch the case where you have been invited to join the team{% endcomment %}
-
-		{% if player|requested_join:team %}
-			You have requested to join this team.
-		{% else %}
-			<form method="POST" action="{% url 'request_team_join' team.id %}">
-				{% csrf_token %}
-				<input type="submit" value="request join">
-			</form>
-		{% endif %}
-	{% endif %}
-
-	{% if player == team.leader %}
-		You are the team leader. TODO invite players
-	{% endif %}
 
 {% endblock content %}
 

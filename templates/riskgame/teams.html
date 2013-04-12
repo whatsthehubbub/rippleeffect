@@ -5,7 +5,7 @@
 	
 	{% for team in teams %}
 		<li>
-			{{ team.name }} - {{ team.victory_points }}
+			<a href="{{ team.get_absolute_url }}">{{ team.name }}</a> - {{ team.victory_points }}
 		</li>
 	{% endfor %}
 
