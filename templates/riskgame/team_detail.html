@@ -14,7 +14,11 @@
 	<h2>{% trans "Players" %}</h2>
 
 	{% for tp in team.teamplayer_set.all %}
-		<li><a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a> - {{ tp.role }}</li>
+		<li><a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a> - {{ tp.role }}
+			{% ifequal current_player tp.player %}
+				YOU
+			{% endifequal %}
+		</li>
 	{% endfor %}
 
 {% endblock content %}
