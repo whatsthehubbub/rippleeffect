@@ -11,8 +11,8 @@
 
 	<h2>{% trans "Players" %}</h2>
 
-	{% for player in team.teamplayer_set.all %}
-		<li><a href="{{ player.get_absolute_url }}">{{ player }}</a> - {{ player.role }}</li>
+	{% for tp in team.teamplayer_set.all %}
+		<li><a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a> - {{ tp.role }}</li>
 	{% endfor %}
 
 {% endblock content %}

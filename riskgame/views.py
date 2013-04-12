@@ -205,8 +205,6 @@ def home(request):
             'teammates': teamplayer.team.teamplayer_set.all(),
             'currentDay': EpisodeDay.objects.get(current=True),
             'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
-
-            'startform': GameStartForm()
         })
 
         if teamplayer.role == 'office':
@@ -215,6 +213,8 @@ def home(request):
             t = loader.get_template('riskgame/home-frontline.html')
 
             c['targetform'] = FrontLineForm(teamplayer)
+
+    c['startform'] = GameStartForm()
 
     return HttpResponse(t.render(c))
 
@@ -388,11 +388,11 @@ def play_pump(request):
 
     if risks > preventions:
         # We have an incident
-        Team.objects.filter(id=team.id).update(goal_zero_markers=0)
+        Team.objects.filter(pk=team.pk).update(goal_zero_markers=0)
 
         # Lose all your action points if the hard wind event is active
         if team.is_event_active(Events.HARD_WIND):
-            Team.objects.filter(id=team.id).update(action_points=0)
+            Team.objects.filter(pk=team.pk).update(action_points=0)
 
         Notification.objects.create_retrieved_failure_notification(team, player)
 
@@ -404,11 +404,11 @@ def play_pump(request):
 
         points_scored = team.goal_zero_markers * oil * high_market_modifier * 100
 
-        Team.objects.filter(id=team.id).update(resources_collected=F('resources_collected') + oil)
-        Team.objects.filter(id=team.id).update(resources_collected_episode=F('resources_collected_episode') + oil)
+        Team.objects.filter(pk=team.pk).update(resources_collected=F('resources_collected') + oil)
+        Team.objects.filter(pk=team.pk).update(resources_collected_episode=F('resources_collected_episode') + oil)
 
-        Team.objects.filter(id=team.id).update(victory_points=F('victory_points') + points_scored)
-        Team.objects.filter(id=team.id).update(victory_points_episode=F('victory_points_episode') + points_scored)
+        Team.objects.filter(pk=team.pk).update(victory_points=F('victory_points') + points_scored)
+        Team.objects.filter(pk=team.pk).update(victory_points_episode=F('victory_points_episode') + points_scored)
 
         Notification.objects.create_retrieved_success_notification(team, player, oil, points_scored)
 

@@ -102,13 +102,6 @@
 		{% endfor %}
 	</ul>
 
-	<h3>Start a new game</h3>
-
-	<form method="POST" action="{% url 'game_start' %}">
-		{% csrf_token %}
-		{{ startform.as_p }}
-		<input type="submit">
-	</form>
-
-
+	{% include "partials/start_new_game.html" %}
+	
 {% endblock content %}

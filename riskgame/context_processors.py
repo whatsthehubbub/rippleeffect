@@ -10,7 +10,7 @@ def player(request):
         except Player.DoesNotExist:
             currentPlayer = Player.objects.create(user=request.user)
 
-        returnDict['player'] = currentPlayer
+        returnDict['current_player'] = currentPlayer
 
     # try:
     #     game = Game.objects.get_latest_game()

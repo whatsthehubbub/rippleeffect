@@ -13,4 +13,8 @@
 
 	<p>Role in current team: {{ teamplayer.role }}</p>
 
+	{% ifequal player.user user %} 
+		<a href="{% url 'player_profile_edit' %}">Edit your profile</a>
+	{% endifequal %}
+
 {% endblock content %}

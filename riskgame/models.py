@@ -279,7 +279,7 @@ class Episode(models.Model):
     number = models.IntegerField(default=0)
 
     def __unicode__(self):
-        return str(self.id)
+        return str(self.number)
 
 class EpisodeDay(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
@@ -295,7 +295,7 @@ class EpisodeDay(models.Model):
     next = models.ForeignKey('self', null=True, blank=True)
 
     def __unicode__(self):
-        return str(self.id)
+        return str(self.number)
 
     def start(self):
         if self.episode.first_day == self:
@@ -503,7 +503,7 @@ class TeamPlayer(models.Model):
         top_card = pile.pop(0)
 
         if top_card == '1':
-            Team.objects.filter(id=self.team.id).update(action_points=0)
+            Team.objects.filter(pk=self.team.pk).update(action_points=0)
             effect = True
 
         self.risk_pile = ','.join(pile)
@@ -538,11 +538,11 @@ class Team(models.Model):
     active_events = models.CommaSeparatedIntegerField(max_length=255, blank=True, default='')
 
     def __unicode__(self):
-        return self.name or self.id
+        return self.name or self.pk
 
     @models.permalink
     def get_absolute_url(self):
-        return ('team_detail', [self.id])
+        return ('team_detail', [self.pk])
 
     def get_join_requests(self):
         return TeamJoinRequest.objects.filter(team=self, invite=False)
@@ -717,6 +717,10 @@ class Player(models.Model):
 
     user = models.OneToOneField(EmailUser)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('player_profile', [self.pk])
+
     def update_unsubscribe_hash(self):
         import uuid
         self.emails_unsubscribe_hash = uuid.uuid4().hex
@@ -770,7 +774,7 @@ class Game(models.Model):
     end = models.DateTimeField()
 
     def __unicode__(self):
-        return str(self.id)
+        return str(self.pk)
 
     def started(self):
         return timezone.now() > self.start
