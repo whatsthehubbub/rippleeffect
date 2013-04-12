@@ -537,7 +537,7 @@ class Team(models.Model):
         return TeamJoinRequest.objects.filter(team=self, invite=False)
 
     def start_episode(self, episode):
-        playerCount = self.players.filter(role='office').count()
+        playerCount = self.teamplayer_set.filter(role='office').count()
 
         # Stack both piles at the start of each episode
         # TODO already change the 0s and 1s here to strings
