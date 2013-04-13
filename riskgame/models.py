@@ -478,7 +478,7 @@ class TeamPlayer(models.Model):
         # If there are more risks than prevent markers, bad things will happen
         result = (oil, risks, self.prevent_markers)
 
-        self.prevent_markers = max(0, self.prevent_markers - risks)
+        self.prevent_markers = 0
 
         return result
 
