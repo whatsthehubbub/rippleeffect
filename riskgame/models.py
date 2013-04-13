@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 import random
 import datetime
 import math
+import hashlib
 
 import logging
 logger = logging.getLogger('ripple')
@@ -768,6 +769,14 @@ class Player(models.Model):
 
     def email(self):
         return self.user.email
+
+    def get_intercom_hash(self):
+        m = hashlib.sha256()
+        m.update('pwGPevZCKMZEXZzhBwtOyWUlmPWCEBqe_R8dI6Xq')
+        m.update(self.email())
+
+        return m.hexdigest()
+
 
 class TeamJoinRequest(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
