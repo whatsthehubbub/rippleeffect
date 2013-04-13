@@ -240,7 +240,7 @@ def teams(request):
     t = loader.get_template('riskgame/teams.html')
 
     c = RequestContext(request, {
-        'teams': Team.objects.all()
+        'teams': Team.objects.all().order_by('-victory_points')
     })
 
     return HttpResponse(t.render(c))
@@ -425,6 +425,8 @@ def play_pump(request):
         Team.objects.filter(pk=team.pk).update(resources_collected_episode=F('resources_collected_episode') + oil)
 
         Team.objects.filter(pk=team.pk).update(victory_points=F('victory_points') + points_scored)
+        Team.objects.get(pk=team.pk).update_rank()
+
         Team.objects.filter(pk=team.pk).update(victory_points_episode=F('victory_points_episode') + points_scored)
 
         Notification.objects.create_retrieved_success_notification(team, player, oil, points_scored)

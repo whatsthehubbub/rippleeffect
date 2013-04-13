@@ -6,7 +6,8 @@
 	{% for team in teams %}
 		<li>
 			<a href="{{ team.get_absolute_url }}">{{ team.name }}</a> - points {{ team.victory_points }} - resources {{ team.resources_collected}} - goal zero {{ team.goal_zero_streak }}<br>
-			composition: ({{ team.get_office_players.count }} / {{ team.get_frontline_players.count }})
+			composition: ({{ team.get_office_players.count }} / {{ team.get_frontline_players.count }})<br>
+			rank: {{ team.get_rank }}
 		</li>
 	{% endfor %}
 

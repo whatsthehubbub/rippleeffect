@@ -723,6 +723,18 @@ class Team(models.Model):
     def get_frontline_players(self):
         return self.teamplayer_set.filter(role='frontline')
 
+    def update_rank(self):
+        from redis_cache import get_redis_connection
+
+        con = get_redis_connection('default')
+        con.zadd('teamrank', self.pk, self.victory_points)
+
+    def get_rank(self):
+        from redis_cache import get_redis_connection
+
+        con = get_redis_connection('default')
+        return con.zrevrank('teamrank', self.pk)+1
+
 
 class Player(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)

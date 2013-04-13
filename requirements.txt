@@ -25,3 +25,4 @@ django-debug-toolbar==0.9.4
 uWSGI==1.9.5
 django-timezone-field==0.4
 django-nose==1.1
+django-redis==3.2
