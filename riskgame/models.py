@@ -33,7 +33,7 @@ def enum(**enums):
 
     return type('Enum', (), enums)
 
-Events = enum(NO_EVENT='0', POOR_VISION='1', TORNADO='2', HIGH_MARKET='3', HIGH_WAVES='4', LIGHTNING='5')
+Events = enum(NO_EVENT='0', POOR_VISION='1', TORNADO='2', HIGH_MARKET='3', INCREASED_RISK='4', LIGHTNING='5')
 
 
 class EmailUserManager(BaseUserManager):
@@ -154,8 +154,8 @@ class NotificationManager(models.Manager):
     def create_received_highmarket_event_notification(self, team, player):
         return Notification.objects.create(identifier='player-received-highmarket-event', team=team, player=player)
 
-    def create_received_highwaves_event_notification(self, team, player):
-        return Notification.objects.create(identifier='player-received-highwaves-event', team=team, player=player)
+    def create_received_increasedrisk_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-increasedrisk-event', team=team, player=player)
 
     def create_received_lightning_event_notification(self, team, player):
         return Notification.objects.create(identifier='player-received-lightning-event', team=team, player=player)
@@ -247,7 +247,7 @@ class Notification(models.Model):
             return 'received the tornado event, affecting the whole team'
         elif self.identifier == 'player-received-highmarket-event':
             return 'received the high market event, affecting the whole team'
-        elif self.identifier == 'player-received-highwaves-event':
+        elif self.identifier == 'player-received-increasedrisk-event':
             return 'received the increased risk event'
         elif self.identifier == 'player-received-lightning-event':
             return 'received the lightning event'
@@ -607,7 +607,7 @@ class Team(models.Model):
 
         if episode.number == 1:
             for counter in range(playerCount):
-                putEventInList(day_lists, random.randint(2, 6), Events.HIGH_WAVES)
+                putEventInList(day_lists, random.randint(2, 6), Events.INCREASED_RISK)
 
             putEventInList(day_lists, random.randint(3, 6), Events.POOR_VISION)
 
@@ -615,9 +615,9 @@ class Team(models.Model):
             # First one high market event on day 2
             day_lists[1][0] = Events.HIGH_MARKET # It doesn't matter where we put this
 
-            # Then high wave events distributed in days 4,5,6
+            # Then increased risk events distributed in days 4,5,6
             for counter in range(playerCount):
-                putEventInList(day_lists, random.randint(3, 5), Events.HIGH_WAVES)
+                putEventInList(day_lists, random.randint(3, 5), Events.INCREASED_RISK)
 
             # Then one tornado event distributed in days 4,5,6
             putEventInList(day_lists, random.randint(3, 5), Events.TORNADO)
@@ -669,12 +669,12 @@ class Team(models.Model):
                 self.add_active_event(Events.HIGH_MARKET)
 
                 Notification.objects.create_received_highmarket_event_notification(self, tp.player)
-            elif event == Events.HIGH_WAVES:
-                tp.add_active_event(Events.HIGH_WAVES)
+            elif event == Events.INCREASED_RISK:
+                tp.add_active_event(Events.INCREASED_RISK)
 
                 tp.put_and_discard('1', 'risk')
 
-                Notification.objects.create_received_highwaves_event_notification(self, tp.player)
+                Notification.objects.create_received_increasedrisk_event_notification(self, tp.player)
             elif event == Events.TORNADO:
                 self.add_active_event(Events.TORNADO)
 
