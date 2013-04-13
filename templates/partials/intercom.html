@@ -4,11 +4,12 @@
     email: "{{ current_player.email }}",
     // TODO: The current logged in user's sign-up date as a Unix timestamp.
     created_at: {{ current_player.datecreated|date:"U" }},
-    name: '{{ player.name }}',
+    name: "{{ current_player.name }}",
     widget: {
     	activator: '#IntercomDefaultWidget'
   	},
-    role: "{{ player.role }}"
+    role: "{{ teamplayer.role }}",
+    team: "{{ teamplayer.team.name }}",
     app_id: "a7af8a497dc2485b4c3cca4b011160715ea89921"
   };
 </script>
