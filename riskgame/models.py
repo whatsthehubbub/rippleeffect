@@ -530,6 +530,7 @@ class Team(models.Model):
     action_points = models.IntegerField(default=0)
     frontline_action_points = models.IntegerField(default=0)
 
+    rank_points = models.IntegerField(default=0)
     victory_points = models.IntegerField(default=0)
     victory_points_episode = models.IntegerField(default=0)
 
@@ -648,6 +649,7 @@ class Team(models.Model):
         # Set the per episode scores to 0 again
         Team.objects.filter(pk=self.pk).update(resources_collected_episode=0)
         Team.objects.filter(pk=self.pk).update(victory_points_episode=0)
+        Team.objects.filter(pk=self.pk).update(rank_points=0)
 
 
     def start_day(self, day):
@@ -727,7 +729,7 @@ class Team(models.Model):
         from redis_cache import get_redis_connection
 
         con = get_redis_connection('default')
-        con.zadd('teamrank', self.pk, self.victory_points)
+        con.zadd('teamrank', self.pk, self.rank_points)
 
     def get_rank(self):
         from redis_cache import get_redis_connection
