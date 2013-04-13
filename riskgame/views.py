@@ -408,7 +408,7 @@ def play_pump(request):
         Team.objects.filter(pk=team.pk).update(goal_zero_markers=0)
 
         # Lose all your action points if the hard wind event is active
-        if team.is_event_active(Events.HARD_WIND):
+        if team.is_event_active(Events.TORNADO):
             Team.objects.filter(pk=team.pk).update(action_points=0)
 
         Notification.objects.create_retrieved_failure_notification(team, player)

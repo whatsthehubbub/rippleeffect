@@ -33,7 +33,7 @@ def enum(**enums):
 
     return type('Enum', (), enums)
 
-Events = enum(NO_EVENT='0', RAIN='1', HARD_WIND='2', HIGH_MARKET='3', HIGH_WAVES='4', LIGHTNING='5')
+Events = enum(NO_EVENT='0', POOR_VISION='1', TORNADO='2', HIGH_MARKET='3', HIGH_WAVES='4', LIGHTNING='5')
 
 
 class EmailUserManager(BaseUserManager):
@@ -145,11 +145,11 @@ class NotificationManager(models.Manager):
         return Notification.objects.create(identifier='player-inspected-production', team=team, player=player)
 
     # Event notifications
-    def create_received_rain_event_notification(self, team, player):
-        return Notification.objects.create(identifier='player-received-rain-event', team=team, player=player)
+    def create_received_poorvision_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-poorvision-event', team=team, player=player)
     
-    def create_received_hardwind_event_notification(self, team, player):
-        return Notification.objects.create(identifier='player-received-hardwind-event', team=team, player=player)
+    def create_received_tornado_event_notification(self, team, player):
+        return Notification.objects.create(identifier='player-received-tornado-event', team=team, player=player)
     
     def create_received_highmarket_event_notification(self, team, player):
         return Notification.objects.create(identifier='player-received-highmarket-event', team=team, player=player)
@@ -241,9 +241,9 @@ class Notification(models.Model):
             return 'improved safety'
         elif self.identifier == 'player-improved-production':
             return 'improved production quality'
-        elif self.identifier == 'player-received-rainevent':
+        elif self.identifier == 'player-received-poorvision-event':
             return 'received the poor vision event, affecting the whole team'
-        elif self.identifier == 'player-received-hardwind-event':
+        elif self.identifier == 'player-received-tornado-event':
             return 'received the tornado event, affecting the whole team'
         elif self.identifier == 'player-received-highmarket-event':
             return 'received the high market event, affecting the whole team'
@@ -370,7 +370,7 @@ class TeamPlayer(models.Model):
         # Need to get half rounded up
         half = int(math.ceil(float(len(pile)) / 2.0))
 
-        if self.team.is_event_active(Events.RAIN):
+        if self.team.is_event_active(Events.POOR_VISION):
             half -= 1
 
         result = pile[:half]
@@ -609,7 +609,7 @@ class Team(models.Model):
             for counter in range(playerCount):
                 putEventInList(day_lists, random.randint(2, 6), Events.HIGH_WAVES)
 
-            putEventInList(day_lists, random.randint(3, 6), Events.RAIN)
+            putEventInList(day_lists, random.randint(3, 6), Events.POOR_VISION)
 
         elif episode.number == 2:
             # First one high market event on day 2
@@ -619,15 +619,15 @@ class Team(models.Model):
             for counter in range(playerCount):
                 putEventInList(day_lists, random.randint(3, 5), Events.HIGH_WAVES)
 
-            # Then one hard wind events distributed in days 4,5,6
-            putEventInList(day_lists, random.randint(3, 5), Events.HARD_WIND)
+            # Then one tornado event distributed in days 4,5,6
+            putEventInList(day_lists, random.randint(3, 5), Events.TORNADO)
 
             # Then lightning events distributed in potentially days 3,4,5,6
             for counter in range(playerCount):
                 putEventInList(day_lists, random.randint(2, 5), Events.LIGHTNING)
 
-            # Then one rain event distributed potentially over in days 2,3,4,5,6,7
-            putEventInList(day_lists, random.randint(1, 6), Events.RAIN)
+            # Then one poor vision event distributed potentially over in days 2,3,4,5,6,7
+            putEventInList(day_lists, random.randint(1, 6), Events.POOR_VISION)
 
         # Randomize the lists per day
         [random.shuffle(day_list) for day_list in day_lists]
@@ -675,10 +675,10 @@ class Team(models.Model):
                 tp.put_and_discard('1', 'risk')
 
                 Notification.objects.create_received_highwaves_event_notification(self, tp.player)
-            elif event == Events.HARD_WIND:
-                self.add_active_event(Events.HARD_WIND)
+            elif event == Events.TORNADO:
+                self.add_active_event(Events.TORNADO)
 
-                Notification.objects.create_received_hardwind_event_notification(self, tp.player)
+                Notification.objects.create_received_tornado_event_notification(self, tp.player)
             elif event == Events.LIGHTNING:
                 tp.add_active_event(Events.LIGHTNING)
 
@@ -687,10 +687,10 @@ class Team(models.Model):
                 # TODO make notification parametric based on effect
 
                 Notification.objects.create_received_lightning_event_notification(self, tp.player)
-            elif event == Events.RAIN:
-                self.add_active_event(Events.RAIN)
+            elif event == Events.POOR_VISION:
+                self.add_active_event(Events.POOR_VISION)
 
-                Notification.objects.create_received_rain_event_notification(self, tp.player)
+                Notification.objects.create_received_poorvision_event_notification(self, tp.player)
 
             tp.save()
         self.save()
