@@ -430,13 +430,13 @@ class TeamPlayer(models.Model):
 
         pile = self.gather_pile.split(',')
         oil = 0 # Units of oil pumped
-        reflow = [] # What we are going to put back in the deck
+        reflow_production = [] # What we are going to put back in the deck
 
         while gathersteps > 0:
             if pile:
                 output = pile.pop(0)
 
-                reflow.append(output)
+                reflow_production.append(output)
 
                 if output == '1':
                     oil += 1
@@ -448,19 +448,20 @@ class TeamPlayer(models.Model):
         # We pump until everything is empty. Even if there are more markers than there are in the pile.
         self.gather_markers = 0
 
-        self.gather_pile = ','.join(pile + reflow)
+        self.gather_pile = ','.join(pile + reflow_production)
+        # Shuffle happens later anyway with the decay step
 
         # Now do the same with the risk pile
 
         pile = self.risk_pile.split(',')
         risks = 0
-        reflow = []
+        reflow_safety = []
 
         while risksteps > 0:
             if pile:
                 output = pile.pop(0)
 
-                reflow.append(output)
+                reflow_safety.append(output)
 
                 if output == '1':
                     risks += 1
@@ -470,14 +471,14 @@ class TeamPlayer(models.Model):
 
             risksteps -= 1
 
-        self.risk_pile = ','.join(pile + reflow)
+        self.risk_pile = ','.join(pile + reflow_safety)
 
         # Both piles decay and are shuffled
         self.put_and_discard('0', 'gather')
         self.put_and_discard('1', 'risk')
 
         # If there are more risks than prevent markers, bad things will happen
-        result = (oil, risks, self.prevent_markers)
+        result = (oil, reflow_production, risks, reflow_safety, self.prevent_markers)
 
         self.prevent_markers = 0
 

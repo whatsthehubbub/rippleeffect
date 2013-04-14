@@ -1,0 +1,33 @@
+<p>Tried to produce resources for player {{ player }} with 0 cost.</p>
+
+{% ifequal episode.number 1 %}	
+	{% if incident_count > barrier_count %}
+		<p>Oh no, look at what you’ve done. During your production work you ran into a risk, and because you didn’t safeguard it with a recovery barrier, the risk turned into a full-blown incident. That means you score no resources, no points, no nothing. Even your Goal Zero points are gone. This looks really terrible, even for a beginner.</p>
+	{% else %}
+		{% if resource_count == 0 %}
+			<p>Oh man, that’s too bad! You didn’t get any resources. Like, at all! Maybe you should’ve talked to Abu and improved your production quality first? Or maybe you’re just out of luck?</p>
+		{% else %}
+			{% if resource_count == 1 %}
+				<p>Well done! You got a resource. Your team will be so happy you’re on their side! Now, as much as I’d like to encourage you to keep producin’, remember that every time you produce a resource, your production quality will go down. I think the scientific phrase for that is ‘entropy’. So you have to constantly work on improving your production quality, too. But that’s really Abu’s department.</p>
+			{% else %}
+				<p>This is incredible! Look at all the resources! If this doesn’t make your team members throw you a party, I don’t know what will! Now, as much as I’d like to encourage you to keep producin’, remember that every time you produce a resource, your production quality will go down. I think the scientific phrase for that is ‘entropy’. So you have to constantly work on improving your production quality, too. But that’s really Abu’s department.</p>
+			{% endif %}
+		{% endif %}
+	{% endif %}
+{% endifequal %}
+
+{% ifequal episode.number 2 %} 
+	{% if incident_count > barrier_count %}
+		<p>Oh no, look at what you’ve done. You ran into a risk, and because you didn’t safeguard it with a recovery barrier, the risk turned into a full-blown incident. That means you score no resources, no points, no nothing. Even your Goal Zero points are gone. Now how are you going to explain this to your colleagues?</p>
+	{% else %}
+		{% if resource_count == 0 %}
+			<p></p>
+		{% else %}
+			{% if resource_count == 1 %}
+				<p>Well done! You got a resource. Your team will be so happy you’re on their side!</p>
+			{% else %}
+				<p>This is incredible! Look at all the resources! If this doesn’t make your team members throw you a party, I don’t know what will!</p>
+			{% endif %}
+		{% endif %}
+	{% endif %}
+{% endifequal %}

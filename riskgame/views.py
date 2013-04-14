@@ -441,10 +441,23 @@ def play_pump(request):
     teamplayer = TeamPlayer.objects.get(player=player)
     team = teamplayer.team
 
-    oil, risks, preventions = teamplayer.pump()
+    # This is horrible but it works
+    resource_count, production, incident_count, safety, barrier_count = teamplayer.pump()
     teamplayer.save()
 
-    if risks > preventions:
+    t = loader.get_template('messages/frontline-predict-event.html')
+
+    c = RequestContext(request, {
+        'episode': EpisodeDay.objects.get(current=True).episode,
+        'player': target.player,
+        'resource_count': resource_count,
+        'production': production,
+        'incident_count': incident_count,
+        'safety': safety,
+        'barrier_count': barrier_count
+    })
+
+    if incident_count > barrier_count:
         # We have an incident
         Team.objects.filter(pk=team.pk).update(goal_zero_markers=0)
 
@@ -453,17 +466,15 @@ def play_pump(request):
             Team.objects.filter(pk=team.pk).update(action_points=0)
 
         Notification.objects.create_retrieved_failure_notification(team, player)
-
-        messages.add_message(request, messages.INFO, "Hit an incident because the number of risks %d was more than the preventions %d." % (risks, preventions))
     else:
         high_market_modifier = 1
         if team.is_event_active(Events.HIGH_MARKET):
             high_market_modifier = 2
 
-        points_scored = team.goal_zero_markers * oil * high_market_modifier * 100
+        points_scored = team.goal_zero_markers * resource_count * high_market_modifier * 100
 
-        Team.objects.filter(pk=team.pk).update(resources_collected=F('resources_collected') + oil)
-        Team.objects.filter(pk=team.pk).update(resources_collected_episode=F('resources_collected_episode') + oil)
+        Team.objects.filter(pk=team.pk).update(resources_collected=F('resources_collected') + resource_count)
+        Team.objects.filter(pk=team.pk).update(resources_collected_episode=F('resources_collected_episode') + resource_count)
 
         Team.objects.filter(pk=team.pk).update(victory_points=F('victory_points') + points_scored)
 
@@ -473,9 +484,9 @@ def play_pump(request):
         
         Team.objects.filter(pk=team.pk).update(victory_points_episode=F('victory_points_episode') + points_scored)
 
-        Notification.objects.create_retrieved_success_notification(team, player, oil, points_scored)
+        Notification.objects.create_retrieved_success_notification(team, player, resource_count, points_scored)
 
-        messages.add_message(request, messages.INFO, "Pumped %d units of oil." % oil)
+    messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
