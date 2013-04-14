@@ -322,18 +322,26 @@ def play_inspect(request):
         pile = request.POST.get('pile', '')
 
         if pile:
-            result = teamplayer.inspect(pile)
+            result = [item for item in teamplayer.inspect(pile) if item=='1']
             teamplayer.save()
 
-            result += (8-len(result)) * ['?']
+            # result += (8-len(result)) * ['?']
 
             if pile == 'gather':
                 Notification.objects.create_inspected_production_notification(team, player)
+
+                t = loader.get_template('messages/office-inspect-production.html')
             elif pile == 'risk':
                 Notification.objects.create_inspected_safety_notification(team, player)
 
-            # TODO remove these messages
-            messages.add_message(request, messages.INFO, "Inspected %s and found: %s" % (pile, ' '.join(result)))
+                t = loader.get_template('messages/office-inspect-safety.html')
+
+            c = RequestContext(request, {
+                'result': result,
+                'episode': EpisodeDay.objects.get(current=True).episode
+            })
+
+            messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
