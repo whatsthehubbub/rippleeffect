@@ -17,9 +17,15 @@
 	{% endif %}
 
 	{% if teamplayer.show_game_start %}
-		{% include "partials/start-game-frontline.html" %} dismiss
-	{% endif %}
+		{% include "partials/start-game-office.html" %}
 
+		<form method="POST" action="{% url 'close_dialog' %}">
+			{% csrf_token %}
+			<input type="hidden" name="dialog" value="start_game">
+			<input type="submit" value="dismiss">
+		</form>
+	{% endif %}
+	
 	<p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({% if currentDay.end|timeuntil != "0 minutes" %}{{ currentDay.end|timeuntil }}{% else %}less than a minute{% endif %} left)</p>
 
 	<h3>Team</h3>

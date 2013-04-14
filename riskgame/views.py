@@ -314,7 +314,7 @@ def inspect_event(request):
 
             Notification.objects.create_frontline_event_notification(teamplayer.team, player)
 
-            messages.add_message(request, messages.INFO, "Inspected event for player %s and found: %s" % (str(target.player), event))
+            messages.add_message(request, messages.INFO, t.render(c))
     return HttpResponseRedirect(reverse('home'))
 
 
