@@ -1,47 +1,57 @@
-{% for item in result %}
-	{{ item }} 
+Inspected production for {{ player }} for 1 action cost
+
+{% for item in resultpositive %}
+	{{ item }}
+{% endfor %}
+
+{% for item in resultnegative %}
+	{{ item }}
+{% endfor %}
+
+{% for unknown in unknowns %}
+	{{ unknown }}
 {% endfor %}
 
 {% ifequal episode.number 1 %}	
-	{% ifequal result|length 4 %} 
+	{% ifequal resultpositive|length 4 %} 
 		<p>Your production quality couldn’t be any better, from the looks of it. Of course, as you can see, I can’t inspect all of your production quality. This is roughly half of it. Should still be quite helpful to plan your next step, right?</p>
 	{% endifequal %}
 
-	{% ifequal result|length 3 %} 
+	{% ifequal resultpositive|length 3 %} 
 		<p>Your production quality is generally excellent. Of course, as you can see, I can’t inspect all of your production quality. This is roughly half of it. Should still be quite helpful to plan your next step, right?</p>
 	{% endifequal %}
 
-	{% ifequal result|length 2 %} 
+	{% ifequal resultpositive|length 2 %} 
 		<p>Your production quality is pretty average, as you can see. Of course, I can’t inspect all of your production quality. This is roughly half of it. Should still be quite helpful to plan your next step, right?</p>
 	{% endifequal %}
 
-	{% ifequal result|length 1 %} 
+	{% ifequal resultpositive|length 1 %} 
 		<p>Your production quality isn’t very good, honestly. Of course, as you can see, I can’t inspect all of your production quality. This is roughly half of it. But this should still be quite helpful to plan your next step.</p>
 	{% endifequal %}
 
-	{% ifequal result|length 0 %} 
+	{% ifequal resultpositive|length 0 %} 
 		<p>Your production quality is terrible! Just terrible! Of course, as you can see, I can’t inspect all of your production quality, this is roughly half of it. But it’s pretty clear to me what needs be done: improve, improve, improve!</p>
 	{% endifequal %}
 {% endifequal %}
 
 {% ifequal episode.number 2 %} 
-	{% ifequal result|length 4 %} 
+	{% ifequal resultpositive|length 4 %} 
 		<p>Your production quality couldn’t be any better, from the looks of it. I’d say you’re as ready for production as you’ve ever been.</p>
 	{% endifequal %}
 
-	{% ifequal result|length 3 %} 
+	{% ifequal resultpositive|length 3 %} 
 		<p>Your production quality is generally excellent. Are you ready for production, or do you want to enhance your quality even further?</p>
 	{% endifequal %}
 
-	{% ifequal result|length 2 %} 
+	{% ifequal resultpositive|length 2 %} 
 		<p>Your production quality is pretty average, as you can see. What do you think, is it safe to dive head-first into resource production?</p>
 	{% endifequal %}
 
-	{% ifequal result|length 1 %} 
+	{% ifequal resultpositive|length 1 %} 
 		<p>Your production quality isn’t very good, honestly. Are you really going to go into production? I wouldn’t do it, if I were you.</p>
 	{% endifequal %}
 
-	{% ifequal result|length 0 %} 
+	{% ifequal resultpositive|length 0 %} 
 		<p>Your production quality is terrible! Just terrible! It’s pretty clear to me what needs be done: improve, improve, improve! Are you considering production right now? Get over yourself!</p>
 	{% endifequal %}
 {% endifequal %}

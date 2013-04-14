@@ -322,7 +322,7 @@ def play_inspect(request):
         pile = request.POST.get('pile', '')
 
         if pile:
-            result = [item for item in teamplayer.inspect(pile) if item=='1']
+            result = teamplayer.inspect(pile)
             teamplayer.save()
 
             # result += (8-len(result)) * ['?']
@@ -337,8 +337,11 @@ def play_inspect(request):
                 t = loader.get_template('messages/office-inspect-safety.html')
 
             c = RequestContext(request, {
-                'result': result,
-                'episode': EpisodeDay.objects.get(current=True).episode
+                'resultnegative': [item for item in result if item == '0'],
+                'resultpositive': [item for item in result if item == '1'],
+                'unknowns': ['?'] * (8 - len(result)),
+                'episode': EpisodeDay.objects.get(current=True).episode,
+                'player': player
             })
 
             messages.add_message(request, messages.INFO, t.render(c))
