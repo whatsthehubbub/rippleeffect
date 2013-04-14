@@ -445,11 +445,11 @@ def play_pump(request):
     resource_count, production, incident_count, safety, barrier_count = teamplayer.pump()
     teamplayer.save()
 
-    t = loader.get_template('messages/frontline-predict-event.html')
+    t = loader.get_template('messages/office-produce-resources.html')
 
     c = RequestContext(request, {
         'episode': EpisodeDay.objects.get(current=True).episode,
-        'player': target.player,
+        'player': player,
         'resource_count': resource_count,
         'production': production,
         'incident_count': incident_count,
