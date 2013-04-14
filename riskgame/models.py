@@ -559,6 +559,8 @@ class Team(models.Model):
         return max(self.goal_zero_markers, self.goal_zero_markers)
 
     def start_episode(self, episode):
+        # logger.info("Starting episode for team %s", str(self))
+
         if episode.number == 1:
             # Game start
             self.teamplayer_set.update(show_game_start=True)
@@ -566,6 +568,9 @@ class Team(models.Model):
         self.teamplayer_set.update(show_episode_start=True)
         
         playerCount = self.teamplayer_set.filter(role='office').count()
+
+        # logger.info("Office player count: %d", playerCount)
+        # logger.info("Gather: %s", self.teamplayer_set.filter(role='frontline')[0].gather_pile)
 
         # Stack both piles at the start of each episode
         # TODO already change the 0s and 1s here to strings
@@ -587,6 +592,9 @@ class Team(models.Model):
             for counter in range(6):
                 tp.addGatherCard(gatherCards.pop())
                 tp.addRiskCard(riskCards.pop())
+
+            # logger.info("team player %s", str(tp))
+            # logger.info("pile: %s", tp.gather_pile)
 
             tp.save()
 
