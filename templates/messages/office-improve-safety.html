@@ -1,0 +1,9 @@
+<p>Improved safety for {{ player }} for 1 action cost</p>
+
+{% ifequal episode.number 1 %}	
+	<p>I’ve improved your safety. The next time you get resources, you’ll be a bit less likely to run into a risk. Just to be sure, I could do an inspection. Remember that it’s important to keep improving your safety. You can never be safe enough.</p>
+{% endifequal %}
+
+{% ifequal episode.number 2 %} 
+	<p>I’ve improved your safety. The next time you get resources, you’ll be a bit less likely to run into a risk.</p>
+{% endifequal %}

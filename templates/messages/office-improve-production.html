@@ -1,0 +1,9 @@
+<p>Improved production for {{ player }} for 1 action cost</p>
+
+{% ifequal episode.number 1 %}	
+	<p>I’ve improved your production quality. Next time you produce resources, you’re likely to be a bit more successful. I’ll have to do an inspection to see just how much you’ve raised the quality. But if you keep improving, success is assured!</p>
+{% endifequal %}
+
+{% ifequal episode.number 2 %} 
+	<p>I’ve improved your production quality. Next time you produce resources, you’re likely to be a bit more successful.</p>
+{% endifequal %}

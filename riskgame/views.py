@@ -364,11 +364,19 @@ def play_invest(request):
 
             if pile == 'gather':
                 Notification.objects.create_improved_production_notification(team, player)
+
+                t = loader.get_template('messages/office-improve-production.html')
             elif pile == 'risk':
                 Notification.objects.create_improved_safety_notification(team, player)
 
-            # Add message
-            messages.add_message(request, messages.INFO, "Invested in pile %s" % pile)
+                t = loader.get_template('messages/office-improve-safety.html')
+
+            c = RequestContext(request, {
+                'episode': EpisodeDay.objects.get(current=True).episode,
+                'player': player
+            })
+
+            messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
