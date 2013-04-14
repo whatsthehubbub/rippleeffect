@@ -555,6 +555,9 @@ class Team(models.Model):
     def get_join_requests(self):
         return TeamJoinRequest.objects.filter(team=self, invite=False)
 
+    def get_goal_zero_streak(self):
+        return max(self.goal_zero_markers, self.goal_zero_markers)
+
     def start_episode(self, episode):
         if episode.number == 1:
             # Game start
@@ -703,7 +706,6 @@ class Team(models.Model):
         Team.objects.filter(pk=self.pk).update(frontline_action_points=2*playerCount)
 
         Team.objects.filter(pk=self.pk).update(goal_zero_markers=F('goal_zero_markers')+1)
-        Team.objects.filter(pk=self.pk).update(goal_zero_streak=max(F('goal_zero_markers'), F('goal_zero_streak')))
 
         # At the start of a day reset all the markers for a team
         TeamPlayer.objects.filter(team=self).update(gather_markers=0)

@@ -459,6 +459,7 @@ def play_pump(request):
 
     if incident_count > barrier_count:
         # We have an incident
+        Team.objects.filter(pk=team.pk).update(goal_zero_streak=max(team.goal_zero_streak, team.goal_zero_markers))
         Team.objects.filter(pk=team.pk).update(goal_zero_markers=0)
 
         # Lose all your action points if the hard wind event is active
