@@ -40,4 +40,3 @@ def test_task():
     from datetime import datetime
     cyan = lambda text: "\033[1;36m%s\033[0m" % text
     print(cyan('[test_task:%s] processing task' % str(datetime.now())))
-    
