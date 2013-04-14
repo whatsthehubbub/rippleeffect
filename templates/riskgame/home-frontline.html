@@ -8,12 +8,12 @@
 	{% include "partials/navigation.html" %}
 
 	{% if messages %}
-		<h3>Action result</h3>
-		<ul class="messages">
-		    {% for message in messages %}
-		    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-		    {% endfor %}
-		</ul>
+	    {% for message in messages %}
+	    	<div data-alert class="alert-box">
+	    		<p>{{ message }}</p>
+				<a href="#" class="close">&times;</a>
+			</div>
+	    {% endfor %}
 	{% endif %}
 
 	{% if teamplayer.show_game_start %}

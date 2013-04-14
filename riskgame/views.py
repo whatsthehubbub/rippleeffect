@@ -304,6 +304,14 @@ def inspect_event(request):
             currentDay = EpisodeDay.objects.get(current=True)
             event = target.get_event_for_day(currentDay.next)
 
+            t = loader.get_template('messages/frontline-predict-event.html')
+
+            c = RequestContext(request, {
+                'episode': EpisodeDay.objects.get(current=True).episode,
+                'player': target.player,
+                'event': event
+            })
+
             Notification.objects.create_frontline_event_notification(teamplayer.team, player)
 
             messages.add_message(request, messages.INFO, "Inspected event for player %s and found: %s" % (str(target.player), event))
