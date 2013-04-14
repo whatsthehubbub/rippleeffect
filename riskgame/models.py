@@ -659,7 +659,7 @@ class Team(models.Model):
         # Active events for teams are cleared at the statr of a day
         self.clear_active_events()
 
-        for tp in self.teamplayer_set.all():
+        for tp in self.teamplayer_set.filter(role='office'):
             # Active events for all players are cleared at the start of a day
             tp.clear_active_events()
 
