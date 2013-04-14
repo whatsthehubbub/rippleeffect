@@ -393,7 +393,14 @@ def play_gather(request):
 
         Notification.objects.create_gather_notification(team, player)
 
-        messages.add_message(request, messages.INFO, "Placed gather token.")
+        t = loader.get_template('messages/office-plan-production.html')
+
+        c = RequestContext(request, {
+            'episode': EpisodeDay.objects.get(current=True).episode,
+            'player': player
+        })
+
+        messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -409,7 +416,14 @@ def play_prevent(request):
 
         Notification.objects.create_prevent_notification(team, player)
 
-        messages.add_message(request, messages.INFO, "Placed prevent token.")
+        t = loader.get_template('messages/office-place-barrier.html')
+
+        c = RequestContext(request, {
+            'episode': EpisodeDay.objects.get(current=True).episode,
+            'player': player
+        })
+
+        messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
