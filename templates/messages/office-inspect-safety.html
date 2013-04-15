@@ -13,6 +13,10 @@ Result:
 	{{ unknown }}
 {% endfor %}
 
+{% if poorvision %}
+	<p>Elin: I’m afraid it’s even worse than I thought. With this weather, my inspections aren’t worth much. Well, at least it’s something...</p>
+{% endif %}
+
 {% ifequal episode.number 1 %}	
 	{% ifequal resultpositive|length 4 %} 
 		<p>Your safety is extremely poor. Despite this, I have to remind you that I can only inspect about half of it. That’s what my training tells me anyway. Now, should you start production with odds like this? Are you kidding me?</p>

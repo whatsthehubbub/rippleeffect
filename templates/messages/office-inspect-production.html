@@ -13,6 +13,10 @@ Result:
 	{{ unknown }}
 {% endfor %}
 
+{% if poorvision %}
+	<p>Abu: I’m afraid it’s even worse than I thought. With this weather, my inspections aren’t worth much. Well, at least it’s something...</p>
+{% endif %}
+
 {% ifequal episode.number 1 %}	
 	{% ifequal resultpositive|length 4 %} 
 		<p>Your production quality couldn’t be any better, from the looks of it. Of course, as you can see, I can’t inspect all of your production quality. This is roughly half of it. Should still be quite helpful to plan your next step, right?</p>

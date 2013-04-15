@@ -364,7 +364,8 @@ def play_inspect(request):
                 'resultpositive': [item for item in result if item == '1'],
                 'unknowns': ['?'] * (8 - len(result)),
                 'episode': EpisodeDay.objects.get(current=True).episode,
-                'player': player
+                'player': player,
+                'poorvision': team.is_event_active(Events.POOR_VISION)
             })
 
             messages.add_message(request, messages.INFO, t.render(c))
