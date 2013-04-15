@@ -1,8 +1,6 @@
 <script id="IntercomSettingsScriptTag">
   window.intercomSettings = {
-    // TODO: The current logged in user's email address.
     email: "{{ current_player.email }}",
-    // TODO: The current logged in user's sign-up date as a Unix timestamp.
     created_at: {{ current_player.datecreated|date:"U" }},
     name: "{{ current_player.name }}",
     user_hash: "{{ current_player.get_intercom_hash }}",
