@@ -234,7 +234,7 @@ def home(request):
 
             mc = RequestContext(request, {})
             messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
-        elif teamplayer.show_day_start:
+        elif teamplayer.show_turn_start:
             TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_day_start=False)
 
             if teamplayer.role == 'office':
