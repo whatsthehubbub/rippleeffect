@@ -316,6 +316,8 @@ def inspect_risks(request):
             messages.add_message(request, messages.INFO, t.render(c))
 
             Notification.objects.create_frontline_safety_notification(teamplayer.team, player)
+        else:
+            messages.add_message(request, messages.INFO, "All out of actions")
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -347,6 +349,9 @@ def inspect_event(request):
             Notification.objects.create_frontline_event_notification(teamplayer.team, player)
 
             messages.add_message(request, messages.INFO, t.render(c))
+        else:
+            messages.add_message(request, messages.INFO, "All out of actions")
+
     return HttpResponseRedirect(reverse('home'))
 
 
@@ -386,6 +391,8 @@ def play_inspect(request):
             })
 
             messages.add_message(request, messages.INFO, t.render(c))
+    else:
+        messages.add_message(request, messages.INFO, "All out of actions")
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -419,6 +426,9 @@ def play_invest(request):
 
             messages.add_message(request, messages.INFO, t.render(c))
 
+    else:
+        messages.add_message(request, messages.INFO, "All out of actions")
+
     return HttpResponseRedirect(reverse('home'))
 
 
@@ -442,6 +452,8 @@ def play_gather(request):
         })
 
         messages.add_message(request, messages.INFO, t.render(c))
+    else:
+        messages.add_message(request, messages.INFO, "All out of actions")
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -465,6 +477,8 @@ def play_prevent(request):
         })
 
         messages.add_message(request, messages.INFO, t.render(c))
+    else:
+        messages.add_message(request, messages.INFO, "All out of actions")
 
     return HttpResponseRedirect(reverse('home'))
 
