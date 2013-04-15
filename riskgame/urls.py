@@ -27,8 +27,6 @@ urlpatterns = patterns('',
 
     url(r'^home/$', 'riskgame.views.home', name='home'),
 
-    url(r'^home/close/dialog/$', 'riskgame.views.close_dialog', name='close_dialog'),
-
     url(r'^game/start/$', 'riskgame.views.game_start', name='game_start'),
 
     url(r'^play/inspect/$', 'riskgame.views.play_inspect', name='play_inspect'),

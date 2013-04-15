@@ -214,26 +214,41 @@ def home(request):
 
             c['targetform'] = FrontLineForm(teamplayer)
 
+        if teamplayer.show_game_start:
+            TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_game_start=False)
+
+            if teamplayer.role == 'office':
+                mt = loader.get_template('messages/start-game-office.html')
+            elif teamplayer.role == 'frontline':
+                mt = loader.get_template('messages/start-game-frontline.html')
+
+            mc = RequestContext(request, {})
+            messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
+        elif teamplayer.show_episode_start:
+            TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_episode_start=False)
+
+            if teamplayer.role == 'office':
+                mt = loader.get_template('messages/start-episode-office.html')
+            elif teamplayer.role == 'frontline':
+                mt = loader.get_template('messages/start-episode-frontline.html')
+
+            mc = RequestContext(request, {})
+            messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
+        elif teamplayer.show_day_start:
+            TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_day_start=False)
+
+            if teamplayer.role == 'office':
+                mt = loader.get_template('messages/start-day-office.html')
+            elif teamplayer.role == 'frontline':
+                mt = loader.get_template('messages/start-day-frontline.html')
+
+            mc = RequestContext(request, {})
+            messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
+
+    
     c['startform'] = GameStartForm()
 
     return HttpResponse(t.render(c))
-
-@login_required
-@require_POST
-def close_dialog(request):
-    player = request.user.get_or_create_player()
-    teamplayer = TeamPlayer.objects.get(player=player)
-
-    dialog = request.POST.get('dialog', '')
-
-    if dialog == 'start_game':
-        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_game_start=False)
-    elif dialog == 'start_episode':
-        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_game_start=False)
-    elif dialog == 'start_turn':
-        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_game_start=False)
-
-    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def teams(request):
