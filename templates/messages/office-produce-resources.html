@@ -6,7 +6,7 @@
 
 <p>Barriers: {{ barrier_count }}</p>
 
-{% if incident_count > barrier_count %}
+{% if tornado %}
 	<p>Harry: This is what I warned you about... It’s bad enough that you let an incident slip through, but with this tornado going on, you’ve now also lost all your actions. I’m pretty sure the rest of your team won’t be pleased!</p>
 {% endif %}
 
@@ -16,7 +16,15 @@
 	{% else %}
 		{% if resource_count == 0 %}
 			<p>Oh man, that’s too bad! You didn’t get any resources. Like, at all! Maybe you should’ve talked to Abu and improved your production quality first? Or maybe you’re just out of luck?</p>
+
+			{% if highmarket %}
+				<p>Mei: Too bad you couldn’t capitalize on this opportunity! But don’t be sad, next time will probably be much better! As a matter of fact, I’m sure of it!</p>
+			</p>
 		{% else %}
+			{% if highmarket %}
+				<p>Mei: Fantastic! Because of the high markets, your resources pay double, and I just love the smell of enormous stacks of points in the morning!</p>
+			{% endif %}
+
 			{% if resource_count == 1 %}
 				<p>Well done! You got a resource. Your team will be so happy you’re on their side! Now, as much as I’d like to encourage you to keep producin’, remember that every time you produce a resource, your production quality will go down. I think the scientific phrase for that is ‘entropy’. So you have to constantly work on improving your production quality, too. But that’s really Abu’s department.</p>
 			{% else %}
@@ -32,7 +40,15 @@
 	{% else %}
 		{% if resource_count == 0 %}
 			<p></p>
+
+			{% if highmarket %}
+				<p>Mei: Too bad you couldn’t capitalize on this opportunity! But don’t be sad, next time will probably be much better! As a matter of fact, I’m sure of it!</p>
+			{% endif %}
 		{% else %}
+			{% if highmarket %}
+				<p>Mei: Fantastic! Because of the high markets, your resources pay double, and I just love the smell of enormous stacks of points in the morning!</p>
+			{% endif %}
+
 			{% if resource_count == 1 %}
 				<p>Well done! You got a resource. Your team will be so happy you’re on their side!</p>
 			{% else %}

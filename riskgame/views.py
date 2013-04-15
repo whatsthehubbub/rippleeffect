@@ -480,7 +480,8 @@ def play_pump(request):
         'incident_count': incident_count,
         'safety': safety,
         'barrier_count': barrier_count,
-        'tornado': team.is_event_active(Events.TORNADO)
+        'tornado': team.is_event_active(Events.TORNADO),
+        'highmarket': team.is_event_active(Events.HIGH_MARKET)
     })
 
     if incident_count > barrier_count:
