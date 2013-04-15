@@ -232,10 +232,12 @@ def home(request):
             elif teamplayer.role == 'frontline':
                 mt = loader.get_template('messages/start-episode-frontline.html')
 
-            mc = RequestContext(request, {})
+            mc = RequestContext(request, {
+                'episode': EpisodeDay.objects.get(current=True).episode
+            })
             messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
         elif teamplayer.show_turn_start:
-            TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_day_start=False)
+            TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_turn_start=False)
 
             if teamplayer.role == 'office':
                 mt = loader.get_template('messages/start-turn-office.html')

@@ -719,6 +719,9 @@ class Team(models.Model):
         TeamPlayer.objects.filter(team=self).update(gather_markers=0)
         TeamPlayer.objects.filter(team=self).update(prevent_markers=0)
 
+        # Show the turn start message
+        TeamPlayer.objects.filter(team=self).update(show_turn_start=True)
+
     def add_active_event(self, event):
         new_events = self.active_events.split(',')
         new_events.append(event)
