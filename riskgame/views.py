@@ -238,11 +238,19 @@ def home(request):
             TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_day_start=False)
 
             if teamplayer.role == 'office':
-                mt = loader.get_template('messages/start-day-office.html')
-            elif teamplayer.role == 'frontline':
-                mt = loader.get_template('messages/start-day-frontline.html')
+                mt = loader.get_template('messages/start-turn-office.html')
 
-            mc = RequestContext(request, {})
+                mc = RequestContext(request, {
+                    'poorvision': teamplayer.team.is_event_active(Events.POOR_VISION),
+                    'tornado': teamplayer.team.is_event_active(Events.TORNADO),
+                    'highmarket': teamplayer.team.is_event_active(Events.HIGH_MARKET),
+                    'increasedrisk': teamplayer.is_event_active(Events.INCREASED_RISK),
+                    'lightning': teamplayer.is_event_active(Events.LIGHTNING)
+                })
+            elif teamplayer.role == 'frontline':
+                mt = loader.get_template('messages/start-turn-frontline.html')
+
+                
             messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
 
     

@@ -1,0 +1,43 @@
+
+{% if poorvision %}
+	<p>Poor Vision
+Inspections are less effective during the current turn. This event affects all office players.</p>
+
+			<p>ABU
+		(angry)
+The weather makes it pretty tough to inspect your production today. Of course, I can still do it, but I’m not sure if I’ll be able to come back to you with as much information as usual.</p>
+
+			<p>ELIN
+		(angry)
+Same here! You’ll have to ask yourself whether you want to try and retrieve resources under these conditions.</p>
+{% endif %}
+
+{% if tornado %}
+	<p>Tornado
+	If there’s an incident during the current turn, you’ll lose all your actions.</p>
+{% endif %}
+
+{% if highmarket %}
+	<p>High Market
+Resources give double points. This event lasts for three turns and affects all office players.</p>
+
+			<p>MEI
+		(happy)
+This is incredible. The resource markets are soaring, so if we do well, we’ll score points like there’s no tomorrow! If you ever needed a motivation to produce, this is it! What are you still waiting for? Go retrieve resources, like, right now!</p>	
+{% endif %}
+
+{% if increasedrisk %}
+	<p>Increased Risk
+Your safety has decreased.</p>
+
+<p>
+			ELIN
+		(terse)
+You ought to be really careful today. Why don’t you improve your safety instead of spending all your actions on resources?</p>
+
+{% endif %}
+
+{% if lightning %}
+	<p>Lightning
+You have a chance of getting hit by lightning. If you draw an incident, you’ll lose all your actions.</p>
+{% endif %}
