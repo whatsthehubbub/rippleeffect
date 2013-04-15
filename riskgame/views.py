@@ -294,11 +294,20 @@ def inspect_risks(request):
 
             result = target.inspect('risk')
 
-            result += (8-len(result)) * ['?']
+            t = loader.get_template('messages/frontline-inspect-safety.html')
+
+            c = RequestContext(request, {
+                'resultnegative': [item for item in result if item == '0'],
+                'resultpositive': [item for item in result if item == '1'],
+                'unknowns': ['?'] * (8 - len(result)),
+                'episode': EpisodeDay.objects.get(current=True).episode,
+                'player': target.player,
+                'poorvision': teamplayer.team.is_event_active(Events.POOR_VISION)
+            })
+
+            messages.add_message(request, messages.INFO, t.render(c))
 
             Notification.objects.create_frontline_safety_notification(teamplayer.team, player)
-
-            messages.add_message(request, messages.INFO, "Inspected risk for player %s and found: %s" % (str(target.player), ' '.join(result)))
 
     return HttpResponseRedirect(reverse('home'))
 
