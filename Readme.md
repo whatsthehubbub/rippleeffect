@@ -15,7 +15,7 @@ You can interface with your VM using the [vagrant](http://docs.vagrantup.com/v2/
 
 To be up and running do this:
 
-* git pull
+* git pull (or sync in your Github.app)
 * vagrant up
 * fab app.install_requirements (only when new packages have been added)
 * fab syncdb (only once on every new database)
@@ -23,12 +23,15 @@ To be up and running do this:
 * fab runserver;
 * Access your environment at: http://127.0.0.1:8000
 
+* You can impersonate other players by adding ?impersonate=admin@email.com behind a URL if you're logged in. You can stop by adding ?unimpersonate=1
+
+* Kill the VM with: vagrant halt
+
 This process does not create a superuser. To create one:
 * fab shell;
 * from riskgame.models import EmailUser
 * EmailUser.objects.create_superuser('admin@email.com', 'password')
 To create a new game that starts from now and runs with 10 minute days:
-* Game.objects.get_latest_game().initialize()
 
 When you're done stop your virtual machine with `vagrant halt` though you shouldn't really notice it and it will disappear on next reboot.
 
