@@ -1,1 +1,9 @@
 <p>Planned production for {{ player }} for 1 action cost</p>
+
+{% if episode.number == 1 %}
+	<p>Mei: Yay, I’ve reserved a slot for you! This is so exciting, I can’t wait for resource production to begin. So do you want to plan more or is this it?</p>
+{% endif %}
+
+{% if episode.number == 2 %}
+	<p>Mei: I’ve reserved another resource production slot for you. This just doesn’t stop being exciting to me! Is this it or do you want to produce even more?</p>
+{% endif %}
