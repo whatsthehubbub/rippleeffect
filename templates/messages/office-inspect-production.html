@@ -19,23 +19,23 @@ Result:
 
 {% ifequal episode.number 1 %}	
 	{% ifequal resultpositive|length 4 %} 
-		<p>Your production quality couldn’t be any better, from the looks of it. Of course, as you can see, I can’t inspect all of your production quality. This is roughly half of it. Should still be quite helpful to plan your next step, right?</p>
+		<p>Your production quality couldn’t be any better, from the looks of it. Of course, as you can see, I can’t inspect all of your production quality. This is a random sample of roughly half of it. Should still be quite helpful to plan your next step, right?</p>
 	{% endifequal %}
 
 	{% ifequal resultpositive|length 3 %} 
-		<p>Your production quality is generally excellent. Of course, as you can see, I can’t inspect all of your production quality. This is roughly half of it. Should still be quite helpful to plan your next step, right?</p>
+		<p>Your production quality is generally excellent. Of course, as you can see, I can’t inspect all of your production quality. This is a random sample of roughly half of it. Should still be quite helpful to plan your next step, right?</p>
 	{% endifequal %}
 
 	{% ifequal resultpositive|length 2 %} 
-		<p>Your production quality is pretty average, as you can see. Of course, I can’t inspect all of your production quality. This is roughly half of it. Should still be quite helpful to plan your next step, right?</p>
+		<p>Your production quality is pretty average, as you can see. Of course, I can’t inspect all of your production quality. This is a random sample of roughly half of it. Should still be quite helpful to plan your next step, right?</p>
 	{% endifequal %}
 
 	{% ifequal resultpositive|length 1 %} 
-		<p>Your production quality isn’t very good, honestly. Of course, as you can see, I can’t inspect all of your production quality. This is roughly half of it. But this should still be quite helpful to plan your next step.</p>
+		<p>Your production quality isn’t very good, honestly. Of course, as you can see, I can’t inspect all of your production quality. This is a random sample of roughly half of it. But that should still be quite helpful to plan your next step.</p>
 	{% endifequal %}
 
 	{% ifequal resultpositive|length 0 %} 
-		<p>Your production quality is terrible! Just terrible! Of course, as you can see, I can’t inspect all of your production quality, this is roughly half of it. But it’s pretty clear to me what needs be done: improve, improve, improve!</p>
+		<p>Your production quality is terrible! Just terrible! Of course, as you can see, I can’t inspect all of your production quality, this is a random sample of roughly half of it. But it’s pretty clear to me what needs be done: improve, improve, improve!</p>
 	{% endifequal %}
 {% endifequal %}
 
