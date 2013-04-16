@@ -239,22 +239,23 @@ def home(request):
         elif teamplayer.show_turn_start:
             TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_turn_start=False)
 
+            mt = loader.get_template('messages/start-turn.html')
+
+            # Team events are returned for both roles
+            mc = RequestContext(request, {
+                'poorvision': teamplayer.team.is_event_active(Events.POOR_VISION),
+                'tornado': teamplayer.team.is_event_active(Events.TORNADO),
+                'highmarket': teamplayer.team.is_event_active(Events.HIGH_MARKET)
+            })
+
             if teamplayer.role == 'office':
-                mt = loader.get_template('messages/start-turn-office.html')
-
-                mc = RequestContext(request, {
-                    'poorvision': teamplayer.team.is_event_active(Events.POOR_VISION),
-                    'tornado': teamplayer.team.is_event_active(Events.TORNADO),
-                    'highmarket': teamplayer.team.is_event_active(Events.HIGH_MARKET),
-                    'increasedrisk': teamplayer.is_event_active(Events.INCREASED_RISK),
-                    'lightning': teamplayer.is_event_active(Events.LIGHTNING)
-                })
+                # Add player specific events for office players
+                mc['increasedrisk'] = teamplayer.is_event_active(Events.INCREASED_RISK)
+                mc['lightning'] = teamplayer.is_event_active(Events.LIGHTNING)
             elif teamplayer.role == 'frontline':
-                mt = loader.get_template('messages/start-turn-frontline.html')
-
+                pass
                 
             messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
-
     
     c['startform'] = GameStartForm()
 
