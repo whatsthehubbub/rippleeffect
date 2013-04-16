@@ -4,6 +4,14 @@
 {% block content %}
 	This game is over.
 
+	<p>Rank: {{ team.get_rank }}</p>
+
+	<p>Points: {{ team.victory_points }}</p>
+
+	<p>Resources: {{ team.resources_collected }}</p>
+
+	<p>Streak: {{ team.goal_zero_streak }}</p>
+
 	{% include "partials/start_new_game.html" %}
 	
 {% endblock content %}

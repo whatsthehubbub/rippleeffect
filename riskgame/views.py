@@ -180,6 +180,9 @@ class FrontLineForm(forms.Form):
 def home(request):
     game = Game.objects.get_latest_game()
 
+    player = request.user.get_or_create_player()
+    teamplayer = TeamPlayer.objects.get(player=player)
+    
     if timezone.now() < game.start:
         # Pre game
 
@@ -193,13 +196,10 @@ def home(request):
         t = loader.get_template('riskgame/home-postgame.html')
 
         c = RequestContext(request, {
-            
+            'team': teamplayer.team
         })
 
     if game.active():
-        player = request.user.get_or_create_player()
-        teamplayer = TeamPlayer.objects.get(player=player)
-
         c = RequestContext(request, {
             'teamplayer': teamplayer,
             'teammates': teamplayer.team.teamplayer_set.all(),
