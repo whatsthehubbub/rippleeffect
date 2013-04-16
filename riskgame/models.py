@@ -12,7 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 import random
 import datetime
 import math
-import hashlib
+import hashlib, hmac
 
 import logging
 logger = logging.getLogger('ripple')
@@ -785,11 +785,9 @@ class Player(models.Model):
         return self.user.email
 
     def get_intercom_hash(self):
-        m = hashlib.sha256()
-        m.update('pwGPevZCKMZEXZzhBwtOyWUlmPWCEBqe_R8dI6Xq')
-        m.update(self.email())
+        mac = hmac.new('pwGPevZCKMZEXZzhBwtOyWUlmPWCEBqe_R8dI6Xq', self.email(), hashlib.sha256)
 
-        return m.hexdigest()
+        return mac.hexdigest()
 
 
 class TeamJoinRequest(models.Model):
