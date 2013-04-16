@@ -30,11 +30,11 @@ urlpatterns = patterns('',
     url(r'^game/start/$', 'riskgame.views.game_start', name='game_start'),
 
     url(r'^play/inspect/$', 'riskgame.views.play_inspect', name='play_inspect'),
-    url(r'^play/invest/$', 'riskgame.views.play_invest', name='play_invest'),
-    url(r'^play/gather/$', 'riskgame.views.play_gather', name='play_gather'),
-    url(r'^play/prevent/$', 'riskgame.views.play_prevent', name='play_prevent'),
-    url(r'^play/pump/$', 'riskgame.views.play_pump', name='play_pump'),
+    url(r'^play/improve/$', 'riskgame.views.play_invest', name='play_invest'),
+    url(r'^play/plan/$', 'riskgame.views.play_gather', name='play_gather'),
+    url(r'^play/barrier/$', 'riskgame.views.play_prevent', name='play_prevent'),
+    url(r'^play/produce/$', 'riskgame.views.play_pump', name='play_pump'),
 
-    url(r'^frontline/risks/$', 'riskgame.views.inspect_risks', name='frontline_risks'),
+    url(r'^frontline/safety/$', 'riskgame.views.inspect_risks', name='frontline_risks'),
     url(r'^frontline/event/$', 'riskgame.views.inspect_event', name='frontline_event'),
 )
