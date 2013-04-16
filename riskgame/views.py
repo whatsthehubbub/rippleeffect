@@ -227,10 +227,7 @@ def home(request):
         elif teamplayer.show_episode_start:
             TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_episode_start=False)
 
-            if teamplayer.role == 'office':
-                mt = loader.get_template('messages/start-episode-office.html')
-            elif teamplayer.role == 'frontline':
-                mt = loader.get_template('messages/start-episode-frontline.html')
+            mt = loader.get_template('messages/start-episode.html')
 
             mc = RequestContext(request, {
                 'episode': EpisodeDay.objects.get(current=True).episode
