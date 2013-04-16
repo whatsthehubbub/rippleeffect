@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block pagetitle %}Register{% endblock pagetitle %}
+{% block pagetitle %}Sign up{% endblock pagetitle %}
 
 {% block content %}
-	<h2>Register</h2>
+	<h2>Sign up</h2>
 	<form method="POST">
 		{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit">
 	</form>
-	<p>Or <a href="{% url 'index' %}">log in</a></p>
+	<p>Or <a href="{% url 'index' %}">sign in</a></p>
 {% endblock content %}
