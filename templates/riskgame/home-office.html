@@ -30,7 +30,7 @@
 	
 	<ul>
 	{% for mate in teammates %}
-		<li>{{ mate.player }} {% ifequal mate.player player %}(You!){% endifequal %}</li>
+		<li>{{ mate.player }} {% ifequal mate.player current_player %}(You!){% endifequal %}</li>
 	{% endfor %}
 	</ul>
 
