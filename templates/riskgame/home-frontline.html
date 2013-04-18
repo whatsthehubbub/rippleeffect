@@ -38,12 +38,12 @@
 
 	<form method="POST" action="{% url 'frontline_risks' %}"> {% csrf_token %}
 		{{ targetform.as_p }}
-		<input type="submit" value="Inspect risks">
+		<input type="submit" value="Inspect safety">
 	</form>
 
 	<form method="POST" action="{% url 'frontline_event' %}"> {% csrf_token %}
 		{{ targetform.as_p }}
-		<input type="submit" value="Inspect event">
+		<input type="submit" value="Predict event">
 	</form>
 
 	<h3>Notifications</h3>
