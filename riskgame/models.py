@@ -258,11 +258,11 @@ class Notification(models.Model):
         elif self.identifier == 'player-gather':
             return 'planned resource production'
         elif self.identifier == 'player-prevent':
-            return 'placed a recovery barrier'
+            return 'placed a barrier'
         elif self.identifier == 'frontline-safety':
-            return "inspected another player's safety"
+            return "inspected [Alias]'s safety"
         elif self.identifier == 'frontline-event':
-            return "inspected another player's event"
+            return "predicted [Alias]'s next turn's event"
 
     def get_subject(self):
         # TODO modify subjects based on notification type
