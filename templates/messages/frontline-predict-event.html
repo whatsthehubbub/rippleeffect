@@ -1,3 +1,27 @@
-<p>Predicted next day event for {{ player }} for 1 action cost</p>
+<p>Predicted the next turn's event for {{ player }} using 1 action.</p>
 
 {{ event }}
+
+{% if event == 0 %}
+<p>No event.</p>
+{% endif %}
+
+{% if event == 1 %}
+<p>Poor vision.</p>
+{% endif %}
+
+{% if event == 2 %}
+<p>Tornado.</p>
+{% endif %}
+
+{% if event == 3 %}
+<p>High market.</p>
+{% endif %}
+
+{% if event == 4 %}
+<p>Increased risk.</p>
+{% endif %}
+
+{% if event == 5 %}
+<p>Lightning.</p>
+{% endif %}
