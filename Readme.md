@@ -99,6 +99,23 @@ To tail the application logs:
     fab staging logs:celery # tail the celery worker log
     fab --display logs  # for more information
 
+Do partial updates
+==================
+
+To update nginx:
+    from fabfile import staging
+    from fabfile.nginx import configure_site, restart_nginx
+    staging()
+    configure_site()
+    restart_nginx()
+
+To enable automatic security updates:
+    from fabfile import staging
+    from fabfile.base import automate_security_updates
+    staging()
+    automate_security_updates()
+
+Everything runs as rippleeffect, so `sudo -i -u rippleeffect`
 
 Production Deployment
 =====================
