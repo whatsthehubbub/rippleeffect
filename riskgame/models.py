@@ -561,7 +561,7 @@ class Team(models.Model):
         return TeamJoinRequest.objects.filter(team=self, invite=False)
 
     def get_goal_zero_streak(self):
-        return max(self.goal_zero_markers, self.goal_zero_markers)
+        return max(self.goal_zero_markers, self.goal_zero_streak)
 
     def start_episode(self, episode):
         # logger.info("Starting episode for team %s", str(self))
