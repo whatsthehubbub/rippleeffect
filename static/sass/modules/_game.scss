@@ -1,6 +1,5 @@
 
 $sidebar-width: 270px;
-$gutter: 12px; // the base gutter measure
 
 #game {
 
@@ -88,7 +87,13 @@ $gutter: 12px; // the base gutter measure
         .btn.row-end {
           margin-right: 0;
         }
+      }
 
+      #game-progress {
+
+        .inline-list li {
+          width: 50px;
+        }
 
       }
 

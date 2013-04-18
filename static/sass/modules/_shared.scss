@@ -31,6 +31,21 @@ h3 {
   font-size: 18px;
 }
 
+header {
+
+  h5 {
+    font-size: 14px;
+    height: 35px;
+    line-height: 37px;
+    color: $dark-grey;
+    font-family: $ff-medium;
+    margin: 0 $gutter*0.5 0 $gutter*0.5;
+    padding: 0 $gutter*0.5 0 $gutter*0.5;
+    text-transform: uppercase;
+    border-bottom: 1px solid $mid-grey;
+  }
+}
+
 //==== Helper classes ====
 
 .text-center {
