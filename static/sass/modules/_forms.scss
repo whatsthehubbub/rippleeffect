@@ -48,6 +48,12 @@ input.medium.btn{
   margin-bottom:12px;
   margin-top: 12px;
   font-family: $ff-medium;
+  border-bottom: 1px solid darken($green, 20%);
+  border-right: 1px solid darken($green, 20%);
+
+  &:active {
+    border: 1px solid darken($green, 20%);
+  }
 }
 
 form {

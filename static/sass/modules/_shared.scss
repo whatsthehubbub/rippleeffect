@@ -54,6 +54,33 @@ h3 {
   padding-bottom: 24px;
 }
 
+a.tiny.btn{
+  @include button(
+      0,
+      $mid-grey,
+      0,
+      false,
+      false,
+      false);
+  text-transform: uppercase;
+  padding: 0 6px;
+  margin-bottom:6px;
+  font-family: $ff-bold;
+  font-size: 11px;
+  height: 30px;
+  line-height: 32px;
+  border-bottom: 1px solid darken($mid-grey, 20%);
+  border-right: 1px solid darken($mid-grey, 20%);
+
+  &:active{
+    border: 1px solid darken($mid-grey, 20%);
+  }
+
+  &.active {
+    background: #fff;
+  }
+}
+
 a.small.btn{
   @include button(
       0,
@@ -69,6 +96,12 @@ a.small.btn{
   font-size: 14px;
   height: 36px;
   line-height: 36px;
+  border-bottom: 1px solid darken($green, 20%);
+  border-right: 1px solid darken($green, 20%);
+
+  &:active{
+    border: 1px solid darken($green, 20%);
+  }
 }
 
 a.medium.btn {
@@ -87,7 +120,34 @@ a.medium.btn {
   margin-bottom:12px;
   margin-top: 12px;
   font-family: $ff-medium;
+  border-bottom: 1px solid darken($green, 20%);
+  border-right: 1px solid darken($green, 20%);
+
+  &:active {
+    padding: 1px 15px 0 14px;
+    border: 1px solid darken($green, 20%);
+  }
 }
+
+.avatar {
+
+  background: indianred;
+
+  &.large {
+
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+
+  }
+
+  &.small {
+
+  }
+
+
+}
+
 
 // Tiny Hubbub + Shell footer
 footer.tiny-footer {

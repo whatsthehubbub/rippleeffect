@@ -16,14 +16,14 @@ $gutter: 12px; // the base gutter measure
     height: 600px;
     top: 0;
 
-
+    // Sidebar logo header /w home link
     header {
       width: $sidebar-width;
       margin: 0 auto;
 
       h1 {
         margin: 0;
-        padding: 56px 0 8px 0;
+        padding: 30px 0 $gutter*3 0;
 
         a {
           display:block;
@@ -32,12 +32,68 @@ $gutter: 12px; // the base gutter measure
           text-indent: -9999em;
           margin: 0;
           padding: 0;
-          height: 129px
+          height: 99px
 
         }
       }
+    }
+
+    // Current player badge and main navigation
+    #player {
+      margin: 0 $gutter*0.5;
+      background: $off-white;
+      width: $sidebar-width - $gutter;
+      overflow: hidden;
+
+      .avatar {
+        margin: $gutter 0 $gutter $gutter;
+        float: left;
+      }
+
+      .name {
+        float: right;
+        width: $sidebar-width - $gutter*3 - 50;
+        min-height: 50px + $gutter*0.5;
+        margin-top: $gutter * 1.5;
+
+        h3 {
+          font-size: 22px;
+          line-height: 24px;
+          font-family: $ff-regular;
+          margin: 0;
+        }
+
+        h4 {
+          font-size: 14px;
+          line-height: 16px;
+          font-family: $ff-regular;
+          margin: 0;
+        }
+
+      }
+
+
+      nav {
+        height: 72px;
+        margin-left: 6px;
+
+        .btn {
+          float: left;
+          display: block;
+          margin-right: $gutter*0.5;
+          width: 78px;
+        }
+
+        // IE friendly way of doing nth-child(3)
+        .btn.row-end {
+          margin-right: 0;
+        }
+
+
+      }
 
     }
+
   }
 
   #main {
