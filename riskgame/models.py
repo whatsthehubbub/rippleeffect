@@ -778,7 +778,7 @@ class Player(models.Model):
         self.emails_unsubscribe_hash = uuid.uuid4().hex
 
     def __unicode__(self):
-        return str(self.user)
+        return self.name or self.email()
 
     def get_led_team(self):
         try:
