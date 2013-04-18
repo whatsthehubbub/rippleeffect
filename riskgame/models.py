@@ -548,6 +548,11 @@ class Team(models.Model):
     def __unicode__(self):
         return self.name or self.pk
 
+    def save(self, *args, **kwargs):
+        super(Team, self).save(*args, **kwargs)
+
+        self.update_rank()
+
     @models.permalink
     def get_absolute_url(self):
         return ('team_detail', [self.pk])
