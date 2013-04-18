@@ -1,14 +1,31 @@
 {% extends "base.html" %}
-
-
 {% block content %}
-	
-	{% for team in teams %}
-		<li>
-			<a href="{{ team.get_absolute_url }}">{{ team.name }}</a> - points {{ team.victory_points }} - resources {{ team.resources_collected}} - goal zero {{ team.get_goal_zero_streak }}<br>
-			composition: ({{ team.get_office_players.count }} / {{ team.get_frontline_players.count }})<br>
-			rank: {{ team.get_rank }}
-		</li>
-	{% endfor %}
-
+<h2>Teams</h2>
+<p>A note on how the rank is determined goes here.</p>
+<table>
+	<thead>
+		<tr>
+			<th>Rank</th>
+			<th>Team name</th>
+			<th>Points</th>
+			<th>Resources</th>
+			<th>Goal zero</th>
+			<th>Office players</th>
+			<th>Frontline players</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for team in teams %}
+		<tr>
+			<td>{{ team.get_rank }}</td>
+			<td><a href="{{ team.get_absolute_url }}">{{ team.name }}</a></td>
+			<td>{{ team.victory_points }}</td>
+			<td>{{ team.resources_collected }}</td>
+			<td>{{ team.get_goal_zero_streak }}</td>
+			<td>{{ team.get_office_players.count }}</td>
+			<td>{{ team.get_frontline_players.count }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
 {% endblock content %}
