@@ -277,7 +277,7 @@ def teams(request):
     t = loader.get_template('riskgame/teams.html')
 
     c = RequestContext(request, {
-        'teams': Team.objects.all().order_by('-rank_points')
+        'teams': Team.objects.all().order_by('-rank_points', '-pk')
     })
 
     return HttpResponse(t.render(c))
