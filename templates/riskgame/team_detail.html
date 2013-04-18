@@ -3,25 +3,29 @@
 {% load i18n %}
 
 {% block content %}
-	<p>Name: {{ team.name }}</p>
+<h2>{{ team.name }}</h2>
 
-	<p>Points: {{ team.victory_points }}</p>
+<dl>
+	<dt>Rank</dt>
+	<dd>{{ team.get_rank }}</dd>
+	<dt>Points earned this game so far</dt>
+	<dd>{{ team.victory_points }}</dd>
+	<dt>Resources collected this game so far</dt>
+	<dd>{{ team.resources_collected }}</dd>
+	<dt>Current goal zero</dt>
+	<dd>{{ team.get_goal_zero_streak }}</dd>
+</dl>
 
-	<p>Rank: {{ team.get_rank }}</p>
+<h3>{% trans "Team members" %}</h3>
 
-	<p>Resources collected: {{ team.resources_collected }}</p>
-
-	<p>Goal zero streak: {{ team.get_goal_zero_streak }}</p>
-
-	<h2>{% trans "Players" %}</h2>
-
-	{% for tp in team.teamplayer_set.all %}
-		<li><a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a> - {{ tp.role }}
-			{% ifequal current_player tp.player %}
-				(You!)
-			{% endifequal %}
-		</li>
-	{% endfor %}
+<ul>
+{% for tp in team.teamplayer_set.all %}
+<li><a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a> - {{ tp.role }}
+	{% ifequal current_player tp.player %}
+	(You!)
+	{% endifequal %}
+</li>
+{% endfor %}
+</ul>
 
 {% endblock content %}
-
