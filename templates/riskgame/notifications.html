@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+	
+	{% for n in notifications %}
+		<li>{{ n.player }} {{ n.get_message }} {{ n.datecreated|timesince }} ago</li>
+	{% endfor %}
+
+{% endblock content %}

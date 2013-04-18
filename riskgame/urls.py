@@ -19,6 +19,8 @@ urlpatterns = patterns('',
 
     url(r'^players/$', 'riskgame.views.players', name='players'),
 
+    url(r'^notifications/$', 'riskgame.views.notifications', name='notifications'),
+
     url(r'^players/(?P<pk>\d+)/$', 'riskgame.views.player_profile', name='player_profile'),
     url(r'^players/you/$', 'riskgame.views.player_profile_own', name='player_profile_own'),
     url(r'^players/you/edit/$', 'riskgame.views.player_profile_edit', name='player_profile_edit'),
