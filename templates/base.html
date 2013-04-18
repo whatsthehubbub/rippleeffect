@@ -14,19 +14,45 @@
 
         <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize.css" />
         <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/app.css" />
+        <!--[if lt IE 9]><link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/ie.css" /><![endif]-->
 
         <script src="{{ STATIC_URL }}javascripts/vendor/custom.modernizr.js"></script>
         <script src="{{ STATIC_URL }}javascripts/vendor/jquery.min.js"></script>
+        <script src="{{ STATIC_URL }}javascripts/vendor/jquery.watermark.min.js"></script>
         <script src="{{ STATIC_URL }}javascripts/site.js"></script>
+        <script src="{{ STATIC_URL }}javascripts/forms.js"></script>
 
         {% block extrahead %}{% endblock extrahead %}
 
     </head>
 
-    <body>
+    <body id="game">
+
+        <aside id="sidebar">
+
+            <header>
+                <h1><a href="/">Ripple Effect</a></h1>
+            </header>
+
+            <div id="player">
+
+            </div>
+
+            <div id="game-progress">
+
+            </div>
+
+
+        </aside>
+
         <div id="main">
             {% block content %}{% endblock content %}
         </div>
+
+        <footer>
+            Hubbub for Shell
+        </footer>
+
 
         {% if current_player %}{% include "partials/intercom.html" %}{% endif %}
         {% include "partials/analytics.html" %}

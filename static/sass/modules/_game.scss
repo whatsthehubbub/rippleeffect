@@ -1,0 +1,47 @@
+
+$sidebar-width: 270px;
+$gutter: 12px; // the base gutter measure
+
+#game {
+
+  // todo: this should probably move to an abs positioned div
+  background-image: url('../img/bg-landing2.jpg');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+
+  #sidebar {
+    width: $sidebar-width;
+    background: white;
+    position: fixed;
+    height: 600px;
+    top: 0;
+
+
+    header {
+      width: $sidebar-width;
+      margin: 0 auto;
+
+      h1 {
+        margin: 0;
+        padding: 56px 0 8px 0;
+
+        a {
+          display:block;
+          background: url('../img/logo-game.png') no-repeat top center;
+          @include image-2x('../img/logo-game2x.png', 168px, 99px);
+          text-indent: -9999em;
+          margin: 0;
+          padding: 0;
+          height: 129px
+
+        }
+      }
+
+    }
+  }
+
+  #main {
+    margin-left: $sidebar-width + $gutter * 2;
+  }
+
+}
