@@ -1,6 +1,6 @@
 from django import template
 
-from riskgame.models import Player, Team, TeamJoinRequest, Events
+from riskgame.models import TeamJoinRequest, Events
 
 register = template.Library()
 
@@ -14,4 +14,4 @@ def requested_join(player, team):
 
 @register.filter
 def event_name(event_code):
-    Events.reverse.get(event_code, '').replace('_', ' ').lower()
+    return Events.reverse.get(event_code, '').replace('_', ' ').lower()

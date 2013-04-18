@@ -500,6 +500,9 @@ class TeamPlayer(models.Model):
     def is_event_active(self, event):
         return event in self.active_events.split(',')
 
+    def get_active_events(self):
+        return self.active_events.split(',')
+
     def hit_by_lightning(self):
         # TODO make function for taking the top card off a pile (drawing)
         effect = False
@@ -738,6 +741,9 @@ class Team(models.Model):
 
     def is_event_active(self, event):
         return event in self.active_events.split(',')
+
+    def get_active_events(self):
+        return self.active_events.split(',')
 
     def get_office_players(self):
         return self.teamplayer_set.filter(role='office')
