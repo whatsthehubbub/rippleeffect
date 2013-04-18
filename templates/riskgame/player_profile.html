@@ -3,18 +3,21 @@
 
 {% block content %}
 	
-	<h3>Player</h3>
+	<h2>{{ player.name }}&rsquo;s player profile</h2>
 
-	<p>Name: {{ player.name }}</p>
+<dl>
+	<dt>Email</dt>
+	<dd>{{ player.user.email }}</dd>
 
-	<p>Email: {{ player.user.email }}</p>
+	<dt>Team</dt>
+	<dd><a href="{{ teamplayer.team.get_absolute_url }}">{{ teamplayer.team }}</a></dd>
 
-	<p>Team: <a href="{{ teamplayer.team.get_absolute_url }}">{{ teamplayer.team }}</a></p>
-
-	<p>Role in current team: {{ teamplayer.role }}</p>
+	<dt>Role</dt>
+	<dd>{{ teamplayer.role }}</p></dd>
+</dl>
 
 	{% ifequal player.user user %} 
-		<a href="{% url 'player_profile_edit' %}">Edit your profile</a>
+		<p><a href="{% url 'player_profile_edit' %}" class="button">Edit your profile</a></p>
 	{% endifequal %}
 
 {% endblock content %}
