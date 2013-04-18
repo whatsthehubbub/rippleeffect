@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 
-
 {% block content %}
-	
-	<form method="POST">
-		{% csrf_token %}
-		
-		{{ profileform.as_p }}
-		<input type="submit">
-	</form>
+<h2>Edit your profile</h2>
 
+<form method="POST">
+	{% csrf_token %}
+	{{ profileform.as_p }}
+	<input type="submit">
+</form>
+<a href="">Cancel, go back</a>
 {% endblock content %}
