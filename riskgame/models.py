@@ -344,7 +344,7 @@ class TeamPlayer(models.Model):
     player = models.ForeignKey('Player')
 
     def __unicode__(self):
-        return str(self.player)
+        return unicode(self.player)
 
     def startPiles(self):
         self.gather_pile = '0,1'
@@ -815,7 +815,7 @@ class TeamJoinRequest(models.Model):
     invite = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return 'Request from %s to %s' % (str(self.player), self.team)
+        return 'Request from %s to %s' % (unicode(self.player), self.team)
 
 
 class GameManager(models.Manager):
