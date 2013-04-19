@@ -63,7 +63,13 @@
 
                         <li><span class="icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
                         
-                        <li><span class="icon action"></span>{{ current_teamplayer.team.action_points }}</li>
+                        <li><span class="icon action"></span>
+                        {% ifequal current_teamplayer.role "office" %}
+                          {{ current_teamplayer.team.action_points }}
+                        {% else %}
+                          {{ current_teamplayer.team.frontline_action_points }}
+                        {% endifequal %}
+                        </li>
                         
                         <li id="turn-countdown" data-seconds-left="{{ current_day.secondsleft }}"><span class="icon time"></span><span class="hours"></span><span class="dark-grey time-colon" style="visibility: hidden">:</span><span class="minutes"></span></li>
                     </ul>
