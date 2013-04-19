@@ -218,15 +218,21 @@ html {
       @extend .white-bg;
       margin-top: 24px;
       margin-bottom: 24px;
-      padding: $gutter*0.5;
-
     }
 
     // generic game UI styles
     .game-ui {
 
-      .ui-box {
-        padding-bottom: $gutter*2;
+      form {
+        margin: 0;
+      }
+
+      .action.btn {
+        background-image: url('../img/icon-action.png');
+        @include image-2x('../img/icon-action@2x.png', 16px, 16px);
+        background-repeat: no-repeat;
+        background-position: 1px 6px;
+        padding-left: 15px;
       }
 
       #events {
@@ -235,9 +241,32 @@ html {
         background-color: palegreen;
       }
 
-      .safety-stack {
-        padding-left: 40px;
+      #safety-box {
+
+        width: 206px;
+        height: 124px;
+        float: left;
+
+        .safety-stack {
+          padding-left: 72px;
+          background: url('../img/safety-stack.png') no-repeat;
+          @include image-2x('../img/safety-stack@2x.png', 50px, 70px);
+          background-position: $gutter 3px;
+
+          .safety.btn {
+            width: 122px;
+          }
+        }
       }
+
+      #production-box {
+        width: 206px;
+        height: 124px;
+        float: left;
+        margin-left: $gutter;
+
+      }
+
 
     }
 

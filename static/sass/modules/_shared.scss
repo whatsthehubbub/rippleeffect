@@ -40,7 +40,7 @@ header {
     line-height: 37px;
     color: $dark-grey;
     font-family: $ff-medium;
-    margin: 0 $gutter*0.5 $gutter $gutter*0.5;
+    margin: 0 $gutter*0.5 $gutter*0.5 $gutter*0.5;
     padding: 0 $gutter*0.5 0 $gutter*0.5;
     text-transform: uppercase;
     border-bottom: 1px solid $mid-grey;
@@ -52,6 +52,22 @@ header {
 
     &.off-white-line {
       border-bottom: 1px solid $off-white;
+    }
+
+    .help {
+      float:right;
+      width: 16px;
+      height: 34px;
+      text-indent:-99999em;
+      opacity: 0.5;
+
+      background: url('../img/icon-help.png') no-repeat left center;
+      @include image-2x('../img/icon-help@2x.png', 16px, 16px);
+
+      &:hover {
+        opacity: 1.0;
+      }
+
     }
 
   }
@@ -73,6 +89,23 @@ header {
 
 .green-bg {
   background-color: $green;
+}
+
+.half-gutter-pad-top {
+  padding-top: $gutter*0.5;
+}
+
+.half-gutter-pad-bot {
+  padding-bottom: $gutter*0.5;
+}
+
+.gutter-pad-bot {
+  padding-bottom: $gutter;
+}
+
+.gutter-pad-h {
+  padding-left: $gutter;
+  padding-right: $gutter;
 }
 
 .gutter-double-pad {
@@ -103,6 +136,7 @@ a.tiny.btn{
   border-right: 1px solid darken($mid-grey, 20%);
 
   &:active{
+    padding: 1px 5px 0 6px;
     border: 1px solid darken($mid-grey, 20%);
   }
 
@@ -130,6 +164,7 @@ a.small.btn{
   border-right: 1px solid darken($green, 20%);
 
   &:active{
+
     border: 1px solid darken($green, 20%);
   }
 }
@@ -154,7 +189,7 @@ a.medium.btn {
   border-right: 1px solid darken($green, 20%);
 
   &:active {
-    padding: 1px 14px 0 14px;
+    padding: 1px 13px 0 14px;
     border: 1px solid darken($green, 20%);
   }
 }

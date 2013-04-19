@@ -30,32 +30,42 @@
         <section class="game-ui office">
 
             <div id="events">
-                events
+                <span data-tooltip class="help has-tip" title="Check and improve your production capacity.">events</span>
                 {{ teamplayer.active_events }}
             </div>
 
-            <div class="sheet ui-box">
+            <div id="safety-box" class="sheet">
                 <header>
                     <h5>
                         Safety
-                        <span class="help">?</span>
+                        <span data-tooltip class="help has-tip" title="Check and improve the safety of your station.">?</span>
                     </h5>
                 </header>
 
-                <div class="safety-stack">
-
+                <div class="safety-stack gutter-pad-h half-gutter-pad-top half-gutter-pad-bot">
                     <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
                         <input type="hidden" name="pile" value="risk">
-                        <input type="submit" class="tiny btn" value="Inspect safety">
+                        <input type="submit" class="tiny safety action btn" value="Inspect">
                     </form>
 
                     <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
                         <input type="hidden" name="pile" value="risk">
-                        <input type="submit" class="tiny btn" value="Improve safety">
+                        <input type="submit" class="tiny safety action btn" value="Improve">
                     </form>
+                </div>
+            </div>
+
+            <div id="production-box" class="sheet">
+                <header>
+                    <h5>
+                        Production
+                        <span data-tooltip class="help has-tip" title="Check and improve your production capacity.">?</span>
+                    </h5>
+                </header>
+
+                <div class="safety-stack gutter-pad-h half-gutter-pad-top half-gutter-pad-bot">
 
                 </div>
-
             </div>
 
 
