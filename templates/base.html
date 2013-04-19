@@ -22,6 +22,7 @@
         <script src="{{ STATIC_URL }}javascripts/vendor/jquery.watermark.min.js"></script>
         <script src="{{ STATIC_URL }}javascripts/site.js"></script>
         <script src="{{ STATIC_URL }}javascripts/forms.js"></script>
+        <script src="{{ STATIC_URL }}javascripts/countdown.js"></script>
 
         {% block extrahead %}{% endblock extrahead %}
 
@@ -86,8 +87,8 @@
             {% block content %}{% endblock content %}
         </div>
 
-        <footer>
-            Hubbub for Shell
+        <footer class="left dimmed tiny-footer white-bg clearfix">
+            <h3><a class="hubbub" href="http://hubbub.eu">Hubbub</a> for <a href="http://shell.com">Shell</a></h3>
         </footer>
 
 

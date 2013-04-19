@@ -220,6 +220,20 @@ footer.tiny-footer {
   width: 125px;
   height: 50px;
 
+  &.left {
+    left: 0;
+    right: auto;
+  }
+
+  &.dimmed {
+    opacity: 0.25;
+
+    &:hover {
+      opacity: 1.0;
+    }
+  }
+
+
   a {
 
   }
