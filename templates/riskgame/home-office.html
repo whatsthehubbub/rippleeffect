@@ -3,98 +3,115 @@
 {% block pagetitle %}Home{% endblock %}
 
 {% block content %}
-<h1>Ripple Effect</h1>
-
-	<h2>Home</h2>
 
 	{# TODO what to do if we have several messages? (can happen with system pushed stuff) #}
 
 	{% if messages %}
 	    {% for message in messages %}
-	    	<div data-alert class="alert-box">
-	    		<p>{{ message }}</p>
-				<a href="#" class="close">&times;</a>
-			</div>
+
+            <section class="message">
+                <div class="row">
+                    <div class="sheet large-12 columns">
+                        {{ message }}
+
+                        <a href="#" class='medium btn' onclick='window.location.reload()'>Okay</a>
+                        <!--
+                        <div data-alert class="alert-box">
+                            <p>{{ message }}</p>
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                        -->
+                    </div>
+                </div>
+            </section>
+
+
 	    {% endfor %}
-	{% endif %}
+    {% else %}
 
-	<p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({% if currentDay.end|timeuntil != "0 minutes" %}{{ currentDay.end|timeuntil }}{% else %}less than a minute{% endif %} left)</p>
+        <section class="game-ui office">
 
-	<h3>Team</h3>
+        <p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({% if currentDay.end|timeuntil != "0 minutes" %}{{ currentDay.end|timeuntil }}{% else %}less than a minute{% endif %} left)</p>
 
-	{% include "partials/team_stats.html" %}
+        <h3>Team</h3>
 
-	<h4>Team members</h4>
-	
-	<ul>
-	{% for mate in teammates %}
-		<li>{{ mate.player }} {% ifequal mate.player current_player %}(You!){% endifequal %}</li>
-	{% endfor %}
-	</ul>
+        {% include "partials/team_stats.html" %}
 
-	<h3>You</h3>
+        <h4>Team members</h4>
 
-	<p>Your role: Office.</p>
+        <ul>
+            {% for mate in teammates %}
+                <li>{{ mate.player }} {% ifequal mate.player current_player %}(You!){% endifequal %}</li>
+            {% endfor %}
+        </ul>
 
-	<p>Event: {{ teamplayer.active_events }}</p>
+        <h3>You</h3>
 
-	<h4>Safety</h4>
+        <p>Your role: Office.</p>
 
-	<ul>
-		<li>Safety status: hidden. <!--{{ teamplayer.risk_pile }}--></li>
-		<li>Barriers: {{ teamplayer.prevent_markers }}</li>
-	</ul>
+        <p>Event: {{ teamplayer.active_events }}</p>
 
-	<form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
-		<input type="hidden" name="pile" value="risk">
-		<input type="submit" value="Inspect safety">
-	</form>
+        <h4>Safety</h4>
 
-	<form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
-		<input type="hidden" name="pile" value="risk">
-		<input type="submit" value="Improve safety">
-	</form>
+        <ul>
+            <li>Safety status: hidden. <!--{{ teamplayer.risk_pile }}--></li>
+            <li>Barriers: {{ teamplayer.prevent_markers }}</li>
+        </ul>
 
-	<h4>Production quality</h4>
+        <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
+            <input type="hidden" name="pile" value="risk">
+            <input type="submit" value="Inspect safety">
+        </form>
 
-	<ul>
-		<li>Production quality status: hidden. <!--{{ teamplayer.gather_pile }}--></li>
-		<li>Planned production: {{ teamplayer.gather_markers }}</li>
-	</ul>
+        <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
+            <input type="hidden" name="pile" value="risk">
+            <input type="submit" value="Improve safety">
+        </form>
+
+        <h4>Production quality</h4>
+
+        <ul>
+            <li>Production quality status: hidden. <!--{{ teamplayer.gather_pile }}--></li>
+            <li>Planned production: {{ teamplayer.gather_markers }}</li>
+        </ul>
 
 
-	<form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
-		<input type="hidden" name="pile" value="gather">
-		<input type="submit" value="Inspect production quality">
-	</form>
+        <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
+            <input type="hidden" name="pile" value="gather">
+            <input type="submit" value="Inspect production quality">
+        </form>
 
-	<form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
-		<input type="hidden" name="pile" value="gather">
-		<input type="submit" value="Improve production quality">
-	</form>
+        <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
+            <input type="hidden" name="pile" value="gather">
+            <input type="submit" value="Improve production quality">
+        </form>
 
-	<h4>Resource production</h4>
+        <h4>Resource production</h4>
 
-	<form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
-		<input type="submit" value="Place barrier">
-	</form>
+        <form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
+            <input type="submit" value="Place barrier">
+        </form>
 
-	<form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
-		<input type="submit" value="Plan resource production">
-	</form>
+        <form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
+            <input type="submit" value="Plan resource production">
+        </form>
 
-	<form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
-		<input type="submit" value="Produce resources">
-	</form>
+        <form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
+            <input type="submit" value="Produce resources">
+        </form>
 
-	<h3>Notifications</h3>
+        <h3>Notifications</h3>
 
-	<ul>
-		{% for notification in notifications %}
-			<li>{{ notification.player }} {{ notification.get_message }} {{ notification.datecreated|timesince }} ago</li>
-		{% endfor %}
-	</ul>
+        <ul>
+            {% for notification in notifications %}
+                <li>{{ notification.player }} {{ notification.get_message }} {{ notification.datecreated|timesince }} ago</li>
+            {% endfor %}
+        </ul>
 
-	{% include "partials/start_new_game.html" %}
-	
-{% endblock content %}
+        {% include "partials/start_new_game.html" %}
+
+        </section>
+
+    {% endif %}
+
+	{% endblock content %}

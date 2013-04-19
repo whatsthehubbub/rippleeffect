@@ -213,6 +213,15 @@ html {
   #main {
     margin-left: $sidebar-width + $gutter * 2;
     width: 424px;
+
+    .sheet {
+      @extend .white-bg;
+      margin-top: 24px;
+      margin-bottom: 24px;
+      padding: $gutter*0.5;
+
+    }
+
   }
 
 }
