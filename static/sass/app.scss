@@ -40,6 +40,9 @@ $gutter: 12px; // the base gutter measure
   }
 }
 
+@mixin pie() {
+  behavior: url(/static/javascripts/vendor/PIE/PIE.htc);
+}
 
 
 //==== Global Foundation Settings ====
