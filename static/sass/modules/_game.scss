@@ -93,20 +93,113 @@ $sidebar-width: 270px;
 
 
     #game-progress {
-      margin-top: $gutter*2;
+      margin-top: $gutter;
 
       #scorecard {
         margin: 0 $gutter*0.5;
         background: $off-white;
+        padding: $gutter*0.5;
         width: $sidebar-width - $gutter;
-        //overflow: hidden;
+        overflow: hidden;
 
+        font-family: $ff-medium;
+        font-size: 14px;
+
+        .inline-list {
+          padding: 0 $gutter*0.5;
+          font-family: $ff-bold;
+          margin: 0;
+          li {
+            width: 25%;
+            margin: 0 !important;
+            line-height:18px;
+            height: 16px;
+
+            .icon {
+              display: block !important;
+              float: left;
+              margin-right: 3px;
+            }
+
+            .time-colon {
+              padding: 0 1px;
+
+              line-height: 10px;
+            }
+          }
+        }
+
+        #goal-zero {
+          width: 73px;
+          height: 79px;
+          margin-top: $gutter - 4px;
+          text-align: center;
+          font-family: $ff-bold;
+          float: left;
+
+          &.gz-0 {
+            background: indianred;
+            color: darkred;
+          }
+
+          &.gz-1 {
+            background: #67c977;
+            color: #195723;
+          }
+
+          .h-top, .h-bot, .score {
+
+            display:block;
+            text-transform: uppercase;
+            font-size: 11px;
+            height: 22px;
+            line-height:26px;
+            letter-spacing: 1px;
+          }
+
+          .score {
+            font-size: 36px;
+            line-height:38px;
+            height: 34px;
+            letter-spacing: 0;
+          }
+
+        }
+
+        #points {
+          width: 167px;
+          height: 79px;
+          background: $light-grey;
+          margin-top: $gutter - 4px;
+          margin-left: $gutter*0.5;
+          float: left;
+          font-family: $ff-bold;
+          padding-left: $gutter*0.5;
+
+          .h-top, .h-bot, .score {
+            display:block;
+            text-transform: uppercase;
+            font-size: 11px;
+            height: 22px;
+            line-height:26px;
+            letter-spacing: 1px;
+
+          }
+
+          .score {
+            font-size: 36px;
+            line-height:38px;
+            height: 34px;
+            letter-spacing: 0;
+          }
+
+          .small.icon.turn {
+            height: 15px !important;
+            background-position-y: 3px !important;
+          }
+
+        }
       }
-
-      .inline-list li {
-        width: 50px;
-      }
-
     }
 
   }

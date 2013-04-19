@@ -62,6 +62,10 @@ header {
   text-align: center;
 }
 
+.dark-grey {
+  color: $dark-grey;
+}
+
 .white-bg {
   background: transparent url('../img/trans-white-bg.png');
 }
@@ -177,17 +181,34 @@ a.medium.btn {
   width: 16px;
   height: 16px;
   text-indent: -9999em;
-  display:block;
+  display:inline-block !important;
 
-  &.episode{
+  &.episode {
     background-image: url('../img/icon-episode.png');
     @include image-2x('../img/icon-episode@2x.png', 16px, 16px);
   }
 
+  &.turn {
+    background-image: url('../img/icon-turn.png');
+    @include image-2x('../img/icon-turn@2x.png', 16px, 16px);
+  }
 
+  &.small.turn {
+    background-image: url('../img/icon-small-turn.png');
+    @include image-2x('../img/icon-small-turn@2x.png', 16px, 16px);
+  }
 
+  &.action {
+    background-image: url('../img/icon-action.png');
+    @include image-2x('../img/icon-action@2x.png', 16px, 16px);
+    background-position: 2px center;
+  }
+
+  &.time{
+    background-image: url('../img/icon-time.png');
+    @include image-2x('../img/icon-time@2x.png', 16px, 16px);
+  }
 }
-
 
 // Tiny Hubbub + Shell footer
 footer.tiny-footer {
