@@ -332,7 +332,7 @@ def inspect_risks(request):
 
             messages.add_message(request, messages.INFO, t.render(c))
 
-            Notification.objects.create_frontline_safety_notification(teamplayer.team, player)
+            Notification.objects.create_frontline_safety_notification(teamplayer.team, player, target.player)
         else:
             messages.add_message(request, messages.INFO, "All out of actions, wait until the next turn.")
 
@@ -363,7 +363,7 @@ def inspect_event(request):
                 'event': event
             })
 
-            Notification.objects.create_frontline_event_notification(teamplayer.team, player)
+            Notification.objects.create_frontline_event_notification(teamplayer.team, player, target.player)
 
             messages.add_message(request, messages.INFO, t.render(c))
         else:

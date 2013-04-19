@@ -131,11 +131,11 @@ from django.core.mail import EmailMessage
 
 class NotificationManager(models.Manager):
     # Inspect frontline notifications
-    def create_frontline_safety_notification(self, team, player):
-        return Notification.objects.create(identifier='frontline-safety', team=team, player=player)
+    def create_frontline_safety_notification(self, team, player, target):
+        return Notification.objects.create(identifier='frontline-safety', team=team, player=player, target=target)
 
-    def create_frontline_event_notification(self, team, player):
-        return Notification.objects.create(identifier='frontline-event', team=team, player=player)
+    def create_frontline_event_notification(self, team, player, target):
+        return Notification.objects.create(identifier='frontline-event', team=team, player=player, target=target)
 
     # Inspect notifications
     def create_inspected_safety_notification(self, team, player):
@@ -198,6 +198,9 @@ class Notification(models.Model):
     # Fields to store data so we can parametrize notifications
     resources_retrieved = models.IntegerField(default=0)
     points_scored = models.IntegerField(default=0)
+
+    # Field to store the target player for frontline actions
+    target = models.ForeignKey('Player', related_name='+', null=True, blank=True)
 
     objects = NotificationManager()
 
