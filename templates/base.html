@@ -59,7 +59,7 @@
                 </header>
                 <div id="scorecard">
                     <ul class="inline-list">
-                        <li><span class="icon episode"></span>2<span class="dark-grey"> / 6</span></li>
+                        <li><span class="icon episode"></span>{{ currentDay }}<span class="dark-grey"> / 6</span></li>
                         <li><span class="icon turn"></span>3<span class="dark-grey"> / 7</span></li>
                         <li><span class="icon action"></span>32</li>
                         <li id="turn-countdown" data-seconds-left="55380"><span class="icon time"></span><span class="hours">15</span><span class="dark-grey time-colon">:</span><span class="minutes">23</span></li>
@@ -67,7 +67,7 @@
 
                     <div id="goal-zero" class="gz-1">
                         <span class="h-top">Goal</span>
-                        <span class="score">62</span>
+                        <span class="score">{{ teamplayer.team.goal_zero_markers }}</span>
                         <span class="h-bot">Zero</span>
                     </div>
 
