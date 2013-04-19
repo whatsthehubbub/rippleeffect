@@ -10,7 +10,7 @@
     initialize: function() {
       if ($('#turn-countdown').length > 0) {
         CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
-        return CountDown.triggerTick();
+        return CountDown.tick();
       }
     },
     triggerTick: function() {
@@ -20,9 +20,15 @@
       var d, h, m;
       d = new Date();
       CountDown.secondsLeft--;
-      m = Math.floor(CountDown.secondsLeft / 60);
-      h = Math.floor(m / 60);
+      m = Math.max(Math.floor(CountDown.secondsLeft / 60), 0);
+      h = Math.max(Math.floor(m / 60), 0);
       m -= h * 60;
+      if (h < 10) {
+        h = "0" + h;
+      }
+      if (m < 10) {
+        m = "0" + m;
+      }
       $('#turn-countdown .hours').text(h);
       $('#turn-countdown .minutes').text(m);
       if (d.getSeconds() % 2 === 0) {
