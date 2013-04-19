@@ -65,7 +65,7 @@
                         
                         <li><span class="icon action"></span>{{ current_teamplayer.team.action_points }}</li>
                         
-                        <li id="turn-countdown" data-seconds-left="55380"><span class="icon time"></span><span class="hours">15</span><span class="dark-grey time-colon">:</span><span class="minutes">23</span></li>
+                        <li id="turn-countdown" data-seconds-left="{{ current_day.secondsleft }}"><span class="icon time"></span><span class="hours">15</span><span class="dark-grey time-colon">:</span><span class="minutes">23</span></li>
                     </ul>
 
                     <div id="goal-zero" class="gz-{% if current_teamplayer.team.goal_zero_markers > 0 %}1{% else %}0{% endif %}">

@@ -315,6 +315,14 @@ class EpisodeDay(models.Model):
 
         logger.info("Starting day %s", str(self))
 
+    def secondsleft(self):
+        if self.end < timezone.now():
+            return 0
+        else:
+            diff = self.end - timezone.now()
+
+            return diff.seconds + (diff.days * 24 * 60 * 60)
+
 
 class TeamPlayer(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
