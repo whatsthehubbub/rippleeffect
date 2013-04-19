@@ -8,3 +8,5 @@ celerybeat.pid
 .env
 fire_app_log.txt
 celerybeat-schedule
+
+codekit-config.json
