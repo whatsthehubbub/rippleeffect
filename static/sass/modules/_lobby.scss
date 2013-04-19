@@ -15,7 +15,7 @@
       a {
         display:block;
         background: url('../img/logo.png') no-repeat top center;
-        @include image-2x('../img/logo2x.png', 218px, 129px);
+        @include image-2x('../img/logo@2x.png', 218px, 129px);
         text-indent: -9999em;
         margin: 0;
         padding: 0;

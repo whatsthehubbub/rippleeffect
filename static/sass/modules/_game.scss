@@ -27,7 +27,7 @@ $sidebar-width: 270px;
         a {
           display:block;
           background: url('../img/logo-game.png') no-repeat top center;
-          @include image-2x('../img/logo-game2x.png', 168px, 99px);
+          @include image-2x('../img/logo-game@2x.png', 168px, 99px);
           text-indent: -9999em;
           margin: 0;
           padding: 0;
@@ -89,12 +89,22 @@ $sidebar-width: 270px;
         }
       }
 
-      #game-progress {
+    }
 
-        .inline-list li {
-          width: 50px;
-        }
 
+    #game-progress {
+      margin-top: $gutter*2;
+
+      #scorecard {
+        margin: 0 $gutter*0.5;
+        background: $off-white;
+        width: $sidebar-width - $gutter;
+        //overflow: hidden;
+
+      }
+
+      .inline-list li {
+        width: 50px;
       }
 
     }

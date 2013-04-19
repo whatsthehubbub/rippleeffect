@@ -19,6 +19,7 @@ html, body {
 
 a, a:link, a:visited {
   text-decoration: underline;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a:hover {
@@ -43,6 +44,15 @@ header {
     padding: 0 $gutter*0.5 0 $gutter*0.5;
     text-transform: uppercase;
     border-bottom: 1px solid $mid-grey;
+
+    &.tight {
+      height: 29px;
+    }
+
+    &.off-white-line {
+      border-bottom: 1px solid $off-white;
+    }
+
   }
 }
 
@@ -157,8 +167,23 @@ a.medium.btn {
   }
 
   &.small {
-
+    // TODO: small size avatar styling
   }
+}
+
+.icon {
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 16px;
+  height: 16px;
+  text-indent: -9999em;
+  display:block;
+
+  &.episode{
+    background-image: url('../img/icon-episode.png');
+    @include image-2x('../img/icon-episode@2x.png', 16px, 16px);
+  }
+
 
 
 }

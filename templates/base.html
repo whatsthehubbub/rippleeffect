@@ -8,6 +8,7 @@
         <meta name="viewport" content="width=device-width" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+        <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}img/apple-touch-icon-precomposed@2x.png" />
         <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon" />
 
         <title>{% block pagetitle %}{% endblock %} - Ripple Effect</title>
@@ -52,16 +53,17 @@
             </div>
 
             <div id="game-progress">
-                <header class="block-header no-line">
-                    <h5>Game Progress</h5>
+                <header>
+                    <h5 class="off-white-line tight">Game Progress</h5>
                 </header>
-                <ul class="inline-list">
-                    <li>2<span> / 6</span></li>
-                    <li>3<span> / 7</span></li>
-                    <li>32</li>
-                    <li>15<span>:</span>23</li>
-                </ul>
-
+                <div id="scorecard">
+                    <ul class="inline-list">
+                        <li><span class="icon episode"></span>2<span> / 6</span></li>
+                        <li><span class="icon turn"></span>3<span> / 7</span></li>
+                        <li><span class="icon action"></span>32</li>
+                        <li><span class="icon time"></span>15<span>:</span>23</li>
+                    </ul>
+                </div>
             </div>
 
 
