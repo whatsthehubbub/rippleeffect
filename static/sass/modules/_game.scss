@@ -1,12 +1,17 @@
 
 $sidebar-width: 270px;
 
-#game {
-
+html {
   // todo: this should probably move to an abs positioned div
-  background-image: url('../img/bg-landing2.jpg');
+  background-image: url('../img/bg/shell_office.jpg');
   background-repeat: no-repeat;
-  background-position: center bottom;
+  background-size: cover;
+}
+
+#game {
+  background:transparent;
+
+
 
   #sidebar {
     width: $sidebar-width;
@@ -206,6 +211,7 @@ $sidebar-width: 270px;
 
   #main {
     margin-left: $sidebar-width + $gutter * 2;
+    width: 424px;
   }
 
 }
