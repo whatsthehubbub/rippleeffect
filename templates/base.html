@@ -42,12 +42,12 @@
                     <h4>Abu Dhabi Desert Drillers</h4>
                 </div>
                 <nav class="clearfix">
-                    <a href="#" class="tiny btn active">Game</a>
-                    <a href="#" class="tiny btn">Messages</a>
-                    <a href="#" class="tiny btn row-end">Team</a>
-                    <a href="#" class="tiny btn">Rankings</a>
-                    <a href="#" class="tiny btn">Profile</a>
-                    <a href="#" class="tiny btn row-end">Sign out</a>
+                    <a href="{% url 'home' %}" class="tiny btn active">Game</a>
+                    <a href="{% url 'notifications' %}" class="tiny btn">Messages</a>
+                    <a href="{% url 'team_your' %}" class="tiny btn row-end">Team</a>
+                    <a href="{% url 'teams' %}" class="tiny btn">Rankings</a>
+                    <a href="{% url 'player_profile_own' %}" class="tiny btn">Profile</a>
+                    <a href="{% url 'auth_logout' %}" class="tiny btn row-end">Sign out</a>
                 </nav>
 
             </div>
