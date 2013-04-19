@@ -259,13 +259,13 @@ html {
         }
       }
 
-      #production-box {
+      #quality-box {
         width: 206px;
         height: 124px;
         float: left;
         margin-left: $gutter;
 
-        .production-stack {
+        .quality-stack {
           padding-left: 72px;
           background: url('../img/production-stack.png') no-repeat;
           @include image-2x('../img/production-stack@2x.png', 50px, 70px);
@@ -275,7 +275,53 @@ html {
             width: 122px;
           }
         }
+      }
 
+      #production-box {
+        margin-top: 0;
+        float: left;
+        height: 150px;
+        width: 424px;
+
+        .barrier.btn, .plan.btn {
+          width: 194px;
+          padding-right: 51px;
+        }
+
+        .badge {
+          position: relative;
+          left: -46px;
+          width: 39px;
+          height: 23px;
+          top: 3px;
+          background: #fff;
+          display:inline-block;
+          text-align: center;
+          font-family: $ff-bold;
+          font-size: 21px;
+          line-height: 23px;
+        }
+
+        .barrier.badge {
+          color: red;
+        }
+
+        .production.badge {
+          color: blue;
+        }
+
+        .production-plan {
+          padding-left: $gutter;
+          padding-top: $gutter*0.5;
+        }
+
+      }
+
+      #messages-box {
+        margin-top: 0;
+        float: left;
+        height: 600px;
+        width: 424px;
       }
 
 

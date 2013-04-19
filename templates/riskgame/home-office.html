@@ -37,7 +37,7 @@
                 <header>
                     <h5>
                         Safety
-                        <span data-tooltip class="help has-tip" title="Check and improve the safety of your station.">?</span>
+                        <span data-tooltip class="help has-tip" title="Check and improve the safety of your station">?</span>
                     </h5>
                 </header>
 
@@ -54,15 +54,15 @@
                 </div>
             </div>
 
-            <div id="production-box" class="sheet">
+            <div id="quality-box" class="sheet">
                 <header>
                     <h5>
-                        Production
-                        <span data-tooltip class="help has-tip" title="Check and improve your production capacity.">?</span>
+                        Production Quality
+                        <span data-tooltip class="help has-tip" title="Check and improve your production capacity">?</span>
                     </h5>
                 </header>
 
-                <div class="production-stack gutter-pad-h half-gutter-pad-top half-gutter-pad-bot">
+                <div class="quality-stack gutter-pad-h half-gutter-pad-top half-gutter-pad-bot">
                     <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
                         <input type="hidden" name="pile" value="gather">
                         <input type="submit" class="tiny production action btn" value="Inspect">
@@ -75,10 +75,58 @@
                 </div>
             </div>
 
+            <div id="production-box" class="sheet">
+                <header>
+                    <h5>
+                        Resource Production
+                        <span data-tooltip class="help has-tip" title="Place barriers, plan production and produce resources">?</span>
+                    </h5>
+                </header>
+
+                <div class="production-plan">
+                    <form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
+                        <input type="submit" class="tiny barrier action btn" value="Place barrier">
+                        <span class="barrier badge">0</span>
+                    </form>
+
+                    <form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
+                        <input type="submit" class="tiny plan action btn" value="Plan production">
+                        <span class="production badge">0</span>
+                    </form>
+                </div>
+
+                <form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
+                    <input type="submit"  class="tiny produce btn" value="Produce resources">
+                </form>
+            </div>
+
+            <div id="messages-box" class="sheet">
+                <header>
+                    <h5>
+                        Messages
+                        <span data-tooltip class="help has-tip" title="See what other team members are up to">?</span>
+                    </h5>
+                </header>
+
+                <ul>
+                    {% for notification in notifications %}
+                        <li>{{ notification.player }} {{ notification.get_message }} {{ notification.datecreated|timesince }} ago</li>
+                    {% endfor %}
+                </ul>
+
+            </div>
 
 
 
 
+
+
+
+
+        </section>
+
+
+        <section style="float: left;">
 
         <p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({% if currentDay.end|timeuntil != "0 minutes" %}{{ currentDay.end|timeuntil }}{% else %}less than a minute{% endif %} left)</p>
 
