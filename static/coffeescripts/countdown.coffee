@@ -8,8 +8,9 @@ $ ->
 
 # hook up event handlers and intialize
   initialize: =>
-    CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
-    CountDown.triggerTick();
+    if $('#turn-countdown').length > 0
+      CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
+      CountDown.triggerTick();
 
   triggerTick: =>
     window.setTimeout(CountDown.tick, 1000)
