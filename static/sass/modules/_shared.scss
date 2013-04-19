@@ -40,13 +40,14 @@ header {
     line-height: 37px;
     color: $dark-grey;
     font-family: $ff-medium;
-    margin: 0 $gutter*0.5 0 $gutter*0.5;
+    margin: 0 $gutter*0.5 $gutter $gutter*0.5;
     padding: 0 $gutter*0.5 0 $gutter*0.5;
     text-transform: uppercase;
     border-bottom: 1px solid $mid-grey;
 
     &.tight {
       height: 29px;
+      margin-bottom:0;
     }
 
     &.off-white-line {

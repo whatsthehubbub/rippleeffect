@@ -222,6 +222,38 @@ html {
 
     }
 
+    // generic game UI styles
+    .game-ui {
+
+      .ui-box {
+        padding-bottom: $gutter*2;
+      }
+
+      #events {
+        height: 112px;
+        margin-top:40px;
+        background-color: palegreen;
+      }
+
+    }
+
+    // in game messages
+    .modal.message {
+
+      h2 {
+        font-size: 18px;
+        font-family: $ff-bold;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      .dismiss.btn {
+        width: auto;
+      }
+
+    }
+
+
   }
 
 }

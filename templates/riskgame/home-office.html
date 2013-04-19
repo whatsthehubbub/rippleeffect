@@ -9,18 +9,16 @@
 	{% if messages %}
 	    {% for message in messages %}
 
-            <section class="message">
+            <section class="modal message">
                 <div class="row">
                     <div class="sheet large-12 columns">
+
+                        <h2>Header</h2>
+
                         {{ message }}
 
-                        <a href="#" class='medium btn' onclick='window.location.reload()'>Okay</a>
-                        <!--
-                        <div data-alert class="alert-box">
-                            <p>{{ message }}</p>
-                            <a href="#" class="close">&times;</a>
-                        </div>
-                        -->
+                        <a href="#" class='medium dismiss btn' onclick='window.location.reload()'>Okay</a>
+
                     </div>
                 </div>
             </section>
@@ -30,6 +28,40 @@
     {% else %}
 
         <section class="game-ui office">
+
+            <div id="events">
+                events
+                {{ teamplayer.active_events }}
+            </div>
+
+            <div class="sheet ui-box">
+                <header>
+                    <h5>
+                        Safety
+                        <span class="help">?</span>
+                    </h5>
+                </header>
+
+                <div class="safety-stack">
+
+                    <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
+                        <input type="hidden" name="pile" value="risk">
+                        <input type="submit" class="tiny btn" value="Inspect safety">
+                    </form>
+
+                    <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
+                        <input type="hidden" name="pile" value="risk">
+                        <input type="submit" class="tiny btn" value="Improve safety">
+                    </form>
+
+                </div>
+
+            </div>
+
+
+
+
+
 
         <p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({% if currentDay.end|timeuntil != "0 minutes" %}{{ currentDay.end|timeuntil }}{% else %}less than a minute{% endif %} left)</p>
 

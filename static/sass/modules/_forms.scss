@@ -58,6 +58,30 @@ input.medium.btn{
   }
 }
 
+input.tiny.btn{
+  @include button(
+      0,
+      $mid-grey,
+      0,
+      false,
+      false,
+      true);
+  text-transform: uppercase;
+  padding: 0 6px;
+  margin-bottom:6px;
+  font-family: $ff-bold;
+  font-size: 11px;
+  height: 30px;
+  line-height: 32px;
+  border-bottom: 1px solid darken($mid-grey, 20%);
+  border-right: 1px solid darken($mid-grey, 20%);
+
+  &:active{
+    border: 1px solid darken($mid-grey, 20%);
+  }
+
+}
+
 form {
 
   // single line
