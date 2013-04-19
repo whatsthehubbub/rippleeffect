@@ -9,14 +9,13 @@ from django.db.models import F
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from django.views.generic import DetailView
 from django.views.decorators.http import require_POST
 
-from django.utils.translation import ugettext_lazy as _
+# from django.utils.translation import ugettext_lazy as _
 
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Field
-from crispy_forms.bootstrap import FormActions
+# from crispy_forms.helper import FormHelper
+# from crispy_forms.layout import Layout, Submit, Field
+# from crispy_forms.bootstrap import FormActions
 
 from riskgame.models import *
 
@@ -75,10 +74,15 @@ def index(request):
 #         return HttpResponseRedirect(reverse('index'))
 
 
-class TeamDetail(DetailView):
-    model = Team
-    template_name = 'riskgame/team_detail.html'
-    context_object_name = 'team'
+@login_required
+def team_detail(request, pk):
+    t = loader.get_template('riskgame/team_detail.html')
+
+    c = RequestContext(request, {
+        'team': Team.objects.get(pk=pk),
+    })
+
+    return HttpResponse(t.render(c))
 
 # @login_required
 # @require_POST
@@ -133,8 +137,7 @@ def player_profile(request, pk):
     t = loader.get_template('riskgame/player_profile.html')
 
     c = RequestContext(request, {
-        'player': player,
-        'teamplayer': TeamPlayer.objects.get(player=player)
+        'player': player
     })
 
     return HttpResponse(t.render(c))

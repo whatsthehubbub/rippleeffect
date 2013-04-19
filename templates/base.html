@@ -59,22 +59,25 @@
                 </header>
                 <div id="scorecard">
                     <ul class="inline-list">
-                        <li><span class="icon episode"></span>{{ currentDay }}<span class="dark-grey"> / 6</span></li>
-                        <li><span class="icon turn"></span>3<span class="dark-grey"> / 7</span></li>
-                        <li><span class="icon action"></span>32</li>
+                        <li><span class="icon episode"></span>{{ current_day.episode.number }}<span class="dark-grey"> / 6</span></li>
+
+                        <li><span class="icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
+                        
+                        <li><span class="icon action"></span>{{ current_teamplayer.team.action_points }}</li>
+                        
                         <li id="turn-countdown" data-seconds-left="55380"><span class="icon time"></span><span class="hours">15</span><span class="dark-grey time-colon">:</span><span class="minutes">23</span></li>
                     </ul>
 
-                    <div id="goal-zero" class="gz-{{ teamplayer.team.goal_zero_markers }}">
+                    <div id="goal-zero" class="gz-{{ current_teamplayer.team.goal_zero_markers }}">
                         <span class="h-top">Goal</span>
-                        <span class="score">{{ teamplayer.team.goal_zero_markers }}</span>
+                        <span class="score">{{ current_teamplayer.team.goal_zero_markers }}</span>
                         <span class="h-bot">Zero</span>
                     </div>
 
                     <div id="points">
                         <span class="h-top">Points</span>
-                        <span class="score">123123</span>
-                        <span class="h-bot dark-grey"><span class="small icon turn"></span>2350</span>
+                        <span class="score">{{ current_teamplayer.team.victory_points }}</span>
+                        <span class="h-bot dark-grey"><span class="small icon turn"></span>{{ current_teamplayer.team.victory_points_episode }}</span>
                     </div>
 
                 </div>
