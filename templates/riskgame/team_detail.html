@@ -3,6 +3,7 @@
 {% load i18n %}
 
 {% block content %}
+
 <h2>{{ team.name }} team page</h2>
 
 <dl>
@@ -14,6 +15,12 @@
 	<dd>{{ team.resources_collected }}</dd>
 	<dt>Current goal zero</dt>
 	<dd>{{ team.get_goal_zero_streak }}</dd>
+	<dt>Active event</dt>
+	<dd>
+		{% for event in team.get_active_events %}
+			{{ event|event_name }}, 
+		{% endfor %}
+	</dd>
 </dl>
 
 <h3>{% trans "Team members" %}</h3>

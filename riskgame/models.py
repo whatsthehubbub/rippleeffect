@@ -500,6 +500,9 @@ class TeamPlayer(models.Model):
     def is_event_active(self, event):
         return event in self.active_events.split(',')
 
+    def get_active_events(self):
+        return self.active_events.split(',')
+
     def hit_by_lightning(self):
         # TODO make function for taking the top card off a pile (drawing)
         effect = False
@@ -561,7 +564,7 @@ class Team(models.Model):
         return TeamJoinRequest.objects.filter(team=self, invite=False)
 
     def get_goal_zero_streak(self):
-        return max(self.goal_zero_markers, self.goal_zero_markers)
+        return max(self.goal_zero_markers, self.goal_zero_streak)
 
     def start_episode(self, episode):
         # logger.info("Starting episode for team %s", str(self))
@@ -739,6 +742,9 @@ class Team(models.Model):
     def is_event_active(self, event):
         return event in self.active_events.split(',')
 
+    def get_active_events(self):
+        return self.active_events.split(',')
+
     def get_office_players(self):
         return self.teamplayer_set.filter(role='office')
 
@@ -778,7 +784,7 @@ class Player(models.Model):
         self.emails_unsubscribe_hash = uuid.uuid4().hex
 
     def __unicode__(self):
-        return str(self.user)
+        return self.name or self.email()
 
     def get_led_team(self):
         try:

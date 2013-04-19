@@ -177,6 +177,20 @@ class FrontLineForm(forms.Form):
         self.fields['target'] = forms.ModelChoiceField(queryset=teamplayer.team.teamplayer_set.filter(role='office'))
 
 @login_required
+def notifications(request):
+    player = request.user.get_or_create_player()
+    teamplayer = TeamPlayer.objects.get(player=player)
+
+    t = loader.get_template('riskgame/notifications.html')
+
+    c = RequestContext(request, {
+        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')
+    })
+
+    return HttpResponse(t.render(c))
+
+
+@login_required
 def home(request):
     game = Game.objects.get_latest_game()
 
@@ -263,7 +277,7 @@ def teams(request):
     t = loader.get_template('riskgame/teams.html')
 
     c = RequestContext(request, {
-        'teams': Team.objects.all().order_by('-rank_points')
+        'teams': Team.objects.all().order_by('-rank_points', '-pk')
     })
 
     return HttpResponse(t.render(c))
@@ -508,7 +522,7 @@ def play_pump(request):
 
     if incident_count > barrier_count:
         # We have an incident
-        Team.objects.filter(pk=team.pk).update(goal_zero_streak=max(team.goal_zero_streak, team.goal_zero_markers))
+        Team.objects.filter(pk=team.pk).update(goal_zero_streak=team.get_goal_zero_streak())
         Team.objects.filter(pk=team.pk).update(goal_zero_markers=0)
 
         # Lose all your action points if the hard wind event is active
