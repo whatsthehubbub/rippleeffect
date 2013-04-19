@@ -213,6 +213,7 @@ html {
   #main {
     margin-left: $sidebar-width + $gutter * 2;
     width: 424px;
+    padding-top: 40px;
 
     .sheet {
       @extend .white-bg;
@@ -237,7 +238,6 @@ html {
 
       #events {
         height: 112px;
-        margin-top:40px;
         background-color: palegreen;
       }
 
@@ -264,6 +264,17 @@ html {
         height: 124px;
         float: left;
         margin-left: $gutter;
+
+        .production-stack {
+          padding-left: 72px;
+          background: url('../img/production-stack.png') no-repeat;
+          @include image-2x('../img/production-stack@2x.png', 50px, 70px);
+          background-position: $gutter 3px;
+
+          .production.btn {
+            width: 122px;
+          }
+        }
 
       }
 

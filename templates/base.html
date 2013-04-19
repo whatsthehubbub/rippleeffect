@@ -59,19 +59,19 @@
                 </header>
                 <div id="scorecard">
                     <ul class="inline-list">
-                        <li><span class="icon episode"></span>{{ current_day.episode.number }}<span class="dark-grey"> / 6</span></li>
+                        <li><span data-tooltip title="Episode" class="has-tip icon episode"></span>{{ current_day.episode.number }}<span class="dark-grey"> / 6</span></li>
 
-                        <li><span class="icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
-                        
-                        <li><span class="icon action"></span>
+                        <li><span data-tooltip title="Turn" class="has-tip icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
+
+                        <li><span data-tooltip title="Remaining actions in this turn" class="has-tip icon action"></span>
                         {% ifequal current_teamplayer.role "office" %}
                           {{ current_teamplayer.team.action_points }}
                         {% else %}
                           {{ current_teamplayer.team.frontline_action_points }}
                         {% endifequal %}
                         </li>
-                        
-                        <li id="turn-countdown" data-seconds-left="{{ current_day.secondsleft }}"><span class="icon time"></span><span class="hours"></span><span class="dark-grey time-colon" style="visibility: hidden">:</span><span class="minutes"></span></li>
+
+                        <li id="turn-countdown" data-seconds-left="{{ current_day.secondsleft }}"><span data-tooltip title="Time left in turn" class="has-tip icon time"></span><span class="hours"></span><span class="dark-grey time-colon" style="visibility: hidden">:</span><span class="minutes"></span></li>
                     </ul>
 
                     <div id="goal-zero" class="gz-{% if current_teamplayer.team.goal_zero_markers > 0 %}1{% else %}0{% endif %}">
@@ -83,7 +83,7 @@
                     <div id="points">
                         <span class="h-top">Points</span>
                         <span class="score">{{ current_teamplayer.team.victory_points }}</span>
-                        <span class="h-bot dark-grey"><span class="small icon turn"></span>{{ current_teamplayer.team.victory_points_episode }}</span>
+                        <span class="h-bot dark-grey"><span data-tooltip title="Points this turn" class="has-tip small icon turn"></span>{{ current_teamplayer.team.victory_points_episode }}</span>
                     </div>
 
                 </div>
@@ -110,19 +110,8 @@
           '.js"><\/script>')
           </script>
           <script src="{{ STATIC_URL}}javascripts/foundation/foundation.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.alerts.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.clearing.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.cookie.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.dropdown.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.forms.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.joyride.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.magellan.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.orbit.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.placeholder.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.reveal.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.section.js"></script>
           <script src="{{ STATIC_URL}}javascripts/foundation/foundation.tooltips.js"></script>
-          <script src="{{ STATIC_URL}}javascripts/foundation/foundation.topbar.js"></script>
+
           <script>
           $(document).foundation();
           </script>

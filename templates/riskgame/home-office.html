@@ -30,7 +30,6 @@
         <section class="game-ui office">
 
             <div id="events">
-                <span data-tooltip class="help has-tip" title="Check and improve your production capacity.">events</span>
                 {{ teamplayer.active_events }}
             </div>
 
@@ -63,8 +62,16 @@
                     </h5>
                 </header>
 
-                <div class="safety-stack gutter-pad-h half-gutter-pad-top half-gutter-pad-bot">
+                <div class="production-stack gutter-pad-h half-gutter-pad-top half-gutter-pad-bot">
+                    <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
+                        <input type="hidden" name="pile" value="gather">
+                        <input type="submit" class="tiny production action btn" value="Inspect">
+                    </form>
 
+                    <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
+                        <input type="hidden" name="pile" value="gather">
+                        <input type="submit" class="tiny production action btn" value="Improve">
+                    </form>
                 </div>
             </div>
 
