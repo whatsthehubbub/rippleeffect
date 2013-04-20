@@ -80,6 +80,7 @@ def team_detail(request, pk):
 
     c = RequestContext(request, {
         'team': Team.objects.get(pk=pk),
+        'title': "team"
     })
 
     return HttpResponse(t.render(c))

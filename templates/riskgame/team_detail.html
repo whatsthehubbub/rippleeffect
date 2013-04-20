@@ -2,6 +2,8 @@
 {% load riskgame_extras %}
 {% load i18n %}
 
+{% block pagetitle %}{{ title|capfirst }} {{ team.name }}{% endblock pagetitle %}
+
 {% block content %}
 
 <h2>{{ team.name }} team page</h2>
