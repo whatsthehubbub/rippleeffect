@@ -201,7 +201,7 @@ html {
 
           .small.icon.turn {
             height: 15px !important;
-            background-position-y: 3px !important;
+            background-position-y: 5px !important;
           }
 
         }
@@ -280,7 +280,7 @@ html {
       #production-box {
         margin-top: 0;
         float: left;
-        height: 150px;
+        height: 125px;
         width: 424px;
 
         .barrier.btn, .plan.btn {
@@ -289,30 +289,49 @@ html {
         }
 
         .badge {
-          position: relative;
-          left: -46px;
+          position: absolute;
+          left: 148px;
           width: 39px;
           height: 23px;
           top: 3px;
           background: #fff;
-          display:inline-block;
           text-align: center;
           font-family: $ff-bold;
           font-size: 21px;
-          line-height: 23px;
+          line-height: 27px;
+
+          background: #fff url('../img/production-count-box.png') no-repeat;
+          @include image-2x('../img/production-count-box@2x.png', 39px, 23px);
+
         }
 
         .barrier.badge {
-          color: red;
+          color: #a34d4d;
         }
 
         .production.badge {
-          color: blue;
+          color: #3f4861;
         }
 
         .production-plan {
           padding-left: $gutter;
           padding-top: $gutter*0.5;
+          width: 271px;
+          float:left;
+
+          background: url('../img/production-flow.png') no-repeat 212px 22px;
+          @include image-2x('../img/production-flow@2x.png', 52px, 36px);
+        }
+
+        .production-produce {
+          padding-top: $gutter*0.5;
+
+          input {
+            width: 141px;
+            height: 66px;
+            line-height:70px;
+          }
+
         }
 
       }

@@ -84,20 +84,23 @@
                 </header>
 
                 <div class="production-plan">
-                    <form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
+                    <form class="relative" method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
                         <input type="submit" class="tiny barrier action btn" value="Place barrier">
-                        <span class="barrier badge">0</span>
+                        <span class="barrier badge">{{ teamplayer.prevent_markers }}</span>
                     </form>
 
-                    <form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
+                    <form class="relative" method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
                         <input type="submit" class="tiny plan action btn" value="Plan production">
-                        <span class="production badge">0</span>
+                        <span class="production badge">{{ teamplayer.gather_markers }}</span>
                     </form>
                 </div>
 
-                <form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
-                    <input type="submit"  class="tiny produce btn" value="Produce resources">
-                </form>
+                <div class="production-produce">
+                    <form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
+                        <input type="submit"  class="tiny produce btn" value="Produce resources">
+                    </form>
+                </div>
+
             </div>
 
             <div id="messages-box" class="sheet">
