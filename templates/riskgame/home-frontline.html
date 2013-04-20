@@ -20,90 +20,73 @@
                 </div>
             </section>
 	    {% endfor %}
-	{% endif %}
 
-    <section class="game-ui frontline">
+    {% else %}
 
-        {% include "partials/game/events.html" %}
+        <section class="game-ui frontline">
 
-        <div id="team-box" class="sheet">
-            <header>
-                <h5>
-                    Your Team
-                    <span data-tooltip class="help has-tip" title="Inspect your team members' stations">?</span>
-                </h5>
-            </header>
+            {% include "partials/game/events.html" %}
 
-            asdf
-        </div>
+            <div id="team-box" class="sheet">
+                <header>
+                    <h5>
+                        Office players
+                        <span data-tooltip class="help has-tip" title="Inspect your team members' stations">?</span>
+                    </h5>
+                </header>
 
-        {% include "partials/game/messages.html" %}
+                <div class="roster">
+                    {% for mate in teammates %}
+                        {% ifnotequal mate.player current_player %}
+                            {% ifnotequal mate.role "frontline" %}
+                                <div data-tooltip title="{{ mate.player }}" id="mate-{{ mate.id }}" data-id="{{ mate.id }}" data-name="{{ mate.player.name }}&nbsp;" data-email="{{ mate.player.email }}" class="small avatar has-tip" style="background-color: sandybrown;"><div class="{{ mate.role }}" style="border-color: palevioletred; background-color: sandybrown"></div></div>
+                            {% endifnotequal %}
+                        {% endifnotequal %}
+                    {% endfor %}
+                </div>
 
-        <div class="ui-box sheet">
-            <header>
-                <h5>
-                    Start a new game
-                </h5>
-            </header>
+                <div id="team-box-inactive" class="actions no-mate">
+                    Select a player
+                </div>
 
-            <div class="ui-box-content">
-                <form method="POST" action="{% url 'game_start' %}">
-                    {% csrf_token %}
-                    {{ startform }}
-                    <input type="submit">
-                </form>
+                <div id="team-box-active" class="actions mate" style="display:none;">
+                    <span id="team-mate-name"></span>
+                    <span id="team-mate-email"></span>
+                    <form method="POST" action="{% url 'frontline_risks' %}"> {% csrf_token %}
+                        <input type="hidden" id="team-mate-inspect-id" name="target" value="2">
+                        <input type="submit" class="tiny inspect action btn" value="Inspect safety">
+                    </form>
+
+                    <form method="POST" action="{% url 'frontline_event' %}"> {% csrf_token %}
+                        <input type="hidden" id="team-mate-predict-id" name="target" value="2">
+                        <input type="submit" class="tiny predict action btn"  value="Predict event">
+                    </form>
+                </div>
+
+
             </div>
 
-        </div>
+            {% include "partials/game/messages.html" %}
 
+            <div class="ui-box sheet">
+                <header>
+                    <h5>
+                        Start a new game
+                    </h5>
+                </header>
 
+                <div class="ui-box-content">
+                    <form method="POST" action="{% url 'game_start' %}">
+                        {% csrf_token %}
+                        {{ startform }}
+                        <input type="submit">
+                    </form>
+                </div>
 
-    </section>
+            </div>
 
+        </section>
 
-
-
-    <section style="float: left;">
-	<p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({% if currentDay.end|timeuntil != "0 minutes" %}{{ currentDay.end|timeuntil }}{% else %}less than a minute{% endif %} left)</p>
-
-	<h3>Team</h3>
-
-	{% include "partials/team_stats.html" %}
-
-	<h4>Team members</h4>
-	
-	<ul>
-	{% for mate in teammates %}
-		<li>{{ mate.player }} - {{ mate.role }} {% ifequal mate.player current_player %}(You!){% endifequal %}</li>
-	{% endfor %}
-	</ul>
-
-	<h3>You</h3>
-
-	<p>Your role: Frontline.</p>
-
-	<h3>Actions</h3>
-
-	<form method="POST" action="{% url 'frontline_risks' %}"> {% csrf_token %}
-		{{ targetform.as_p }}
-		<input type="submit" value="Inspect safety">
-	</form>
-
-	<form method="POST" action="{% url 'frontline_event' %}"> {% csrf_token %}
-		{{ targetform.as_p }}
-		<input type="submit" value="Predict event">
-	</form>
-
-	<h3>Notifications</h3>
-
-	<ul>
-		{% for notification in notifications %}
-			<li>{{ notification.player }} {{ notification.get_message }} {{ notification.datecreated|timesince }} ago</li>
-		{% endfor %}
-	</ul>
-
-	{% include "partials/start_new_game.html" %}
-
-    </section>
+	{% endif %}
 	
 {% endblock content %}

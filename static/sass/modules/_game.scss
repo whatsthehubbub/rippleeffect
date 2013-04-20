@@ -235,8 +235,8 @@ $sidebar-width: 270px;
       }
 
       .action.btn {
-        background-image: url('../img/icon-action.png');
-        @include image-2x('../img/icon-action@2x.png', 16px, 16px);
+        background-image: url('../img/action-recessed.png');
+        @include image-2x('../img/action-recessed@2x.png', 16px, 16px);
         background-repeat: no-repeat;
         background-position: 1px 6px;
         padding-left: 15px;
@@ -295,6 +295,12 @@ $sidebar-width: 270px;
           }
 
           &.high-market div {
+            background-image: url('../img/event-high-market.png');
+            @include image-2x('../img/event-high-market@2x.png', 99px, 61px);
+          }
+
+          // todo: add this asset
+          &.poor-vision div {
             background-image: url('../img/event-high-market.png');
             @include image-2x('../img/event-high-market@2x.png', 99px, 61px);
           }
@@ -408,6 +414,81 @@ $sidebar-width: 270px;
         width: 424px;
         overflow: hidden;
       }
+
+      #team-box {
+        float: left;
+        width: 424px;
+
+        .roster {
+          width: 235px;
+          border-right: 1px solid $mid-grey;
+          margin-bottom: $gutter*0.5;
+          padding: 0 $gutter*0.5 $gutter*0.5 $gutter;
+          overflow: hidden;
+          float: left;
+          min-height: 136px;
+
+          .avatar {
+            opacity: 0.5;
+            margin: $gutter*0.5 $gutter*0.5 0 0;
+            float: left;
+
+            &:hover, &.active {
+              opacity: 1.0;
+            }
+
+            &.active {
+              border: 2px solid $black;
+
+              div {
+                // nudge the office dot back into place
+                margin: 7px 0 0 7px;
+              }
+            }
+          }
+        }
+
+        .actions {
+          float: left;
+          width: 183px;
+        }
+
+        .actions.no-mate {
+          text-transform: uppercase;
+          color: $mid-grey;
+          font-family: $ff-medium;
+          font-size: 14px;
+          text-align: center;
+          padding-top: 54px;
+        }
+
+        .actions.mate {
+          padding: 10px $gutter*0.5 0 $gutter;
+
+          #team-mate-name {
+            font-size: 22px;
+            font-family: $ff-medium;
+            display:block;
+          }
+
+          #team-mate-email {
+            font-size: 14px;
+            display: block;
+            margin-bottom: $gutter*0.5;
+          }
+
+          .tiny.btn {
+            width: 165px;
+          }
+
+
+
+        }
+
+
+
+      }
+
 
 
     }
