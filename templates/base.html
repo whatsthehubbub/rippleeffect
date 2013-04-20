@@ -47,8 +47,8 @@
                     <h4>{{ current_teamplayer.team }}</h4>
                 </div>
                 <nav class="clearfix">
-                    <a href="{% url 'home' %}" class="tiny btn active">Game</a>
-                    <a href="{% url 'notifications' %}" class="tiny btn">Messages</a>
+                    <a href="{% url 'home' %}" class="tiny btn {% ifequal title "game" %}active{% endifequal %}">Game</a>
+                    <a href="{% url 'notifications' %}" class="tiny btn {% ifequal title "messages" %}active{% endifequal %}">Messages</a>
                     <a href="{% url 'team_your' %}" class="tiny btn row-end">Team</a>
                     <a href="{% url 'teams' %}" class="tiny btn">Rankings</a>
                     <a href="{% url 'player_profile_own' %}" class="tiny btn">Profile</a>

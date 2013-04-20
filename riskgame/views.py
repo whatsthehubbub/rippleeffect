@@ -187,7 +187,8 @@ def notifications(request):
     t = loader.get_template('riskgame/notifications.html')
 
     c = RequestContext(request, {
-        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')
+        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
+        'title': 'messages'
     })
 
     return HttpResponse(t.render(c))
@@ -222,6 +223,7 @@ def home(request):
             'teammates': teamplayer.team.teamplayer_set.all(),
             'currentDay': EpisodeDay.objects.get(current=True),
             'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')[:25],
+            'title': "game"
         })
 
         if teamplayer.role == 'office':
