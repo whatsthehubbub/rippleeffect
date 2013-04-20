@@ -21,7 +21,7 @@
 		{% for team in teams %}
 		<tr>
 			<td>{{ team.get_rank }}</td>
-			<td><a href="{{ team.get_absolute_url }}">{{ team.name }}</a></td>
+			<td><a href="{{ team.get_absolute_url }}">{{ team.name }}</a> {% ifequal team current_teamplayer.team %}(your team){% endifequal %}</td>
 			<td>{{ team.victory_points }}</td>
 			<td>{{ team.resources_collected }}</td>
 			<td>{{ team.get_goal_zero_streak }}</td>
