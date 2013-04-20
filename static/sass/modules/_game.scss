@@ -1,13 +1,6 @@
 
 $sidebar-width: 270px;
 
-html {
-  // todo: this should probably move to an abs positioned div
-  background-image: url('../img/bg/shell_office.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
 #game {
   background:transparent;
 
@@ -221,6 +214,19 @@ html {
       margin-bottom: 24px;
     }
 
+    .ui-box {
+      margin-top: 0;
+      float: left;
+      width: 424px;
+    }
+
+    .ui-box-content {
+      //padding-left: $gutter;
+      //padding-top: $gutter*0.5;
+      //width: 271px;
+      //float:left;
+    }
+
     // generic game UI styles
     .game-ui {
 
@@ -238,7 +244,65 @@ html {
 
       #events {
         height: 112px;
-        background-color: palegreen;
+        overflow: hidden;
+
+        .event {
+          float: left;
+          width: 106px;
+          height: 106px;
+          padding: 3px;
+          margin-right: $gutter;
+          background: url('../img/event-frame.png') no-repeat;
+          @include image-2x('../img/event-frame@2x.png', 106px, 106px);
+          text-align: center;
+
+          div {
+            // inner div containing bg image
+            width: 100px;
+            height: 100px;
+            background-repeat: no-repeat;
+            background-position: center bottom;
+
+            font-size: 14px;
+            font-family: $ff-medium;
+            line-height: 13px;
+
+
+            span {
+              font-size: 11px;
+              font-family: $ff-bold;
+              display: block;
+              height: 24px;
+              line-height: 26px;
+              text-transform: uppercase;
+              color: $dark-grey;
+            }
+          }
+
+          &.caution div {
+            background-image: url('../img/event-caution.png');
+            @include image-2x('../img/event-caution@2x.png', 99px, 61px);
+          }
+
+          &.tornado div {
+            background-image: url('../img/event-tornado.png');
+            @include image-2x('../img/event-tornado@2x.png', 99px, 61px);
+          }
+
+          &.lightning div {
+            background-image: url('../img/event-lightning.png');
+            @include image-2x('../img/event-lightning@2x.png', 99px, 61px);
+          }
+
+          &.high-market div {
+            background-image: url('../img/event-high-market.png');
+            @include image-2x('../img/event-high-market@2x.png', 99px, 61px);
+          }
+
+
+        }
+
+
       }
 
       #safety-box {
@@ -338,9 +402,11 @@ html {
 
       #messages-box {
         margin-top: 0;
+        margin-bottom: $gutter*4;
         float: left;
-        height: 600px;
+
         width: 424px;
+        overflow: hidden;
       }
 
 

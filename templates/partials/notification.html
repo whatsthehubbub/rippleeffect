@@ -1,0 +1,7 @@
+<div class="notification clearfix">
+    <div class="small avatar"></div>
+    <div class="message clearfix">
+        <span class="timestamp">{{ notification.datecreated|timesince }} ago</span>
+        {{ notification.player }} {{ notification.get_message }}
+    </div>
+</div>

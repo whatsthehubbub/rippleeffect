@@ -23,12 +23,16 @@
         <script src="{{ STATIC_URL }}javascripts/site.js"></script>
         <script src="{{ STATIC_URL }}javascripts/forms.js"></script>
         <script src="{{ STATIC_URL }}javascripts/countdown.js"></script>
+        <script src="{{ STATIC_URL }}javascripts/backdrop-scaler.js"></script>
 
         {% block extrahead %}{% endblock extrahead %}
 
     </head>
 
     <body id="game">
+
+
+        <img id="backdrop" src="{{ STATIC_URL }}img/bg/shell_office.jpg" alt="">
 
         <aside id="sidebar" class="clearfix">
 

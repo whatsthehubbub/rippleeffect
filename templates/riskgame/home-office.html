@@ -30,7 +30,33 @@
         <section class="game-ui office">
 
             <div id="events">
-                {{ teamplayer.active_events }}
+                <!--{{ teamplayer.active_events }}-->
+
+                <div class="event tornado">
+                    <div>
+                        <span>Your event</span>
+                        Tornado
+                    </div>
+                </div>
+                <div class="event caution">
+                    <div>
+                        <span>Team event</span>
+                        Increased Risk
+                    </div>
+                </div>
+                <div class="event high-market">
+                    <div>
+                        <span>Your event</span>
+                        High Market
+                    </div>
+                </div>
+                <div class="event lightning">
+                    <div>
+                        <span>Your event</span>
+                        Lightning
+                    </div>
+                </div>
+
             </div>
 
             <div id="safety-box" class="sheet">
@@ -111,106 +137,34 @@
                     </h5>
                 </header>
 
-                <ul>
-                    {% for notification in notifications %}
-                        <li>{{ notification.player }} {{ notification.get_message }} {{ notification.datecreated|timesince }} ago</li>
-                    {% endfor %}
-                </ul>
+
+                {% for notification in notifications %}
+                    {% include "partials/notification.html" %}
+                {% endfor %}
+            </div>
+
+
+            <div class="ui-box sheet">
+                <header>
+                    <h5>
+                        Start a new game
+                    </h5>
+                </header>
+
+                <div class="ui-box-content">
+                    <form method="POST" action="{% url 'game_start' %}">
+                        {% csrf_token %}
+                        {{ startform }}
+                        <input type="submit">
+                    </form>
+                </div>
 
             </div>
 
 
 
-
-
-
-
-
         </section>
 
-
-        <section style="float: left;">
-
-        <p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({% if currentDay.end|timeuntil != "0 minutes" %}{{ currentDay.end|timeuntil }}{% else %}less than a minute{% endif %} left)</p>
-
-        <h3>Team</h3>
-
-        {% include "partials/team_stats.html" %}
-
-        <h4>Team members</h4>
-
-        <ul>
-            {% for mate in teammates %}
-                <li>{{ mate.player }} {% ifequal mate.player current_player %}(You!){% endifequal %}</li>
-            {% endfor %}
-        </ul>
-
-        <h3>You</h3>
-
-        <p>Your role: Office.</p>
-
-        <p>Event: {{ teamplayer.active_events }}</p>
-
-        <h4>Safety</h4>
-
-        <ul>
-            <li>Safety status: hidden. <!--{{ teamplayer.risk_pile }}--></li>
-            <li>Barriers: {{ teamplayer.prevent_markers }}</li>
-        </ul>
-
-        <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
-            <input type="hidden" name="pile" value="risk">
-            <input type="submit" value="Inspect safety">
-        </form>
-
-        <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
-            <input type="hidden" name="pile" value="risk">
-            <input type="submit" value="Improve safety">
-        </form>
-
-        <h4>Production quality</h4>
-
-        <ul>
-            <li>Production quality status: hidden. <!--{{ teamplayer.gather_pile }}--></li>
-            <li>Planned production: {{ teamplayer.gather_markers }}</li>
-        </ul>
-
-
-        <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
-            <input type="hidden" name="pile" value="gather">
-            <input type="submit" value="Inspect production quality">
-        </form>
-
-        <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
-            <input type="hidden" name="pile" value="gather">
-            <input type="submit" value="Improve production quality">
-        </form>
-
-        <h4>Resource production</h4>
-
-        <form method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
-            <input type="submit" value="Place barrier">
-        </form>
-
-        <form method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
-            <input type="submit" value="Plan resource production">
-        </form>
-
-        <form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
-            <input type="submit" value="Produce resources">
-        </form>
-
-        <h3>Notifications</h3>
-
-        <ul>
-            {% for notification in notifications %}
-                <li>{{ notification.player }} {{ notification.get_message }} {{ notification.datecreated|timesince }} ago</li>
-            {% endfor %}
-        </ul>
-
-        {% include "partials/start_new_game.html" %}
-
-        </section>
 
     {% endif %}
 
