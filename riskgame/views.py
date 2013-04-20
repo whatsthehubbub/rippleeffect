@@ -138,7 +138,8 @@ def player_profile(request, pk):
     t = loader.get_template('riskgame/player_profile.html')
 
     c = RequestContext(request, {
-        'player': player
+        'player': player,
+        "title": "profile"
     })
 
     return HttpResponse(t.render(c))
@@ -283,7 +284,8 @@ def teams(request):
     t = loader.get_template('riskgame/teams.html')
 
     c = RequestContext(request, {
-        'teams': Team.objects.all().order_by('-rank_points', '-pk')
+        'teams': Team.objects.all().order_by('-rank_points', '-pk'),
+        'title': 'rankings'
     })
 
     return HttpResponse(t.render(c))
