@@ -30,51 +30,7 @@
 
         <section class="game-ui office">
 
-            <div id="events">
-
-            {% for e in current_teamplayer.get_active_events %}
-                {% with e|event_name as event %}
-
-                {% ifequal event "tornado" %}
-                    <div class="event tornado">
-                        <div>
-                            <span>Your event</span>
-                            Tornado
-                        </div>
-                    </div>
-                {% endifequal %}
-
-                {% ifequal event "increased risk" %}
-                    <div class="event caution">
-                        <div>
-                            <span>Team event</span>
-                            Increased Risk
-                        </div>
-                    </div>
-                {% endifequal %}
-
-                {% ifequal event "high market" %}
-                    <div class="event high-market">
-                        <div>
-                            <span>Your event</span>
-                            High Market
-                        </div>
-                    </div>
-                {% endifequal %}
-
-                {% ifequal event "lightning" %}
-                    <div class="event lightning">
-                        <div>
-                            <span>Your event</span>
-                            Lightning
-                        </div>
-                    </div>
-                {% endifequal %}
-
-                {% endwith %}
-            {% endfor %}
-
-            </div>
+            {% include "partials/game/events.html" %}
 
             <div id="safety-box" class="sheet">
                 <header>

@@ -24,35 +24,7 @@
 
     <section class="game-ui frontline">
 
-        <div id="events">
-            <!--{{ teamplayer.active_events }}-->
-
-            <div class="event tornado">
-                <div>
-                    <span>Your event</span>
-                    Tornado
-                </div>
-            </div>
-            <div class="event caution">
-                <div>
-                    <span>Team event</span>
-                    Increased Risk
-                </div>
-            </div>
-            <div class="event high-market">
-                <div>
-                    <span>Your event</span>
-                    High Market
-                </div>
-            </div>
-            <div class="event lightning">
-                <div>
-                    <span>Your event</span>
-                    Lightning
-                </div>
-            </div>
-
-        </div>
+        {% include "partials/game/events.html" %}
 
         <div id="team-box" class="sheet">
             <header>
