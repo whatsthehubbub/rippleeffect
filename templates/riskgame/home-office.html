@@ -112,12 +112,12 @@
                 <div class="production-plan">
                     <form class="relative" method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
                         <input type="submit" class="tiny barrier action btn" value="Place barrier">
-                        <span class="barrier badge">{{ teamplayer.prevent_markers }}</span>
+                        <span class="barrier badge">{{ current_teamplayer.prevent_markers }}</span>
                     </form>
 
                     <form class="relative" method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
                         <input type="submit" class="tiny plan action btn" value="Plan production">
-                        <span class="production badge">{{ teamplayer.gather_markers }}</span>
+                        <span class="production badge">{{ current_teamplayer.gather_markers }}</span>
                     </form>
                 </div>
 

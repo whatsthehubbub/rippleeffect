@@ -223,7 +223,6 @@ def home(request):
         c = RequestContext(request, {
             'teamplayer': teamplayer,
             'teammates': teamplayer.team.teamplayer_set.all(),
-            'currentDay': EpisodeDay.objects.get(current=True),
             'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')[:25],
             'title': "game"
         })
