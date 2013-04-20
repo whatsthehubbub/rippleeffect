@@ -1,0 +1,20 @@
+<div id="messages-box" class="sheet">
+    <header>
+        <h5>
+            Messages
+            <span data-tooltip class="help has-tip" title="See what other team members are up to">?</span>
+        </h5>
+    </header>
+
+    {% if notifications|length > 0 %}
+        {% for notification in notifications %}
+            {% include "partials/notification.html" %}
+        {% endfor %}
+    {% else %}
+        <div class="notification clearfix">
+            <div class="message clearfix">
+                No messages.
+            </div>
+        </div>
+    {% endif %}
+</div>
