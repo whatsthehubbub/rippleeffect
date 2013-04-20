@@ -4,42 +4,113 @@
 
 {% block content %}
 
-   <section>
-       <div id="messages-box" class="sheet">
-           <header>
-               <h5>
-                   Messages
-                   <span data-tooltip class="help has-tip" title="See what other team members are up to">?</span>
-               </h5>
-           </header>
-
-           {% if notifications|length > 0 %}
-               {% for notification in notifications %}
-                   {% include "partials/notification.html" %}
-               {% endfor %}
-           {% else %}
-               <div class="notification clearfix">
-                   <div class="message clearfix">
-                       No messages.
-                   </div>
-               </div>
-           {% endif %}
-       </div>
-   </section>
-
-
-
-<h1>Ripple Effect</h1>
-
 	{% if messages %}
 	    {% for message in messages %}
-	    	<div data-alert class="alert-box">
-	    		<p>{{ message }}</p>
-				<a href="#" class="close">&times;</a>
-			</div>
+            <section class="modal message">
+                <div class="row">
+                    <div class="sheet large-12 columns">
+
+                        <h2>Header</h2>
+
+                        {{ message }}
+
+                        <a href="#" class='medium dismiss btn' onclick='window.location.reload()'>Okay</a>
+
+                    </div>
+                </div>
+            </section>
 	    {% endfor %}
 	{% endif %}
-	
+
+    <section class="game-ui frontline">
+
+        <div id="events">
+            <!--{{ teamplayer.active_events }}-->
+
+            <div class="event tornado">
+                <div>
+                    <span>Your event</span>
+                    Tornado
+                </div>
+            </div>
+            <div class="event caution">
+                <div>
+                    <span>Team event</span>
+                    Increased Risk
+                </div>
+            </div>
+            <div class="event high-market">
+                <div>
+                    <span>Your event</span>
+                    High Market
+                </div>
+            </div>
+            <div class="event lightning">
+                <div>
+                    <span>Your event</span>
+                    Lightning
+                </div>
+            </div>
+
+        </div>
+
+        <div id="team-box" class="sheet">
+            <header>
+                <h5>
+                    Your Team
+                    <span data-tooltip class="help has-tip" title="Inspect your team members' stations">?</span>
+                </h5>
+            </header>
+
+            asdf
+        </div>
+
+        <div id="messages-box" class="sheet">
+            <header>
+                <h5>
+                    Messages
+                    <span data-tooltip class="help has-tip" title="See what other team members are up to">?</span>
+                </h5>
+            </header>
+
+            {% if notifications|length > 0 %}
+                {% for notification in notifications %}
+                    {% include "partials/notification.html" %}
+                {% endfor %}
+            {% else %}
+                <div class="notification clearfix">
+                    <div class="message clearfix">
+                        No messages.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="ui-box sheet">
+            <header>
+                <h5>
+                    Start a new game
+                </h5>
+            </header>
+
+            <div class="ui-box-content">
+                <form method="POST" action="{% url 'game_start' %}">
+                    {% csrf_token %}
+                    {{ startform }}
+                    <input type="submit">
+                </form>
+            </div>
+
+        </div>
+
+
+
+    </section>
+
+
+
+
+    <section style="float: left;">
 	<p>Episode {{ currentDay.episode.number }} Turn {{ currentDay.number }} ({% if currentDay.end|timeuntil != "0 minutes" %}{{ currentDay.end|timeuntil }}{% else %}less than a minute{% endif %} left)</p>
 
 	<h3>Team</h3>
@@ -79,5 +150,7 @@
 	</ul>
 
 	{% include "partials/start_new_game.html" %}
+
+    </section>
 	
 {% endblock content %}
