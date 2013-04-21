@@ -15,3 +15,4 @@ $(window).on('load', -> BackdropScaler.initialize() )
       $('#backdrop').removeClass().addClass('bgheight')
     else
       $('#backdrop').removeClass().addClass('bgwidth')
+    $('#backdrop').show()
