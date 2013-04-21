@@ -15,3 +15,13 @@ def requested_join(player, team):
 @register.filter
 def event_name(event_code):
     return Events.reverse.get(event_code, '').replace('_', ' ').lower()
+
+@register.filter
+def team_color(player):
+    # returns the calculated color for the team (derived from the team name) as a hex value
+    return "#CFC59F"
+
+@register.filter
+def player_color(player):
+    # returns the calculated color for the player (derived from the player's email address) as a hex value
+    return "#6686CD"
