@@ -1,12 +1,42 @@
 {% extends "base.html" %}
-
+{% load riskgame_extras %}
 
 {% block pagetitle %}{{ title|capfirst }}{% endblock pagetitle %}
 
 {% block content %}
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+                <h3 class="text-center triple-gutter-pad-top">Messages for team {{ current_teamplayer.team }}</h3>
+
+
+                <header>
+                    <h5 class="text-center">
+                        Messages
+                    </h5>
+                </header>
+
+                {% if notifications|length > 0 %}
+                    {% for notification in notifications %}
+                        {% include "partials/notification.html" %}
+                    {% endfor %}
+                {% else %}
+                    <div class="notification clearfix">
+                        <div class="message clearfix">
+                            No messages.
+                        </div>
+                    </div>
+                {% endif %}
+
+                <p class="double-gutter-margin-bot">&nbsp;</p>
+
+
+            </div>
+        </div>
+    </section>
 	
-	{% for n in notifications %}
-		<li>{{ n.player }} {{ n.get_message }} {{ n.datecreated|timesince }} ago</li>
-	{% endfor %}
+
 
 {% endblock content %}
