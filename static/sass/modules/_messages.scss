@@ -2,6 +2,7 @@
 .episode-intro, .event-intro {
   height: 300px;
   border: 6px solid #fff;
+  border-bottom: none;
 }
 
 h4.action-cost {
@@ -91,3 +92,7 @@ blockquote {
 
 }
 
+p.narrow {
+  padding-left: $gutter*4;
+  padding-right: $gutter*4;
+}

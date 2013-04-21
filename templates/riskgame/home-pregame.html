@@ -1,11 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+                <div class="episode-intro episode-1-intro"></div>
+
+                <h3 class="text-center triple-gutter-pad-top">{{ game.start|timeuntil}} until the game starts&hellip;</h3>
+
+                <p class="half-gutter-pad-top narrow">Great to see you signed up for the pilot of Ripple Effect, a game of resources and risks. Pretty soon, your team of office and frontline players will be banding together, trying to produce as many resources as possible, while avoiding any incidents. In the meantime, please refer to the player briefing for more information. Good luck!</p>
+
+            </div>
+        </div>
+    </section>
 	
-	<h2>{{ game.start|timeuntil}} until the game starts…</h2>
-
-	<p>Great to see you signed up for the pilot of Ripple Effect, a game of resources and risks. Pretty soon, your team of office and frontline players will be banding together, trying to produce as many resources as possible, while avoiding any incidents. In the meantime, please refer to the player briefing for more information. Good luck!</p>
-
     <div class="ui-box sheet debug">
         <header>
             <h5>

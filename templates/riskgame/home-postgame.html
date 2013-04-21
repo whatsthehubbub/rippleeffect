@@ -2,17 +2,29 @@
 
 
 {% block content %}
-	<h2>Game over</h2>
-	
-	<p>Thanks a lot for playing the pilot of Ripple Effect, a game of resources and risks. We hope you found the experience enjoyable and instructive. Please let us know what you thought via <a href="mailto:feedback@playrippleeffect.com">feedback@playrippleeffect.com</a>. We will use all comments to improve the full version of the game, that will be longer and deeper, offering many new events along the way.</p>
 
-	<p>Rank: {{ team.get_rank }}</p>
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
 
-	<p>Points: {{ team.victory_points }}</p>
+                <div class="episode-intro episode-1-intro"></div>
 
-	<p>Resources: {{ team.resources_collected }}</p>
+                <h3 class="text-center triple-gutter-pad-top">Game Over</h3>
 
-	<p>Streak: {{ team.goal_zero_streak }}</p>
+                <p class="half-gutter-pad-top narrow">Thanks a lot for playing the pilot of Ripple Effect, a game of resources and risks. We hope you found the experience enjoyable and instructive. Please let us know what you thought via <a href="mailto:feedback@playrippleeffect.com">feedback@playrippleeffect.com</a>. We will use all comments to improve the full version of the game, that will be longer and deeper, offering many new events along the way.</p>
+
+                <p>Rank: {{ team.get_rank }}</p>
+
+                <p>Points: {{ team.victory_points }}</p>
+
+                <p>Resources: {{ team.resources_collected }}</p>
+
+                <p>Streak: {{ team.goal_zero_streak }}</p>
+
+
+            </div>
+        </div>
+    </section>
 
     <div class="ui-box sheet debug">
         <header>
