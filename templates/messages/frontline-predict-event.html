@@ -1,25 +1,35 @@
-<p>Predicted the next turn's event for {{ player }} using 1 action.</p>
+<h4 class="action-cost">Spent <span>1</span> Action</h4>
+<h3 class="text-center double-gutter-pad-top">Safety Inspection Report</h3>
+
+<p class="text-center triple-gutter-pad-top half-gutter-margin-bot">Predicted the next turn's event for {{ player }}</p>
 
 {% if event == '0' %}
-<p>No event.</p>
+    <h3 class="text-center half-gutter-pad-top">No Event</h3>
 {% endif %}
 
 {% if event == '1' %}
-<p>Poor vision.</p>
+    <div class="event-intro event-poor-vision-intro"></div>
+    <h3 class="text-center half-gutter-pad-top">Poor Vision</h3>
 {% endif %}
 
 {% if event == '2' %}
-<p>Tornado.</p>
+    <div class="event-intro event-poor-vision-intro"></div>
+    <h3 class="text-center half-gutter-pad-top">Tornado</h3>
 {% endif %}
 
 {% if event == '3' %}
-<p>High market.</p>
+    <div class="event-intro event-high-market-intro"></div>
+    <h3 class="text-center half-gutter-pad-top">High Market</h3>
 {% endif %}
 
 {% if event == '4' %}
-<p>Increased risk.</p>
+    <div class="event-intro event-caution-intro"></div>
+    <h3 class="text-center half-gutter-pad-top">Increased Risk</h3>
 {% endif %}
 
 {% if event == '5' %}
-<p>Lightning.</p>
+    <div class="event-intro event-lightning-intro"></div>
+    <h3 class="text-center half-gutter-pad-top">Lightning</h3>
 {% endif %}
+
+<a href="#" class='triple-gutter-margin-top quad-gutter-margin-bot medium grey centered dismiss btn' onclick='window.location.reload()'>Continue</a>
