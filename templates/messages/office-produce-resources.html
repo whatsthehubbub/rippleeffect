@@ -1,64 +1,159 @@
-<p>Tried to produce resources for player {{ player }} using no actions.</p>
+{% load riskgame_extras %}
+<h3 class="text-center triple-gutter-pad-top">Resource Production Report</h3>
 
-<p>Production: {{ production }}</p>
+<header>
+    <h5 class="text-center pad-left">
+        Barriers placed
+        <span data-tooltip class="help has-tip" title="Barriers prevent risks from turning into incidents">?</span>
+    </h5>
+</header>
 
-<p>Safety: {{ safety }}</p>
+<div class="coingroup double-gutter-pad-bot">
+    {% if barrier_count < 1 %}
+        <p class="text-center tiny-type gutter-pad-top">none</p>
+    {% else %}
+        {% for i in barrier_count|times %}
+            <div class="coin barrier">!</div>
+        {% endfor %}
+    {% endif %}
+</div>
 
-<p>Barriers: {{ barrier_count }}</p>
+<header>
+    <h5 class="text-center pad-left">
+        Production Result
+        <span data-tooltip class="help has-tip" title="Planned units of production">?</span>
+    </h5>
+</header>
+
+<div class="coingroup double-gutter-pad-bot">
+    {% for coin in production %}
+        {% if coin == '1' %}
+            <div class="coin production yes">1</div>
+        {% else %}
+            <div class="coin production no">0</div>
+        {% endif %}
+    {% empty %}
+        <p class="text-center tiny-type gutter-pad-top">none</p>
+    {% endfor %}
+</div>
+
+<header>
+    <h5 class="text-center pad-left">
+        Risks &amp; Incidents
+        <span data-tooltip class="help has-tip" title="Risks turn into incidents when they are not covered by a barrier">?</span>
+    </h5>
+</header>
+
+<div class="coingroup double-gutter-pad-bot">
+    {% for coin in safety %}
+        {% if coin == '1' %}
+            <div class="coin safety no">0</div>
+        {% else %}
+            <div class="coin safety yes">1</div>
+        {% endif %}
+    {% empty %}
+        <p class="text-center tiny-type gutter-pad-top">none</p>
+    {% endfor %}
+</div>
 
 {% ifequal episode.number 1 %}	
 	{% if incident_count > barrier_count %}
-		<p>Oh no, look at what you’ve done. During your production work you ran into a risk, and because you didn’t safeguard it with a barrier, the risk turned into a full-blown incident. That means you score no resources, no points, no nothing. Even your Goal Zero points are gone. This looks really terrible, even for a beginner.</p>
-
 		{% if tornado %}
-			<p>Harry: This is what I warned you about... It’s bad enough that you let an incident slip through, but with this tornado going on, you’ve now also lost all your actions. I’m pretty sure the rest of your team won’t be pleased!</p>
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-harry-concerned">Harry</div>
+                <p>This is what I warned you about... It’s bad enough that you let an incident slip through, but with this tornado going on, you’ve now also lost all your actions. I’m pretty sure the rest of your team won’t be pleased!</p>
+            </blockquote>
+        {% else %}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-harry-happy">Harry</div>
+                <p>Oh no, look at what you’ve done. During your production work you ran into a risk, and because you didn’t safeguard it with a barrier, the risk turned into a full-blown incident. That means you score no resources, no points, no nothing. Even your Goal Zero points are gone. This looks really terrible, even for a beginner.</p>
+            </blockquote>
 		{% endif %}
 	{% else %}
 		{% if resource_count == 0 %}
-			<p>Oh man, that’s too bad! You didn’t get any resources. Like, at all! Maybe you should’ve talked to Abu and improved your production quality first? Or maybe you’re just out of luck?</p>
-
 			{% if highmarket %}
-				<p>Mei: Too bad you couldn’t capitalize on, like, the opportunity the current market conditions present us! But don’t be sad, next time will probably be much better. As a matter of fact, I’m sure of it!</p>
-			</p>
+                <blockquote class="triple-gutter-margin-top">
+                    <div class="large character large-mei-neutral">Mei</div>
+                    <p>Too bad you couldn’t capitalize on, like, the opportunity the current market conditions present us! But don’t be sad, next time will probably be much better. As a matter of fact, I’m sure of it!</p>
+                </blockquote>
+            {% else %}
+                <blockquote class="triple-gutter-margin-top">
+                    <div class="large character large-mei-neutral">Mei</div>
+                    <p>Oh man, that’s too bad! You didn’t get any resources. Like, at all! Maybe you should’ve talked to Abu and improved your production quality first? Or maybe you’re just out of luck?</p>
+                </blockquote>
 			{% endif %}
 		{% else %}
 			{% if highmarket %}
-				<p>Mei: Fantastic! Because of the high markets, your resources pay double, and I just love the smell of enormous stacks of points in the morning!</p>
+                <blockquote class="triple-gutter-margin-top">
+                    <div class="large character large-mei-happy">Mei</div>
+                    <p>Fantastic! Because of the high markets, your resources pay double, and I just love the smell of enormous stacks of points in the morning!</p>
+                </blockquote>
+            {% else %}
+                {% if resource_count == 1 %}
+                    <blockquote class="triple-gutter-margin-top">
+                        <div class="large character large-mei-happy">Mei</div>
+                        <p>Well done! You got a resource. Your team will be so happy you’re on their side! Now, as much as I’d like to encourage you to keep producin’, remember that every time you produce a resource, your production quality will go down. I think the scientific phrase for that is ‘entropy’. So you have to constantly work on improving your production quality, too. But that’s really Abu’s department.</p>
+                    </blockquote>
+                {% else %}
+                    <blockquote class="triple-gutter-margin-top">
+                        <div class="large character large-mei-happy">Mei</div>
+                        <p>This is incredible! Look at all the resources! If this doesn’t make your team members throw you a party, I don’t know what will! Now, as much as I’d like to encourage you to keep producin’, remember that every time you produce a resource, your production quality will go down. I think the scientific phrase for that is ‘entropy’. So you have to constantly work on improving your production quality, too. But that’s really Abu’s department.</p>
+                    </blockquote>
+                {% endif %}
 			{% endif %}
 
-			{% if resource_count == 1 %}
-				<p>Well done! You got a resource. Your team will be so happy you’re on their side! Now, as much as I’d like to encourage you to keep producin’, remember that every time you produce a resource, your production quality will go down. I think the scientific phrase for that is ‘entropy’. So you have to constantly work on improving your production quality, too. But that’s really Abu’s department.</p>
-			{% else %}
-				<p>This is incredible! Look at all the resources! If this doesn’t make your team members throw you a party, I don’t know what will! Now, as much as I’d like to encourage you to keep producin’, remember that every time you produce a resource, your production quality will go down. I think the scientific phrase for that is ‘entropy’. So you have to constantly work on improving your production quality, too. But that’s really Abu’s department.</p>
-			{% endif %}
 		{% endif %}
 	{% endif %}
 {% endifequal %}
 
 {% ifequal episode.number 2 %} 
 	{% if incident_count > barrier_count %}
-		<p>Oh no, look at what you’ve done. You ran into a risk, and because you didn’t safeguard it with a barrier, the risk turned into a full-blown incident. That means you score no resources, no points, no nothing. Even your Goal Zero points are gone. Now how are you going to explain this to your colleagues?</p>
-
 		{% if tornado %}
-			<p>Harry: This is what I warned you about... It’s bad enough that you let an incident slip through, but with this tornado going on, you’ve now also lost all your actions. I’m pretty sure the rest of your team won’t be pleased!</p>
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-harry-concerned">Harry</div>
+                <p>This is what I warned you about... It’s bad enough that you let an incident slip through, but with this tornado going on, you’ve now also lost all your actions. I’m pretty sure the rest of your team won’t be pleased!</p>
+            </blockquote>
+        {% else %}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-harry-concerned">Harry</div>
+                <p>Oh no, look at what you’ve done. You ran into a risk, and because you didn’t safeguard it with a barrier, the risk turned into a full-blown incident. That means you score no resources, no points, no nothing. Even your Goal Zero points are gone. Now how are you going to explain this to your colleagues?</p>
+            </blockquote>
 		{% endif %}
 	{% else %}
 		{% if resource_count == 0 %}
-			<p>Mei: Oh man, that’s too bad! You didn’t get any resources. Like, at all!</p>
 
 			{% if highmarket %}
-				<p>Mei: Too bad you couldn’t capitalize on, like, the opportunity the current market conditions present us! But don’t be sad, next time will probably be much better. As a matter of fact, I’m sure of it!</p>
+                <blockquote class="triple-gutter-margin-top">
+                    <div class="large character large-mei-neutral">Mei</div>
+                    <p>Too bad you couldn’t capitalize on, like, the opportunity the current market conditions present us! But don’t be sad, next time will probably be much better. As a matter of fact, I’m sure of it!</p>
+                </blockquote>
+            {% else %}
+                <blockquote class="triple-gutter-margin-top">
+                    <div class="large character large-mei-neutral">Mei</div>
+                    <p>Oh man, that’s too bad! You didn’t get any resources. Like, at all!</p>
+                </blockquote>
 			{% endif %}
 		{% else %}
 			{% if highmarket %}
-				<p>Mei: Fantastic! Because of the high markets, your resources pay double, and I just love the smell of enormous stacks of points in the morning!</p>
-			{% endif %}
-
-			{% if resource_count == 1 %}
-				<p>Well done! You got a resource. Your team will be so happy you’re on their side!</p>
-			{% else %}
-				<p>This is incredible! Look at all the resources! If this doesn’t make your team members throw you a party, I don’t know what will!</p>
+                <blockquote class="triple-gutter-margin-top">
+                    <div class="large character large-mei-happy">Mei</div>
+                    <p>Fantastic! Because of the high markets, your resources pay double, and I just love the smell of enormous stacks of points in the morning!</p>
+                </blockquote>
+            {%  else %}
+                {% if resource_count == 1 %}
+                    <blockquote class="triple-gutter-margin-top">
+                        <div class="large character large-mei-happy">Mei</div>
+                        <p>Well done! You got a resource. Your team will be so happy you’re on their side!</p>
+                    </blockquote>
+                {% else %}
+                    <blockquote class="triple-gutter-margin-top">
+                        <div class="large character large-mei-happy">Mei</div>
+                        <p>This is incredible! Look at all the resources! If this doesn’t make your team members throw you a party, I don’t know what will!</p>
+                    </blockquote>
+                {% endif %}
 			{% endif %}
 		{% endif %}
 	{% endif %}
 {% endifequal %}
+
+<a href="#" class='triple-gutter-margin-top quad-gutter-margin-bot medium grey centered dismiss btn' onclick='window.location.reload()'>Continue</a>

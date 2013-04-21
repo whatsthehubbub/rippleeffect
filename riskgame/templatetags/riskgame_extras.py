@@ -25,3 +25,7 @@ def team_color(player):
 def player_color(player):
     # returns the calculated color for the player (derived from the player's email address) as a hex value
     return "#6686CD"
+
+@register.filter(name='times')
+def times(number):
+    return range(number)
