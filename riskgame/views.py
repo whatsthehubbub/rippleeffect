@@ -250,7 +250,7 @@ def home(request):
 
 
             if episode.number != 1:
-                previousEpisode = EpisodeDay.objects.get(number=episode.number-1)
+                previousEpisode = Episode.objects.get(number=episode.number-1)
                 startDateTime = EpisodeDay.objects.filter(episode=previousEpisode).order_by('-end')[0].end
                 endDateTime = EpisodeDay.objects.filter(episode=episode).order_by('-end')[0].end
                 players = Player.objects.filter(notification__datecreated__gte=startDateTime, notification__datecreated__lte=endDateTime).distinct()
