@@ -18,6 +18,10 @@
 
     <h3 class="text-center triple-gutter-pad-top">Episode 2</h3>
 
+    {% if action_players %}
+        <p>Players that did something last episode: {% for player in action_players %}{{ player }}{% endfor %}</p>
+    {% endif %}
+
     <blockquote class="half-gutter-pad-top double-gutter-pad-bot">
         <p>Welcome to episode two. As you can see, it’s a lot wetter now than it was last time. Don’t let the weather distract you from your job, producing resources and staying safe. Why don’t you get started? Then I can get inside and put on some dry clothes.</p>
         <div class="small character small-harry-happy">Harry</div>
