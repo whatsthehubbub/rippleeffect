@@ -246,8 +246,16 @@ def home(request):
 
             mt = loader.get_template('messages/start-episode.html')
 
+            episode = EpisodeDay.objects.get(current=True).episode
+
+            if episode.number != 1:
+                players = []
+            else:
+                players = []
+
             mc = RequestContext(request, {
-                'episode': EpisodeDay.objects.get(current=True).episode
+                'episode': episode,
+                'action_players': players
             })
             messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
         elif teamplayer.show_turn_start:

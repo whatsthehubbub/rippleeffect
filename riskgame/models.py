@@ -860,7 +860,9 @@ class Game(models.Model):
     def active(self):
         return self.started() and not self.over()
 
-    def initialize(self, start=None, episodeCount=2, weekLength=7, dayLengthInMinutes=10):
+    def initialize(self, start=None, episodeCount=2, dayLengthInMinutes=10):
+
+        weekLength = 7
 
         if not start:
             start = timezone.now()
