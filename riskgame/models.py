@@ -274,6 +274,9 @@ class Notification(models.Model):
         else:
             return 'New notification from Ripple Effect'
 
+    def get_teamplayer(self):
+        return TeamPlayer.objects.get(player=self.player)
+
 class Episode(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
