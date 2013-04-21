@@ -438,12 +438,7 @@ $sidebar-width: 270px;
             }
 
             &.active {
-              border: 2px solid $black;
-
-              div {
-                // nudge the office dot back into place
-                margin: 7px 0 0 7px;
-              }
+              box-shadow: 0 0 4px $black;
             }
           }
         }
