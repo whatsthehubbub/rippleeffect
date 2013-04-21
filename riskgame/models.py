@@ -274,9 +274,6 @@ class Notification(models.Model):
         else:
             return 'New notification from Ripple Effect'
 
-    def get_teamplayer(self):
-        return TeamPlayer.objects.get(player=self.player)
-
 class Episode(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
@@ -832,6 +829,9 @@ class Player(models.Model):
         mac = hmac.new('pwGPevZCKMZEXZzhBwtOyWUlmPWCEBqe_R8dI6Xq', self.email(), hashlib.sha256)
 
         return mac.hexdigest()
+
+    def get_teamplayer(self):
+        return TeamPlayer.objects.get(player=self)
 
 
 class TeamJoinRequest(models.Model):
