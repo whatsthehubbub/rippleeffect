@@ -205,6 +205,11 @@
   @include image-2x('../img/coin-safety-no@2x.png', 41px, 42px);
 }
 
+.coin.safety.maybe {
+  background: url('../img/coin-safety-maybe.png') no-repeat;
+  @include image-2x('../img/coin-safety-maybe@2x.png', 41px, 42px);
+}
+
 .coin.production.unknown {
   background: url('../img/coin-production.png') no-repeat;
   @include image-2x('../img/coin-safety@2x.png', 41px, 42px);

@@ -47,7 +47,11 @@
 <div class="coingroup double-gutter-pad-bot">
     {% for coin in safety %}
         {% if coin == '1' %}
-            <div class="coin safety no">0</div>
+            {% if incident_count > barrier_count %}
+                <div class="coin safety no">0</div>
+            {%  else %}
+                <div class="coin safety maybe">0</div>
+            {% endif %}
         {% else %}
             <div class="coin safety yes">1</div>
         {% endif %}
