@@ -1,9 +1,18 @@
-<p>Planned production for {{ player }} using 1 action.</p>
+<h4 class="action-cost">Spent <span>1</span> Action</h4>
+<h3 class="text-center double-gutter-pad-top">Planned Production Report</h3>
 
-{% if episode.number == 1 %}
-	<p>Mei: Yay, I’ve reserved a slot for you! This is so exciting, I can’t wait for resource production to begin. So do you want to plan more or is this it?</p>
-{% endif %}
+{% ifequal episode.number 1 %}
+    <blockquote class="triple-gutter-margin-top">
+        <div class="large character large-mei-happy">Mei</div>
+        <p>Yay, I’ve reserved a slot for you! This is so exciting, I can’t wait for resource production to begin. So do you want to plan more or is this it?</p>
+    </blockquote>
+{% endifequal %}
 
-{% if episode.number == 2 %}
-	<p>Mei: I’ve reserved another resource production slot for you. This just doesn’t stop being exciting to me! Is this it or do you want to produce even more?</p>
-{% endif %}
+{% ifequal episode.number 2 %}
+    <blockquote class="triple-gutter-margin-top">
+        <div class="large character large-mei-happy">Mei</div>
+        <p>I’ve reserved another resource production slot for you. This just doesn’t stop being exciting to me! Is this it or do you want to produce even more?</p>
+    </blockquote>
+{% endifequal %}
+
+<a href="#" class='triple-gutter-margin-top quad-gutter-margin-bot medium grey centered dismiss btn' onclick='window.location.reload()'>Continue</a>
