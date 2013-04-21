@@ -338,7 +338,9 @@ def inspect_risks(request):
 
             Notification.objects.create_frontline_safety_notification(teamplayer.team, player, target.player)
         else:
-            messages.add_message(request, messages.INFO, "All out of actions, wait until the next turn.")
+            t = loader.get_template('messages/out-of-actions.html')
+            c = RequestContext(request, {})
+            messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -371,7 +373,9 @@ def inspect_event(request):
 
             messages.add_message(request, messages.INFO, t.render(c))
         else:
-            messages.add_message(request, messages.INFO, "All out of actions, wait until the next turn.")
+            t = loader.get_template('messages/out-of-actions.html')
+            c = RequestContext(request, {})
+            messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -413,7 +417,9 @@ def play_inspect(request):
 
             messages.add_message(request, messages.INFO, t.render(c))
     else:
-        messages.add_message(request, messages.INFO, "All out of actions, wait until the next turn.")
+        t = loader.get_template('messages/out-of-actions.html')
+        c = RequestContext(request, {})
+        messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -448,7 +454,9 @@ def play_invest(request):
             messages.add_message(request, messages.INFO, t.render(c))
 
     else:
-        messages.add_message(request, messages.INFO, "All out of actions, wait until the next turn.")
+        t = loader.get_template('messages/out-of-actions.html')
+        c = RequestContext(request, {})
+        messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -474,7 +482,9 @@ def play_gather(request):
 
         messages.add_message(request, messages.INFO, t.render(c))
     else:
-        messages.add_message(request, messages.INFO, "All out of actions, wait until the next turn.")
+        t = loader.get_template('messages/out-of-actions.html')
+        c = RequestContext(request, {})
+        messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -499,7 +509,9 @@ def play_prevent(request):
 
         messages.add_message(request, messages.INFO, t.render(c))
     else:
-        messages.add_message(request, messages.INFO, "All out of actions, wait until the next turn.")
+        t = loader.get_template('messages/out-of-actions.html')
+        c = RequestContext(request, {})
+        messages.add_message(request, messages.INFO, t.render(c))
 
     return HttpResponseRedirect(reverse('home'))
 
