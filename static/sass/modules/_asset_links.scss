@@ -1,13 +1,13 @@
 
 // Episode banners
 .episode-1-intro {
-  background: url('../img/intro-1.png') no-repeat;
-  @include image-2x('../img/intro-1@2x.png', 424px, 300px);
+  background: url('../img/intro-1.jpg') no-repeat;
+  @include image-2x('../img/intro-1@2x.jpg', 424px, 300px);
 }
 
 .episode-2-intro {
-  background: url('../img/intro-2.png') no-repeat;
-  @include image-2x('../img/intro-2@2x.png', 424px, 300px);
+  background: url('../img/intro-2.jpg') no-repeat;
+  @include image-2x('../img/intro-2@2x.jpg', 424px, 300px);
 }
 
 // Event banners
