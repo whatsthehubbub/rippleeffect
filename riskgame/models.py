@@ -436,25 +436,36 @@ class TeamPlayer(models.Model):
     def pump(self):
         # Steps to go through the gather pile
         gathersteps = self.gather_markers
+
         # Steps to go through the risk pile
         risksteps = self.gather_markers
 
         pile = self.gather_pile.split(',')
         oil = 0 # Units of oil pumped
         reflow_production = [] # What we are going to put back in the deck
+        result_production = [] # What we are going to return
 
-        while gathersteps > 0:
-            if pile:
-                output = pile.pop(0)
+        while True:
+            result_step = []
+            new_steps = 0
 
-                reflow_production.append(output)
+            for c in range(gathersteps):
+                if pile:
+                    output = pile.pop(0)
 
-                if output == '1':
-                    oil += 1
-                    # Do an extra pump for every oil we pump
-                    gathersteps += 1
+                    reflow_production.append(output)
+                    result_step.append(output)
 
-            gathersteps -= 1
+                    if output == '1':
+                        oil += 1
+                        new_steps += 1
+
+            result_production.append(result_step)
+
+            if new_steps:
+                gathersteps = new_steps
+            else:
+                break
 
         # We pump until everything is empty. Even if there are more markers than there are in the pile.
         self.gather_markers = 0
@@ -463,24 +474,32 @@ class TeamPlayer(models.Model):
         # Shuffle happens later anyway with the decay step
 
         # Now do the same with the risk pile
-
         pile = self.risk_pile.split(',')
         risks = 0
         reflow_safety = []
+        result_safety = []
 
-        while risksteps > 0:
-            if pile:
-                output = pile.pop(0)
+        while True:
+            result_step = []
+            new_steps = 0
 
-                reflow_safety.append(output)
+            for c in range(risksteps):
+                if pile:
+                    output = pile.pop(0)
 
-                if output == '1':
-                    risks += 1
+                    reflow_safety.append(output)
+                    result_step.append(output)
 
-                    # Do an extra risk resolve for every risk we get
-                    risksteps += 1
+                    if output == '1':
+                        risks += 1
+                        new_steps += 1
 
-            risksteps -= 1
+            result_safety.append(result_step)
+
+            if new_steps:
+                risksteps = new_steps
+            else:
+                break
 
         self.risk_pile = ','.join(pile + reflow_safety)
 
@@ -489,7 +508,7 @@ class TeamPlayer(models.Model):
         self.put_and_discard('1', 'risk')
 
         # If there are more risks than prevent markers, bad things will happen
-        result = (oil, reflow_production, risks, reflow_safety, self.prevent_markers)
+        result = (oil, result_production, risks, result_production, self.prevent_markers)
 
         self.prevent_markers = 0
 

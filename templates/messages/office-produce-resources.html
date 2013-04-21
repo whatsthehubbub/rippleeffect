@@ -26,12 +26,14 @@
 </header>
 
 <div class="coingroup double-gutter-pad-bot">
-    {% for coin in production %}
-        {% if coin == '1' %}
-            <div class="coin production yes">1</div>
-        {% else %}
-            <div class="coin production no">0</div>
-        {% endif %}
+    {% for step in production %}
+        {% for coin in step %}
+            {% if coin == '1' %}
+                <div class="coin production yes">1</div>
+            {% else %}
+                <div class="coin production no">0</div>
+            {% endif %}
+        {% endfor %}
     {% empty %}
         <p class="text-center tiny-type gutter-pad-top">none</p>
     {% endfor %}
@@ -45,16 +47,18 @@
 </header>
 
 <div class="coingroup double-gutter-pad-bot">
-    {% for coin in safety %}
-        {% if coin == '1' %}
-            {% if incident_count > barrier_count %}
-                <div class="coin safety no">0</div>
-            {%  else %}
-                <div class="coin safety maybe">0</div>
+    {% for step in safety %}
+        {% for coin in step %}
+            {% if coin == '1' %}
+                {% if incident_count > barrier_count %}
+                    <div class="coin safety no">0</div>
+                {%  else %}
+                    <div class="coin safety maybe">0</div>
+                {% endif %}
+            {% else %}
+                <div class="coin safety yes">1</div>
             {% endif %}
-        {% else %}
-            <div class="coin safety yes">1</div>
-        {% endif %}
+        {% endfor %}
     {% empty %}
         <p class="text-center tiny-type gutter-pad-top">none</p>
     {% endfor %}
