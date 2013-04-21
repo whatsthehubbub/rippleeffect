@@ -1,24 +1,35 @@
 {% extends "base.html" %}
+{% load riskgame_extras %}
 
 {% block pagetitle %}{{ title|capfirst }}{% endblock pagetitle %}
 
 {% block content %}
-	
-	<h2>{{ player.name }}&rsquo;s player profile</h2>
 
-<dl>
-	<dt>Email</dt>
-	<dd>{{ player.user.email }}</dd>
 
-	<dt>Team</dt>
-	<dd><a href="{{ teamplayer.team.get_absolute_url }}">{{ teamplayer.team }}</a></dd>
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
 
-	<dt>Role</dt>
-	<dd>{{ teamplayer.role }}</p></dd>
-</dl>
+                <h3 class="text-center triple-gutter-pad-top">{{ player.name }}&rsquo;s profile</h3>
 
-	{% ifequal player.user user %} 
-		<p><a href="{% url 'player_profile_edit' %}" class="button">Edit your profile</a></p>
-	{% endifequal %}
+                <div class="large avatar margin-center triple-gutter-margin-bot" title="{{ teamplayer.role }}" style="background-color: {{ teamplayer|team_color }};"><div title="{{ teamplayer.role }}" class="{{ teamplayer.role }}" style="border-color: {{ teamplayer|player_color }}; background-color: {{ teamplayer|team_color }}"></div></div>
+
+                <header>
+                    <h5 class="text-center">
+                        Profile
+                    </h5>
+                </header>
+
+                <p class="stat-row">Email address <span>{{ player.user.email }}</span></p>
+                <p class="stat-row">Team <span><a href="{{ teamplayer.team.get_absolute_url }}">{{ teamplayer.team }}</a></span></p>
+                <p class="stat-row triple-gutter-margin-bot">Team role <span>{{ teamplayer.role }}</span></p>
+
+                {% ifequal player.user user %}
+                    <a href="{% url 'player_profile_edit' %}" class='triple-gutter-margin-top quad-gutter-margin-bot medium yellow centered dismiss btn'>Edit profile</a>
+                {% endifequal %}
+
+            </div>
+        </div>
+    </section>
 
 {% endblock content %}
