@@ -1,4 +1,5 @@
 {% load url from future %}
+{% load riskgame_extras %}
 <!DOCTYPE html>
 <!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
@@ -45,7 +46,7 @@
             </header>
 
             <div id="player" class="clearfix">
-                <div class="large avatar" title="{{ current_teamplayer.role }}" style="background-color: sandybrown;"><div title="{{ current_teamplayer.role }}" class="{{ current_teamplayer.role }}" style="border-color: palevioletred; background-color: sandybrown"></div></div>
+                <div class="large avatar" title="{{ current_teamplayer.role }}" style="background-color: {{ current_teamplayer|team_color }};"><div title="{{ current_teamplayer.role }}" class="{{ current_teamplayer.role }}" style="border-color: {{ current_teamplayer|player_color }}; background-color: {{ current_teamplayer|team_color }}"></div></div>
                 <div class="name">
                     <h3>{{ current_player }}</h3>
                     <h4>{{ current_teamplayer.team }}</h4>
