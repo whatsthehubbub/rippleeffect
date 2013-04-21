@@ -211,15 +211,13 @@ def home(request):
         c = RequestContext(request, {
             'game': game
         })
-
-    if game.over():
+    elif game.over():
         t = loader.get_template('riskgame/home-postgame.html')
 
         c = RequestContext(request, {
             'team': teamplayer.team
         })
-
-    if game.active():
+    elif game.active():
         c = RequestContext(request, {
             'teamplayer': teamplayer,
             'teammates': teamplayer.team.teamplayer_set.all(),
