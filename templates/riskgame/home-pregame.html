@@ -6,6 +6,21 @@
 
 	<p>Great to see you signed up for the pilot of Ripple Effect, a game of resources and risks. Pretty soon, your team of office and frontline players will be banding together, trying to produce as many resources as possible, while avoiding any incidents. In the meantime, please refer to the player briefing for more information. Good luck!</p>
 
-	{% include "partials/start_new_game.html" %}
+    <div class="ui-box sheet debug">
+        <header>
+            <h5>
+                Start a new game
+            </h5>
+        </header>
+
+        <div class="ui-box-content">
+            <form method="POST" action="{% url 'game_start' %}">
+                {% csrf_token %}
+                {{ startform }}
+                <input type="submit">
+            </form>
+        </div>
+
+    </div>
 
 {% endblock content %}

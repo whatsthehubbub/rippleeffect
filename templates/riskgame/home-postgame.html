@@ -14,6 +14,21 @@
 
 	<p>Streak: {{ team.goal_zero_streak }}</p>
 
-	{% include "partials/start_new_game.html" %}
+    <div class="ui-box sheet debug">
+        <header>
+            <h5>
+                Start a new game
+            </h5>
+        </header>
+
+        <div class="ui-box-content">
+            <form method="POST" action="{% url 'game_start' %}">
+                {% csrf_token %}
+                {{ startform }}
+                <input type="submit">
+            </form>
+        </div>
+
+    </div>
 	
 {% endblock content %}
