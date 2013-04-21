@@ -96,3 +96,17 @@ p.narrow {
   padding-left: $gutter*3;
   padding-right: $gutter*3;
 }
+
+p.stat-row {
+  @extend .small-type;
+  font-family: $ff-medium;
+  margin-bottom:0;
+  height: 24px;
+  line-height: 24px;
+
+  span {
+    float:right;
+    width: 200px;
+  }
+
+}
