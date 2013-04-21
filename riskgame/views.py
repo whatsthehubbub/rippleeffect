@@ -248,7 +248,6 @@ def home(request):
 
             episode = EpisodeDay.objects.get(current=True).episode
 
-
             if episode.number != 1:
                 previousEpisode = Episode.objects.get(number=episode.number-1)
                 startDateTime = EpisodeDay.objects.filter(episode=previousEpisode).order_by('-end')[0].end
@@ -265,21 +264,33 @@ def home(request):
         elif teamplayer.show_turn_start:
             TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_turn_start=False)
 
+            turn = EpisodeDay.objects.get(current=True)
+
+            if turn.number > 1 or turn.episode.number > 1:
+                print 'here'
+                previousTurn = EpisodeDay.objects.filter(end__lt=turn.end).order_by('-end')[0]
+
+                startDateTime = previousTurn.end - (turn.end - previousTurn.end)
+                endDateTime = previousTurn.end
+
+                players = Player.objects.filter(notification__datecreated__gte=startDateTime, notification__datecreated__lte=endDateTime).distinct()
+            else:
+                players = []
+
             mt = loader.get_template('messages/start-turn.html')
 
             # Team events are returned for both roles
             mc = RequestContext(request, {
                 'poorvision': teamplayer.team.is_event_active(Events.POOR_VISION),
                 'tornado': teamplayer.team.is_event_active(Events.TORNADO),
-                'highmarket': teamplayer.team.is_event_active(Events.HIGH_MARKET)
+                'highmarket': teamplayer.team.is_event_active(Events.HIGH_MARKET),
+                'action_players': players
             })
 
             if teamplayer.role == 'office':
                 # Add player specific events for office players
                 mc['increasedrisk'] = teamplayer.is_event_active(Events.INCREASED_RISK)
                 mc['lightning'] = teamplayer.is_event_active(Events.LIGHTNING)
-            elif teamplayer.role == 'frontline':
-                pass
                 
             messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
     

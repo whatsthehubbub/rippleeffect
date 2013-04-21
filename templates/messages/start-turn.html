@@ -68,4 +68,8 @@
     <p class="half-gutter-margin-bot">&nbsp;</p>
 {% endif %}
 
+{% if action_players %}
+    <p>Players that did something last turn: {% for player in action_players %}{{ player }}{% endfor %}</p>
+{% endif %}
+
 <a href="#" class='quad-gutter-margin-bot medium grey centered dismiss btn' onclick='window.location.reload()'>Continue</a>
