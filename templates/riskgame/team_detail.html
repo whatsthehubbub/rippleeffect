@@ -23,7 +23,7 @@
                 <p class="stat-row">Team ranking <span>{{ team.get_rank }}</span></p>
                 <p class="stat-row">Points scored so far<span>{{ team.victory_points }}</span></p>
                 <p class="stat-row">Resources produced so far<span>{{ team.resources_collected }}</span></p>
-                <p class="stat-row">Goal Zero streak<span>{{ team.get_goal_zero_streak }}</span></p>
+                <p class="stat-row">Longest Goal Zero streak<span>{{ team.get_goal_zero_streak }}</span></p>
                 <p class="stat-row triple-gutter-margin-bot">Active events<span>
                     {% for event in team.get_active_events %}
                         {{ event|event_name }},
@@ -37,7 +37,7 @@
 
                 {% for tp in team.teamplayer_set.all %}
                     <div class="notification clearfix">
-                        <div class="small avatar" title="{{ tp.player.get_teamplayer.role }}" style="background-color: {{ tp.player.get_teamplayer|team_color }};"><div title="{{ tp.player.get_teamplayer.role }}" class="{{ tp.player.get_teamplayer.role }}" style="border-color: {{ tp.player.get_teamplayer|player_color }}; background-color: {{ tp.player.get_teamplayer|team_color }}"></div></div>
+                        <div class="small avatar" title="{{ tp.player.get_teamplayer.role }}" style="background-color: {{ tp.player.get_teamplayer.team|team_color }};"><div title="{{ tp.player.get_teamplayer.role }}" class="{{ tp.player.get_teamplayer.role }}" style="border-color: {{ tp.player.get_teamplayer|player_color }}; background-color: {{ tp.player.get_teamplayer.team|team_color }}"></div></div>
                         <div class="message clearfix">
                             <span class="timestamp">{{ tp.role }}</span>
                             <a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a>

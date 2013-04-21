@@ -1,34 +1,40 @@
 {% extends "base.html" %}
+{% load riskgame_extras %}
 
 {% block pagetitle %}{{ title|capfirst }}{% endblock pagetitle %}
 
 {% block content %}
-<h2>Teams</h2>
-<p>A note on how the rank is determined goes here.</p>
-<table>
-	<thead>
-		<tr>
-			<th>Rank</th>
-			<th>Team name</th>
-			<th>Points</th>
-			<th>Resources</th>
-			<th>Goal zero</th>
-			<th>Office players</th>
-			<th>Frontline players</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for team in teams %}
-		<tr>
-			<td>{{ team.get_rank }}</td>
-			<td><a href="{{ team.get_absolute_url }}">{{ team.name }}</a> {% ifequal team current_teamplayer.team %}(your team){% endifequal %}</td>
-			<td>{{ team.victory_points }}</td>
-			<td>{{ team.resources_collected }}</td>
-			<td>{{ team.get_goal_zero_streak }}</td>
-			<td>{{ team.get_office_players.count }}</td>
-			<td>{{ team.get_frontline_players.count }}</td>
-		</tr>
-		{% endfor %}
-	</tbody>
-</table>
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+                <h3 class="text-center triple-gutter-pad-top">Team Ranking</h3>
+
+                <p class="half-gutter-pad-top narrow">A note on how the rank is determined goes here.</p>
+
+                <header>
+                    <h5 class="text-center">
+                        Rankings
+                    </h5>
+                </header>
+
+                {% for team in teams %}
+
+                    <div class="ranking notification clearfix" >
+                        <div class="rank-points-box">1</div>
+                        <div class="small avatar" style="background-color: {{ team|team_color }};"></div>
+                        <div data-tooltip class="has-tip tip-top message clearfix" title="{{ team.get_office_players.count }} office players, {{ team.get_frontline_players.count }} frontline players">
+                            <span class="timestamp">Points: {{ team.victory_points }}, Goal Zero: {{ team.get_goal_zero_streak }}, Resources: {{ team.resources_collected }}</span>
+                            <a href="{{ team.get_absolute_url }}">{{ team.name }}</a> {% ifequal team current_teamplayer.team %}(your team){% endifequal %}
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                <p class="double-gutter-margin-bot">&nbsp;</p>
+
+            </div>
+        </div>
+    </section>
 {% endblock content %}

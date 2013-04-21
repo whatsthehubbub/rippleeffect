@@ -17,7 +17,7 @@ def event_name(event_code):
     return Events.reverse.get(event_code, '').replace('_', ' ').lower()
 
 @register.filter
-def team_color(player):
+def team_color(team):
     # returns the calculated color for the team (derived from the team name) as a hex value
     return "#CFC59F"
 

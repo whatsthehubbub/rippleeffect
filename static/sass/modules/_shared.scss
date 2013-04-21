@@ -78,6 +78,22 @@ header {
   }
 }
 
+.type-gz-green {
+  color: #67c977;
+}
+
+.type-gz-red {
+  color: darkred;
+}
+
+.has-tip {
+  font-weight: normal !important;
+
+  &:focus, &:hover {
+    color: inherit !important;
+  }
+}
+
 img#backdrop {
   position: fixed;
   top: 0;
