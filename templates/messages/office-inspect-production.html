@@ -1,62 +1,101 @@
-<p>Inspected production for {{ player }} using 1 action.</p>
+<h4 class="action-cost">Spent <span>1</span> Action</h4>
+<h3 class="text-center double-gutter-pad-top">Production Quality Inspection Report</h3>
 
-Result:
-{% for item in resultpositive %}
-	{{ item }}
-{% endfor %}
+<p class="text-center triple-gutter-pad-top half-gutter-margin-bot">Inspected your production quality</p>
 
-{% for item in resultnegative %}
-	{{ item }}
-{% endfor %}
+<div class="coingroup">
+    {% for unknown in unknowns %}
+        <div class="coin production unknown">?</div>
+    {% endfor %}
 
-{% for unknown in unknowns %}
-	{{ unknown }}
-{% endfor %}
+    {% for item in resultpositive %}
+        <div class="coin production yes">1</div>
+    {% endfor %}
+
+    {% for item in resultnegative %}
+        <div class="coin production no">0</div>
+    {% endfor %}
+</div>
 
 {% if poorvision %}
-	<p>Abu: I’m sorry, my inspections aren’t worth much with this weather. Well, at least it’s something...</p>
+    <blockquote class="triple-gutter-margin-top">
+        <p>I’m sorry, my inspections aren’t worth much with this weather. Well, at least it’s something&hellip;</p>
+        <div class="small character small-abu-concerned">Abu</div>
+    </blockquote>
 {% endif %}
 
 {% ifequal episode.number 1 %}	
-	{% ifequal resultpositive|length 4 %} 
-		<p>Your production quality couldn’t be any better, from the looks of it. Of course, as you can see, I can’t inspect all of your production quality. This is a random sample of roughly half of it. Should still be quite helpful to plan your next step, right?</p>
+	{% ifequal resultpositive|length 4 %}
+        <blockquote class="triple-gutter-margin-top">
+            <div class="large character large-abu-happy">Abu</div>
+            <p>Your production quality couldn’t be any better, from the looks of it. Of course, as you can see, I can’t inspect all of your production quality. This is a random sample of roughly half of it. Should still be quite helpful to plan your next step, right?</p>
+        </blockquote>
 	{% endifequal %}
 
-	{% ifequal resultpositive|length 3 %} 
-		<p>Your production quality is generally excellent. Of course, as you can see, I can’t inspect all of your production quality. This is a random sample of roughly half of it. Should still be quite helpful to plan your next step, right?</p>
+	{% ifequal resultpositive|length 3 %}
+        <blockquote class="triple-gutter-margin-top">
+            <div class="large character large-abu-happy">Abu</div>
+            <p>Your production quality is generally excellent. Of course, as you can see, I can’t inspect all of your production quality. This is a random sample of roughly half of it. Should still be quite helpful to plan your next step, right?</p>
+        </blockquote>
 	{% endifequal %}
 
-	{% ifequal resultpositive|length 2 %} 
-		<p>Your production quality is pretty average, as you can see. Of course, I can’t inspect all of your production quality. This is a random sample of roughly half of it. Should still be quite helpful to plan your next step, right?</p>
+	{% ifequal resultpositive|length 2 %}
+        <blockquote class="triple-gutter-margin-top">
+            <div class="large character large-abu-neutral">Abu</div>
+            <p>Your production quality is pretty average, as you can see. Of course, I can’t inspect all of your production quality. This is a random sample of roughly half of it. Should still be quite helpful to plan your next step, right?</p>
+        </blockquote>
 	{% endifequal %}
 
-	{% ifequal resultpositive|length 1 %} 
-		<p>Your production quality isn’t very good, honestly. Of course, as you can see, I can’t inspect all of your production quality. This is a random sample of roughly half of it. But that should still be quite helpful to plan your next step.</p>
+	{% ifequal resultpositive|length 1 %}
+        <blockquote class="triple-gutter-margin-top">
+            <div class="large character large-abu-concerned">Abu</div>
+            <p>Your production quality isn’t very good, honestly. Of course, as you can see, I can’t inspect all of your production quality. This is a random sample of roughly half of it. But that should still be quite helpful to plan your next step.</p>
+        </blockquote>
 	{% endifequal %}
 
-	{% ifequal resultpositive|length 0 %} 
-		<p>Your production quality is terrible! Just terrible! Of course, as you can see, I can’t inspect all of your production quality, this is a random sample of roughly half of it. But it’s pretty clear to me what needs be done: improve, improve, improve!</p>
+	{% ifequal resultpositive|length 0 %}
+        <blockquote class="triple-gutter-margin-top">
+            <div class="large character large-abu-concerned">Abu</div>
+            <p>Your production quality is terrible! Just terrible! Of course, as you can see, I can’t inspect all of your production quality, this is a random sample of roughly half of it. But it’s pretty clear to me what needs be done: improve, improve, improve!</p>
+        </blockquote>
 	{% endifequal %}
 {% endifequal %}
 
 {% ifequal episode.number 2 %} 
-	{% ifequal resultpositive|length 4 %} 
-		<p>Your production quality couldn’t be any better, from the looks of it. I’d say you’re as ready for production as you’ve ever been.</p>
+	{% ifequal resultpositive|length 4 %}
+        <blockquote class="triple-gutter-margin-top">
+            <div class="large character large-abu-happy">Abu</div>
+            <p>Your production quality couldn’t be any better, from the looks of it. I’d say you’re as ready for production as you’ve ever been.</p>
+        </blockquote>
 	{% endifequal %}
 
-	{% ifequal resultpositive|length 3 %} 
-		<p>Your production quality is generally excellent. Are you ready for production, or do you want to enhance your quality even further?</p>
+	{% ifequal resultpositive|length 3 %}
+        <blockquote class="triple-gutter-margin-top">
+            <div class="large character large-abu-happy">Abu</div>
+            <p>Your production quality is generally excellent. Are you ready for production, or do you want to enhance your quality even further?</p>
+        </blockquote>
 	{% endifequal %}
 
-	{% ifequal resultpositive|length 2 %} 
-		<p>Your production quality is pretty average, as you can see. What do you think, is it safe to dive head-first into resource production?</p>
+	{% ifequal resultpositive|length 2 %}
+        <blockquote class="triple-gutter-margin-top">
+            <div class="large character large-abu-neutral">Abu</div>
+            <p>Your production quality is pretty average, as you can see. What do you think, is it safe to dive head-first into resource production?</p>
+        </blockquote>
 	{% endifequal %}
 
-	{% ifequal resultpositive|length 1 %} 
-		<p>Your production quality isn’t very good, honestly. Are you really going to go into production? I wouldn’t do it, if I were you.</p>
+	{% ifequal resultpositive|length 1 %}
+        <blockquote class="triple-gutter-margin-top">
+            <div class="large character large-abu-concerned">Abu</div>
+            <p>Your production quality isn’t very good, honestly. Are you really going to go into production? I wouldn’t do it, if I were you.</p>
+        </blockquote>
 	{% endifequal %}
 
-	{% ifequal resultpositive|length 0 %} 
-		<p>Your production quality is terrible! Just terrible! It’s pretty clear to me what needs be done: improve, improve, improve! Are you considering production right now? Get over yourself!</p>
+	{% ifequal resultpositive|length 0 %}
+        <blockquote class="triple-gutter-margin-top">
+            <div class="large character large-abu-concerned">Abu</div>
+            <p>Your production quality is terrible! Just terrible! It’s pretty clear to me what needs be done: improve, improve, improve! Are you considering production right now? Get over yourself!</p>
+        </blockquote>
 	{% endifequal %}
 {% endifequal %}
+
+<a href="#" class='triple-gutter-margin-top quad-gutter-margin-bot medium grey centered dismiss btn' onclick='window.location.reload()'>Continue</a>
