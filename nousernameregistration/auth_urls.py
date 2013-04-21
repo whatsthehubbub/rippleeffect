@@ -23,11 +23,12 @@ consult a specific backend's documentation for details.
 
 """
 
-from django.conf.urls import include
 from django.conf.urls import patterns
 from django.conf.urls import url
 
 from django.contrib.auth import views as auth_views
+
+from django.conf import settings
 
 
 urlpatterns = patterns('',
@@ -37,7 +38,8 @@ urlpatterns = patterns('',
                            name='auth_login'),
                        url(r'^signout/$',
                            auth_views.logout,
-                           {'template_name': 'registration/logout.html'},
+                           {'template_name': 'registration/logout.html',
+                           'next_page': settings.LOGIN_URL},
                            name='auth_logout'),
                        url(r'^password/change/$',
                            auth_views.password_change,
