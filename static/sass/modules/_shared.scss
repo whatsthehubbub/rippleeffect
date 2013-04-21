@@ -73,28 +73,6 @@ header {
   }
 }
 
-//#backdrop {
-//  background-color: $off-white;
-//  z-index: -1;
-//  position: fixed;
-//  top: -50%;
-//  left: -50%;
-//  width: 200%;
-//  height: 200%;
-//
-//  img {
-//    position: absolute;
-//    top: 0;
-//    left: 0;
-//    right: 0;
-//    bottom: 0;
-//    margin: auto;
-//    min-width: 50%;
-//    min-height: 50%;
-//  }
-//
-//}
-
 img#backdrop {
   position: fixed;
   top: 0;
@@ -106,6 +84,18 @@ img#backdrop {
 .bgheight { height: 100%; }
 
 //==== Helper classes ====
+
+.tiny-type {
+  font-size: 11px;
+  line-height: 14px;
+  text-transform: uppercase;
+  font-family: $ff-bold;
+}
+
+.small-type {
+  font-size: 14px;
+  line-height: 18px;
+}
 
 .relative {
   position: relative;
@@ -127,16 +117,36 @@ img#backdrop {
   background-color: $green;
 }
 
+.triple-gutter-pad-top {
+  padding-top: $gutter*3;
+}
+
+.gutter-pad-top {
+  padding-top: $gutter;
+}
+
 .half-gutter-pad-top {
   padding-top: $gutter*0.5;
 }
 
-.half-gutter-pad-bot {
-  padding-bottom: $gutter*0.5;
+.triple-gutter-pad-bot {
+  padding-bottom: $gutter*3;
+}
+
+.triple-gutter-margin-bot {
+  margin-bottom: $gutter*3 !important;
+}
+
+.quad-gutter-margin-bot {
+  margin-bottom: $gutter*4 !important;
 }
 
 .gutter-pad-bot {
   padding-bottom: $gutter;
+}
+
+.half-gutter-pad-bot {
+  padding-bottom: $gutter*0.5;
 }
 
 .gutter-pad-h {
@@ -152,6 +162,8 @@ img#backdrop {
 .bottom-double-pad {
   padding-bottom: 24px;
 }
+
+
 
 a.tiny.btn{
   @include button(
@@ -227,6 +239,23 @@ a.medium.btn {
   &:active {
     padding: 1px 13px 0 14px;
     border: 1px solid darken($green, 20%);
+  }
+}
+
+a.centered.btn {
+  display:block;
+  margin: 0 auto;
+}
+
+a.yellow.btn {
+  background-color: $orange;
+  border-color: darken($orange, 20%);
+  color: $black;
+
+  &:hover {
+    background-color: darken($orange, 10%);
+    border-color: darken($orange, 20%);
+    color: $black;
   }
 }
 

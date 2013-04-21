@@ -147,9 +147,9 @@ $h3-font-size: emCalc(18px);
 // $definition-list-margin-bottom: emCalc(12px);
 
 // We use these to style blockquotes
-// $blockquote-font-color: lighten($header-font-color, 30%);
-// $blockquote-padding: emCalc(9px) emCalc(20px) 0 emCalc(19px);
-// $blockquote-border: 1px solid #ddd;
+$blockquote-font-color: $black;
+$blockquote-padding:0;
+$blockquote-border: none;
 // $blockquote-cite-font-size: emCalc(13px);
 // $blockquote-cite-font-color: lighten($header-font-color, 20%);
 // $blockquote-cite-link-color: $blockquote-cite-font-color;

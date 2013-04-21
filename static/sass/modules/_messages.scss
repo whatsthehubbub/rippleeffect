@@ -1,0 +1,42 @@
+
+.episode-intro {
+  height: 300px;
+  border: 6px solid #fff;
+}
+
+
+a.medium.dismiss.btn {
+  width: 160px;
+}
+
+// blockquotes are used for character copy
+blockquote {
+
+  position: relative;
+
+  p {
+    margin: 0 auto;
+    @extend .small-type;
+    width: 230px + $gutter*2;
+    padding: 0 $gutter;
+    background: url('../img/icon-blockquote.png') no-repeat top left;
+    @include image-2x('../img/icon-blockquote@2x.png', 16px, 16px);
+    text-align: justify;
+  }
+
+  .small.character {
+    @extend .tiny-type;
+    @extend .text-center;
+    margin-left: $gutter;
+    position:absolute;
+    width: 72px;
+    height: 75px;
+    padding-top: 67px;
+    top: 0;
+    left: 0;
+    background-position: center 8px;
+    text-transform: uppercase;
+    color: $dark-grey;
+  }
+
+}
