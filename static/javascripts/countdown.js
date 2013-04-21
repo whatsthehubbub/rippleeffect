@@ -20,6 +20,9 @@
       var d, h, m;
       d = new Date();
       CountDown.secondsLeft--;
+      if (CountDown.secondsLeft < -10) {
+        window.location.reload();
+      }
       m = Math.max(Math.floor(CountDown.secondsLeft / 60), 0);
       h = Math.max(Math.floor(m / 60), 0);
       m -= h * 60;

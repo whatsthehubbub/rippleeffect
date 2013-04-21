@@ -1,5 +1,5 @@
 
-.episode-intro {
+.episode-intro, .event-intro {
   height: 300px;
   border: 6px solid #fff;
 }
@@ -7,6 +7,11 @@
 
 a.medium.dismiss.btn {
   width: 160px;
+}
+
+.sheet p {
+  padding-left: $gutter;
+  padding-right: $gutter;
 }
 
 // blockquotes are used for character copy
@@ -31,10 +36,10 @@ blockquote {
     position:absolute;
     width: 72px;
     height: 75px;
-    padding-top: 67px;
+    padding-top: 62px;
     top: 0;
     left: 0;
-    background-position: center 8px;
+    background-position: center 2px;
     text-transform: uppercase;
     color: $dark-grey;
   }

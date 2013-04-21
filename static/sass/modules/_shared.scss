@@ -117,6 +117,10 @@ img#backdrop {
   background-color: $green;
 }
 
+.quad-gutter-pad-top {
+  padding-top: $gutter*4;
+}
+
 .triple-gutter-pad-top {
   padding-top: $gutter*3;
 }
@@ -133,6 +137,14 @@ img#backdrop {
   padding-bottom: $gutter*3;
 }
 
+.triple-gutter-margin-top {
+  margin-top: $gutter*3 !important;
+}
+
+.quad-gutter-margin-top {
+  margin-top: $gutter*4 !important;
+}
+
 .triple-gutter-margin-bot {
   margin-bottom: $gutter*3 !important;
 }
@@ -143,6 +155,10 @@ img#backdrop {
 
 .gutter-pad-bot {
   padding-bottom: $gutter;
+}
+
+.double-gutter-pad-bot {
+  padding-bottom: $gutter*2;
 }
 
 .half-gutter-pad-bot {

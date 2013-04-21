@@ -21,6 +21,11 @@ $ ->
     # todo: we could only do this every minute, but it would be a bit less accurate
     # todo: reload the page when we hit 0?
     CountDown.secondsLeft--
+
+    # reload the page when the turn has passed
+    if CountDown.secondsLeft < -10
+      window.location.reload()
+
     m = Math.max(Math.floor(CountDown.secondsLeft / 60), 0);
     h = Math.max(Math.floor(m / 60), 0);
     m -= h * 60

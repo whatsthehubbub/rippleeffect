@@ -1,44 +1,71 @@
-<p>It's the start of a new turn.</p>
+<h3 class="text-center quad-gutter-pad-top">It's the start of a new turn</h3>
 
 {% if poorvision %}
-	<p>Poor Vision
-Inspections are less effective during the current turn. This event affects all office players.</p>
+    <div class="event-intro event-poor-vision-intro"></div>
 
-			<p>ABU
-		(angry)
-The weather makes it pretty tough to inspect your production today. Of course, I can still do it, but I’m not sure if I’ll be able to come back to you with as much information as usual.</p>
+    <h3 class="text-center triple-gutter-pad-top">Poor Vision</h3>
+    <p class="text-center">Inspections are less effective during this turn.<br>This event affects all office players.</p>
 
-			<p>ELIN
-		(angry)
-Same here! You’ll have to ask yourself whether you want to try and retrieve resources under these conditions.</p>
+    <blockquote class="half-gutter-pad-top">
+        <p>The weather makes it pretty tough to inspect your production today. Of course, I can still do it, but I’m not sure if I’ll be able to come back to you with as much information as usual.</p>
+        <div class="small character small-abu-concerned">Abu</div>
+    </blockquote>
+
+    <blockquote class="half-gutter-pad-top double-gutter-pad-bot">
+        <p>Same here! You’ll have to ask yourself whether you want to try and retrieve resources under these conditions.</p>
+        <div class="small character small-elin-concerned">Elin</div>
+    </blockquote>
+
 {% endif %}
 
 {% if tornado %}
-	<p>Tornado
-	If there’s an incident during the current turn, you’ll lose all your actions.</p>
+    <div class="event-intro event-tornado-intro"></div>
+
+    <h3 class="text-center triple-gutter-pad-top">Tornado</h3>
+    <p class="triple-gutter-margin-bot text-center">If there’s an incident during the current turn,<br>you’ll lose all your actions.</p>
+
 {% endif %}
 
 {% if highmarket %}
-	<p>High Market
-Resources give double points. This event affects all office players.</p>
 
-			<p>MEI
-		(happy)
-This is incredible. The resource markets are soaring, so if we do well, we’ll score points like there’s no tomorrow! If you ever needed a motivation to produce, this is it! What are you still waiting for? Go retrieve resources, like, right now!</p>	
+    <div class="event-intro event-high-market-intro"></div>
+
+    <h3 class="text-center triple-gutter-pad-top">High Market</h3>
+    <p class="text-center">Resources give double points.<br>This event affects all office players.</p>
+
+    <blockquote class="half-gutter-pad-top double-gutter-pad-bot">
+        <p>This is incredible. The resource markets are soaring, so if we do well, we’ll score points like there’s no tomorrow! If you ever needed a motivation to produce, this is it! What are you still waiting for? Go retrieve resources, like, right now!</p>
+        <div class="small character small-mei-happy">Mei</div>
+    </blockquote>
+
 {% endif %}
 
 {% if increasedrisk %}
-	<p>Increased Risk
-Your safety has decreased.</p>
 
-<p>
-			ELIN
-		(terse)
-You ought to be really careful today. Why don’t you improve your safety instead of spending all your actions on resources?</p>
+    <div class="event-intro event-caution-intro"></div>
+
+    <h3 class="text-center triple-gutter-pad-top">Increased Risk</h3>
+    <p class="text-center">Your safety has decreased.</p>
+
+    <blockquote class="half-gutter-pad-top double-gutter-pad-bot">
+        <p>You ought to be really careful today. Why don’t you improve your safety instead of spending all your actions on resources?</p>
+        <div class="small character small-elin-neutral">Elin</div>
+    </blockquote>
+
 
 {% endif %}
 
 {% if lightning %}
-	<p>Lightning
-You have a chance of getting hit by lightning. If you draw an incident, you’ll lose all your actions.</p>
+
+    <div class="event-intro event-lightning-intro"></div>
+
+    <h3 class="text-center triple-gutter-pad-top">Lightning</h3>
+    <p class="triple-gutter-margin-bot text-center">You have a chance of getting hit by lightning.<br>If you draw an incident, you’ll lose all your actions.</p>
+
 {% endif %}
+
+{% if not poorvision and not tornado and not highmarket and not increasedrisk and not lightning %}
+    <p class="triple-gutter-margin-bot">&nbsp;</p>
+{% endif %}
+
+<a href="#" class='quad-gutter-margin-bot medium yellow centered dismiss btn' onclick='window.location.reload()'>Continue</a>

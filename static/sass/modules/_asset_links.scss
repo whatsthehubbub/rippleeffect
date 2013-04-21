@@ -1,4 +1,5 @@
 
+// Episode banners
 .episode-1-intro {
   background: url('../img/intro-1.png') no-repeat;
   @include image-2x('../img/intro-1@2x.png', 424px, 300px);
@@ -9,7 +10,180 @@
   @include image-2x('../img/intro-2@2x.png', 424px, 300px);
 }
 
+// Event banners
+.event-high-market-intro {
+  background: url('../img/large-event-high-market.png') no-repeat;
+  @include image-2x('../img/large-event-high-market@2x.png', 424px, 300px);
+}
+
+.event-lightning-intro {
+  background: url('../img/large-event-lightning.png') no-repeat;
+  @include image-2x('../img/large-event-lightning@2x.png', 424px, 300px);
+}
+
+.event-caution-intro {
+  background: url('../img/large-event-caution.png') no-repeat;
+  @include image-2x('../img/large-event-caution@2x.png', 424px, 300px);
+}
+
+.event-tornado-intro {
+  background: url('../img/large-event-tornado.png') no-repeat;
+  @include image-2x('../img/large-event-tornado@2x.png', 424px, 300px);
+}
+
+.event-poor-vision-intro {
+  background: url('../img/large-event-poor-vision.png') no-repeat;
+  @include image-2x('../img/large-event-poor-vision@2x.png', 424px, 300px);
+}
+
+// Small character heads
 .small-mei-happy {
   background: url('../img/small-mei-1.png') no-repeat;
   @include image-2x('../img/small-mei-1@2x.png', 43px, 58px);
+}
+
+.small-abu-happy {
+  background: url('../img/small-abu-1.png') no-repeat;
+  @include image-2x('../img/small-abu-1@2x.png', 43px, 58px);
+}
+
+.small-david-happy {
+  background: url('../img/small-david-1.png') no-repeat;
+  @include image-2x('../img/small-david-1@2x.png', 43px, 58px);
+}
+
+.small-harry-happy {
+  background: url('../img/small-harry-1.png') no-repeat;
+  @include image-2x('../img/small-harry-1@2x.png', 43px, 58px);
+}
+
+.small-elin-happy {
+  background: url('../img/small-elin-1.png') no-repeat;
+  @include image-2x('../img/small-elin-1@2x.png', 43px, 58px);
+}
+
+.small-mei-neutral {
+  background: url('../img/small-mei-2.png') no-repeat;
+  @include image-2x('../img/small-mei-2@2x.png', 43px, 58px);
+}
+
+.small-abu-neutral {
+  background: url('../img/small-abu-2.png') no-repeat;
+  @include image-2x('../img/small-abu-2@2x.png', 43px, 58px);
+}
+
+.small-david-neutral {
+  background: url('../img/small-david-2.png') no-repeat;
+  @include image-2x('../img/small-david-2@2x.png', 43px, 58px);
+}
+
+.small-harry-neutral {
+  background: url('../img/small-harry-2.png') no-repeat;
+  @include image-2x('../img/small-harry-2@2x.png', 43px, 58px);
+}
+
+.small-elin-neutral  {
+  background: url('../img/small-elin-2.png') no-repeat;
+  @include image-2x('../img/small-elin-2@2x.png', 43px, 58px);
+}
+
+.small-mei-concerned {
+  background: url('../img/small-mei-3.png') no-repeat;
+  @include image-2x('../img/small-mei-3@2x.png', 43px, 58px);
+}
+
+.small-abu-concerned {
+  background: url('../img/small-abu-3.png') no-repeat;
+  @include image-2x('../img/small-abu-3@2x.png', 43px, 58px);
+}
+
+.small-david-concerned {
+  background: url('../img/small-david-3.png') no-repeat;
+  @include image-2x('../img/small-david-3@2x.png', 43px, 58px);
+}
+
+.small-harry-concerned {
+  background: url('../img/small-harry-3.png') no-repeat;
+  @include image-2x('../img/small-harry-3@2x.png', 43px, 58px);
+}
+
+.small-elin-concerned {
+  background: url('../img/small-elin-3.png') no-repeat;
+  @include image-2x('../img/small-elin-3@2x.png', 43px, 58px);
+}
+
+// Large character heads in triangles
+.large-harry-happy {
+  background: url('../img/large-harry-1.png') no-repeat;
+  @include image-2x('../img/large-harry-1@2x.png', 127px, 100px);
+}
+
+.large-harry-neutral {
+  background: url('../img/large-harry-2.png') no-repeat;
+  @include image-2x('../img/large-harry-2@2x.png', 127px, 100px);
+}
+
+.large-harry-concerned {
+  background: url('../img/large-harry-3.png') no-repeat;
+  @include image-2x('../img/large-harry-3@2x.png', 127px, 100px);
+}
+
+.large-mei-happy {
+  background: url('../img/large-mei-1.png') no-repeat;
+  @include image-2x('../img/large-mei-1@2x.png', 127px, 100px);
+}
+
+.large-mei-neutral {
+  background: url('../img/large-mei-2.png') no-repeat;
+  @include image-2x('../img/large-mei-2@2x.png', 127px, 100px);
+}
+
+.large-mei-concerned {
+  background: url('../img/large-mei-3.png') no-repeat;
+  @include image-2x('../img/large-mei-3@2x.png', 127px, 100px);
+}
+
+.large-david-happy {
+  background: url('../img/large-david-1.png') no-repeat;
+  @include image-2x('../img/large-david-1@2x.png', 127px, 100px);
+}
+
+.large-david-neutral {
+  background: url('../img/large-david-2.png') no-repeat;
+  @include image-2x('../img/large-david-2@2x.png', 127px, 100px);
+}
+
+.large-david-concerned {
+  background: url('../img/large-david-3.png') no-repeat;
+  @include image-2x('../img/large-david-3@2x.png', 127px, 100px);
+}
+
+.large-elin-happy {
+  background: url('../img/large-elin-1.png') no-repeat;
+  @include image-2x('../img/large-elin-1@2x.png', 127px, 100px);
+}
+
+.large-elin-neutral {
+  background: url('../img/large-elin-2.png') no-repeat;
+  @include image-2x('../img/large-elin-2@2x.png', 127px, 100px);
+}
+
+.large-elin-concerned {
+  background: url('../img/large-elin-3.png') no-repeat;
+  @include image-2x('../img/large-elin-3@2x.png', 127px, 100px);
+}
+
+.large-abu-happy {
+  background: url('../img/large-abu-1.png') no-repeat;
+  @include image-2x('../img/large-abu-1@2x.png', 127px, 100px);
+}
+
+.large-abu-neutral {
+  background: url('../img/large-abu-2.png') no-repeat;
+  @include image-2x('../img/large-abu-2@2x.png', 127px, 100px);
+}
+
+.large-abu-concerned {
+  background: url('../img/large-abu-3.png') no-repeat;
+  @include image-2x('../img/large-abu-3@2x.png', 127px, 100px);
 }
