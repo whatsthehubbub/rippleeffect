@@ -6,12 +6,12 @@
     <h3 class="text-center triple-gutter-pad-top">Poor Vision</h3>
     <p class="text-center">Inspections are less effective during this turn.<br>This event affects all office players.</p>
 
-    <blockquote class="half-gutter-pad-top">
+    <blockquote class="half-gutter-margin-top">
         <p>The weather makes it pretty tough to inspect your production today. Of course, I can still do it, but I’m not sure if I’ll be able to come back to you with as much information as usual.</p>
         <div class="small character small-abu-concerned">Abu</div>
     </blockquote>
 
-    <blockquote class="half-gutter-pad-top double-gutter-pad-bot">
+    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
         <p>Same here! You’ll have to ask yourself whether you want to try and retrieve resources under these conditions.</p>
         <div class="small character small-elin-concerned">Elin</div>
     </blockquote>
@@ -33,7 +33,7 @@
     <h3 class="text-center triple-gutter-pad-top">High Market</h3>
     <p class="text-center">Resources give double points.<br>This event affects all office players.</p>
 
-    <blockquote class="half-gutter-pad-top double-gutter-pad-bot">
+    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
         <p>This is incredible. The resource markets are soaring, so if we do well, we’ll score points like there’s no tomorrow! If you ever needed a motivation to produce, this is it! What are you still waiting for? Go retrieve resources, like, right now!</p>
         <div class="small character small-mei-happy">Mei</div>
     </blockquote>
@@ -47,7 +47,7 @@
     <h3 class="text-center triple-gutter-pad-top">Increased Risk</h3>
     <p class="text-center">Your safety has decreased.</p>
 
-    <blockquote class="half-gutter-pad-top double-gutter-pad-bot">
+    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
         <p>You ought to be really careful today. Why don’t you improve your safety instead of spending all your actions on resources?</p>
         <div class="small character small-elin-neutral">Elin</div>
     </blockquote>
@@ -65,7 +65,7 @@
 {% endif %}
 
 {% if not poorvision and not tornado and not highmarket and not increasedrisk and not lightning %}
-    <p class="triple-gutter-margin-bot">&nbsp;</p>
+    <p class="half-gutter-margin-bot">&nbsp;</p>
 {% endif %}
 
-<a href="#" class='quad-gutter-margin-bot medium yellow centered dismiss btn' onclick='window.location.reload()'>Continue</a>
+<a href="#" class='quad-gutter-margin-bot medium grey centered dismiss btn' onclick='window.location.reload()'>Continue</a>

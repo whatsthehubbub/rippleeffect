@@ -4,6 +4,28 @@
   border: 6px solid #fff;
 }
 
+h4.action-cost {
+  @extend .tiny-type;
+  @extend .text-center;
+  margin-top: $gutter*2;
+  margin-bottom: 0;
+  color: $black;
+  text-transform: uppercase;
+  font-family: $ff-bold;
+  opacity: 0.5;
+  height: 20px;
+  line-height:20px;
+
+  span {
+    background: url('../img/icon-action.png') no-repeat 6px 1px;
+    @include image-2x('../img/icon-action@2x.png', 16px, 16px);
+    padding-left:16px;
+    height: 20px;
+    line-height:20px;
+    padding: 5px 10px 5px 20px;
+  }
+}
+
 
 a.medium.dismiss.btn {
   width: 160px;
@@ -44,4 +66,28 @@ blockquote {
     color: $dark-grey;
   }
 
+  .large.character {
+    @extend .tiny-type;
+    @extend .text-center;
+    height: 197px;
+    display:block;
+    background-position: center top;
+    padding-top: 173px;
+
+  }
+
 }
+
+.coingroup {
+  text-align: center;
+}
+
+.coin {
+  margin: 1px;
+  width: 42px;
+  height: 42px;
+  display:inline-block;
+  text-indent: -999999em;
+
+}
+

@@ -133,8 +133,28 @@ img#backdrop {
   padding-top: $gutter*0.5;
 }
 
+.double-gutter-pad-top {
+  padding-top: $gutter*2;
+}
+
 .triple-gutter-pad-bot {
   padding-bottom: $gutter*3;
+}
+
+.half-gutter-margin-top {
+  margin-top: $gutter*0.5;
+}
+
+.half-gutter-margin-bot {
+  margin-bottom: $gutter*0.5 !important;
+}
+
+.gutter-margin-top {
+  margin-top: $gutter !important;
+}
+
+.double-gutter-margin-top {
+  margin-top: $gutter*2 !important;
 }
 
 .triple-gutter-margin-top {
@@ -271,6 +291,18 @@ a.yellow.btn {
   &:hover {
     background-color: darken($orange, 10%);
     border-color: darken($orange, 20%);
+    color: $black;
+  }
+}
+
+a.grey.btn {
+  background-color: $mid-grey;
+  border-color: darken($mid-grey, 20%);
+  color: $black;
+
+  &:hover {
+    background-color: darken($mid-grey, 10%);
+    border-color: darken($mid-grey, 20%);
     color: $black;
   }
 }

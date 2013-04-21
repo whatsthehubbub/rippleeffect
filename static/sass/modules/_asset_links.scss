@@ -114,76 +114,113 @@
 
 // Large character heads in triangles
 .large-harry-happy {
-  background: url('../img/large-harry-1.png') no-repeat;
-  @include image-2x('../img/large-harry-1@2x.png', 127px, 100px);
+  background: url('../img/report-harry-1.png') no-repeat;
+  @include image-2x('../img/report-harry-1@2x.png', 127px, 100px);
 }
 
 .large-harry-neutral {
-  background: url('../img/large-harry-2.png') no-repeat;
-  @include image-2x('../img/large-harry-2@2x.png', 127px, 100px);
+  background: url('../img/report-harry-2.png') no-repeat;
+  @include image-2x('../img/report-harry-2@2x.png', 127px, 100px);
 }
 
 .large-harry-concerned {
-  background: url('../img/large-harry-3.png') no-repeat;
-  @include image-2x('../img/large-harry-3@2x.png', 127px, 100px);
+  background: url('../img/report-harry-3.png') no-repeat;
+  @include image-2x('../img/report-harry-3@2x.png', 127px, 100px);
 }
 
 .large-mei-happy {
-  background: url('../img/large-mei-1.png') no-repeat;
-  @include image-2x('../img/large-mei-1@2x.png', 127px, 100px);
+  background: url('../img/report-mei-1.png') no-repeat;
+  @include image-2x('../img/report-mei-1@2x.png', 127px, 100px);
 }
 
 .large-mei-neutral {
-  background: url('../img/large-mei-2.png') no-repeat;
-  @include image-2x('../img/large-mei-2@2x.png', 127px, 100px);
+  background: url('../img/report-mei-2.png') no-repeat;
+  @include image-2x('../img/report-mei-2@2x.png', 127px, 100px);
 }
 
 .large-mei-concerned {
-  background: url('../img/large-mei-3.png') no-repeat;
-  @include image-2x('../img/large-mei-3@2x.png', 127px, 100px);
+  background: url('../img/report-mei-3.png') no-repeat;
+  @include image-2x('../img/report-mei-3@2x.png', 127px, 100px);
 }
 
 .large-david-happy {
-  background: url('../img/large-david-1.png') no-repeat;
-  @include image-2x('../img/large-david-1@2x.png', 127px, 100px);
+  background: url('../img/report-david-1.png') no-repeat;
+  @include image-2x('../img/report-david-1@2x.png', 127px, 100px);
 }
 
 .large-david-neutral {
-  background: url('../img/large-david-2.png') no-repeat;
-  @include image-2x('../img/large-david-2@2x.png', 127px, 100px);
+  background: url('../img/report-david-2.png') no-repeat;
+  @include image-2x('../img/report-david-2@2x.png', 127px, 100px);
 }
 
 .large-david-concerned {
-  background: url('../img/large-david-3.png') no-repeat;
-  @include image-2x('../img/large-david-3@2x.png', 127px, 100px);
+  background: url('../img/report-david-3.png') no-repeat;
+  @include image-2x('../img/report-david-3@2x.png', 127px, 100px);
 }
 
 .large-elin-happy {
-  background: url('../img/large-elin-1.png') no-repeat;
-  @include image-2x('../img/large-elin-1@2x.png', 127px, 100px);
+  background: url('../img/report-elin-1.png') no-repeat;
+  @include image-2x('../img/report-elin-1@2x.png', 127px, 100px);
 }
 
 .large-elin-neutral {
-  background: url('../img/large-elin-2.png') no-repeat;
-  @include image-2x('../img/large-elin-2@2x.png', 127px, 100px);
+  background: url('../img/report-elin-2.png') no-repeat;
+  @include image-2x('../img/report-elin-2@2x.png', 127px, 100px);
 }
 
 .large-elin-concerned {
-  background: url('../img/large-elin-3.png') no-repeat;
-  @include image-2x('../img/large-elin-3@2x.png', 127px, 100px);
+  background: url('../img/report-elin-3.png') no-repeat;
+  @include image-2x('../img/report-elin-3@2x.png', 127px, 100px);
 }
 
 .large-abu-happy {
-  background: url('../img/large-abu-1.png') no-repeat;
-  @include image-2x('../img/large-abu-1@2x.png', 127px, 100px);
+  background: url('../img/report-abu-1.png') no-repeat;
+  @include image-2x('../img/report-abu-1@2x.png', 127px, 100px);
 }
 
 .large-abu-neutral {
-  background: url('../img/large-abu-2.png') no-repeat;
-  @include image-2x('../img/large-abu-2@2x.png', 127px, 100px);
+  background: url('../img/report-abu-2.png') no-repeat;
+  @include image-2x('../img/report-abu-2@2x.png', 127px, 100px);
 }
 
 .large-abu-concerned {
-  background: url('../img/large-abu-3.png') no-repeat;
-  @include image-2x('../img/large-abu-3@2x.png', 127px, 100px);
+  background: url('../img/report-abu-3.png') no-repeat;
+  @include image-2x('../img/report-abu-3@2x.png', 127px, 100px);
+}
+
+// Coins
+
+.coin.safety.unknown {
+  background: url('../img/coin-safety.png') no-repeat;
+  @include image-2x('../img/coin-safety@2x.png', 41px, 42px);
+}
+
+.coin.safety.yes {
+  background: url('../img/coin-safety-yes.png') no-repeat;
+  @include image-2x('../img/coin-safety-yes@2x.png', 41px, 42px);
+}
+
+.coin.safety.no {
+  background: url('../img/coin-safety-no.png') no-repeat;
+  @include image-2x('../img/coin-safety-no@2x.png', 41px, 42px);
+}
+
+.coin.production.unknown {
+  background: url('../img/coin-production.png') no-repeat;
+  @include image-2x('../img/coin-safety@2x.png', 41px, 42px);
+}
+
+.coin.production.yes {
+  background: url('../img/coin-production-yes.png') no-repeat;
+  @include image-2x('../img/coin-safety-yes@2x.png', 41px, 42px);
+}
+
+.coin.production.no {
+  background: url('../img/coin-production-no.png') no-repeat;
+  @include image-2x('../img/coin-safety-no@2x.png', 41px, 42px);
+}
+
+.coin.barrier {
+  background: url('../img/coin-barrier.png') no-repeat;
+  @include image-2x('../img/coin-barrier@2x.png', 41px, 42px);
 }

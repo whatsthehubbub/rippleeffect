@@ -9,19 +9,22 @@
             <section class="modal message">
                 <div class="row">
                     <div class="sheet large-12 columns">
-
-                        <h2>Header</h2>
-
                         {{ message }}
-
-                        <a href="#" class='medium dismiss btn' onclick='window.location.reload()'>Okay</a>
-
                     </div>
                 </div>
             </section>
 	    {% endfor %}
 
     {% else %}
+
+        <section class="modal message">
+            <div class="row">
+                <div class="sheet large-12 columns">
+
+
+                </div>
+            </div>
+        </section>
 
         <section class="game-ui frontline">
 
