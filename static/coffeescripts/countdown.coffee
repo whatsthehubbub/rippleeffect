@@ -4,12 +4,17 @@ $ ->
 @CountDown =
 
   secondsleft: -1
+  refresh: true
 
 
 # hook up event handlers and intialize
   initialize: =>
     if $('#turn-countdown').length > 0
       CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
+
+      # Don't start refreshing if there is no active turn
+      if CountDown.secondsLeft == 0 then CountDown.refresh = false
+
       CountDown.tick()
 
   triggerTick: =>
@@ -23,7 +28,7 @@ $ ->
     CountDown.secondsLeft--
 
     # reload the page when the turn has passed
-    if CountDown.secondsLeft < -90
+    if CountDown.secondsLeft < -90 and CountDown.refresh
       window.location.reload()
 
     m = Math.max(Math.floor(CountDown.secondsLeft / 60), 0);

@@ -207,6 +207,7 @@ $sidebar-width: 270px;
     margin-left: $sidebar-width + $gutter * 2;
     width: 424px;
     padding-top: 29px;
+    overflow: hidden;
 
     .sheet {
       @extend .white-bg;

@@ -7,9 +7,13 @@
 
   this.CountDown = {
     secondsleft: -1,
+    refresh: true,
     initialize: function() {
       if ($('#turn-countdown').length > 0) {
         CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
+        if (CountDown.secondsLeft === 0) {
+          CountDown.refresh = false;
+        }
         return CountDown.tick();
       }
     },
@@ -20,7 +24,7 @@
       var d, h, m;
       d = new Date();
       CountDown.secondsLeft--;
-      if (CountDown.secondsLeft < -90) {
+      if (CountDown.secondsLeft < -90 && CountDown.refresh) {
         window.location.reload();
       }
       m = Math.max(Math.floor(CountDown.secondsLeft / 60), 0);
