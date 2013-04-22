@@ -165,6 +165,8 @@ def player_profile_edit(request):
         if profileform.is_valid():
             profileform.save()
 
+            messages.add_message(request, messages.INFO, '<div class="form-success text-center">Profile updated successfully.</div>')
+
             return HttpResponseRedirect(reverse('player_profile_own'))
     else:
         profileform = ProfileForm(instance=player)

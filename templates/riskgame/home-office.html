@@ -5,8 +5,6 @@
 
 {% block content %}
 
-	{# TODO what to do if we have several messages? (can happen with system pushed stuff) #}
-
 	{% if messages %}
 	    {% for message in messages %}
 
@@ -17,7 +15,6 @@
                     </div>
                 </div>
             </section>
-
 
 	    {% endfor %}
     {% else %}
