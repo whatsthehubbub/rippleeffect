@@ -1,6 +1,4 @@
-<h3>Start a new game</h3>
-
-<form method="POST" action="{% url 'game_start' %}">
+<form method="POST" action="{% url 'game_start' %}" enctype="multipart/form-data">
     {% csrf_token %}
     {{ startform.as_p }}
     <input type="submit">

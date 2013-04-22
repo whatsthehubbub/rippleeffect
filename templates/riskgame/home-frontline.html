@@ -71,11 +71,7 @@
                 </header>
 
                 <div class="ui-box-content">
-                    <form method="POST" action="{% url 'game_start' %}">
-                        {% csrf_token %}
-                        {{ startform }}
-                        <input type="submit">
-                    </form>
+                    {% include "partials/start-new-game.html" %}
                 </div>
 
             </div>

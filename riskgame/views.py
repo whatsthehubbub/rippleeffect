@@ -6,7 +6,7 @@ from django import forms
 
 from django.db.models import F
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 
 from django.views.decorators.http import require_POST
@@ -312,12 +312,24 @@ def teams(request):
     return HttpResponse(t.render(c))
 
 class GameStartForm(forms.Form):
+    start = forms.DateTimeField(initial=timezone.now())
     turn_minutes = forms.IntegerField(initial=10)
+    csv = forms.FileField(label="Teams and players (CSV)")
+
+    def clean(self):
+        cleaned_data = super(GameStartForm, self).clean()
+
+        print cleaned_data
+
+        import csv
+        # print self.cleaned_data['csv']
+
+        return cleaned_data
 
 @login_required
 def game_start(request):
     if request.method == 'POST':
-        form = GameStartForm(request.POST)
+        form = GameStartForm(request.POST, request.FILES)
 
         if form.is_valid():
             minutes = form.cleaned_data.get('turn_minutes', 10)
