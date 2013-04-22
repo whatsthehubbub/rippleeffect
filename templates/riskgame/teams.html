@@ -11,7 +11,7 @@
 
                 <h3 class="text-center triple-gutter-pad-top">Team Ranking</h3>
 
-                <p class="half-gutter-pad-top narrow">A note on how the rank is determined goes here.</p>
+                <p class="half-gutter-pad-top narrow">Below are all the teams playing Ripple Effect. Their rank is determined by total points divided by number of office players.</p>
 
                 <header>
                     <h5 class="text-center">
@@ -22,7 +22,7 @@
                 {% for team in teams %}
 
                     <div class="ranking notification clearfix" >
-                        <div class="rank-points-box">1</div>
+                        <div class="rank-points-box">{{ team.get_rank }}</div>
                         <div class="small avatar" style="background-color: {{ team|team_color }};"></div>
                         <div data-tooltip class="has-tip tip-top message clearfix" title="{{ team.get_office_players.count }} office players, {{ team.get_frontline_players.count }} frontline players">
                             <span class="timestamp">Points: {{ team.victory_points }}, Goal Zero: {{ team.get_goal_zero_streak }}, Resources: {{ team.resources_collected }}</span>
