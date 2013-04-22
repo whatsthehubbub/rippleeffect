@@ -3,23 +3,6 @@
 
 <header>
     <h5 class="text-center pad-left">
-        Barriers placed
-        <span data-tooltip class="help has-tip" title="Barriers prevent risks from turning into incidents">?</span>
-    </h5>
-</header>
-
-<div class="coingroup double-gutter-pad-bot">
-    {% if barrier_count < 1 %}
-        <p class="text-center tiny-type gutter-pad-top">none</p>
-    {% else %}
-        {% for i in barrier_count|times %}
-            <div class="coin barrier">!</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<header>
-    <h5 class="text-center pad-left">
         Production Result
         <span data-tooltip class="help has-tip" title="Planned units of production">?</span>
     </h5>
@@ -62,6 +45,23 @@
     {% empty %}
         <p class="text-center tiny-type gutter-pad-top">none</p>
     {% endfor %}
+</div>
+
+<header>
+    <h5 class="text-center pad-left">
+        Barriers placed
+        <span data-tooltip class="help has-tip" title="Barriers prevent risks from turning into incidents">?</span>
+    </h5>
+</header>
+
+<div class="coingroup double-gutter-pad-bot">
+    {% if barrier_count < 1 %}
+        <p class="text-center tiny-type gutter-pad-top">none</p>
+    {% else %}
+        {% for i in barrier_count|times %}
+            <div class="coin barrier">!</div>
+        {% endfor %}
+    {% endif %}
 </div>
 
 {% ifequal episode.number 1 %}	
