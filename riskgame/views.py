@@ -319,22 +319,80 @@ class GameStartForm(forms.Form):
     def clean(self):
         cleaned_data = super(GameStartForm, self).clean()
 
-        print cleaned_data
+        try:
+            import csv, StringIO
+            from email.utils import parseaddr
 
-        import csv
-        # print self.cleaned_data['csv']
+            content = StringIO.StringIO(cleaned_data['csv'].read())
+
+            reader = csv.reader(content)
+
+            players = []
+
+            for row in reader:
+                team_name = row[0]
+                email = parseaddr(row[1])[1]
+
+                if not email[1]:
+                    raise forms.ValidationError("Passed value %s is not a valid e-mail address." % row[1])
+
+                role = row[2]
+
+                if role not in ['office', 'frontline']:
+                    raise forms.ValidationError("Role for %s did not conform to 'frontline' or 'office'." % email)
+
+                players.append((team_name, email, role))
+        except:
+            raise forms.ValidationError("Did not receive a valid CSV file.")
+
+        # Check for e-mail duplicates
+        for player in players:
+            email = player[1]
+
+            if len([p for p in players if p[1] == email]) > 1:
+                raise forms.ValidationError("Received a duplicate for e-mail: %s" % email)
+
+        # Stuff the parsed player array in cleaned_data
+        cleaned_data['players'] = players
 
         return cleaned_data
 
 @login_required
+@user_passes_test(lambda u: u.is_admin)
 def game_start(request):
     if request.method == 'POST':
         form = GameStartForm(request.POST, request.FILES)
 
         if form.is_valid():
             minutes = form.cleaned_data.get('turn_minutes', 10)
+            start = form.cleaned_data.get('start', timezone.now())
 
-            Game.objects.get_latest_game().initialize(dayLengthInMinutes=minutes)
+            EmailUser.objects.all().delete()
+            Team.objects.all().delete()
+            TeamPlayer.objects.all().delete()
+            Episode.objects.all().delete()
+            EpisodeDay.objects.all().delete()
+
+            Notification.objects.all().delete()
+
+            for player in form.cleaned_data.get('players', []):
+                print player 
+
+                team_name = player[0]
+                email = player[1]
+                role = player[2]
+
+                user = EmailUser.objects.create_user(email=email)
+                player, player_created = Player.objects.get_or_create(user=user)
+
+                # TODO send user e-mail to set their password and activate their account
+
+                team, team_created = Team.objects.get_or_create(name=team_name)
+
+                TeamPlayer.objects.get_or_create(player=player, team=team, role=role)
+
+
+            Game.objects.get_latest_game().initialize(start=start, dayLengthInMinutes=minutes)
 
             from riskgame.tasks import change_days
             change_days()

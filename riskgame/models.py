@@ -891,23 +891,6 @@ class Game(models.Model):
 
         self.start = start
 
-        Team.objects.all().update(goal_zero_markers=0)
-        Team.objects.all().update(goal_zero_streak=0)
-        Team.objects.all().update(action_points=0)
-        Team.objects.all().update(victory_points=0)
-        Team.objects.all().update(victory_points_episode=0)
-        Team.objects.all().update(resources_collected=0)
-        Team.objects.all().update(resources_collected_episode=0)
-
-        TeamPlayer.objects.all().update(gather_pile='')
-        TeamPlayer.objects.all().update(risk_pile='')
-        TeamPlayer.objects.all().update(episode_events='')
-
-        Episode.objects.all().delete()
-        EpisodeDay.objects.all().delete()
-
-        Notification.objects.all().delete()
-
         episodes = [Episode.objects.create(number=epCounter+1) for epCounter in range(episodeCount)]
 
         counter = 0
