@@ -34,7 +34,7 @@
                     {% for mate in teammates %}
                         {% ifnotequal mate.player current_player %}
                             {% ifnotequal mate.role "frontline" %}
-                                <div data-tooltip title="{{ mate.player }}" id="mate-{{ mate.id }}" data-id="{{ mate.id }}" data-name="{{ mate.player.name }}&nbsp;" data-email="{{ mate.player.email }}" class="small avatar has-tip" style="background-color: {{ mate|team_color }};"><div class="{{ mate.role }}" style="border-color: {{ mate|player_color }}; background-color: {{ mate|team_color }}"></div></div>
+                                <div data-tooltip title="{{ mate.player }}" id="mate-{{ mate.id }}" data-id="{{ mate.id }}" data-name="{{ mate.player.name }}&nbsp;" data-email="{{ mate.player.email }}" class="small avatar has-tip" style="background-color: {{ mate.team|team_color }};"><div class="{{ mate.role }}" style="border-color: {{ mate.player|player_color }}; background-color: {{ mate.team|team_color }}"></div></div>
                             {% endifnotequal %}
                         {% endifnotequal %}
                     {% endfor %}

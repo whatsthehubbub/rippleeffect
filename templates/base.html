@@ -46,7 +46,7 @@
             </header>
 
             <div id="player" class="clearfix">
-                <div class="large avatar" title="{{ current_teamplayer.role }}" style="background-color: {{ current_teamplayer.team|team_color }};"><div title="{{ current_teamplayer.role }}" class="{{ current_teamplayer.role }}" style="border-color: {{ current_teamplayer|player_color }}; background-color: {{ current_teamplayer.team|team_color }}"></div></div>
+                <div class="large avatar" title="{{ current_teamplayer.role }}" style="background-color: {{ current_teamplayer.team|team_color }};"><div title="{{ current_teamplayer.role }}" class="{{ current_teamplayer.role }}" style="border-color: {{ current_teamplayer.player|player_color }}; background-color: {{ current_teamplayer.team|team_color }}"></div></div>
                 <div class="name">
                     <h3>{{ current_player }}</h3>
                     <h4>{{ current_teamplayer.team }}</h4>

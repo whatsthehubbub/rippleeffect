@@ -31,11 +31,11 @@
             </h5>
         </header>
 
-        {% for tp in action_players %}
+        {% for player in action_players %}
             <div class="notification clearfix">
-                <div class="small avatar" title="{{ tp.player.get_teamplayer.role }}" style="background-color: {{ tp.player.get_teamplayer.team|team_color }};"><div title="{{ tp.player.get_teamplayer.role }}" class="{{ tp.player.get_teamplayer.role }}" style="border-color: {{ tp.player.get_teamplayer|player_color }}; background-color: {{ tp.player.get_teamplayer.team|team_color }}"></div></div>
+                <div class="small avatar" title="{{ player.get_teamplayer.role }}" style="background-color: {{ player.get_teamplayer.team|team_color }};"><div title="{{ player.get_teamplayer.role }}" class="{{ player.get_teamplayer.role }}" style="border-color: {{ player|player_color }}; background-color: {{ player.get_teamplayer.team|team_color }}"></div></div>
                 <div class="message clearfix single-line">
-                    {{ tp }}
+                    {{ player }}
                     {% ifequal current_player tp.player %}
                         (You!)
                     {% endifequal %}

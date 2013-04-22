@@ -12,7 +12,7 @@
 
                 <h3 class="text-center triple-gutter-pad-top">Team {{ team.name }}</h3>
 
-                <div class="large avatar margin-center triple-gutter-margin-bot" style="background-color: {{ player.get_teamplayer|team_color }};"></div>
+                <div class="large avatar margin-center triple-gutter-margin-bot" style="background-color: {{ team|team_color }};"></div>
 
                 <header>
                     <h5 class="text-center">
@@ -37,7 +37,7 @@
 
                 {% for tp in team.teamplayer_set.all %}
                     <div class="notification clearfix">
-                        <div class="small avatar" title="{{ tp.player.get_teamplayer.role }}" style="background-color: {{ tp.player.get_teamplayer.team|team_color }};"><div title="{{ tp.player.get_teamplayer.role }}" class="{{ tp.player.get_teamplayer.role }}" style="border-color: {{ tp.player.get_teamplayer|player_color }}; background-color: {{ tp.player.get_teamplayer.team|team_color }}"></div></div>
+                        <div class="small avatar" title="{{ tp.player.get_teamplayer.role }}" style="background-color: {{ tp.team|team_color }};"><div title="{{ tp.player.get_teamplayer.role }}" class="{{ tp.player.get_teamplayer.role }}" style="border-color: {{ tp.player|player_color }}; background-color: {{ tp.team|team_color }}"></div></div>
                         <div class="message clearfix">
                             <span class="timestamp">{{ tp.role }}</span>
                             <a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a>

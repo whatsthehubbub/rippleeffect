@@ -15,7 +15,7 @@
 
                 <h3 class="text-center triple-gutter-pad-top">{{ player.name }}&rsquo;s profile</h3>
 
-                <div class="large avatar margin-center triple-gutter-margin-bot" title="{{ player.get_teamplayer.role }}" style="background-color: {{ player.get_teamplayer|team_color }};"><div title="{{ player.get_teamplayer.role }}" class="{{ player.get_teamplayer.role }}" style="border-color: {{ player.get_teamplayer|player_color }}; background-color: {{ player.get_teamplayer|team_color }}"></div></div>
+                <div class="large avatar margin-center triple-gutter-margin-bot" title="{{ player.get_teamplayer.role }}" style="background-color: {{ player.get_teamplayer.team|team_color }};"><div title="{{ player.get_teamplayer.role }}" class="{{ player.get_teamplayer.role }}" style="border-color: {{ player|player_color }}; background-color: {{ player.get_teamplayer.team|team_color }}"></div></div>
 
                 <header>
                     <h5 class="text-center">
