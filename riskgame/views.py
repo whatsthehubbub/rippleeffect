@@ -8,6 +8,7 @@ from django.db.models import F
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from django.contrib.sites.models import get_current_site
 
 from django.views.decorators.http import require_POST
 
@@ -18,7 +19,7 @@ from django.views.decorators.http import require_POST
 # from crispy_forms.bootstrap import FormActions
 
 from riskgame.models import *
-
+from nousernameregistration.models import RegistrationProfile
 
 def index(request):
     if request.user.is_authenticated():
@@ -383,6 +384,10 @@ def game_start(request):
                 role = player[2]
 
                 user = EmailUser.objects.create_user(email=email)
+
+                regprofile = RegistrationProfile.objects.create_profile(user)
+                regprofile.send_activation_email(get_current_site(request))
+
                 player, player_created = Player.objects.get_or_create(user=user)
 
                 # TODO send user e-mail to set their password and activate their account
