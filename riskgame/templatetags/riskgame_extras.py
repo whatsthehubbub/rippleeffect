@@ -16,7 +16,7 @@ def requested_join(player, team):
 
 @register.filter
 def event_name(event_code):
-    return Events.reverse.get(event_code, '').replace('_', ' ').lower()
+    return Events.reverse.get(event_code, '').replace('_', ' ').title()
 
 @register.filter
 def team_color(team):
