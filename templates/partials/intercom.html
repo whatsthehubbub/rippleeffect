@@ -7,8 +7,8 @@
     widget: {
     	activator: '#IntercomDefaultWidget'
   	},
-    role: "{{ teamplayer.role }}",
-    team: "{{ teamplayer.team.name }}",
+    role: "{{ current_teamplayer.role }}",
+    team: "{{ current_teamplayer.team.name }}",
     app_id: "a7af8a497dc2485b4c3cca4b011160715ea89921",
     unsubscribed_from_emails: {% if not current_player.receive_email %}true{% else %}false{% endif %},
   };
