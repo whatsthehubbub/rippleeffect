@@ -4,7 +4,7 @@
 <header>
     <h5 class="text-center pad-left">
         Resources Produced
-        <span data-tooltip class="help has-tip" title="Planned units of production">?</span>
+        <span data-tooltip class="help has-tip" title="Depending on your production quality,<br />your production may fail. Each resource<br />creates another chance for a resource.">?</span>
     </h5>
 </header>
 
@@ -32,7 +32,7 @@
 <header>
     <h5 class="text-center pad-left">
         Risks Encountered
-        <span data-tooltip class="help has-tip" title="Risks turn into incidents when they are not covered by a barrier">?</span>
+        <span data-tooltip class="help has-tip" title="For each production<br />attempt, a risk may appear.">?</span>
     </h5>
 </header>
 
@@ -61,7 +61,7 @@
 <header>
     <h5 class="text-center pad-left">
         Barriers placed
-        <span data-tooltip class="help has-tip" title="Barriers prevent risks from turning into incidents">?</span>
+        <span data-tooltip class="help has-tip" title="If you've placed barriers, they prevent<br />risks from turning into incidents.">?</span>
     </h5>
 </header>
 
@@ -133,12 +133,12 @@
                 {% if resource_count == 1 %}
                     <blockquote class="triple-gutter-margin-top">
                         <div class="large character large-mei-happy">Mei</div>
-                        <p>Well done! You got a resource. Your team will be so happy you’re on their side! Now, as much as I’d like to encourage you to keep producin’, remember that every time you produce a resource, your production quality will go down. I think the scientific phrase for that is ‘entropy’. So you have to constantly work on improving your production quality, too. But that’s really Abu’s department.</p>
+                        <p>Well done, you got a resource. Your team will be so happy you’re on their side! Now, I really want to encourage you to keep producing, but I also have to tell you that every time you produce a resource, your production quality goes down. This means you have to constantly work on improving your production quality... but that’s really Abu’s department.</p>
                     </blockquote>
                 {% else %}
                     <blockquote class="triple-gutter-margin-top">
                         <div class="large character large-mei-happy">Mei</div>
-                        <p>This is incredible! Look at all the resources! If this doesn’t make your team members throw you a party, I don’t know what will! Now, as much as I’d like to encourage you to keep producin’, remember that every time you produce a resource, your production quality will go down. I think the scientific phrase for that is ‘entropy’. So you have to constantly work on improving your production quality, too. But that’s really Abu’s department.</p>
+                        <p>This is incredible! Look at all the resources! If this doesn’t make your team members throw you a party, I don’t know what will! Now, I really want to encourage you to keep producing, but I also have to tell you that every time you produce a resource, your production quality goes down. This means you have to constantly work on improving your production quality... but that’s really Abu’s department.</p>
                     </blockquote>
                 {% endif %}
 			{% endif %}
