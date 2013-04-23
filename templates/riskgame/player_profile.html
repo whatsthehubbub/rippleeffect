@@ -24,6 +24,7 @@
                 </header>
 
                 <p class="stat-row">Email address <span>{{ player.user.email }}</span></p>
+                <p class="stat-row">Receive emails <span>{% if player.receive_email %}Yes{% else %}No{% endif %}</span></p>
                 <p class="stat-row">Team <span><a href="{{ player.get_teamplayer.team.get_absolute_url }}">{{ player.get_teamplayer.team }}</a></span></p>
                 <p class="stat-row">Team role <span>{{ player.get_teamplayer.role|capfirst }}</span></p>
                 <p class="stat-row triple-gutter-margin-bot capitalize">Active events <span>
