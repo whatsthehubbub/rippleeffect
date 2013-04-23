@@ -16,7 +16,6 @@
       if ($('html').hasClass('touch')) {
         events += " touchstart";
       }
-      console.log(events);
       return $('#team-box .avatar').on(events, function() {
         $('#team-box .avatar').removeClass('active');
         $(this).addClass('active');
