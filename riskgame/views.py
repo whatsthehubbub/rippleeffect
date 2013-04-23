@@ -680,6 +680,7 @@ def play_pump(request):
         Team.objects.get(pk=team.pk).update_rank()
         
         Team.objects.filter(pk=team.pk).update(victory_points_episode=F('victory_points_episode') + points_scored)
+        Team.objects.filter(pk=team.pk).update(victory_points_turn=F('victory_points_turn') + points_scored)
 
         Notification.objects.create_retrieved_success_notification(team, player, resource_count, points_scored)
 

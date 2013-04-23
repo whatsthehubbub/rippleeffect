@@ -594,6 +594,7 @@ class Team(models.Model):
     rank_points = models.IntegerField(default=0)
     victory_points = models.IntegerField(default=0)
     victory_points_episode = models.IntegerField(default=0)
+    victory_points_turn = models.IntegerField(default=0)
 
     resources_collected = models.IntegerField(default=0)
     resources_collected_episode = models.IntegerField(default=0)
@@ -776,6 +777,9 @@ class Team(models.Model):
 
         Team.objects.filter(pk=self.pk).update(action_points=4*playerCount)
         Team.objects.filter(pk=self.pk).update(frontline_action_points=2*playerCount)
+
+        # Reset the per episode victory points counter
+        Team.objects.filter(pk=self.pk).update(victory_points_turn=0)
 
         Team.objects.filter(pk=self.pk).update(goal_zero_markers=F('goal_zero_markers')+1)
 
