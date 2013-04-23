@@ -370,6 +370,8 @@ class TeamPlayer(models.Model):
 
     active_events = models.CommaSeparatedIntegerField(max_length=255, blank=True, default='')
 
+    lightning_hit = models.BooleanField(default=False)
+
     show_game_start = models.BooleanField(default=False)
     show_episode_start = models.BooleanField(default=False)
     show_turn_start = models.BooleanField(default=False)
@@ -743,6 +745,9 @@ class Team(models.Model):
     def start_day(self, day):
         # Draw event cards which can be either active for the player or for the team
 
+        # Reset lightning hit at the start of every day
+        self.team_player_set.update(lightning_hit=False)
+
         # Active events for teams are cleared at the start of a day
         self.clear_active_events()
 
@@ -770,6 +775,9 @@ class Team(models.Model):
                 tp.add_active_event(Events.LIGHTNING)
 
                 effect = tp.hit_by_lightning()
+
+                if effect:
+                    TeamPlayer.objects.filter(pk=tp.pk).update(lightning_hit=True)
 
                 # TODO make notification parametric based on effect
 
