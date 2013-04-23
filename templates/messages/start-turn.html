@@ -3,7 +3,7 @@
 <h3 class="text-center quad-gutter-pad-top">Turn {{ current_day.number }} has started</h3>
 
 {% with event|event_name as event %}
-    {% ifequal event "tornado" %}
+    {% ifequal event "Tornado" %}
         <div class="event-intro event-tornado-intro"></div>
 
         <h3 class="text-center triple-gutter-pad-top">Tornado</h3>
@@ -15,7 +15,7 @@
         </blockquote>
     {% endifequal %}
 
-    {% ifequal event "increased risk" %}
+    {% ifequal event "Increased Risk" %}
         <div class="event-intro event-caution-intro"></div>
 
         <h3 class="text-center triple-gutter-pad-top">Increased Risk</h3>
@@ -27,7 +27,7 @@
         </blockquote>
     {% endifequal %}
 
-    {% ifequal event "high market" %}
+    {% ifequal event "High Market" %}
         <div class="event-intro event-high-market-intro"></div>
 
         <h3 class="text-center triple-gutter-pad-top">High Market</h3>
@@ -39,7 +39,7 @@
         </blockquote>
     {% endifequal %}
 
-    {% ifequal event "lightning" %}
+    {% ifequal event "Lightning" %}
         <div class="event-intro event-lightning-intro"></div>
 
         <h3 class="text-center triple-gutter-pad-top">Lightning</h3>
@@ -61,7 +61,7 @@
         {% endif %}
     {% endifequal %}
 
-    {% ifequal event "poor vision" %}
+    {% ifequal event "Poor Vision" %}
         <div class="event-intro event-poor-vision-intro"></div>
 
         <h3 class="text-center triple-gutter-pad-top">Poor Vision</h3>
