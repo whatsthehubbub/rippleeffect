@@ -291,7 +291,7 @@ class Notification(models.Model):
         elif self.identifier == 'frontline-safety':
             return "inspected %s's safety" % unicode(self.target)
         elif self.identifier == 'frontline-event':
-            return "predicted %s's next turn's event" % unicode(self.target)
+            return "predicted %s's upcoming event" % unicode(self.target)
 
     def get_subject(self):
         # TODO modify subjects based on notification type
