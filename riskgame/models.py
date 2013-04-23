@@ -735,7 +735,7 @@ class Team(models.Model):
     def start_day(self, day):
         # Draw event cards which can be either active for the player or for the team
 
-        # Active events for teams are cleared at the statr of a day
+        # Active events for teams are cleared at the start of a day
         self.clear_active_events()
 
         for tp in self.teamplayer_set.filter(role='office'):
