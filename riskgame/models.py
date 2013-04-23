@@ -599,7 +599,7 @@ class Team(models.Model):
     resources_collected = models.IntegerField(default=0)
     resources_collected_episode = models.IntegerField(default=0)
 
-    leader = models.ForeignKey('Player', null=True, related_name='ledteam')
+    leader = models.ForeignKey('Player', null=True, blank=True, related_name='ledteam')
 
     players = models.ManyToManyField('Player', through='TeamPlayer')
 

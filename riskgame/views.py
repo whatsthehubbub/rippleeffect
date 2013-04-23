@@ -374,6 +374,7 @@ def game_start(request):
 
             if players:
                 EmailUser.objects.exclude(is_admin=True).delete()
+                # TODO add delete all players
                 Team.objects.all().delete()
                 TeamPlayer.objects.all().delete()
 
