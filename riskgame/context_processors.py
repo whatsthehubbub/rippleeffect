@@ -1,5 +1,5 @@
 # -*- coding: utf-8
-from riskgame.models import Player, TeamPlayer, EpisodeDay
+from riskgame.models import Player, TeamPlayer, EpisodeDay, Game
 
 def player(request):
     returnDict = {}
@@ -20,6 +20,11 @@ def player(request):
         try:
             returnDict['current_day'] = EpisodeDay.objects.get(current=True)
         except EpisodeDay.DoesNotExist:
+            pass
+
+        try:
+            returnDict['current_game'] = Game.objects.get_latest_game()
+        except Game.DoesNotExist:
             pass
 
     # try:
