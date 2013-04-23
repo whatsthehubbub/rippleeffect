@@ -23,83 +23,85 @@
         <p>I can’t inspect your team member's safety as well as I’m used to. Here are the results... I advise you not to draw too many conclusions from this... it's fragmentary information at best.</p>
         <div class="small character small-elin-concerned">Elin</div>
     </blockquote>
+{% else %}
+
+
+    {% ifequal episode.number 1 %}
+        {% ifequal resultpositive|length 0 %}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-elin-happy">Elin</div>
+                <p>Your team member's safety is magnificent. Couldn’t be better. Perhaps it's obvious, but I should remind you that I can only take a random sample of about half the safety. This is not nearly enough if you ask me, but you’ll have to deal with it. It’s just the nature of this business that we can never eliminate all risk.</p>
+            </blockquote>
+        {% endifequal %}
+
+        {% ifequal resultpositive|length 1 %}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-elin-happy">Elin</div>
+                <p>Your team member's safety looks pretty solid. Perhaps it's obvious, but I should remind you that I can only take a random sample of about half the safety. This is not nearly enough if you ask me, but you’ll have to deal with it. Now, is it safe enough to start production? Ultimately, that’s up to your team.</p>
+            </blockquote>
+        {% endifequal %}
+
+        {% if not poorvision and resultpositive|length == 2 %}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-elin-neutral">Elin</div>
+                <p>Your team member's safety seems to be pretty average. Perhaps it's obvious, but I should remind you that I can only take a random sample of about half the safety. This is not nearly enough if you ask me, but you’ll have to deal with it. Now, is it safe enough to start production? Ultimately, that’s up to your team.</p>
+            </blockquote>
+        {% endif %}
+
+        {% if resultpositive|length == 3 or poorvision and resultpositive|length == 2 %}
+            {# If we have poor vision, it means two positives is worse than average.  #}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-elin-concerned">Elin</div>
+                <p>Your team member's safety is quite poor. Perhaps it's obvious, but I should remind you that I can only take a random sample of about half the safety. That’s what my training tells me anyway. Now, should production be started with odds like this? If you ask me, no way!</p>
+            </blockquote>
+        {% endif %}
+
+        {% ifequal resultpositive|length 4 %}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-elin-concerned">Elin</div>
+                <p>Your team member's safety is extremely poor. Perhaps it's obvious, but I should remind you that I can only take a random sample of about half the safety. That’s what my training tells me anyway. Now, should production be started with odds like this? Are you kidding me?</p>
+            </blockquote>
+        {% endifequal %}
+
+    {% endifequal %}
+
+    {% ifequal episode.number 2 %}
+        {% ifequal resultpositive|length 0 %}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-elin-happy">Elin</div>
+                <p>Your team member's safety is magnificent. Couldn’t be better. Should your team jump straight into production now? I guess so!</p>
+            </blockquote>
+        {% endifequal %}
+
+        {% ifequal resultpositive|length 1 %}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-elin-happy">Elin</div>
+                <p>Your team member's safety looks pretty solid. Now, is it safe enough to start production? Ultimately, that’s up to your team.</p>
+            </blockquote>
+        {% endifequal %}
+
+        {% if not poorvision and resultpositive|length == 2 %}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-elin-neutral">Elin</div>
+                <p>Your team member's safety seems to be pretty average. Now, is it safe enough to start production? Ultimately, that’s up to your team.</p>
+            </blockquote>
+        {% endif %}
+
+        {% if resultpositive|length == 3 or poorvision and resultpositive|length == 2 %}
+            {# If we have poor vision, it means two positives is worse than average.  #}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-elin-concerned">Elin</div>
+                <p>Your team member's safety is really poor. Should your team start production with odds like this? If you ask me, no way!</p>
+            </blockquote>
+        {% endif %}
+
+        {% ifequal resultpositive|length 4 %}
+            <blockquote class="triple-gutter-margin-top">
+                <div class="large character large-elin-concerned">Elin</div>
+                <p>Your team member's safety is extremely poor. Should your team start production with odds like this? Are you kidding me?</p>
+            </blockquote>
+        {% endifequal %}
+    {% endifequal %}
 {% endif %}
-
-{% ifequal episode.number 1 %}
-	{% ifequal resultpositive|length 0 %}
-        <blockquote class="triple-gutter-margin-top">
-            <div class="large character large-elin-happy">Elin</div>
-            <p>Your team member's safety is magnificent. Couldn’t be better. Perhaps it's obvious, but I should remind you that I can only take a random sample of about half the safety. This is not nearly enough if you ask me, but you’ll have to deal with it. It’s just the nature of this business that we can never eliminate all risk.</p>
-        </blockquote>
-	{% endifequal %}
-
-	{% ifequal resultpositive|length 1 %}
-        <blockquote class="triple-gutter-margin-top">
-            <div class="large character large-elin-happy">Elin</div>
-            <p>Your team member's safety looks pretty solid. Perhaps it's obvious, but I should remind you that I can only take a random sample of about half the safety. This is not nearly enough if you ask me, but you’ll have to deal with it. Now, is it safe enough to start production? Ultimately, that’s up to your team.</p>
-        </blockquote>
-	{% endifequal %}
-
-	{% if not poorvision and resultpositive|length == 2 %}
-        <blockquote class="triple-gutter-margin-top">
-            <div class="large character large-elin-neutral">Elin</div>
-            <p>Your team member's safety seems to be pretty average. Perhaps it's obvious, but I should remind you that I can only take a random sample of about half the safety. This is not nearly enough if you ask me, but you’ll have to deal with it. Now, is it safe enough to start production? Ultimately, that’s up to your team.</p>
-        </blockquote>
-	{% endif %}
-
-	{% if resultpositive|length == 3 or poorvision and resultpositive|length == 2 %}
-		{# If we have poor vision, it means two positives is worse than average.  #}
-        <blockquote class="triple-gutter-margin-top">
-            <div class="large character large-elin-concerned">Elin</div>
-            <p>Your team member's safety is quite poor. Perhaps it's obvious, but I should remind you that I can only take a random sample of about half the safety. That’s what my training tells me anyway. Now, should production be started with odds like this? If you ask me, no way!</p>
-        </blockquote>
-	{% endif %}
-
-	{% ifequal resultpositive|length 4 %}
-        <blockquote class="triple-gutter-margin-top">
-            <div class="large character large-elin-concerned">Elin</div>
-            <p>Your team member's safety is extremely poor. Perhaps it's obvious, but I should remind you that I can only take a random sample of about half the safety. That’s what my training tells me anyway. Now, should production be started with odds like this? Are you kidding me?</p>
-        </blockquote>
-	{% endifequal %}
-	
-{% endifequal %}
-
-{% ifequal episode.number 2 %}
-	{% ifequal resultpositive|length 0 %}
-        <blockquote class="triple-gutter-margin-top">
-            <div class="large character large-elin-happy">Elin</div>
-            <p>Your team member's safety is magnificent. Couldn’t be better. Should your team jump straight into production now? I guess so!</p>
-        </blockquote>
-	{% endifequal %}
-	
-	{% ifequal resultpositive|length 1 %}
-        <blockquote class="triple-gutter-margin-top">
-            <div class="large character large-elin-happy">Elin</div>
-            <p>Your team member's safety looks pretty solid. Now, is it safe enough to start production? Ultimately, that’s up to your team.</p>
-        </blockquote>
-	{% endifequal %}
-
-	{% if not poorvision and resultpositive|length == 2 %}
-        <blockquote class="triple-gutter-margin-top">
-            <div class="large character large-elin-neutral">Elin</div>
-            <p>Your team member's safety seems to be pretty average. Now, is it safe enough to start production? Ultimately, that’s up to your team.</p>
-        </blockquote>
-	{% endif %}
-
-	{% if resultpositive|length == 3 or poorvision and resultpositive|length == 2 %}
-		{# If we have poor vision, it means two positives is worse than average.  #}
-        <blockquote class="triple-gutter-margin-top">
-            <div class="large character large-elin-concerned">Elin</div>
-            <p>Your team member's safety is really poor. Should your team start production with odds like this? If you ask me, no way!</p>
-        </blockquote>
-	{% endif %}
-
-	{% ifequal resultpositive|length 4 %}
-        <blockquote class="triple-gutter-margin-top">
-            <div class="large character large-elin-concerned">Elin</div>
-            <p>Your team member's safety is extremely poor. Should your team start production with odds like this? Are you kidding me?</p>
-        </blockquote>
-	{% endifequal %}
-{% endifequal %}
 
 <a href="{% url 'home' %}" class='triple-gutter-margin-top quad-gutter-margin-bot medium grey centered dismiss btn js-continue'>Continue</a>
