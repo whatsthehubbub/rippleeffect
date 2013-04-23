@@ -271,15 +271,15 @@ class Notification(models.Model):
         elif self.identifier == 'player-improved-production':
             return 'improved production quality'
         elif self.identifier == 'player-received-poorvision-event':
-            return 'received the poor vision event, affecting the whole team'
+            return 'received the Poor Vision event, affecting the whole team'
         elif self.identifier == 'player-received-tornado-event':
-            return 'received the tornado event, affecting the whole team'
+            return 'received the Tornado event, affecting the whole team'
         elif self.identifier == 'player-received-highmarket-event':
-            return 'received the high market event, affecting the whole team'
+            return 'received the High Market event, affecting the whole team'
         elif self.identifier == 'player-received-increasedrisk-event':
-            return 'received the increased risk event'
+            return 'received the Increased Risk event'
         elif self.identifier == 'player-received-lightning-event':
-            return 'received the lightning event'
+            return 'received the Lightning event'
         elif self.identifier == 'player-retrieved-success':
             return 'produced %d resources and scored %d points' % (self.resources_retrieved, self.points_scored)
         elif self.identifier == 'player-retrieved-failure':
