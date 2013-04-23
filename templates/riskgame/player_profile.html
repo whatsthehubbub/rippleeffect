@@ -13,7 +13,7 @@
             		{{ message|safe }}
 			    {% endfor %}
 
-                <h3 class="text-center triple-gutter-pad-top">{{ player.name }}&rsquo;s profile</h3>
+                <h3 class="text-center triple-gutter-pad-top">{{ player.get_teamplayer.player }}&rsquo;s profile</h3>
 
                 <div class="large avatar margin-center triple-gutter-margin-bot" title="{{ player.get_teamplayer.role }}" style="background-color: {{ player.get_teamplayer.team|team_color }};"><div title="{{ player.get_teamplayer.role }}" class="{{ player.get_teamplayer.role }}" style="border-color: {{ player|player_color }}; background-color: {{ player.get_teamplayer.team|team_color }}"></div></div>
 
