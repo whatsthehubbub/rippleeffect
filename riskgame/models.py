@@ -570,7 +570,12 @@ class TeamPlayer(models.Model):
         top_card = pile.pop(0)
 
         if top_card == '1':
-            Team.objects.filter(pk=self.team.pk).update(action_points=0)
+            # Drop four action points but be sure not to go negative
+            Team.objects.filter(pk=self.team.pk, action_points__gt=0).update(action_points=F('action_points')-1)
+            Team.objects.filter(pk=self.team.pk, action_points__gt=0).update(action_points=F('action_points')-1)
+            Team.objects.filter(pk=self.team.pk, action_points__gt=0).update(action_points=F('action_points')-1)
+            Team.objects.filter(pk=self.team.pk, action_points__gt=0).update(action_points=F('action_points')-1)
+
             effect = True
 
         self.risk_pile = ','.join(pile)
