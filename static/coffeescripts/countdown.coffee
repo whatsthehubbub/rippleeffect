@@ -9,7 +9,7 @@ $ ->
 
 # hook up event handlers and intialize
   initialize: =>
-    if $('#turn-countdown').length > 0
+    if $('#turn-countdown').length > 0 && $('.auto-refresh').length > 0
       CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
 
       # Don't start refreshing if there is no active turn
