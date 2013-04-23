@@ -7,12 +7,11 @@
 
   this.CountDown = {
     secondsleft: -1,
-    refresh: true,
     initialize: function() {
-      if ($('#turn-countdown').length > 0 && $('.auto-refresh').length > 0) {
+      if ($('#turn-countdown').length > 0) {
         CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
-        if (CountDown.secondsLeft === 0) {
-          CountDown.refresh = false;
+        if (CountDown.secondsLeft > 0) {
+          $('#turn-countdown').show();
         }
         return CountDown.tick();
       }
@@ -24,7 +23,7 @@
       var d, h, m;
       d = new Date();
       CountDown.secondsLeft--;
-      if (CountDown.secondsLeft < -65 && CountDown.refresh) {
+      if (CountDown.secondsLeft < -65 && $('.auto-refresh').length > 0) {
         window.location.reload();
       }
       m = Math.max(Math.floor(CountDown.secondsLeft / 60), 0);

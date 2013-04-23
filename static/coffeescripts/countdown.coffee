@@ -4,16 +4,15 @@ $ ->
 @CountDown =
 
   secondsleft: -1
-  refresh: true
 
 
 # hook up event handlers and intialize
   initialize: =>
-    if $('#turn-countdown').length > 0 && $('.auto-refresh').length > 0
+    if $('#turn-countdown').length > 0
       CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
 
-      # Don't start refreshing if there is no active turn
-      if CountDown.secondsLeft == 0 then CountDown.refresh = false
+      # show the clock if we're counting down
+      if CountDown.secondsLeft > 0 then $('#turn-countdown').show()
 
       CountDown.tick()
 
@@ -28,7 +27,7 @@ $ ->
     CountDown.secondsLeft--
 
     # reload the page when the turn has passed
-    if CountDown.secondsLeft < -65 and CountDown.refresh
+    if CountDown.secondsLeft < -65 and $('.auto-refresh').length > 0
       window.location.reload()
 
     m = Math.max(Math.floor(CountDown.secondsLeft / 60), 0);
