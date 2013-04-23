@@ -1,7 +1,7 @@
 {% load riskgame_extras %}
 <div id="events">
 
-    {% for e in current_teamplayer.get_active_events %}
+    {% for e in current_teamplayer.get_active_events|add:current_teamplayer.team.get_active_events %}
         {% with e|event_name as event %}
 
             {% ifequal event "tornado" %}
