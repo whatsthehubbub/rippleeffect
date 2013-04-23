@@ -20,7 +20,7 @@ def player(request):
         try:
             returnDict['current_day'] = EpisodeDay.objects.get(current=True)
         except EpisodeDay.DoesNotExist:
-            pass
+            returnDict['current_day'] = None
 
         try:
             returnDict['current_game'] = Game.objects.get_latest_game()
