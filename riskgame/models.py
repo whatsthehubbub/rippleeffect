@@ -534,7 +534,9 @@ class TeamPlayer(models.Model):
         self.put_and_discard('1', 'risk')
 
         # If there are more risks than prevent markers, bad things will happen
-        result = (oil, result_production, risks, result_production, self.prevent_markers)
+        result = (oil, result_production, risks, result_safety, self.prevent_markers)
+
+        logger.info("Production result %s", str(result))
 
         self.prevent_markers = 0
 
