@@ -27,6 +27,8 @@
                 <p class="stat-row triple-gutter-margin-bot">Active events<span>
                     {% for event in team.get_active_events %}
                         {{ event|event_name }} {% if not forloop.last %},{% endif %}
+                    {% empty %}
+                        none
                 {% endfor %}</span></p>
 
                 <header>
