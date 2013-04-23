@@ -89,7 +89,7 @@ To deploy more complex updates:
     fab staging git_pull migrate reload  # pull code, run migrations, reload app in staging
     
     # pull develop branch, install requirements & reload app in staging
-    fab staging git_pull:develop app.install_requirements reload
+    fab staging git_pull:develop app.install_requirements collectstatic reload
 
 To tail the application logs:
     
