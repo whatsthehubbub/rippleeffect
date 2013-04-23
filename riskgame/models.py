@@ -777,7 +777,8 @@ class Team(models.Model):
                 effect = tp.hit_by_lightning()
 
                 if effect:
-                    TeamPlayer.objects.filter(pk=tp.pk).update(lightning_hit=True)
+                    # TODO probably should move this inside the function
+                    tp.lightning_hit = True
 
                 # TODO make notification parametric based on effect
 

@@ -32,7 +32,7 @@
             {% endifequal %}
 
             {% ifequal event "Lightning" %}
-                <div data-tooltip title="You were hit by lightning and lost four actions / You were nearly hit by lightning" class="has-tip event lightning">
+                <div data-tooltip title="{% if current_teamplayer.lightning_hit %}You were hit by lightning and lost four actions.{% else %}You were nearly hit by lightning.{% endif %}" class="has-tip event lightning">
                     <div>
                         <span>Your event</span>
                         Lightning
