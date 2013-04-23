@@ -28,10 +28,11 @@ def change_days():
                 current_day.save()
 
                 next_day = current_day.next
-                next_day.current = True
-                next_day.save()
+                if next_day:
+                    next_day.current = True
+                    next_day.save()
 
-                next_day.start()
+                    next_day.start()
 
                 return next_day
 
