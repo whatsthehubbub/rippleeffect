@@ -9,7 +9,7 @@
     secondsleft: -1,
     refresh: true,
     initialize: function() {
-      if ($('#turn-countdown').length > 0) {
+      if ($('#turn-countdown').length > 0 && $('.auto-refresh').length > 0) {
         CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
         if (CountDown.secondsLeft === 0) {
           CountDown.refresh = false;
