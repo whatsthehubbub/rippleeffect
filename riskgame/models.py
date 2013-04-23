@@ -746,7 +746,7 @@ class Team(models.Model):
         # Draw event cards which can be either active for the player or for the team
 
         # Reset lightning hit at the start of every day
-        self.team_player_set.update(lightning_hit=False)
+        self.teamplayer_set.update(lightning_hit=False)
 
         # Active events for teams are cleared at the start of a day
         self.clear_active_events()
