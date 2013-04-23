@@ -1,0 +1,9 @@
+Hello,
+
+Your new password is: {{ password }}
+
+You can log in with this password at: http://{{ site }}
+
+Kind regards, your friendly Ripple Effect e-mail robot
+
+{# (You're receiving this message because someone signed up for Ripple Effect using this e-mail address. If this wasn't you, you can ignore this message.) #}

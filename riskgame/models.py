@@ -9,6 +9,8 @@ from django.conf import settings
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
+from django.template.loader import render_to_string
+
 import random
 import datetime
 import math
@@ -109,6 +111,30 @@ class EmailUser(AbstractBaseUser):
         Sends an email to this User.
         """
         send_mail(subject, message, from_email, [self.email])
+
+    def send_invitation_email(self, site):
+        """Send an invitation email to the user with a new password."""
+        
+        password = EmailUser.objects.make_random_password()
+        
+        self.set_password(password)
+        self.save()
+
+        ctx_dict = {
+            'site': site,
+            'password': password
+        }
+
+        subject = render_to_string('registration/invitation_email_subject.txt',
+                                   ctx_dict)
+        
+        # Email subject *must not* contain newlines
+        subject = ''.join(subject.splitlines())
+        
+        message = render_to_string('registration/invitation_email.txt',
+                                   ctx_dict)
+        
+        self.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
 
     def get_or_create_player(self):
         try:

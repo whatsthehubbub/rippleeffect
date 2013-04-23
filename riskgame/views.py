@@ -6,6 +6,7 @@ from django import forms
 
 from django.db.models import F
 
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.contrib.sites.models import get_current_site
@@ -19,7 +20,7 @@ from django.views.decorators.http import require_POST
 # from crispy_forms.bootstrap import FormActions
 
 from riskgame.models import *
-from nousernameregistration.models import RegistrationProfile
+from riskgame.tasks import change_days, invite_user
 
 def index(request):
     if request.user.is_authenticated():
@@ -270,7 +271,6 @@ def home(request):
             turn = EpisodeDay.objects.get(current=True)
 
             if turn.number > 1 or turn.episode.number > 1:
-                print 'here'
                 previousTurn = EpisodeDay.objects.filter(end__lt=turn.end).order_by('-end')[0]
 
                 startDateTime = previousTurn.end - (turn.end - previousTurn.end)
@@ -373,7 +373,7 @@ def game_start(request):
             players = form.cleaned_data.get('players', [])
 
             if players:
-                EmailUser.objects.all().delete()
+                EmailUser.objects.exclude(is_admin=True).delete()
                 Team.objects.all().delete()
                 TeamPlayer.objects.all().delete()
 
@@ -383,20 +383,18 @@ def game_start(request):
                     role = player[2]
 
                     user = EmailUser.objects.create_user(email=email)
-
-                    regprofile = RegistrationProfile.objects.create_profile(user)
-                    regprofile.send_activation_email(get_current_site(request))
+                    # Put inviting this user in the queue
+                    invite_user.delay(user, get_current_site(request))
 
                     player, player_created = Player.objects.get_or_create(user=user)
-
-                    # TODO send user e-mail to set their password and activate their account
 
                     team, team_created = Team.objects.get_or_create(name=team_name)
 
                     TeamPlayer.objects.get_or_create(player=player, team=team, role=role)
 
-
                 Game.objects.get_latest_game().initialize(start=start, dayLengthInMinutes=minutes)
+
+                logout(request)
             else:
                 # Starting a game with current team and players, so reset stats
                 Team.objects.all().update(goal_zero_markers=0)
@@ -419,7 +417,6 @@ def game_start(request):
 
                 Game.objects.get_latest_game().initialize(start=start, dayLengthInMinutes=minutes)
 
-            from riskgame.tasks import change_days
             change_days()
 
     return HttpResponseRedirect(reverse('home'))
