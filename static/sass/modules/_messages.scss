@@ -55,7 +55,7 @@ blockquote {
   .small.character {
     @extend .tiny-type;
     @extend .text-center;
-    margin-left: $gutter;
+    margin-left: 4px;
     position:absolute;
     width: 92px;
     height: 82px;
