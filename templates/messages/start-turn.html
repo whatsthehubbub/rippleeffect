@@ -87,7 +87,7 @@
 {% if action_players %}
     <header>
         <h5 class="text-center">
-            Active team members in the previous turn
+            Active team members during the previous turn
         </h5>
     </header>
 
@@ -97,7 +97,7 @@
             <div class="message clearfix single-line">
                 {{ player }}
                 {% ifequal current_player tp.player %}
-                    (You!)
+                    (you!)
                 {% endifequal %}
             </div>
         </div>

@@ -75,11 +75,11 @@
                 </header>
                 <div id="scorecard">
                     <ul class="inline-list">
-                        <li><span data-tooltip title="Episode" class="has-tip icon episode"></span>{{ current_day.episode.number }}<span class="dark-grey"> / 2</span></li>
+                        <li><span data-tooltip title="Current episode / Total episodes." class="has-tip icon episode"></span>{{ current_day.episode.number }}<span class="dark-grey"> / 2</span></li>
 
-                        <li><span data-tooltip title="Turn" class="has-tip icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
+                        <li><span data-tooltip title="Current turn / Total turns in this episode." class="has-tip icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
 
-                        <li><span data-tooltip title="Remaining {{ current_teamplayer.role }} actions in this turn" class="has-tip icon action"></span>
+                        <li><span data-tooltip title="Number of {{ current_teamplayer.role }} actions left for the current turn." class="has-tip icon action"></span>
                         {% ifequal current_teamplayer.role "office" %}
                           {{ current_teamplayer.team.action_points }}
                         {% else %}
@@ -87,7 +87,7 @@
                         {% endifequal %}
                         </li>
 
-                        <li id="turn-countdown" style="display:none;" data-seconds-left="{{ current_day.secondsleft }}"><span data-tooltip title="Time left in turn" class="has-tip icon time"></span><span class="hours"></span><span class="dark-grey time-colon" style="visibility: hidden">:</span><span class="minutes"></span></li>
+                        <li id="turn-countdown" style="display:none;" data-seconds-left="{{ current_day.secondsleft }}"><span data-tooltip title="Time left for this turn." class="has-tip icon time"></span><span class="hours"></span><span class="dark-grey time-colon" style="visibility: hidden">:</span><span class="minutes"></span></li>
                     </ul>
 
                     <div id="goal-zero" class="gz-{% if current_teamplayer.team.goal_zero_markers > 0 %}1{% else %}0{% endif %}">
@@ -99,7 +99,7 @@
                     <div id="points">
                         <span class="h-top">Points</span>
                         <span class="score">{{ current_teamplayer.team.victory_points }}</span>
-                        <span class="h-bot dark-grey"><span data-tooltip title="Points this turn" class="has-tip small icon turn"></span>{{ current_teamplayer.team.victory_points_turn }}</span>
+                        <span class="h-bot dark-grey"><span data-tooltip title="Points scored during the current turn." class="has-tip small icon turn"></span>{{ current_teamplayer.team.victory_points_turn }}</span>
                     </div>
 
                 </div>

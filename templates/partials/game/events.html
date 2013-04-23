@@ -5,7 +5,7 @@
         {% with e|event_name as event %}
 
             {% ifequal event "Tornado" %}
-                <div data-tooltip title="If there’s an incident, you’ll lose all your actions" class="has-tip event tornado">
+                <div data-tooltip title="If there’s an incident, your team will lose its actions." class="has-tip event tornado">
                     <div>
                         <span>Team event</span>
                         Tornado
@@ -14,7 +14,7 @@
             {% endifequal %}
 
             {% ifequal event "Increased Risk" %}
-                <div data-tooltip title="Your safety may have decreased" class="has-tip event caution">
+                <div data-tooltip title="Your safety may have decreased." class="has-tip event caution">
                     <div>
                         <span>Your event</span>
                         Increased Risk
@@ -23,7 +23,7 @@
             {% endifequal %}
 
             {% ifequal event "High Market" %}
-                <div data-tooltip title="Resources give double points" class="has-tip event high-market">
+                <div data-tooltip title="Resources give double points." class="has-tip event high-market">
                     <div>
                         <span>Team event</span>
                         High Market
@@ -41,7 +41,7 @@
             {% endifequal %}
 
             {% ifequal event "Poor Vision" %}
-                <div data-tooltip title="Inspections are less effective during this turn" class="has-tip event poor-vision">
+                <div data-tooltip title="Inspections are less effective during this turn." class="has-tip event poor-vision">
                     <div>
                         <span>Team event</span>
                         Poor Vision

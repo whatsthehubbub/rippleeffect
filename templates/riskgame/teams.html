@@ -9,13 +9,13 @@
         <div class="row">
             <div class="sheet large-12 columns">
 
-                <h3 class="text-center triple-gutter-pad-top">Teams</h3>
+                <h3 class="text-center triple-gutter-pad-top">Global rankings</h3>
 
-                <p class="half-gutter-pad-top narrow">Below are all the teams playing Ripple Effect. Their rank is determined by total points divided by number of office players.</p>
+                <p class="half-gutter-pad-top narrow">These are the teams that are currently playing Ripple Effect. Their positions are determined by dividing each team's points total by its number of office players.</p>
 
                 <header>
                     <h5 class="text-center">
-                        Rankings
+                        Active teams
                     </h5>
                 </header>
 
@@ -26,7 +26,7 @@
                         <div class="small avatar" style="background-color: {{ team|team_color }};"></div>
                         <div data-tooltip class="has-tip tip-top message clearfix" title="{{ team.get_office_players.count }} office players, {{ team.get_frontline_players.count }} frontline players">
                             <span class="timestamp">Points: {{ team.victory_points }}, Goal Zero: {{ team.get_goal_zero_streak }}, Resources: {{ team.resources_collected }}</span>
-                            <a href="{{ team.get_absolute_url }}">{{ team.name }}</a> {% ifequal team current_teamplayer.team %}(your team){% endifequal %}
+                            <a href="{{ team.get_absolute_url }}">{{ team.name }}</a> {% ifequal team current_teamplayer.team %}(your team!){% endifequal %}
                         </div>
                     </div>
 
