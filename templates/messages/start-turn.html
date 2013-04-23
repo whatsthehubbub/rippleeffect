@@ -1,94 +1,87 @@
 {% load riskgame_extras %}
+
 <h3 class="text-center quad-gutter-pad-top">Turn {{ current_day.number }} has started</h3>
 
-{% if poorvision %}
-    <div class="event-intro event-poor-vision-intro"></div>
+{% with event|event_name as event %}
+    {% ifequal event "tornado" %}
+        <div class="event-intro event-tornado-intro"></div>
 
-    <h3 class="text-center triple-gutter-pad-top">Poor Vision</h3>
-    <p class="text-center">Inspections are less effective during this turn.<br>This event affects the entire team.</p>
+        <h3 class="text-center triple-gutter-pad-top">Tornado</h3>
+        <p class="triple-gutter-margin-bot text-center">If there’s an incident during the current turn,<br>your team will lose its actions.</p>
 
-    <blockquote class="half-gutter-margin-top">
-        <p>The weather makes it pretty tough to inspect your production during this turn. To be honest, I’m not sure if I’ll be able to come back to you with as much information as usual.</p>
-        <div class="small character small-abu-concerned">Abu</div>
-    </blockquote>
+        <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
+            <p>Please be careful now. With these high winds, bad stuff will surely happen. An incident is bad enough by itself, but if your actions are lost, everyone's hands will be tied for the rest of the turn. You folks should think hard about how to proceed!</p>
+            <div class="small character small-harry-neutral">Harry</div>
+        </blockquote>
+    {% endifequal %}
 
-    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
-        <p>Same here! You’ll have to ask yourself whether you want to try and retrieve resources under these conditions.</p>
-        <div class="small character small-elin-concerned">Elin</div>
-    </blockquote>
+    {% ifequal event "increased risk" %}
+        <div class="event-intro event-caution-intro"></div>
 
-{% endif %}
+        <h3 class="text-center triple-gutter-pad-top">Increased Risk</h3>
+        <p class="text-center">Your safety may have decreased.</p>
 
-{% if tornado %}
-    <div class="event-intro event-tornado-intro"></div>
+        <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
+            <p>Please be careful now, this is risky! Why don’t you improve your safety instead of spending all your actions on resources?</p>
+            <div class="small character small-elin-neutral">Elin</div>
+        </blockquote>
+    {% endifequal %}
 
-    <h3 class="text-center triple-gutter-pad-top">Tornado</h3>
-    <p class="triple-gutter-margin-bot text-center">If there’s an incident during the current turn,<br>your team will lose its actions.</p>
+    {% ifequal event "high market" %}
+        <div class="event-intro event-high-market-intro"></div>
 
-    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
-        <p>Please be careful now. With these high winds, bad stuff will surely happen. An incident is bad enough by itself, but if your actions are lost, everyone's hands will be tied for the rest of the turn. You folks should think hard about how to proceed!</p>
-        <div class="small character small-harry-neutral">Harry</div>
-    </blockquote>
+        <h3 class="text-center triple-gutter-pad-top">High Market</h3>
+        <p class="text-center">Resources give double points.<br>This event affects all office players.</p>
 
-{% endif %}
+        <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
+            <p>This is incredible. The resource markets are soaring, which means that if your team does well, it'll score points like there’s no tomorrow! So what are you still waiting for? Go retrieve resources, like, right now!</p>
+            <div class="small character small-mei-happy">Mei</div>
+        </blockquote>
+    {% endifequal %}
 
-{% if highmarket %}
+    {% ifequal event "lightning" %}
+        <div class="event-intro event-lightning-intro"></div>
 
-    <div class="event-intro event-high-market-intro"></div>
+        <h3 class="text-center triple-gutter-pad-top">Lightning</h3>
+        <p class="triple-gutter-margin-bot text-center">You were almost hit by lightning.</p>
 
-    <h3 class="text-center triple-gutter-pad-top">High Market</h3>
-    <p class="text-center">Resources give double points.<br>This event affects all office players.</p>
+        <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
+            <p>The weather’s rough this morning, but it’s not nearly as rough as it was in the fall of eighty-four. That lightning bolt came pretty darn close though... you should consider yourself lucky!</p>
+            <div class="small character small-harry-neutral">Harry</div>
+        </blockquote>
 
-    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
-        <p>This is incredible. The resource markets are soaring, which means that if your team does well, it'll score points like there’s no tomorrow! So what are you still waiting for? Go retrieve resources, like, right now!</p>
-        <div class="small character small-mei-happy">Mei</div>
-    </blockquote>
+        <p class="triple-gutter-margin-bot text-center">You were hit by lightning, which caused your team to lose four actions.</p>
 
-{% endif %}
+        <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
+            <p>The weather’s rough this morning, maybe even rougher than it was in the fall of eighty-four. That lightning bolt was pretty nasty... you're lucky to be alive!</p>
+            <div class="small character small-harry-neutral">Harry</div>
+        </blockquote>
+    {% endifequal %}
 
-{% if increasedrisk %}
+    {% ifequal event "poor vision" %}
+        <div class="event-intro event-poor-vision-intro"></div>
 
-    <div class="event-intro event-caution-intro"></div>
+        <h3 class="text-center triple-gutter-pad-top">Poor Vision</h3>
+        <p class="text-center">Inspections are less effective during this turn.<br>This event affects the entire team.</p>
 
-    <h3 class="text-center triple-gutter-pad-top">Increased Risk</h3>
-    <p class="text-center">Your safety may have decreased.</p>
+        <blockquote class="half-gutter-margin-top">
+            <p>The weather makes it pretty tough to inspect your production during this turn. To be honest, I’m not sure if I’ll be able to come back to you with as much information as usual.</p>
+            <div class="small character small-abu-concerned">Abu</div>
+        </blockquote>
 
-    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
-        <p>Please be careful now, this is risky! Why don’t you improve your safety instead of spending all your actions on resources?</p>
-        <div class="small character small-elin-neutral">Elin</div>
-    </blockquote>
+        <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
+            <p>Same here! You’ll have to ask yourself whether you want to try and retrieve resources under these conditions.</p>
+            <div class="small character small-elin-concerned">Elin</div>
+        </blockquote>
+    {% endifequal %}
 
+    {% ifequal event "" %}
+        <p class="half-gutter-margin-bot">&nbsp;</p>
+    {% endifequal %}
+{% endwith %}
 
-{% endif %}
-
-{% if lightning %}
-
-    <div class="event-intro event-lightning-intro"></div>
-
-    <h3 class="text-center triple-gutter-pad-top">Lightning</h3>
-    <p class="triple-gutter-margin-bot text-center">You were almost hit by lightning.</p>
-
-    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
-        <p>The weather’s rough this morning, but it’s not nearly as rough as it was in the fall of eighty-four. That lightning bolt came pretty darn close though... you should consider yourself lucky!</p>
-        <div class="small character small-harry-neutral">Harry</div>
-    </blockquote>
-
-    <p class="triple-gutter-margin-bot text-center">You were hit by lightning, which caused your team to lose four actions.</p>
-
-    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
-        <p>The weather’s rough this morning, maybe even rougher than it was in the fall of eighty-four. That lightning bolt was pretty nasty... you're lucky to be alive!</p>
-        <div class="small character small-harry-neutral">Harry</div>
-    </blockquote>
-
-
-{% endif %}
-
-{% if not poorvision and not tornado and not highmarket and not increasedrisk and not lightning %}
-    <p class="half-gutter-margin-bot">&nbsp;</p>
-{% endif %}
 
 {% if action_players %}
-
     <header>
         <h5 class="text-center">
             Active team members in the previous turn
@@ -108,8 +101,6 @@
 
     {% endfor %}
     <p class="double-gutter-margin-bot">&nbsp;</p>
-
-
 {% endif %}
 
 <a href="{% url 'home' %}" class='quad-gutter-margin-bot medium grey centered dismiss btn js-continue'>Continue</a>

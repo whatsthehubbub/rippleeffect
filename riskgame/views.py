@@ -284,16 +284,9 @@ def home(request):
 
             # Team events are returned for both roles
             mc = RequestContext(request, {
-                'poorvision': teamplayer.team.is_event_active(Events.POOR_VISION),
-                'tornado': teamplayer.team.is_event_active(Events.TORNADO),
-                'highmarket': teamplayer.team.is_event_active(Events.HIGH_MARKET),
+                'event': teamplayer.get_event_for_day(turn),
                 'action_players': players
             })
-
-            if teamplayer.role == 'office':
-                # Add player specific events for office players
-                mc['increasedrisk'] = teamplayer.is_event_active(Events.INCREASED_RISK)
-                mc['lightning'] = teamplayer.is_event_active(Events.LIGHTNING)
                 
             messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
     
