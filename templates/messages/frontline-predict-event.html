@@ -1,35 +1,66 @@
 <h4 class="action-cost">Spent <span>1</span> Action</h4>
-<h3 class="text-center double-gutter-pad-top">Safety Inspection Report</h3>
-
-<p class="text-center triple-gutter-pad-top half-gutter-margin-bot">Predicted the next turn's event for {{ player }}</p>
+<h3 class="text-center double-gutter-pad-top">Event Prediction Report</h3>
 
 {% if event == '0' %}
-    <h3 class="text-center half-gutter-pad-top">No Event</h3>
+   <p class="text-center half-gutter-pad-top">There will be no event for {{ player }} at the start of the next turn.</p>
+    <blockquote class="half-gutter-margin-top">
+        <p>It seems like all will be quiet on both the western and eastern front for now. Hook up with the rest of your team to pass on the happy news!</p>
+        <div class="small character small-david-happy">David</div>
+    </blockquote>
 {% endif %}
 
 {% if event == '1' %}
     <div class="event-intro event-poor-vision-intro"></div>
     <h3 class="text-center half-gutter-pad-top">Poor Vision</h3>
+    <p class="text-center">Inspections will be less effective for {{ player }} during the next turn. This event affects the entire team.</p>
+
+    <blockquote class="half-gutter-margin-top">
+        <p>The weather will make it pretty tough to inspect your team members' safety. Perhaps Elin won't be able to give you and your peers as much information as usual. It's up to your team to decide whether it's a good idea to try and retrieve resources under these conditions.</p>
+        <div class="small character small-david-concerned">David</div>
+    </blockquote>
 {% endif %}
 
 {% if event == '2' %}
     <div class="event-intro event-poor-vision-intro"></div>
     <h3 class="text-center half-gutter-pad-top">Tornado</h3>
+    <p class="triple-gutter-margin-bot text-center">If an incident occurs on {{ player }}'s watch during the next turn, your team will lose its actions.</p>
+
+    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
+        <p>Please tell your team to be careful. With these high winds, bad stuff will surely happen. An incident is bad enough by itself, but if your actions are lost, everyone's hands will be tied for the rest of the turn. Think hard about how to proceed!</p>
+        <div class="small character small-david-concerned">David</div>
 {% endif %}
 
 {% if event == '3' %}
     <div class="event-intro event-high-market-intro"></div>
     <h3 class="text-center half-gutter-pad-top">High Market</h3>
+    <p class="text-center">Resources give double points during the next turn. While {{ player }} gets this event, it will affect all office players.</p>
+
+    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
+        <p>The resource markets are about to go soaring, which means that if your team does well, it'll score a lot of points. You better hook up with your team and tell them to start preparing for production!</p>
+        <div class="small character small-david-happy">David</div>
+    </blockquote>
 {% endif %}
 
 {% if event == '4' %}
     <div class="event-intro event-caution-intro"></div>
     <h3 class="text-center half-gutter-pad-top">Increased Risk</h3>
+    <p class="text-center">{{ player }}'s safety may decrease at the start of the next turn.</p>
+
+    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
+        <p>Your team member should be careful, this may get risky! What about telling {{ player }} to spend some actions on safety instead of production?</p>
+        <div class="small character small-david-neutral">David</div>
+    </blockquote>
 {% endif %}
 
 {% if event == '5' %}
     <div class="event-intro event-lightning-intro"></div>
     <h3 class="text-center half-gutter-pad-top">Lightning</h3>
+    <p class="triple-gutter-margin-bot text-center">{{ player }} has a chance of getting hit by lightning at the start of the next turn. If that player draws an incident, all actions will be lost.</p>
+
+    <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
+        <p>The weather will be rough during the next turn. Hopefully your team member won't get hit by a lightning bolt. Losing all of your team's actions is a heavy reprimand, don't you agree?</p>
+        <div class="small character small-david-neutral">David</div>
+    </blockquote>
 {% endif %}
 
 <a href="{% url 'home' %}" class='triple-gutter-margin-top quad-gutter-margin-bot medium grey centered dismiss btn js-continue'>Continue</a>
