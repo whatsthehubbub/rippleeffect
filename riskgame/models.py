@@ -578,6 +578,9 @@ class TeamPlayer(models.Model):
 
             effect = True
 
+        pile = [top_card] + pile
+        random.shuffle(pile)
+
         self.risk_pile = ','.join(pile)
 
         return effect
