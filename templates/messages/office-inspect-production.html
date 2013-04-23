@@ -9,11 +9,11 @@
     {% endfor %}
 
     {% for item in resultpositive %}
-        <div class="coin production yes">1</div>
+        <div class="coin production yes">{{ item }}</div>
     {% endfor %}
 
     {% for item in resultnegative %}
-        <div class="coin production no">0</div>
+        <div class="coin production no">{{ item }}</div>
     {% endfor %}
 </div>
 
