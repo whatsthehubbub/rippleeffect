@@ -9,7 +9,8 @@ $ ->
     $(window).on('keyup', RE.catchKey)
     # todo: differentiate between dismiss and continue
 
-    $(document).on('mouseup', 'a.btn:not(.js-no-refresh)', RE.handleButtonClick)
+    $(document).on('click', 'html:not(.touch) a:not(.js-no-refresh)', RE.handleButtonClick)
+    $(document).on('click', 'html.touch a:not(.js-no-refresh)', RE.handleButtonTouch)
 
     @resize()
 
@@ -21,7 +22,10 @@ $ ->
     if event.keyCode == 68
       $('.debug').show();
 
-  handleButtonClick: (e) ->
+  handleButtonClick:(e) ->
+    # nothing, for now
+
+  handleButtonTouch: (e) ->
     e.preventDefault()
-    document.location.href = $(this).attr('href')
+    window.location.assign($(this).attr('href'))
     return false;

@@ -10,7 +10,8 @@
         return RE.resize();
       });
       $(window).on('keyup', RE.catchKey);
-      $(document).on('mouseup', 'a.btn:not(.js-no-refresh)', RE.handleButtonClick);
+      $(document).on('click', 'html:not(.touch) a:not(.js-no-refresh)', RE.handleButtonClick);
+      $(document).on('click', 'html.touch a:not(.js-no-refresh)', RE.handleButtonTouch);
       return this.resize();
     },
     resize: function() {
@@ -21,9 +22,10 @@
         return $('.debug').show();
       }
     },
-    handleButtonClick: function(e) {
+    handleButtonClick: function(e) {},
+    handleButtonTouch: function(e) {
       e.preventDefault();
-      document.location.href = $(this).attr('href');
+      window.location.assign($(this).attr('href'));
       return false;
     }
   };

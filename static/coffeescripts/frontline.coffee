@@ -14,8 +14,6 @@ $ ->
     if $('html').hasClass('touch')
       events += " touchstart"
 
-    console.log(events)
-
     $('#team-box .avatar').on(events, ->
 
       # deselect all team members, select the current one
@@ -31,6 +29,5 @@ $ ->
       # hide the boilerpate, show the player
       $('#team-box-inactive').hide();
       $('#team-box-active').show();
-
 
     )
