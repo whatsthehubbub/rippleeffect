@@ -7,7 +7,7 @@
     </header>
 
     {% if notifications|length > 0 %}
-        {% for notification in notifications %}
+        {% for notification in notifications|slice:":20" %}
             {% include "partials/notification.html" %}
         {% endfor %}
     {% else %}
