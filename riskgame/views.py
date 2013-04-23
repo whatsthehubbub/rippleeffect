@@ -448,7 +448,7 @@ def inspect_risks(request):
         else:
             t = loader.get_template('messages/out-of-actions.html')
             c = RequestContext(request, {})
-            messages.add_message(request, messages.INFO, t.render(c))
+            messages.add_message(request, messages.INFO, t.render(c), extra_tags="brief")
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -483,7 +483,7 @@ def inspect_event(request):
         else:
             t = loader.get_template('messages/out-of-actions.html')
             c = RequestContext(request, {})
-            messages.add_message(request, messages.INFO, t.render(c))
+            messages.add_message(request, messages.INFO, t.render(c), extra_tags="brief")
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -527,7 +527,7 @@ def play_inspect(request):
     else:
         t = loader.get_template('messages/out-of-actions.html')
         c = RequestContext(request, {})
-        messages.add_message(request, messages.INFO, t.render(c))
+        messages.add_message(request, messages.INFO, t.render(c), extra_tags="brief")
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -559,12 +559,12 @@ def play_invest(request):
                 'player': player
             })
 
-            messages.add_message(request, messages.INFO, t.render(c))
+            messages.add_message(request, messages.INFO, t.render(c), extra_tags="brief")
 
     else:
         t = loader.get_template('messages/out-of-actions.html')
         c = RequestContext(request, {})
-        messages.add_message(request, messages.INFO, t.render(c))
+        messages.add_message(request, messages.INFO, t.render(c), extra_tags="brief")
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -588,11 +588,11 @@ def play_gather(request):
             'player': player
         })
 
-        messages.add_message(request, messages.INFO, t.render(c))
+        messages.add_message(request, messages.INFO, t.render(c), extra_tags="brief")
     else:
         t = loader.get_template('messages/out-of-actions.html')
         c = RequestContext(request, {})
-        messages.add_message(request, messages.INFO, t.render(c))
+        messages.add_message(request, messages.INFO, t.render(c), extra_tags="brief")
 
     return HttpResponseRedirect(reverse('home'))
 
@@ -615,11 +615,11 @@ def play_prevent(request):
             'player': player
         })
 
-        messages.add_message(request, messages.INFO, t.render(c))
+        messages.add_message(request, messages.INFO, t.render(c), extra_tags="brief")
     else:
         t = loader.get_template('messages/out-of-actions.html')
         c = RequestContext(request, {})
-        messages.add_message(request, messages.INFO, t.render(c))
+        messages.add_message(request, messages.INFO, t.render(c), extra_tags="brief")
 
     return HttpResponseRedirect(reverse('home'))
 
