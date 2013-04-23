@@ -398,7 +398,26 @@ def game_start(request):
 
                 Game.objects.get_latest_game().initialize(start=start, dayLengthInMinutes=minutes)
             else:
-                Game.objects.get_latest_game().initialize()
+                # Starting a game with current team and players, so reset stats
+                Team.objects.all().update(goal_zero_markers=0)
+                Team.objects.all().update(goal_zero_streak=0)
+                Team.objects.all().update(action_points=0)
+                Team.objects.all().update(frontline_action_points=0)
+                Team.objects.all().update(rank_points=0)
+                Team.objects.all().update(victory_points=0)
+                Team.objects.all().update(victory_points_episode=0)
+                Team.objects.all().update(resources_collected=0)
+                Team.objects.all().update(resources_collected_episode=0)
+                Team.objects.all().update(active_events='')
+
+                TeamPlayer.objects.all().update(gather_pile='')
+                TeamPlayer.objects.all().update(gather_markers=0)
+                TeamPlayer.objects.all().update(risk_pile='')
+                TeamPlayer.objects.all().update(prevent_markers=0)
+                TeamPlayer.objects.all().update(episode_events='')
+                TeamPlayer.objects.all().update(active_events='')
+
+                Game.objects.get_latest_game().initialize(start=start, dayLengthInMinutes=minutes)
 
             from riskgame.tasks import change_days
             change_days()
