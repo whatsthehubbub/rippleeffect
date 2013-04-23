@@ -28,7 +28,7 @@ $ ->
     CountDown.secondsLeft--
 
     # reload the page when the turn has passed
-    if CountDown.secondsLeft < -90 and CountDown.refresh
+    if CountDown.secondsLeft < -65 and CountDown.refresh
       window.location.reload()
 
     m = Math.max(Math.floor(CountDown.secondsLeft / 60), 0);

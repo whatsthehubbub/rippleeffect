@@ -303,8 +303,8 @@ $sidebar-width: 270px;
 
           // todo: add this asset
           &.poor-vision div {
-            background-image: url('../img/event-high-market.png');
-            @include image-2x('../img/event-high-market@2x.png', 99px, 61px);
+            background-image: url('../img/event-poor-vision.png');
+            @include image-2x('../img/event-poor-vision@2x.png', 99px, 61px);
           }
 
 

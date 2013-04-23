@@ -24,7 +24,7 @@
       var d, h, m;
       d = new Date();
       CountDown.secondsLeft--;
-      if (CountDown.secondsLeft < -90 && CountDown.refresh) {
+      if (CountDown.secondsLeft < -65 && CountDown.refresh) {
         window.location.reload();
       }
       m = Math.max(Math.floor(CountDown.secondsLeft / 60), 0);
