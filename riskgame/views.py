@@ -285,7 +285,7 @@ def home(request):
             # Team events are returned for both roles
             mc = RequestContext(request, {
                 'event': teamplayer.get_event_for_day(turn),
-                'lightninghit': teamplayer.lightninghit,
+                'lightninghit': teamplayer.lightning_hit,
                 'action_players': players
             })
                 
