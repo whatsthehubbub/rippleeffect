@@ -315,7 +315,7 @@ def teams(request):
 class GameStartForm(forms.Form):
     start = forms.DateTimeField(initial=timezone.now())
     turn_minutes = forms.IntegerField(initial=10)
-    csv = forms.FileField(label="Teams and players (CSV)")
+    csv = forms.FileField(label="Teams and players (CSV)", required=False)
 
     def clean(self):
         cleaned_data = super(GameStartForm, self).clean()
@@ -367,37 +367,39 @@ def game_start(request):
         if form.is_valid():
             minutes = form.cleaned_data.get('turn_minutes', 10)
             start = form.cleaned_data.get('start', timezone.now())
+            players = form.cleaned_data.get('players', [])
 
-            EmailUser.objects.all().delete()
-            Team.objects.all().delete()
-            TeamPlayer.objects.all().delete()
-            Episode.objects.all().delete()
-            EpisodeDay.objects.all().delete()
+            if players:
+                EmailUser.objects.all().delete()
+                Team.objects.all().delete()
+                TeamPlayer.objects.all().delete()
+                Episode.objects.all().delete()
+                EpisodeDay.objects.all().delete()
 
-            Notification.objects.all().delete()
+                Notification.objects.all().delete()
 
-            for player in form.cleaned_data.get('players', []):
-                print player 
+                for player in players:
+                    team_name = player[0]
+                    email = player[1]
+                    role = player[2]
 
-                team_name = player[0]
-                email = player[1]
-                role = player[2]
+                    user = EmailUser.objects.create_user(email=email)
 
-                user = EmailUser.objects.create_user(email=email)
+                    regprofile = RegistrationProfile.objects.create_profile(user)
+                    regprofile.send_activation_email(get_current_site(request))
 
-                regprofile = RegistrationProfile.objects.create_profile(user)
-                regprofile.send_activation_email(get_current_site(request))
+                    player, player_created = Player.objects.get_or_create(user=user)
 
-                player, player_created = Player.objects.get_or_create(user=user)
+                    # TODO send user e-mail to set their password and activate their account
 
-                # TODO send user e-mail to set their password and activate their account
+                    team, team_created = Team.objects.get_or_create(name=team_name)
 
-                team, team_created = Team.objects.get_or_create(name=team_name)
-
-                TeamPlayer.objects.get_or_create(player=player, team=team, role=role)
+                    TeamPlayer.objects.get_or_create(player=player, team=team, role=role)
 
 
-            Game.objects.get_latest_game().initialize(start=start, dayLengthInMinutes=minutes)
+                Game.objects.get_latest_game().initialize(start=start, dayLengthInMinutes=minutes)
+            else:
+                Game.objects.get_latest_game().initialize()
 
             from riskgame.tasks import change_days
             change_days()
