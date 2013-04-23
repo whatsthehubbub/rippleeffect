@@ -320,41 +320,44 @@ class GameStartForm(forms.Form):
     def clean(self):
         cleaned_data = super(GameStartForm, self).clean()
 
-        try:
-            import csv, StringIO
-            from email.utils import parseaddr
+        if cleaned_data['csv']:
+            try:
+                import csv, StringIO
+                from email.utils import parseaddr
 
-            content = StringIO.StringIO(cleaned_data['csv'].read())
+                content = StringIO.StringIO(cleaned_data['csv'].read())
 
-            reader = csv.reader(content)
+                reader = csv.reader(content)
 
-            players = []
+                players = []
 
-            for row in reader:
-                team_name = row[0]
-                email = parseaddr(row[1])[1]
+                for row in reader:
+                    team_name = row[0]
+                    email = parseaddr(row[1])[1]
 
-                if not email[1]:
-                    raise forms.ValidationError("Passed value %s is not a valid e-mail address." % row[1])
+                    if not email[1]:
+                        raise forms.ValidationError("Passed value %s is not a valid e-mail address." % row[1])
 
-                role = row[2]
+                    role = row[2]
 
-                if role not in ['office', 'frontline']:
-                    raise forms.ValidationError("Role for %s did not conform to 'frontline' or 'office'." % email)
+                    if role not in ['office', 'frontline']:
+                        raise forms.ValidationError("Role for %s did not conform to 'frontline' or 'office'." % email)
 
-                players.append((team_name, email, role))
-        except:
-            raise forms.ValidationError("Did not receive a valid CSV file.")
+                    players.append((team_name, email, role))
+            except:
+                raise forms.ValidationError("Did not receive a valid CSV file.")
 
-        # Check for e-mail duplicates
-        for player in players:
-            email = player[1]
+            # Check for e-mail duplicates
+            for player in players:
+                email = player[1]
 
-            if len([p for p in players if p[1] == email]) > 1:
-                raise forms.ValidationError("Received a duplicate for e-mail: %s" % email)
+                if len([p for p in players if p[1] == email]) > 1:
+                    raise forms.ValidationError("Received a duplicate for e-mail: %s" % email)
 
-        # Stuff the parsed player array in cleaned_data
-        cleaned_data['players'] = players
+            # Stuff the parsed player array in cleaned_data
+            cleaned_data['players'] = players
+        else:
+            cleaned_data['players'] = []
 
         return cleaned_data
 
@@ -373,10 +376,6 @@ def game_start(request):
                 EmailUser.objects.all().delete()
                 Team.objects.all().delete()
                 TeamPlayer.objects.all().delete()
-                Episode.objects.all().delete()
-                EpisodeDay.objects.all().delete()
-
-                Notification.objects.all().delete()
 
                 for player in players:
                     team_name = player[0]

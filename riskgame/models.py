@@ -883,6 +883,9 @@ class Game(models.Model):
         return self.started() and not self.over()
 
     def initialize(self, start=None, episodeCount=2, dayLengthInMinutes=10):
+        Episode.objects.all().delete()
+        EpisodeDay.objects.all().delete()
+        Notification.objects.all().delete()
 
         weekLength = 7
 
