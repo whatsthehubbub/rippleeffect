@@ -355,6 +355,10 @@ $sidebar-width: 270px;
         height: 125px;
         width: 424px;
 
+        &.no-production-possible {
+          height: 160px;
+        }
+
         .barrier.btn, .plan.btn {
           width: 194px;
           padding-right: 51px;
@@ -398,7 +402,7 @@ $sidebar-width: 270px;
         .production-produce {
           padding-top: $gutter*0.5;
 
-          input {
+          a.btn {
             width: 141px;
             height: 66px;
             line-height:70px;

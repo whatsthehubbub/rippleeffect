@@ -3,7 +3,7 @@
 
 <header>
     <h5 class="text-center pad-left">
-        Production Result
+        Resources Produced
         <span data-tooltip class="help has-tip" title="Planned units of production">?</span>
     </h5>
 </header>
@@ -17,14 +17,21 @@
                 <div class="coin production no">0</div>
             {% endif %}
         {% endfor %}
-    {% empty %}
-        <p class="text-center tiny-type gutter-pad-top">none</p>
+        {% if not forloop.last %}<div>|</div>{% endif %}
     {% endfor %}
+
+    <p class="text-center gutter-pad-top">
+        {% if resource_count == 0 %}
+            {{ production_draws }} blank{{ production_draws|pluralize }}
+        {% else %}
+            {{ resource_count }} resource{{ resource_count|pluralize }} and {{  production_draws|subtract:resource_count }} blank{{ production_draws|subtract:resource_count|pluralize }}
+        {% endif %}
+    </p>
 </div>
 
 <header>
     <h5 class="text-center pad-left">
-        Risks &amp; Incidents
+        Risks Encountered
         <span data-tooltip class="help has-tip" title="Risks turn into incidents when they are not covered by a barrier">?</span>
     </h5>
 </header>
@@ -33,18 +40,22 @@
     {% for step in safety %}
         {% for coin in step %}
             {% if coin == '1' %}
-                {% if incident_count > barrier_count %}
-                    <div class="coin safety no">0</div>
-                {%  else %}
-                    <div class="coin safety maybe">0</div>
-                {% endif %}
+                <div class="coin safety no">{{ coin }}</div>
             {% else %}
-                <div class="coin safety yes">1</div>
+                <div class="coin safety yes">{{ coin }}</div>
             {% endif %}
         {% endfor %}
-    {% empty %}
-        <p class="text-center tiny-type gutter-pad-top">none</p>
+    {% if not forloop.last %}<div>|</div>{% endif %}
     {% endfor %}
+
+    <p class="text-center gutter-pad-top">
+    {% if risk_draws == 1 %}
+        1 blank
+    {% else %}
+        {{ incident_count }} risk{{ incident_count|pluralize }} and {{  risk_draws|subtract:incident_count }} blank{{ risk_draws|subtract:incident_count|pluralize }}
+    {% endif %}
+    </p>
+
 </div>
 
 <header>
@@ -55,13 +66,35 @@
 </header>
 
 <div class="coingroup double-gutter-pad-bot">
-    {% if barrier_count < 1 %}
-        <p class="text-center tiny-type gutter-pad-top">none</p>
-    {% else %}
-        {% for i in barrier_count|times %}
-            <div class="coin barrier">!</div>
-        {% endfor %}
-    {% endif %}
+    {% for i in barrier_count|times %}
+        <div class="coin barrier">!</div>
+    {% endfor %}
+
+    <p class="text-center gutter-pad-top">{{ barrier_count }} barrier{{ barrier_count|pluralize }}</p>
+</div>
+
+<header>
+    <h5 class="text-center pad-left">
+        Results
+    </h5>
+</header>
+
+<div class="coingroup double-gutter-pad-bot">
+    <p class="text-center gutter-pad-top">
+
+    <!-- dit is nog  niet goed -->
+
+        {% if barrier_count > 0 and incident_count > barrier_count %}
+            Your {{ barrier_count }} barrier{{ barrier_count|pluralize }} did not prevent {{ incident_count }} risk{{ incident_count|pluralize }} from triggering an incident.
+        {% elif barrier_count > 0 and incident_count <= barrier_count and incident_count > 0 %}
+            Your {{ barrier_count }} barrier{{ barrier_count|pluralize }} prevented {{ incident_count }} risk{{ incident_count|pluralize }} from triggering an incident.
+        {% elif incident_count > barrier_count and incident_count > 0 %}
+            Without barriers you could not prevent {{ incident_count }} risk{{ incident_count|pluralize }} from triggering an incident.
+        {% else %}
+            You did not encounter any risks.
+        {% endif %}
+
+    </p>
 </div>
 
 {% ifequal episode.number 1 %}	

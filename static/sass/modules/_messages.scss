@@ -28,7 +28,7 @@ h4.action-cost {
 }
 
 
-a.medium.dismiss.btn {
+a.medium.dismiss.btn, input.medium.dismiss.btn {
   width: 160px;
 }
 
@@ -107,6 +107,24 @@ p.stat-row {
   span {
     float:right;
     width: 200px;
+  }
+
+}
+
+form.confirm-production {
+  text-align: center;
+
+  a.cancel.btn {
+    margin: 0 $gutter;
+  }
+
+  input.produce.btn {
+    margin: 0;
+    margin-right: $gutter;
+  }
+
+  a.btn, input.btn {
+    display:inline-block
   }
 
 }

@@ -1,3 +1,5 @@
+import itertools
+
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
@@ -624,6 +626,27 @@ def play_prevent(request):
 
     return HttpResponseRedirect(reverse('home'))
 
+
+@login_required
+def play_confirm_pump(request):
+    player = request.user.get_or_create_player()
+    teamplayer = TeamPlayer.objects.get(player=player)
+    team = teamplayer.team
+
+    t = loader.get_template('messages/office-confirm-production.html')
+
+    c = RequestContext(request, {
+        'episode': EpisodeDay.objects.get(current=True).episode,
+        'player': player,
+        'tornado': team.is_event_active(Events.TORNADO),
+        'highmarket': team.is_event_active(Events.HIGH_MARKET)
+    })
+
+    messages.add_message(request, messages.INFO, t.render(c))
+
+    return HttpResponseRedirect(reverse('home'))
+
+
 @login_required
 def play_pump(request):
     player = request.user.get_or_create_player()
@@ -631,7 +654,7 @@ def play_pump(request):
     team = teamplayer.team
 
     # This is horrible but it works
-    resource_count, production, incident_count, safety, barrier_count = teamplayer.pump()
+    resource_count, production, incident_count, safety, barrier_count, gather_count = teamplayer.pump()
     teamplayer.save()
 
     t = loader.get_template('messages/office-produce-resources.html')
@@ -641,9 +664,12 @@ def play_pump(request):
         'player': player,
         'resource_count': resource_count,
         'production': production,
+        'production_draws': len(list(itertools.chain(*production))),
         'incident_count': incident_count,
         'safety': safety,
+        'risk_draws': len(list(itertools.chain(*safety))),
         'barrier_count': barrier_count,
+        'gather_count': gather_count,
         'tornado': team.is_event_active(Events.TORNADO),
         'highmarket': team.is_event_active(Events.HIGH_MARKET)
     })

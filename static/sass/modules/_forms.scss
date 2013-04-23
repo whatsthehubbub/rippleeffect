@@ -99,6 +99,18 @@ input.tiny.btn{
 
 }
 
+input.yellow.btn {
+  background-color: $orange;
+  border-color: darken($orange, 20%);
+  color: $black;
+
+  &:hover {
+    background-color: darken($orange, 10%);
+    border-color: darken($orange, 20%);
+    color: $black;
+  }
+}
+
 label {
   padding: 0 !important;
 }

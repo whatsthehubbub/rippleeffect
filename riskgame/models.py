@@ -468,6 +468,9 @@ class TeamPlayer(models.Model):
         # Steps to go through the risk pile
         risksteps = self.gather_markers
 
+        # Keep this for later reference
+        planned_production = self.gather_markers
+
         pile = self.gather_pile.split(',')
         oil = 0 # Units of oil pumped
         reflow_production = [] # What we are going to put back in the deck
@@ -536,7 +539,7 @@ class TeamPlayer(models.Model):
         self.put_and_discard('1', 'risk')
 
         # If there are more risks than prevent markers, bad things will happen
-        result = (oil, result_production, risks, result_safety, self.prevent_markers)
+        result = (oil, result_production, risks, result_safety, self.prevent_markers, planned_production)
 
         logger.info("Production result %s", str(result))
 

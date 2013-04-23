@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <div id="production-box" class="sheet">
+            <div id="production-box" class="sheet {% if current_teamplayer.team.goal_zero_markers == 0 %}no-production-possible{% endif %}">
                 <header>
                     <h5>
                         Resource Production
@@ -74,23 +74,32 @@
                     </h5>
                 </header>
 
-                <div class="production-plan">
-                    <form class="relative" method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
-                        <input type="submit" class="tiny barrier action btn" value="Place barrier">
-                        <span class="barrier badge">{{ current_teamplayer.prevent_markers }}</span>
-                    </form>
+                {% if current_teamplayer.team.goal_zero_markers == 0 %}
+                    <blockquote class="double-gutter-margin-top">
+                        <p>Since your team was silly enough to let an incident happen, you're unable to any production for the rest of the turn!</p>
+                        <div class="small character small-harry-concerned">Harry</div>
+                    </blockquote>
+                {% else %}
+                    <div class="production-plan">
+                            <form class="relative" method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
+                                <input type="submit" class="tiny barrier action btn" value="Place barrier">
+                                <span class="barrier badge">{{ current_teamplayer.prevent_markers }}</span>
+                            </form>
 
-                    <form class="relative" method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
-                        <input type="submit" class="tiny plan action btn" value="Plan production">
-                        <span class="production badge">{{ current_teamplayer.gather_markers }}</span>
-                    </form>
-                </div>
+                            <form class="relative" method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
+                                <input type="submit" class="tiny plan action btn" value="Plan production">
+                                <span class="production badge">{{ current_teamplayer.gather_markers }}</span>
+                            </form>
+                    </div>
 
-                <div class="production-produce">
-                    <form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
-                        <input type="submit" {% if current_teamplayer.gather_markers < 1 %} disabled {% endif %} class="tiny produce btn {% if current_teamplayer.gather_markers < 1 %} disabled {% endif %}" value="Produce resources">
-                    </form>
-                </div>
+                    <div class="production-produce">
+                        {% if current_teamplayer.gather_markers < 1 %}
+                            <a href="javascript:void(0)" class="tiny disabled produce btn">Produce resources</a>
+                        {% else %}
+                            <a href="{% url 'play_confirm_pump' %}" class="tiny produce btn">Produce resources</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
 
             </div>
 
