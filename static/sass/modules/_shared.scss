@@ -257,6 +257,13 @@ a.tiny.btn{
   &.active {
     background: #fff;
   }
+
+  &.disabled {
+    background-color: lighten($mid-grey, 10%) !important;
+    border-color: $mid-grey;
+    color: lighten($black, 50%);
+
+  }
 }
 
 a.small.btn{

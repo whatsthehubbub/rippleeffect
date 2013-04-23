@@ -87,7 +87,7 @@
 
                 <div class="production-produce">
                     <form method="POST" action="{% url 'play_pump' %}">{% csrf_token %}
-                        <input type="submit"  class="tiny produce btn" value="Produce resources">
+                        <input type="submit" {% if current_teamplayer.gather_markers < 1 %} disabled {% endif %} class="tiny produce btn {% if current_teamplayer.gather_markers < 1 %} disabled {% endif %}" value="Produce resources">
                     </form>
                 </div>
 
