@@ -55,10 +55,10 @@
 {% if event == '5' %}
     <div class="event-intro event-lightning-intro"></div>
     <h3 class="text-center half-gutter-pad-top">Lightning</h3>
-    <p class="triple-gutter-margin-bot text-center">{{ player }} has a chance of getting hit by lightning at the start of the next turn. If that player draws an incident, all actions will be lost.</p>
+    <p class="triple-gutter-margin-bot text-center">{{ player }} has a chance of getting hit by lightning at the start of the next turn. If it hits, the team will lose four actions.</p>
 
     <blockquote class="half-gutter-margin-top double-gutter-pad-bot">
-        <p>The weather will be rough during the next turn. Hopefully your team member won't get hit by a lightning bolt. Losing all of your team's actions is a heavy reprimand, don't you agree?</p>
+        <p>The weather will be rough during the next turn. I really hope that lightning bolt won't hit {{ player }}, but there's no way of knowing at this point. You'll just have to wait and see.</p>
         <div class="small character small-david-neutral">David</div>
     </blockquote>
 {% endif %}
