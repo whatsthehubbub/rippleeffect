@@ -54,7 +54,7 @@
 
                     <form method="POST" action="{% url 'frontline_event' %}"> {% csrf_token %}
                         <input type="hidden" id="team-mate-predict-id" name="target" value="2">
-                        <input type="submit" class="tiny predict action btn"  value="Predict event">
+                        <input type="submit" class="tiny predict action btn {% if current_day.number == 7 %}disabled{% endif %}" {% if current_day.number == 7 %}disabled{% endif %}  value="Predict event">
                     </form>
                 </div>
 
