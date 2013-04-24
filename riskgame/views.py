@@ -226,7 +226,7 @@ def home(request):
     elif game.active():
         c = RequestContext(request, {
             'teammates': teamplayer.team.teamplayer_set.all(),
-            'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')[:50],
+            'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')[:15],
             'title': "game"
         })
 
