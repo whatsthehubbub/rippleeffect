@@ -101,12 +101,12 @@
         {% endif %}
     {% else %}
         {% if resource_count == 0 %}
-            As you didn't find any resources, you didn't score any points.
+            Since you didn't find any resources, you didn't score any points.
         {% else %}
             {% if highmarket %}
-                You produced {{ resource_count }} resource{{ resource_count|pluralize }} worth {{ base_points }} base points each. Multiplied by a Goal Zero of {{ goal_zero }} and the current High Market doubler, you scored {{ points }} points in total!
+                You produced {{ resource_count }} resource{{ resource_count|pluralize }} worth {{ base_points }} base points. Multiplied by a Goal Zero of {{ goal_zero }} and the current High Market doubler, you scored {{ points }} points in total!
             {% else %}
-                You produced {{ resource_count }} resource{{ resource_count|pluralize }} worth {{ base_points }} base points each. Multiplied by a Goal Zero of {{ goal_zero }}, you scored {{ points }} points in total!
+                You produced {{ resource_count }} resource{{ resource_count|pluralize }} worth {{ base_points }} base points. Multiplied by a Goal Zero of {{ goal_zero }}, you scored {{ points }} points in total!
             {% endif %}
         {% endif %}
     {% endif %}
@@ -118,12 +118,12 @@
 		{% if tornado %}
             <blockquote class="triple-gutter-margin-top">
                 <div class="large character large-harry-concerned">Harry</div>
-                <p>This is what I warned you about... it’s bad enough that you let an incident slip through, but with this tornado going on, you’ve now also lost all your actions. I’m pretty sure the rest of your team won’t be pleased!</p>
+                <p>This is what I warned you about… it’s bad enough that you let an incident slip through, but with this tornado going on, you’ve now also lost all your actions. I’m pretty sure the rest of your team won’t be pleased!</p>
             </blockquote>
         {% else %}
             <blockquote class="triple-gutter-margin-top">
                 <div class="large character large-harry-concerned">Harry</div>
-                <p>Oh no, look at what you’ve done! You were careless, and now you have a full-blown incident. That means no resources, no points, no nothing. Even your Goal Zero points are gone. This looks really terrible, even for a beginner.</p>
+                <p>Oh no, look at what you’ve done! You were careless, and now you have a full-blown incident. That means no resources, no points, no nothing. Even your Goal Zero streak is gone. This looks terrible, even for a beginner.</p>
             </blockquote>
 		{% endif %}
 	{% else %}
@@ -136,7 +136,7 @@
             {% else %}
                 <blockquote class="triple-gutter-margin-top">
                     <div class="large character large-mei-neutral">Mei</div>
-                    <p>Oh man, that’s too bad! No resources... like, at all! Maybe you should’ve talked to Abu and improved your production quality first? Or maybe you’re just out of luck?</p>
+                    <p>Oh man, that’s too bad! No resources… like, at all! Maybe you should’ve talked to Abu and improved your production quality first? Or maybe you’re just out of luck?</p>
                 </blockquote>
 			{% endif %}
 		{% else %}
@@ -149,12 +149,12 @@
                 {% if resource_count == 1 %}
                     <blockquote class="triple-gutter-margin-top">
                         <div class="large character large-mei-happy">Mei</div>
-                        <p>Well done, your team will be so happy you’re on their side! Now, I really want to encourage you to keep producing, but I also have to tell you that every time you produce a resource, your production quality goes down. This means you have to constantly work on improving your production quality... but that’s really Abu’s department.</p>
+                        <p>Well done, your team will be so happy you’re on their side! Now, I really want to encourage you to keep producing, but I also have to tell you that every time you produce a resource, your production quality goes down. This means you have to constantly work on improving your production quality… but that’s really Abu’s department.</p>
                     </blockquote>
                 {% else %}
                     <blockquote class="triple-gutter-margin-top">
                         <div class="large character large-mei-happy">Mei</div>
-                        <p>Incredible! If this doesn’t make your team members throw you a party, I don’t know what will! Now, I really want to encourage you to keep producing, but I also have to tell you that every time you produce a resource, your production quality goes down. This means you have to constantly work on improving your production quality... but that’s really Abu’s department.</p>
+                        <p>Incredible! If this doesn’t make your team members throw you a party, I don’t know what will! Now, I really want to encourage you to keep producing, but I also have to tell you that every time you produce a resource, your production quality goes down. This means you have to constantly work on improving your production quality… but that’s really Abu’s department.</p>
                     </blockquote>
                 {% endif %}
 			{% endif %}
@@ -168,12 +168,12 @@
 		{% if tornado %}
             <blockquote class="triple-gutter-margin-top">
                 <div class="large character large-harry-concerned">Harry</div>
-                <p>This is what I warned you about... it’s bad enough that you let an incident slip through, but with this tornado going on, you’ve now also lost all your actions. I’m pretty sure the rest of your team won’t be pleased!</p>
+                <p>This is what I warned you about… it’s bad enough that you let an incident slip through, but with this tornado going on, you’ve now also lost all your actions. I’m pretty sure the rest of your team won’t be pleased!</p>
             </blockquote>
         {% else %}
             <blockquote class="triple-gutter-margin-top">
                 <div class="large character large-harry-concerned">Harry</div>
-                <p>Oh no, look at what you’ve done! You were careless, and now you have a full-blown incident. That means no resources, no points, no nothing. Even your Goal Zero points are gone. This looks really terrible, even for a beginner. Now how are you going to explain this to your colleagues?</p>
+                <p>Oh no, look at what you’ve done! You were careless, and now you have a full-blown incident. That means no resources, no points, no nothing. Even your Goal Zero streak is gone. Now how are you going to explain this to your colleagues?</p>
             </blockquote>
 		{% endif %}
 	{% else %}
@@ -187,7 +187,7 @@
             {% else %}
                 <blockquote class="triple-gutter-margin-top">
                     <div class="large character large-mei-neutral">Mei</div>
-                    <p>Oh man, that’s too bad! No resources... like, at all!</p>
+                    <p>Oh man, that’s too bad! No resources… like, at all!</p>
                 </blockquote>
 			{% endif %}
 		{% else %}
