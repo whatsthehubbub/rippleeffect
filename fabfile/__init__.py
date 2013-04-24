@@ -9,7 +9,7 @@ from mysql import install_mysql
 from redis import install_redis
 from python import install_python, install_virtualenv
 from app import (install_app, restart_celerybeat,
-                 start_worker, stop_worker, is_worker_running)
+                 restart_worker, stop_worker, stop_celerybeat, is_worker_running)
 from supervisor import install_supervisor
 
 
@@ -64,7 +64,7 @@ def logs(proc='uwsgi'):
     possible procs are:
     nginx, uwsgi, celery, celerybeat, redis
     """
-    if proc in ('celery', 'celerybeat','uwsgi'):
+    if proc in ('celery', 'celerybeat', 'uwsgi'):
         run('tail -f %s/%s.log' % (env.log_home, proc))
     elif proc == 'nginx':
         sudo('tail -f /var/log/nginx/%(project_name)s.log' % env)
@@ -75,12 +75,18 @@ def logs(proc='uwsgi'):
 @roles('dev')
 def runserver():
     "run django development server"
+
+    stop_worker()
+    stop_celerybeat()
+
     # start a background worker
     if is_worker_running() is False:
         print(cyan('starting background worker'))
-        start_worker()
+        restart_worker()
+
     # restart celerybeat
     restart_celerybeat()
+
     # start the django dev server
     with cd(env.home):
         virtualenv('python manage.py runserver 0.0.0.0:8000')
