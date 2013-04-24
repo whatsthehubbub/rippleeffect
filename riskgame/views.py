@@ -416,7 +416,7 @@ def game_start(request):
 
             change_days()
 
-    return HttpResponseRedirect(reverse('home'))
+            return HttpResponseRedirect(reverse('home'))
 
 # Frontline actions
 
