@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     # url(r'^team/(?P<pk>\d+)/join/request/$', 'riskgame.views.request_team_join', name='request_team_join'),
     # url(r'^team/(?P<pk>\d+)/join/accept/$', 'riskgame.views.accept_team_join', name='accept_team_join'),
 
-    url(r'^dummy/$', TemplateView.as_view(template_name='riskgame/dummy.html'), name='dummy'),
+    # url(r'^dummy/$', TemplateView.as_view(template_name='riskgame/dummy.html'), name='dummy'),
 
     url(r'^players/$', 'riskgame.views.players', name='players'),
 
