@@ -105,9 +105,9 @@
             You did not find any resources so you did not score any points, even though no incident happened. Oh well.
         {% else %}
             {% if highmarket %}
-                You found {{ resource_count }} resource{{ resource_count|pluralize }}. Multiplied by a Goal Zero of {{ teamplayer.team.goal_zero_markers }} the High Market duplicator and 100 base points this means you score {{ points_scored }} points!
+                You found {{ resource_count }} resource{{ resource_count|pluralize }}. Multiplied by a Goal Zero of {{ goal_zero }} the High Market duplicator and {{ base_points }} base points this means you score {{ points }} points!
             {% else %}
-                You found {{ resource_count }} resource{{ resource_count|pluralize }}. Multiplied by a Goal Zero of {{ teamplayer.team.goal_zero_markers }} and 100 base points this means you score {{ points_scored }} points!
+                You found {{ resource_count }} resource{{ resource_count|pluralize }}. Multiplied by a Goal Zero of {{ goal_zero }} and {{ base_points }} base points this means you score {{ points }} points!
             {% endif %}
         {% endif %}
     {% endif %}

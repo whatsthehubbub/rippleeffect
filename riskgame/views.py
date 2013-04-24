@@ -691,6 +691,10 @@ def play_pump(request):
 
         points_scored = team.goal_zero_markers * resource_count * high_market_modifier * 100
 
+        c['base_points'] = resource_count * 100
+        c['goal_zero'] = team.goal_zero_markers
+        c['points'] = points_scored
+
         Team.objects.filter(pk=team.pk).update(resources_collected=F('resources_collected') + resource_count)
         Team.objects.filter(pk=team.pk).update(resources_collected_episode=F('resources_collected_episode') + resource_count)
 
