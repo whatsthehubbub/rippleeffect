@@ -11,8 +11,8 @@ $ ->
     if $('#turn-countdown').length > 0
       CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
 
-      # show the clock if we're counting down
-      if CountDown.secondsLeft > 0 then $('#turn-countdown').show()
+      # show the clock
+      $('#turn-countdown').show()
 
       CountDown.tick()
 

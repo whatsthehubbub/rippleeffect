@@ -10,9 +10,7 @@
     initialize: function() {
       if ($('#turn-countdown').length > 0) {
         CountDown.secondsLeft = parseInt($('#turn-countdown').data('seconds-left'));
-        if (CountDown.secondsLeft > 0) {
-          $('#turn-countdown').show();
-        }
+        $('#turn-countdown').show();
         return CountDown.tick();
       }
     },

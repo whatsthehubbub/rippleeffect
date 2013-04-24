@@ -82,15 +82,15 @@
 <div class="coingroup double-gutter-pad-bot">
     <p class="text-center gutter-pad-top">
 
-    <!-- dit is nog  niet goed -->
-
-        {% if barrier_count > 0 and incident_count > barrier_count %}
+        {% if barrier_count > 0 and incident_count > barrier_count %} <!-- Barriers set, but less than number of risks, so incident. -->
             Your {{ barrier_count }} barrier{{ barrier_count|pluralize }} did not prevent {{ incident_count }} risk{{ incident_count|pluralize }} from turning into an incident.
-        {% elif barrier_count > 0 and incident_count <= barrier_count and incident_count > 0 %}
+        {% elif barrier_count > 0 and incident_count <= barrier_count and incident_count > 0 %} <!-- Barriers set, equal to or more than risks, so no incident. -->
             Your {{ barrier_count }} barrier{{ barrier_count|pluralize }} prevented {{ incident_count }} risk{{ incident_count|pluralize }} from turning into an incident.
-        {% elif incident_count > barrier_count and incident_count > 0 %}
+        {% elif incident_count > barrier_count and incident_count > 0 %} <!-- More risks than barriers, incident. -->
             Without barriers you could not prevent {{ incident_count }} risk{{ incident_count|pluralize }} from turning into an incident.
-        {% else %}
+        {% elif barrier_count > 0 and incident_count == 0 %} <!-- Barriers set but no risks. -->
+            There were no risks, so those {{ barrier_count }} barrier{{ barrier_count|pluralize }} turned out to be unnecesary.
+        {% else %} <!-- No risks, so no incident, regardless of number of barriers. -->
             You did not encounter any risks.
         {% endif %}
 

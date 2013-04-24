@@ -10,7 +10,13 @@
         {% for notification in notifications %}
             {% include "partials/notification.html" %}
         {% endfor %}
-        <a href="{% url 'notifications' %}">All messages</a>
+        <div class="notification clearfix">
+
+            <div class="message clearfix">
+                <a href="{% url 'notifications' %}">All messages</a>
+            </div>
+        </div>
+
     {% else %}
         <div class="notification clearfix">
             <div class="message clearfix">

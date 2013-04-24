@@ -40,12 +40,28 @@
 
 </div>
 
-<!-- possible analysis by Harry, based on number of barriers in place? -->
+{% if current_teamplayer.prevent_markers == 0 %}
 
-<blockquote class="triple-gutter-margin-top">
-    <div class="large character large-harry-concerned">Harry</div>
-    <p>Starting production with only one barrier in place? Are you mad?! Oh by the way, I could easily be removed from this screen but then you'd be on your own.</p>
-</blockquote>
+    <blockquote class="triple-gutter-margin-top">
+        <div class="large character large-harry-concerned">Harry</div>
+        <p>Starting production without any barriers? Are you mad?!</p>
+    </blockquote>
+
+{% elif current_teamplayer.prevent_markers == 1 %}
+
+    <blockquote class="triple-gutter-margin-top">
+        <div class="large character large-harry-neutral">Harry</div>
+        <p>Starting production with only one barrier in place? Are you sure?</p>
+    </blockquote>
+
+{% else %}
+
+    <blockquote class="triple-gutter-margin-top">
+        <div class="large character large-harry-happy">Harry</div>
+        <p>{{ current_teamplayer.prevent_markers }} barriers, top stuff!</p>
+    </blockquote>
+
+{% endif %}
 
 <form class="triple-gutter-margin-top quad-gutter-margin-bot confirm-production" method="POST" action="{% url 'play_pump' %}">
     {% csrf_token %}
