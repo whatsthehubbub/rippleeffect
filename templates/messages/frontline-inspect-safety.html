@@ -1,9 +1,7 @@
 <h4 class="action-cost">Spent <span>1</span> Action</h4>
-<h3 class="text-center double-gutter-pad-top">Safety Inspection Report</h3>
+<h3 class="text-center double-gutter-pad-top">Safety Inspection Report<br>for {{ player }}</h3>
 
-<p class="text-center triple-gutter-pad-top half-gutter-margin-bot">Inspected safety for {{ player }}</p>
-
-<div class="coingroup">
+<div class="coingroup triple-gutter-pad-top">
 
     {% for unknown in unknowns %}
         <div class="coin safety unknown">?</div>
@@ -16,6 +14,19 @@
     {% for item in resultnegative %}
         <div class="coin safety yes">{{ item }}</div>
     {% endfor %}
+
+    <p class="text-center gutter-pad-top">
+        Found
+
+        {% if resultpositive|length == 0 %}
+            {{ resultnegative|length }} blank{{ resultnegative|length|pluralize }}
+        {% elif resultnegative|length == 0 %}
+            {{ resultpositive|length }} risk{{ resultpositive|length|pluralize }}
+        {% else %}
+            {{ resultpositive|length }} risk{{ resultpositive|length|pluralize }} and {{ resultnegative|length }} blank{{ resultnegative|length|pluralize }}
+        {% endif %}
+
+    </p>
 </div>
 
 {% if poorvision %}
