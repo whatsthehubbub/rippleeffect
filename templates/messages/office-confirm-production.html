@@ -6,8 +6,8 @@
 
 <header>
     <h5 class="text-center pad-left">
-        Planned Production
-        <span data-tooltip class="help has-tip" title="Planned units of production">?</span>
+        Production
+        <span data-tooltip class="help has-tip" title="For each unit of production, a risk may come up.">?</span>
     </h5>
 </header>
 
@@ -26,8 +26,8 @@
 
 <header>
     <h5 class="text-center pad-left">
-        Barriers placed
-        <span data-tooltip class="help has-tip" title="Barriers prevent risks from turning into incidents">?</span>
+        Barriers
+        <span data-tooltip class="help has-tip" title="Barriers prevent risks from turning into incidents.">?</span>
     </h5>
 </header>
 
@@ -44,21 +44,21 @@
 
     <blockquote class="triple-gutter-margin-top">
         <div class="large character large-harry-concerned">Harry</div>
-        <p>Starting production without any barriers? Are you mad?!</p>
+        <p>You're starting resource production without any barriers in place. Are you nuts?</p>
     </blockquote>
 
 {% elif current_teamplayer.prevent_markers == 1 %}
 
     <blockquote class="triple-gutter-margin-top">
         <div class="large character large-harry-neutral">Harry</div>
-        <p>Starting production with only one barrier in place? Are you sure?</p>
+        <p>You're starting production with only one barrier in place. Are you sure about this?</p>
     </blockquote>
 
 {% else %}
 
     <blockquote class="triple-gutter-margin-top">
         <div class="large character large-harry-happy">Harry</div>
-        <p>{{ current_teamplayer.prevent_markers }} barriers, top stuff!</p>
+        <p>You've placed {{ current_teamplayer.prevent_markers }} barriers. This looks quite solid!</p>
     </blockquote>
 
 {% endif %}

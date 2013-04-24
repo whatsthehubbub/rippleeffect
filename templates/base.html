@@ -90,7 +90,7 @@
                         <li id="turn-countdown" style="display:none;" data-seconds-left="{{ current_day.secondsleft }}"><span data-tooltip title="Time left for this turn." class="has-tip icon time"></span><span class="hours"></span><span class="dark-grey time-colon" style="visibility: hidden">:</span><span class="minutes"></span></li>
                     </ul>
 
-                    <div id="goal-zero" data-tooltip title="Number of consecutive turns without any incidents." class="has-tip gz-{% if current_teamplayer.team.goal_zero_markers > 0 %}1{% else %}0{% endif %}">
+                    <div id="goal-zero" data-tooltip title="Number of consecutive turns without incidents. As your<br />Goal Zero streak rises, resources are worth more points." class="has-tip gz-{% if current_teamplayer.team.goal_zero_markers > 0 %}1{% else %}0{% endif %}">
                         <span class="h-top">Goal</span>
                         <span class="score">{{ current_teamplayer.team.goal_zero_markers }}</span>
                         <span class="h-bot">Zero</span>
