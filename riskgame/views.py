@@ -378,9 +378,15 @@ def game_start(request):
             start = form.cleaned_data.get('start', timezone.now())
             players = form.cleaned_data.get('players', [])
 
+            logger.info("Starting a game of %d minutes starting on %s", minutes, str(start))
+
             if players:
+                logger.info("Starting game with players passed.")
+
+                # Delete all non admin users
                 EmailUser.objects.exclude(is_admin=True).delete()
-                # TODO add delete all players
+                
+                Player.object.all().delete()
                 Team.objects.all().delete()
                 TeamPlayer.objects.all().delete()
 
@@ -390,8 +396,11 @@ def game_start(request):
                     role = player[2]
                     alias = player[3]
 
+                    logger.info("Creating player %s %s with role %s in team %s", alias, email, role, team_name)
+
                     user = EmailUser.objects.create_user(email=email)
-                    # Put inviting this user in the queue
+
+                    # Put e-mail inviting this user in the queue
                     invite_user.delay(user, get_current_site(request))
 
                     player, player_created = Player.objects.get_or_create(user=user, name=alias)
@@ -404,6 +413,8 @@ def game_start(request):
 
                 logout(request)
             else:
+                logger.info("Starting game without players passed.")
+
                 # Starting a game with current team and players, so reset stats
                 Team.objects.all().update(goal_zero_markers=0)
                 Team.objects.all().update(goal_zero_streak=0)
