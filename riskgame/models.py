@@ -572,16 +572,14 @@ class TeamPlayer(models.Model):
 
         pile = self.risk_pile.split(',')
 
+        logger.info('Lightning risk pile: %s', str(pile))
+
         top_card = pile.pop(0)
 
         if top_card == '1':
-            # Drop four action points but be sure not to go negative
-            Team.objects.filter(pk=self.team.pk, action_points__gt=0).update(action_points=F('action_points')-1)
-            Team.objects.filter(pk=self.team.pk, action_points__gt=0).update(action_points=F('action_points')-1)
-            Team.objects.filter(pk=self.team.pk, action_points__gt=0).update(action_points=F('action_points')-1)
-            Team.objects.filter(pk=self.team.pk, action_points__gt=0).update(action_points=F('action_points')-1)
-
             effect = True
+
+            # The action drop is done outside of this method due to circumstances.
 
         pile = [top_card] + pile
         random.shuffle(pile)
@@ -777,9 +775,9 @@ class Team(models.Model):
             elif event == Events.LIGHTNING:
                 tp.add_active_event(Events.LIGHTNING)
 
-                effect = tp.hit_by_lightning()
+                lightning_hit = tp.hit_by_lightning()
 
-                if effect:
+                if lightning_hit:
                     # TODO probably should move this inside the function
                     tp.lightning_hit = True
 
@@ -797,7 +795,11 @@ class Team(models.Model):
         # Put these after the save to prevent the stale model to overwrite the new values
         playerCount = self.teamplayer_set.filter(role='office').count()
 
-        Team.objects.filter(pk=self.pk).update(action_points=4*playerCount)
+        new_actions = 4 * playerCount
+        if lightning_hit and new_actions >= 4:
+            new_actions -= 4
+
+        Team.objects.filter(pk=self.pk).update(action_points=new_actions)
         Team.objects.filter(pk=self.pk).update(frontline_action_points=2*playerCount)
 
         # Reset the per episode victory points counter
