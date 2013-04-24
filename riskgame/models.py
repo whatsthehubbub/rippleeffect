@@ -974,3 +974,8 @@ class Game(models.Model):
 
         self.end = previousDay.end # Previous day when we come out of the loop is the last day
         self.save()
+
+        from redis_cache import get_redis_connection
+
+        con = get_redis_connection('default')
+        con.delete('teamrank')
