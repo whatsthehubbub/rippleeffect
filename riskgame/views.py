@@ -3,6 +3,7 @@ import itertools
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext, loader
 from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django import forms
 
@@ -194,8 +195,20 @@ def notifications(request):
 
     t = loader.get_template('riskgame/notifications.html')
 
+    nots = Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')
+    paginator = Paginator(nots, 5)
+
+    page = request.GET.get('page')
+
+    try:
+        notifications = paginator.page(page)
+    except PageNotAnInteger:
+        notifications = paginator.page(1)
+    except EmptyPage:
+        notifications = paginator.page(paginator.num_pages)
+
     c = RequestContext(request, {
-        'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated'),
+        'notifications': notifications,
         'title': 'messages'
     })
 

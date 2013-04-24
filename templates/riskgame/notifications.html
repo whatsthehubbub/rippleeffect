@@ -11,7 +11,6 @@
 
                 <h3 class="text-center triple-gutter-pad-top">Messages for team {{ current_teamplayer.team }}</h3>
 
-
                 <header>
                     <h5 class="text-center">
                         Full history
@@ -30,13 +29,16 @@
                     </div>
                 {% endif %}
 
-                <p class="double-gutter-margin-bot">&nbsp;</p>
+                <p>
+                    {% if notifications.has_previous %}<a href="?page={{ notifications.previous_page_number }}">&lt;</a>{% endif %}
+                    Page {{ notifications.number }} of {{ notifications.paginator.num_pages }}
+                    {% if notifications.has_next %}<a href="?page={{ notifications.next_page_number }}">&gt;</a>{% endif %}
+                </p>
 
+                <p class="double-gutter-margin-bot">&nbsp;</p>
 
             </div>
         </div>
     </section>
-	
-
 
 {% endblock content %}
