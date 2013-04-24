@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^players/(\S+?)/unsubscribe/$', 'riskgame.views.player_unsubscribe', name='player_unsubscribe'),
 
     url(r'^home/$', 'riskgame.views.home', name='home'),
+    url(r'^home/message/seen/(?P<message>\S+)/$', 'riskgame.views.message_seen', name='message_seen'),
 
     url(r'^game/start/$', 'riskgame.views.game_start', name='game_start'),
 

@@ -36,13 +36,11 @@
 
     <body id="game">
 
-
         {% if current_teamplayer.role == 'office' %}
             <img id="backdrop" src="{{ STATIC_URL }}img/bg/shell_office_web.jpg" alt="" class="hide">
         {% else %}
             <img id="backdrop" src="{{ STATIC_URL }}img/bg/shell_frontline_web.jpg" alt="" class="hide">
         {% endif %}
-
 
         <aside id="sidebar" class="clearfix">
 

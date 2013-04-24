@@ -211,7 +211,6 @@ def home(request):
     
     if timezone.now() < game.start:
         # Pre game
-
         t = loader.get_template('riskgame/home-pregame.html')
 
         c = RequestContext(request, {
@@ -238,8 +237,6 @@ def home(request):
             c['targetform'] = FrontLineForm(teamplayer)
 
         if teamplayer.show_game_start:
-            TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_game_start=False)
-
             if teamplayer.role == 'office':
                 mt = loader.get_template('messages/start-game-office.html')
             elif teamplayer.role == 'frontline':
@@ -248,8 +245,6 @@ def home(request):
             mc = RequestContext(request, {})
             messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
         elif teamplayer.show_episode_start:
-            TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_episode_start=False)
-
             mt = loader.get_template('messages/start-episode.html')
 
             episode = EpisodeDay.objects.get(current=True).episode
@@ -268,8 +263,6 @@ def home(request):
             })
             messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
         elif teamplayer.show_turn_start:
-            TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_turn_start=False)
-
             turn = EpisodeDay.objects.get(current=True)
 
             if turn.number > 1 or turn.episode.number > 1:
@@ -296,6 +289,21 @@ def home(request):
     c['startform'] = GameStartForm()
 
     return HttpResponse(t.render(c))
+
+@login_required
+def message_seen(request, message):
+    # TODO should be post
+    player = request.user.get_or_create_player()
+    teamplayer = TeamPlayer.objects.get(player=player)
+
+    if message == 'game':
+        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_game_start=False)
+    elif message == 'episode':
+        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_episode_start=False)
+    elif message == 'turn':
+        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_turn_start=False)
+
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def teams(request):
