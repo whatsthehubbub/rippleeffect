@@ -81,7 +81,6 @@
 
 <div class="coingroup double-gutter-pad-bot">
     <p class="text-center gutter-pad-top">
-
         {% if barrier_count > 0 and incident_count > barrier_count %} <!-- Barriers set, but less than number of risks, so incident. -->
             Your {{ barrier_count }} barrier{{ barrier_count|pluralize }} did not prevent {{ incident_count }} risk{{ incident_count|pluralize }} from turning into an incident.
         {% elif barrier_count > 0 and incident_count <= barrier_count and incident_count > 0 %} <!-- Barriers set, equal to or more than risks, so no incident. -->
@@ -93,7 +92,25 @@
         {% else %} <!-- No risks, so no incident, regardless of number of barriers. -->
             You did not encounter any risks.
         {% endif %}
-
+    </p>
+    <p>
+    {% if incident_count > barrier_count %}
+        {% if resource_count == 0 %}
+            You did not find any resources. You would have lost them due to the incident, so that's a mixed blessing.
+        {% else %}
+            You lost {{ resource_count }} resource{{ resource_count|pluralize }} due to the incident. You scored no points as a result.
+        {% endif %}
+    {% else %}
+        {% if resource_count == 0 %}
+            You did not find any resources so you did not score any points, even though no incident happened. Oh well.
+        {% else %}
+            {% if highmarket %}
+                You found {{ resource_count }} resource{{ resource_count|pluralize }}. Multiplied by a Goal Zero of {{ teamplayer.team.goal_zero_markers }} the High Market duplicator and 100 base points this means you score {{ points_scored }} points!
+            {% else %}
+                You found {{ resource_count }} resource{{ resource_count|pluralize }}. Multiplied by a Goal Zero of {{ teamplayer.team.goal_zero_markers }} and 100 base points this means you score {{ points_scored }} points!
+            {% endif %}
+        {% endif %}
+    {% endif %}
     </p>
 </div>
 
