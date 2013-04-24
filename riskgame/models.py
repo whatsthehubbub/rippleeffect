@@ -752,6 +752,8 @@ class Team(models.Model):
         # Active events for teams are cleared at the start of a day
         self.clear_active_events()
 
+        lightning_hits = 0
+
         for tp in self.teamplayer_set.filter(role='office'):
             # Active events for all players are cleared at the start of a day
             tp.clear_active_events()
@@ -780,6 +782,7 @@ class Team(models.Model):
                 if lightning_hit:
                     # TODO probably should move this inside the function
                     tp.lightning_hit = True
+                    lightning_hits += 1
 
                 # TODO make notification parametric based on effect
 
@@ -796,8 +799,11 @@ class Team(models.Model):
         playerCount = self.teamplayer_set.filter(role='office').count()
 
         new_actions = 4 * playerCount
-        if tp.lightning_hit and new_actions >= 4:
-            new_actions -= 4
+
+        logger.info("Player count %d, lightning hits %d, uncorrected new actions %d", playerCount, lightning_hits, new_actions)
+        
+        if lightning_hits > 0:
+            new_actions -= (4 * lightning_hits)
 
         Team.objects.filter(pk=self.pk).update(action_points=new_actions)
         Team.objects.filter(pk=self.pk).update(frontline_action_points=2*playerCount)
