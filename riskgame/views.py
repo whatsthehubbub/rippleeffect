@@ -339,7 +339,9 @@ class GameStartForm(forms.Form):
                     if role not in ['office', 'frontline']:
                         raise forms.ValidationError("Role for %s did not conform to 'frontline' or 'office'." % email)
 
-                    players.append((team_name, email, role))
+                    alias = row[3]
+
+                    players.append((team_name, email, role, alias))
             except:
                 raise forms.ValidationError("Did not receive a valid CSV file.")
 
@@ -378,12 +380,13 @@ def game_start(request):
                     team_name = player[0]
                     email = player[1]
                     role = player[2]
+                    alias = player[3]
 
                     user = EmailUser.objects.create_user(email=email)
                     # Put inviting this user in the queue
                     invite_user.delay(user, get_current_site(request))
 
-                    player, player_created = Player.objects.get_or_create(user=user)
+                    player, player_created = Player.objects.get_or_create(user=user, name=alias)
 
                     team, team_created = Team.objects.get_or_create(name=team_name)
 
