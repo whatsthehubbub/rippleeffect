@@ -90,13 +90,13 @@
                         <li id="turn-countdown" style="display:none;" data-seconds-left="{{ current_day.secondsleft }}"><span data-tooltip title="Time left for this turn." class="has-tip icon time"></span><span class="hours"></span><span class="dark-grey time-colon" style="visibility: hidden">:</span><span class="minutes"></span></li>
                     </ul>
 
-                    <div id="goal-zero" data-tooltip title="Number of turns without incidents." class="has-tip gz-{% if current_teamplayer.team.goal_zero_markers > 0 %}1{% else %}0{% endif %}">
+                    <div id="goal-zero" data-tooltip title="Number of consecutive turns without any incidents." class="has-tip gz-{% if current_teamplayer.team.goal_zero_markers > 0 %}1{% else %}0{% endif %}">
                         <span class="h-top">Goal</span>
                         <span class="score">{{ current_teamplayer.team.goal_zero_markers }}</span>
                         <span class="h-bot">Zero</span>
                     </div>
 
-                    <div id="points" data-tooltip title="Points scored during the game so far / Points scored during the current turn." class="has-tip">
+                    <div id="points" data-tooltip title="Points scored so far / Points<br />scored during the current turn." class="has-tip">
                         <span class="h-top">Points</span>
                         <span class="score">{{ current_teamplayer.team.victory_points }}</span>
                         <span class="h-bot dark-grey"><span class="small icon turn"></span>{{ current_teamplayer.team.victory_points_turn }}</span>
