@@ -104,9 +104,9 @@
             As you didn't find any resources, you didn't score any points.
         {% else %}
             {% if highmarket %}
-                You produced {{ resource_count }} resource{{ resource_count|pluralize }} worth {{ base_points }} base points each. Multiplied by a Goal Zero of {{ goal_zero }} and the current High Market doubler, you scored {{ points }} points in total!
+                You produced {{ resource_count }} resource{{ resource_count|pluralize }} worth {{ base_points }} base points. Multiplied by a Goal Zero of {{ goal_zero }} and the current High Market doubler, you scored {{ points }} points in total!
             {% else %}
-                You produced {{ resource_count }} resource{{ resource_count|pluralize }} worth {{ base_points }} base points each. Multiplied by a Goal Zero of {{ goal_zero }}, you scored {{ points }} points in total!
+                You produced {{ resource_count }} resource{{ resource_count|pluralize }} worth {{ base_points }} base points. Multiplied by a Goal Zero of {{ goal_zero }}, you scored {{ points }} points in total!
             {% endif %}
         {% endif %}
     {% endif %}
