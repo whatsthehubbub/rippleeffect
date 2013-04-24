@@ -96,10 +96,10 @@
                         <span class="h-bot">Zero</span>
                     </div>
 
-                    <div id="points">
+                    <div id="points" data-tooltip title="Points scored during the game so far / Points scored during the current turn." class="has-tip">
                         <span class="h-top">Points</span>
                         <span class="score">{{ current_teamplayer.team.victory_points }}</span>
-                        <span class="h-bot dark-grey"><span data-tooltip title="Points scored during the current turn." class="has-tip small icon turn"></span>{{ current_teamplayer.team.victory_points_turn }}</span>
+                        <span class="h-bot dark-grey"><span class="small icon turn"></span>{{ current_teamplayer.team.victory_points_turn }}</span>
                     </div>
 
                 </div>
