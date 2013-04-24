@@ -456,7 +456,7 @@ $sidebar-width: 270px;
 
         .actions.no-mate {
           text-transform: uppercase;
-          color: $mid-grey;
+          color: darken($mid-grey, 30%);
           font-family: $ff-medium;
           font-size: 14px;
           text-align: center;
