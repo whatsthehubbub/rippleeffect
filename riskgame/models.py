@@ -796,7 +796,7 @@ class Team(models.Model):
         playerCount = self.teamplayer_set.filter(role='office').count()
 
         new_actions = 4 * playerCount
-        if lightning_hit and new_actions >= 4:
+        if tp.lightning_hit and new_actions >= 4:
             new_actions -= 4
 
         Team.objects.filter(pk=self.pk).update(action_points=new_actions)
