@@ -173,19 +173,19 @@ class NotificationManager(models.Manager):
 
     # Event notifications
     def create_received_poorvision_event_notification(self, team, player):
-        return Notification.objects.create(identifier='player-received-poorvision-event', team=team, player=player)
+        return Notification.objects.create(identifier='player-received-poorvision-event', team=team, player=player, action=False)
     
     def create_received_tornado_event_notification(self, team, player):
-        return Notification.objects.create(identifier='player-received-tornado-event', team=team, player=player)
+        return Notification.objects.create(identifier='player-received-tornado-event', team=team, player=player, action=False)
     
     def create_received_highmarket_event_notification(self, team, player):
-        return Notification.objects.create(identifier='player-received-highmarket-event', team=team, player=player)
+        return Notification.objects.create(identifier='player-received-highmarket-event', team=team, player=player, action=False)
 
     def create_received_increasedrisk_event_notification(self, team, player):
-        return Notification.objects.create(identifier='player-received-increasedrisk-event', team=team, player=player)
+        return Notification.objects.create(identifier='player-received-increasedrisk-event', team=team, player=player, action=False)
 
     def create_received_lightning_event_notification(self, team, player):
-        return Notification.objects.create(identifier='player-received-lightning-event', team=team, player=player)
+        return Notification.objects.create(identifier='player-received-lightning-event', team=team, player=player, action=False)
 
     # Improvement notifications
     def create_improved_safety_notification(self, team, player):
@@ -214,6 +214,9 @@ class Notification(models.Model):
     datechanged = models.DateTimeField(auto_now=True)
 
     identifier = models.CharField(max_length=255)
+
+    # Set when this is a real player initiated action (mostly where they spend action points)
+    action = models.BooleanField(default=True)
 
     team = models.ForeignKey('Team')
     player = models.ForeignKey('Player')
