@@ -23,7 +23,7 @@
                 <p class="stat-row">Team ranking <span>{{ team.get_rank }}</span></p>
                 <p class="stat-row">Points scored so far<span>{{ team.victory_points }}</span></p>
                 <p class="stat-row">Resources produced so far<span>{{ team.resources_collected }}</span></p>
-                <p class="stat-row">Longest Goal Zero streak<span>{{ team.get_goal_zero_streak }}</span></p>
+                <p class="stat-row">Goal Zero<span>{{ team.goal_zero_markers }} currently / {{ team.get_goal_zero_streak }} longest</span></p>
                 <p class="stat-row triple-gutter-margin-bot">Active events<span>
                     {% for event in team.get_active_events %}
                         {{ event|event_name }}{% if not forloop.last %},{% endif %}
