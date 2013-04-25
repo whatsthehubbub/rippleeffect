@@ -102,6 +102,7 @@ Do partial updates
 ==================
 
 To update nginx:
+
     from fabfile import staging
     from fabfile.nginx import configure_site, restart_nginx
     staging()
@@ -109,6 +110,7 @@ To update nginx:
     restart_nginx()
 
 To enable automatic security updates:
+
     from fabfile import staging
     from fabfile.base import automate_security_updates
     staging()
