@@ -26,7 +26,9 @@
 
                     {% if notifications.paginator.num_pages > 1 and notifications.has_next %}
                         <div id="load-messages-container" class="notification clearfix">
-                            <a id="load-messages" href="?page={{ notifications.next_page_number }}" class="tiny btn js-no-refresh">Load more messages</a>
+                            <div class="message clearfix">
+                                <a id="load-messages" href="?page={{ notifications.next_page_number }}" class="tiny btn js-no-refresh">Load more messages</a>
+                            </div>
                         </div>
                     {% endif %}
                 {% else %}
@@ -37,7 +39,7 @@
                     </div>
                 {% endif %}
 
-                <p class="double-gutter-margin-bot">&nbsp;</p>
+                <p class="half-gutter-margin-bot">&nbsp;</p>
 
             </div>
         </div>
