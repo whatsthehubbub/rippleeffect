@@ -78,7 +78,7 @@
 
                         <li><span data-tooltip title="Current turn / Total turns in this episode." class="has-tip icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
 
-                        <li><span data-tooltip title="Number of {{ current_teamplayer.role }} actions left for the current turn." class="has-tip icon action"></span>
+                        <li><span data-tooltip title="Number of {{ current_teamplayer.role }} actions left. Actions are shared by the team and replenish every turn." class="has-tip icon action"></span>
                         {% ifequal current_teamplayer.role "office" %}
                           {{ current_teamplayer.team.action_points }}
                         {% else %}
