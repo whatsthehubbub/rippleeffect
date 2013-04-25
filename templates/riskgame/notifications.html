@@ -5,7 +5,7 @@
 
 {% block content %}
 
-    <section class="modal message">
+    <section class="modal message" id="message-list" data-endpoint="?page=" data-current-page="{{ notifications.number }}" data-last-page="{{ notifications.paginator.num_pages }}">
         <div class="row">
             <div class="sheet large-12 columns">
 
@@ -18,9 +18,19 @@
                 </header>
 
                 {% if notifications|length > 0 %}
-                    {% for notification in notifications %}
-                        {% include "partials/notification.html" %}
-                    {% endfor %}
+                    <div id="message-list-container">
+                        {% for notification in notifications %}
+                            {% include "partials/notification.html" %}
+                        {% endfor %}
+                    </div>
+
+                    {% if notifications.paginator.num_pages > 1 and notifications.has_next %}
+                        <div id="load-messages-container" class="notification clearfix">
+                            <div class="message clearfix">
+                                <a id="load-messages" href="?page={{ notifications.next_page_number }}" class="tiny btn js-no-refresh">Load more messages</a>
+                            </div>
+                        </div>
+                    {% endif %}
                 {% else %}
                     <div class="notification clearfix">
                         <div class="message clearfix">
@@ -29,13 +39,7 @@
                     </div>
                 {% endif %}
 
-                <p>
-                    {% if notifications.has_previous %}<a href="?page={{ notifications.previous_page_number }}">&lt;</a>{% endif %}
-                    Page {{ notifications.number }} of {{ notifications.paginator.num_pages }}
-                    {% if notifications.has_next %}<a href="?page={{ notifications.next_page_number }}">&gt;</a>{% endif %}
-                </p>
-
-                <p class="double-gutter-margin-bot">&nbsp;</p>
+                <p class="half-gutter-margin-bot">&nbsp;</p>
 
             </div>
         </div>
