@@ -404,7 +404,7 @@ def game_start(request):
                 # Delete all non admin users
                 EmailUser.objects.exclude(is_admin=True).delete()
                 
-                Player.object.all().delete()
+                Player.objects.all().delete()
                 Team.objects.all().delete()
                 TeamPlayer.objects.all().delete()
 
