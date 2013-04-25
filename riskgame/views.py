@@ -193,8 +193,6 @@ def notifications(request):
     player = request.user.get_or_create_player()
     teamplayer = TeamPlayer.objects.get(player=player)
 
-    t = loader.get_template('riskgame/notifications.html')
-
     nots = Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')
     paginator = Paginator(nots, 5)
 
@@ -207,12 +205,19 @@ def notifications(request):
     except EmptyPage:
         notifications = paginator.page(paginator.num_pages)
 
-    c = RequestContext(request, {
-        'notifications': notifications,
-        'title': 'messages'
-    })
+    if not request.is_ajax():
+        t = loader.get_template('riskgame/notifications.html')
 
-    return HttpResponse(t.render(c))
+        c = RequestContext(request, {
+            'notifications': notifications,
+            'title': 'messages'
+        })
+
+        return HttpResponse(t.render(c))
+    else:
+        t = loader.get_template('partials/notification.html')
+
+        return HttpResponse('\n'.join([t.render(RequestContext(request, {'notification': n})) for n in notifications]))
 
 
 @login_required
