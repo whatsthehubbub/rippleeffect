@@ -33,12 +33,12 @@
                 <div class="safety-stack gutter-pad-h half-gutter-pad-top half-gutter-pad-bot">
                     <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
                         <input type="hidden" name="pile" value="risk">
-                        <input type="submit" class="tiny safety action btn" value="Inspect">
+                        <input type="submit" class="tiny safety action btn has-tip" value="Inspect" data-tooltip title="Shuffles, then reveals part of your safety stack. Costs one action.">
                     </form>
 
                     <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
                         <input type="hidden" name="pile" value="risk">
-                        <input type="submit" class="tiny safety action btn" value="Improve">
+                        <input type="submit" class="tiny safety action btn has-tip" value="Improve" data-tooltip title="Adds a blank token to your safety stack, shuffles it, then removes a random token. Costs one action.">
                     </form>
                 </div>
             </div>
@@ -54,12 +54,12 @@
                 <div class="quality-stack gutter-pad-h half-gutter-pad-top half-gutter-pad-bot">
                     <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
                         <input type="hidden" name="pile" value="gather">
-                        <input type="submit" class="tiny production action btn" value="Inspect">
+                        <input type="submit" class="tiny production action btn has-tip" value="Inspect" data-tooltip title="Shuffles, then reveals part of your production quality stack. Costs one action.">
                     </form>
 
                     <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
                         <input type="hidden" name="pile" value="gather">
-                        <input type="submit" class="tiny production action btn" value="Improve">
+                        <input type="submit" class="tiny production action btn has-tip" value="Improve" data-tooltip title="Adds a resource token to your production quality stack, shuffles it, then removes a random token. Costs one action.">
                     </form>
                 </div>
             </div>
@@ -80,21 +80,21 @@
                 {% else %}
                     <div class="production-plan">
                             <form class="relative" method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
-                                <input type="submit" class="tiny barrier action btn" value="Place barrier">
+                                <input type="submit" class="tiny barrier action btn has-tip" value="Place barrier" data-tooltip title="Places a barrier. Each barrier cancels out one risk encountered during production. Costs one action.">
                                 <span class="barrier badge">{{ current_teamplayer.prevent_markers }}</span>
                             </form>
 
                             <form class="relative" method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
-                                <input type="submit" class="tiny plan action btn" value="Plan production">
+                                <input type="submit" class="tiny plan action btn has-tip" value="Plan production" data-tooltip title="Reserves a resource production slot. Each slot allows you to take one token from your production quality stack. Costs one action.">
                                 <span class="production badge">{{ current_teamplayer.gather_markers }}</span>
                             </form>
                     </div>
 
                     <div class="production-produce">
                         {% if current_teamplayer.gather_markers < 1 %}
-                            <a href="javascript:void(0)" class="tiny disabled produce btn">Confirm production</a>
+                            <a href="javascript:void(0)" class="tiny disabled produce btn has-tip" data-tooltip title="Reserve at least one resource production slot first.">Confirm production</a>
                         {% else %}
-                            <a href="{% url 'play_confirm_pump' %}" class="tiny produce btn">Confirm production</a>
+                            <a href="{% url 'play_confirm_pump' %}" class="tiny produce btn has-tip" data-tooltip title="Starts production. All barriers and reserved production slots will be used up. Costs no actions.">Confirm production</a>
                         {% endif %}
                     </div>
                 {% endif %}
