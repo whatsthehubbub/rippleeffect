@@ -1,0 +1,24 @@
+{% extends "base-lobby.html" %}
+
+{% block content %}
+
+    {% include "partials/lobby-logo-header.html" %}
+
+    <div class="row">
+        <div class="sheet large-6 large-centered columns">
+            <header>
+                <h5>
+                    Start a new game
+                </h5>
+            </header>
+
+            <div class="ui-box-content">
+                <form method="POST" action="{% url 'game_start' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ startform.as_p }}
+                    <input type="submit">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -14,6 +14,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.contrib.sites.models import get_current_site
 
+from django.shortcuts import render
+
 from django.views.decorators.http import require_POST
 
 # from django.utils.translation import ugettext_lazy as _
@@ -307,8 +309,6 @@ def home(request):
             })
                 
             messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
-    
-    c['startform'] = GameStartForm()
 
     return HttpResponse(t.render(c))
 
@@ -393,12 +393,12 @@ class GameStartForm(forms.Form):
 @user_passes_test(lambda u: u.is_admin)
 def game_start(request):
     if request.method == 'POST':
-        form = GameStartForm(request.POST, request.FILES)
+        startform = GameStartForm(request.POST, request.FILES)
 
-        if form.is_valid():
-            minutes = form.cleaned_data.get('turn_minutes', 10)
-            start = form.cleaned_data.get('start', timezone.now())
-            players = form.cleaned_data.get('players', [])
+        if startform.is_valid():
+            minutes = startform.cleaned_data.get('turn_minutes', 10)
+            start = startform.cleaned_data.get('start', timezone.now())
+            players = startform.cleaned_data.get('players', [])
 
             logger.info("Starting a game of %d minutes starting on %s", minutes, str(start))
 
@@ -461,6 +461,12 @@ def game_start(request):
             change_days()
 
             return HttpResponseRedirect(reverse('home'))
+    else:
+        startform = GameStartForm()
+
+    return render(request, 'riskgame/start_new_game.html', {
+        'startform': startform
+    })
 
 # Frontline actions
 
