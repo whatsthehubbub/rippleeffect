@@ -1,6 +1,10 @@
 <h4 class="action-cost">Spent <span>1</span> Action</h4>
 <h3 class="text-center double-gutter-pad-top">Safety Inspection Report</h3>
-<p class="text-center">Shuffling your stack and revealing half of it.</p>
+{% if poorvision %}
+    <p class="text-center">Shuffling your stack and revealing one less than half because of Poor Vision.</p>
+{% else %}
+    <p class="text-center">Shuffling your stack and revealing half of it.</p>
+{% endif %}
 
 <div class="coingroup triple-gutter-pad-top">
     {% for unknown in unknowns %}
