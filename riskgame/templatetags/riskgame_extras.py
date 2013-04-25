@@ -21,7 +21,7 @@ def event_name(event_code):
 @register.filter
 def team_color(team):
     # returns the calculated color for the team (derived from the team name) as a hex value
-    if team.name:
+    if team and team.name:
         m = hashlib.md5()
         m.update(team.name)
 
@@ -31,10 +31,13 @@ def team_color(team):
 @register.filter
 def player_color(player):
     # returns the calculated color for the player (derived from the player's email address) as a hex value
-    m = hashlib.md5()
-    m.update(player.email())
+    
+    if player and player.email():
+        m = hashlib.md5()
+        m.update(player.email())
 
-    return '#%s' % m.hexdigest()[:6]
+        return '#%s' % m.hexdigest()[:6]
+    return "#CFC59F"
 
 @register.filter(name='times')
 def times(number):
