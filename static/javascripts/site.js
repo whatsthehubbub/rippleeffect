@@ -13,6 +13,7 @@
       $(document).on('click', 'html:not(.touch) a:not(.js-no-refresh)', RE.handleButtonClick);
       $(document).on('click', 'html.touch a:not(.js-no-refresh)', RE.handleButtonTouch);
       $(document).on('click', '#load-messages', RE.handleMoreMessages);
+      $(document).on('click', '.js-confirmable', RE.confirmLink);
       return this.resize();
     },
     resize: function() {
@@ -46,6 +47,15 @@
           }
           return $('#message-list-container').append(data);
         });
+      }
+      return false;
+    },
+    confirmLink: function(e) {
+      var response;
+      e.preventDefault();
+      response = confirm($(this).data('confirmation'));
+      if (response) {
+        window.location.assign($(this).attr('href'));
       }
       return false;
     }
