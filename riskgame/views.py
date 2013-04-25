@@ -194,7 +194,7 @@ def notifications(request):
     teamplayer = TeamPlayer.objects.get(player=player)
 
     nots = Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')
-    paginator = Paginator(nots, 5)
+    paginator = Paginator(nots, 50)
 
     page = request.GET.get('page')
 
