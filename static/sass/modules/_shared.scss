@@ -55,6 +55,10 @@ header {
       border-bottom: 1px solid $off-white;
     }
 
+    &.no-line {
+      border-color: transparent;
+    }
+
     &.pad-left {
       padding-left: $gutter*0.5 + 16px;
     }

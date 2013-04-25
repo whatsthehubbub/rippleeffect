@@ -14,6 +14,11 @@
       $(document).on('click', 'html.touch a:not(.js-no-refresh)', RE.handleButtonTouch);
       $(document).on('click', '#load-messages', RE.handleMoreMessages);
       $(document).on('click', '.js-confirmable', RE.confirmLink);
+      if ($('.event').length > 0) {
+        $('.event').each(function(i, el) {
+          return RE.pulse(el);
+        });
+      }
       return this.resize();
     },
     resize: function() {
@@ -58,6 +63,16 @@
         window.location.assign($(this).attr('href'));
       }
       return false;
+    },
+    pulse: function(el) {
+      console.log(el);
+      return $(el).animate({
+        backgroundColor: '#FE944E'
+      }, 1000, 'swing').animate({
+        backgroundColor: '#FEB94E'
+      }, 1000, 'swing', function() {
+        return RE.pulse(this);
+      });
     }
   };
 

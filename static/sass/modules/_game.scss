@@ -20,7 +20,7 @@ $sidebar-width: 270px;
 
       h1 {
         margin: 0;
-        padding: 30px 0 $gutter*3 0;
+        padding: $gutter 0 $gutter*2 0;
 
         a {
           display:block;
@@ -201,6 +201,68 @@ $sidebar-width: 270px;
       }
     }
 
+    #events {
+      overflow: hidden;
+      margin-top: $gutter*1.5;
+
+      .event {
+        padding: $gutter*0.5 65px $gutter*0.5 $gutter;
+        margin: 0 $gutter*0.5 $gutter*0.5 $gutter*0.5;
+        height: 38px;
+
+        text-align: right;
+
+        background-color: $orange;
+        background-repeat: no-repeat;
+        background-position: right bottom;
+
+        font-size: 14px;
+        font-family: $ff-medium;
+        line-height: 28px;
+
+        span {
+          text-align: left;
+          float:left;
+          font-size: 11px;
+          font-family: $ff-bold;
+          display: block;
+          height: 24px;
+          line-height: 30px;
+          text-transform: uppercase;
+          color: #62481e; // dark yellow
+        }
+
+        &.caution {
+          background-image: url('../img/event-caution.png');
+          @include image-2x('../img/event-caution@2x.png', 60px, 38px);
+        }
+
+        &.tornado {
+          background-image: url('../img/event-tornado.png');
+          @include image-2x('../img/event-tornado@2x.png', 60px, 38px);
+        }
+
+        &.lightning {
+          background-image: url('../img/event-lightning.png');
+          @include image-2x('../img/event-lightning@2x.png', 60px, 38px);
+        }
+
+        &.high-market {
+          background-image: url('../img/event-high-market.png');
+          @include image-2x('../img/event-high-market@2x.png', 60px, 38px);
+        }
+
+        &.poor-vision {
+          background-image: url('../img/event-poor-vision.png');
+          @include image-2x('../img/event-poor-vision@2x.png', 60px, 38px);
+        }
+
+
+      }
+
+
+    }
+
   }
 
   #main {
@@ -231,6 +293,7 @@ $sidebar-width: 270px;
 
     // generic game UI styles
     .game-ui {
+      margin-top: 82px !important;
 
       form {
         margin: 0;
@@ -242,75 +305,6 @@ $sidebar-width: 270px;
         background-repeat: no-repeat;
         background-position: 1px 6px;
         padding-left: 15px;
-      }
-
-      #events {
-        height: 112px;
-        overflow: hidden;
-
-        .event {
-          float: left;
-          width: 106px;
-          height: 106px;
-          padding: 3px;
-          margin-right: $gutter;
-          background: url('../img/event-frame.png') no-repeat;
-          @include image-2x('../img/event-frame@2x.png', 106px, 106px);
-          text-align: center;
-
-          div {
-            // inner div containing bg image
-            width: 100px;
-            height: 100px;
-            background-repeat: no-repeat;
-            background-position: center bottom;
-
-            font-size: 14px;
-            font-family: $ff-medium;
-            line-height: 13px;
-
-
-            span {
-              font-size: 11px;
-              font-family: $ff-bold;
-              display: block;
-              height: 24px;
-              line-height: 26px;
-              text-transform: uppercase;
-              color: $dark-grey;
-            }
-          }
-
-          &.caution div {
-            background-image: url('../img/event-caution.png');
-            @include image-2x('../img/event-caution@2x.png', 99px, 61px);
-          }
-
-          &.tornado div {
-            background-image: url('../img/event-tornado.png');
-            @include image-2x('../img/event-tornado@2x.png', 99px, 61px);
-          }
-
-          &.lightning div {
-            background-image: url('../img/event-lightning.png');
-            @include image-2x('../img/event-lightning@2x.png', 99px, 61px);
-          }
-
-          &.high-market div {
-            background-image: url('../img/event-high-market.png');
-            @include image-2x('../img/event-high-market@2x.png', 99px, 61px);
-          }
-
-          // todo: add this asset
-          &.poor-vision div {
-            background-image: url('../img/event-poor-vision.png');
-            @include image-2x('../img/event-poor-vision@2x.png', 99px, 61px);
-          }
-
-
-        }
-
-
       }
 
       #safety-box {

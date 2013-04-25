@@ -23,6 +23,7 @@
 
         <script src="{{ STATIC_URL }}javascripts/vendor/custom.modernizr.js"></script>
         <script src="{{ STATIC_URL }}javascripts/vendor/jquery.min.js"></script>
+        <script src="{{ STATIC_URL }}javascripts/vendor/jquery.color.min.js"></script>
         <script src="{{ STATIC_URL }}javascripts/vendor/jquery.watermark.min.js"></script>
         <script src="{{ STATIC_URL }}javascripts/site.js"></script>
         <script src="{{ STATIC_URL }}javascripts/forms.js"></script>
@@ -102,6 +103,9 @@
 
                 </div>
             </div>
+
+            {% include "partials/game/events.html" %}
+
         {% endif %}
 
 

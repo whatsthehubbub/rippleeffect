@@ -1,51 +1,47 @@
 {% load riskgame_extras %}
 <div id="events">
 
+{% if current_teamplayer.get_active_events|add:current_teamplayer.team.get_active_events|length > 0 %}
+    <header>
+        <h5 class="no-line tight">Events</h5>
+    </header>
+{% endif %}
+
     {% for e in current_teamplayer.get_active_events|add:current_teamplayer.team.get_active_events %}
         {% with e|event_name as event %}
 
             {% ifequal event "Tornado" %}
                 <div data-tooltip title="If there’s an incident, your team will lose its actions." class="has-tip event tornado">
-                    <div>
-                        <span>Team event</span>
-                        Tornado
-                    </div>
+                    <span>Team event</span>
+                    Tornado
                 </div>
             {% endifequal %}
 
             {% ifequal event "Increased Risk" %}
                 <div data-tooltip title="Your safety may have decreased." class="has-tip event caution">
-                    <div>
-                        <span>Your event</span>
-                        Increased Risk
-                    </div>
+                    <span>Your event</span>
+                    Increased Risk
                 </div>
             {% endifequal %}
 
             {% ifequal event "High Market" %}
                 <div data-tooltip title="Resources give double points." class="has-tip event high-market">
-                    <div>
-                        <span>Team event</span>
-                        High Market
-                    </div>
+                    <span>Team event</span>
+                    High Market
                 </div>
             {% endifequal %}
 
             {% ifequal event "Lightning" %}
                 <div data-tooltip title="{% if current_teamplayer.lightning_hit %}You were hit by lightning and lost four actions.{% else %}You were nearly hit by lightning.{% endif %}" class="has-tip event lightning">
-                    <div>
-                        <span>Your event</span>
-                        Lightning
-                    </div>
+                    <span>Your event</span>
+                    Lightning
                 </div>
             {% endifequal %}
 
             {% ifequal event "Poor Vision" %}
                 <div data-tooltip title="Inspections are less effective during this turn." class="has-tip event poor-vision">
-                    <div>
-                        <span>Team event</span>
-                        Poor Vision
-                    </div>
+                    <span>Team event</span>
+                    Poor Vision
                 </div>
             {% endifequal %}
 

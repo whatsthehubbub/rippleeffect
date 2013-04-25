@@ -14,6 +14,11 @@ $ ->
     $(document).on('click', '#load-messages', RE.handleMoreMessages)
     $(document).on('click', '.js-confirmable', RE.confirmLink)
 
+    if $('.event').length > 0
+      $('.event').each( (i, el) ->
+        RE.pulse(el)
+      )
+
     @resize()
 
   # update sidebar height when viewport is resized
@@ -62,3 +67,9 @@ $ ->
       window.location.assign($(this).attr('href'))
 
     return false
+
+  pulse:(el) ->
+    console.log (el)
+    $(el).animate({backgroundColor: '#FE944E'}, 1000, 'swing').animate({backgroundColor: '#FEB94E'}, 1000, 'swing', ->
+      RE.pulse(this)
+    )
