@@ -81,6 +81,12 @@ $sidebar-width: 270px;
           width: 78px;
         }
 
+        .signout.btn {
+          color: $dark-grey;
+          background-color: transparent;
+          border-color: transparent;
+        }
+
         // IE friendly way of doing nth-child(3)
         .btn.row-end {
           margin-right: 0;

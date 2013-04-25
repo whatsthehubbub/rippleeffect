@@ -61,7 +61,7 @@
                     <a href="{% url 'team_your' %}" class="tiny btn row-end {% ifequal title "team" %}active{% endifequal %}">Team</a>
                     <a href="{% url 'teams' %}" class="tiny btn {% ifequal title "rankings" %}active{% endifequal %}">Rankings</a>
                     <a href="{% url 'player_profile_own' %}" class="tiny btn {% ifequal title "profile" %}active{% endifequal %}">Profile</a>
-                    <a href="{% url 'auth_logout' %}" class="tiny btn row-end js-no-refresh" data-confirmation="Are you sure you want to sign out?">Sign out</a>
+                    <a href="{% url 'auth_logout' %}" class="tiny signout btn row-end js-no-refresh" data-confirmation="Are you sure you want to sign out?">Sign out</a>
                 </nav>
 
             </div>
