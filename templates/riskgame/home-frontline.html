@@ -24,7 +24,7 @@
                 <header>
                     <h5>
                         Office players
-                        <span data-tooltip class="help has-tip" title="Inspect your team members' stations">?</span>
+                        <span data-tooltip class="help has-tip" title="Inspect the safety of your team members' stations and predict upcoming events.">?</span>
                     </h5>
                 </header>
 
@@ -52,7 +52,7 @@
 
                     <form method="POST" action="{% url 'frontline_event' %}"> {% csrf_token %}
                         <input type="hidden" id="team-mate-predict-id" name="target" value="2">
-                        <input type="submit" class="tiny predict action btn {% if current_day.number == 7 %}disabled{% endif %}" {% if current_day.number == 7 %}disabled{% endif %}  value="Predict event">
+                        <input type="submit" class="tiny predict action btn {% if current_day.number == 7 %}disabled has-tip{% endif %}" {% if current_day.number == 7 %}disabled data-tooltip title="You can't predict events in the last turn of an episode."{% endif %} value="Predict event">
                     </form>
                 </div>
 
