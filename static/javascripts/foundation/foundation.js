@@ -13,21 +13,22 @@
 // See http://docs.jquery.com/Using_jQuery_with_Other_Libraries
 // and http://zeptojs.com/
 var libFuncName = null;
+
 if (typeof jQuery === "undefined" &&
     typeof Zepto === "undefined" &&
     typeof $ === "function") {
-    libFuncName = $;
+  libFuncName = $;
 } else if (typeof jQuery === "function") {
-    libFuncName = jQuery;
+  libFuncName = jQuery;
 } else if (typeof Zepto === "function") {
-    libFuncName = Zepto;
+  libFuncName = Zepto;
 } else {
-    throw new TypeError();
+  throw new TypeError();
 }
 
-(function ($) {
+(function ($, window, document, undefined) {
+  'use strict';
 
-(function () {
   // add dusty browser stuff
   if (!Array.prototype.filter) {
     Array.prototype.filter = function(fun /*, thisp */) {
@@ -36,17 +37,13 @@ if (typeof jQuery === "undefined" &&
       if (this == null) {
         throw new TypeError();
       }
-   
+
       var t = Object(this),
           len = t.length >>> 0;
       if (typeof fun != "function") {
-        try {
-          throw new TypeError();
-        } catch (e) {
           return;
-        }
       }
-   
+
       var res = [],
           thisp = arguments[1];
       for (var i = 0; i < len; i++) {
@@ -57,48 +54,44 @@ if (typeof jQuery === "undefined" &&
           }
         }
       }
-   
-      return res;
-    };
 
-    if (!Function.prototype.bind) {
-      Function.prototype.bind = function (oThis) {
-        if (typeof this !== "function") {
-          // closest thing possible to the ECMAScript 5 internal IsCallable function
-          throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
-        }
-     
-        var aArgs = Array.prototype.slice.call(arguments, 1), 
-            fToBind = this, 
-            fNOP = function () {},
-            fBound = function () {
-              return fToBind.apply(this instanceof fNOP && oThis
-                 ? this
-                 : oThis,
-               aArgs.concat(Array.prototype.slice.call(arguments)));
-            };
-     
-        fNOP.prototype = this.prototype;
-        fBound.prototype = new fNOP();
-     
-        return fBound;
-      };
+      return res;
     }
+  }
+
+  if (!Function.prototype.bind) {
+    Function.prototype.bind = function (oThis) {
+      if (typeof this !== "function") {
+        // closest thing possible to the ECMAScript 5 internal IsCallable function
+        throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+      }
+   
+      var aArgs = Array.prototype.slice.call(arguments, 1), 
+          fToBind = this, 
+          fNOP = function () {},
+          fBound = function () {
+            return fToBind.apply(this instanceof fNOP && oThis
+               ? this
+               : oThis,
+             aArgs.concat(Array.prototype.slice.call(arguments)));
+          };
+   
+      fNOP.prototype = this.prototype;
+      fBound.prototype = new fNOP();
+   
+      return fBound;
+    };
   }
 
   // fake stop() for zepto.
   $.fn.stop = $.fn.stop || function() {
     return this;
   };
-}());
-
-;(function (window, document, undefined) {
-  'use strict';
 
   window.Foundation = {
     name : 'Foundation',
 
-    version : '4.0.8',
+    version : '4.1.3',
 
     // global Foundation cache object
     cache : {},
@@ -108,10 +101,13 @@ if (typeof jQuery === "undefined" &&
           args = [scope, method, options, response],
           responses = [],
           nc = nc || false;
-          
+
       // disable library error catching,
       // used for development only
       if (nc) this.nc = nc;
+
+      // check RTL
+      this.rtl = /rtl/i.test($('html').attr('dir'));
 
       // set foundation global scope
       this.scope = scope || this.scope;
@@ -141,9 +137,9 @@ if (typeof jQuery === "undefined" &&
     },
 
     response_obj : function (response_arr, args) {
-      for (var callback in args) {
-        if (typeof args[callback] === 'function') {
-          return args[callback]({
+      for (var i = 0, len = args.length; i < len; i++) {
+        if (typeof args[i] === 'function') {
+          return args[i]({
             errors: response_arr.filter(function (s) {
               if (typeof s === 'string') return s;
             })
@@ -177,6 +173,8 @@ if (typeof jQuery === "undefined" &&
 
     patch : function (lib) {
       this.fix_outer(lib);
+      lib.scope = this.scope;
+      lib.rtl = this.rtl;
     },
 
     inherit : function (scope, methods) {
@@ -191,11 +189,11 @@ if (typeof jQuery === "undefined" &&
 
     random_str : function (length) {
       var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz'.split('');
-      
+
       if (!length) {
           length = Math.floor(Math.random() * chars.length);
       }
-      
+
       var str = '';
       for (var i = 0; i < length; i++) {
           str += chars[Math.floor(Math.random() * chars.length)];
@@ -356,7 +354,7 @@ if (typeof jQuery === "undefined" &&
         return jQuery;
       }
     }()
-  },
+  };
 
   $.fn.foundation = function () {
     var args = Array.prototype.slice.call(arguments, 0);
@@ -367,6 +365,4 @@ if (typeof jQuery === "undefined" &&
     });
   };
 
-}(this, this.document));
-
-})(libFuncName);
+}(libFuncName, this, this.document));
