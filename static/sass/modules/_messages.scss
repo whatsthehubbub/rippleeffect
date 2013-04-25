@@ -1,8 +1,9 @@
 
 .episode-intro, .event-intro {
   height: 300px;
-  border: 6px solid #fff;
-  border-bottom: none;
+  //border: 6px solid transparent;
+  //border-bottom: none;
+  margin: 6px 6px 0 6px;
 }
 
 h4.action-cost {
