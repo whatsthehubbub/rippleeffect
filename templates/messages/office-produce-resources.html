@@ -17,7 +17,7 @@
                 <div class="coin production no">0</div>
             {% endif %}
         {% endfor %}
-        {% if not forloop.last %}<div>|</div>{% endif %}
+        {% if not forloop.last %}<div class="divider"></div>{% endif %}
     {% endfor %}
 
     <p class="text-center gutter-pad-top">
@@ -45,7 +45,7 @@
                 <div class="coin safety yes">{{ coin }}</div>
             {% endif %}
         {% endfor %}
-    {% if not forloop.last %}<div>|</div>{% endif %}
+    {% if not forloop.last %}<div class="divider"></div>{% endif %}
     {% endfor %}
 
     <p class="text-center gutter-pad-top">
@@ -78,8 +78,8 @@
     </h5>
 </header>
 
-<div class="coingroup double-gutter-pad-bot">
-    <p class="text-center gutter-pad-top">
+
+    <p class="text-center gutter-pad-top narrow">
         {% if barrier_count > 0 and incident_count > barrier_count %} <!-- Barriers set, but less than number of risks, so incident. -->
             Your {{ barrier_count }} barrier{{ barrier_count|pluralize }} didn't prevent {{ incident_count }} risk{{ incident_count|pluralize }} from turning into an incident.
         {% elif barrier_count > 0 and incident_count <= barrier_count and incident_count > 0 %} <!-- Barriers set, equal to or more than risks, so no incident. -->
@@ -92,7 +92,7 @@
             You didn't encounter any risks.
         {% endif %}
     </p>
-    <p>
+    <p class="text-center narrow">
     {% if incident_count > barrier_count %}
         {% if resource_count == 0 %}
             You didn't produce any resources. If you had, you would've lost them in the incident.
@@ -111,7 +111,7 @@
         {% endif %}
     {% endif %}
     </p>
-</div>
+
 
 {% ifequal episode.number 1 %}	
 	{% if incident_count > barrier_count %}

@@ -90,7 +90,12 @@ blockquote {
   height: 42px;
   display:inline-block;
   text-indent: -999999em;
+}
 
+.step-divider {
+  height: 13px;
+  background: url('../img/step-divider.png') no-repeat center top;
+  margin: $gutter 0;
 }
 
 p.narrow {
