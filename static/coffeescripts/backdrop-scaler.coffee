@@ -12,7 +12,7 @@ $(window).on('load', -> BackdropScaler.initialize() )
 
   resize: ->
     if ( $(window).width() / $(window).height() ) < BackdropScaler.aspectRatio
-      $('#backdrop').removeClass().addClass('bgheight')
+      $('#backdrop').removeClass('bgwidth').addClass('bgheight')
     else
-      $('#backdrop').removeClass().addClass('bgwidth')
+      $('#backdrop').removeClass('bgheight').addClass('bgwidth')
     $('#backdrop').show()

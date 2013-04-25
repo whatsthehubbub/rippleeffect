@@ -100,10 +100,19 @@ header {
 
 img#backdrop {
   position: fixed;
-  bottom: 0;
-  right: 0;
+
+  left: 0;
   max-width: none;
-  z-index: -1
+  z-index: -1;
+
+  &.top {
+    top: 0;
+  }
+
+  &.bottom {
+    bottom: 0;
+  }
+
 }
 .bgwidth { width: 100%; }
 .bgheight { height: 100%; }

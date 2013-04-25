@@ -17,9 +17,9 @@
     },
     resize: function() {
       if (($(window).width() / $(window).height()) < BackdropScaler.aspectRatio) {
-        $('#backdrop').removeClass().addClass('bgheight');
+        $('#backdrop').removeClass('bgwidth').addClass('bgheight');
       } else {
-        $('#backdrop').removeClass().addClass('bgwidth');
+        $('#backdrop').removeClass('bgheight').addClass('bgwidth');
       }
       return $('#backdrop').show();
     }
