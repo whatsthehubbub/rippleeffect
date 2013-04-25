@@ -225,7 +225,11 @@ def home(request):
     game = Game.objects.get_latest_game()
 
     player = request.user.get_or_create_player()
-    teamplayer = TeamPlayer.objects.get(player=player)
+
+    try:
+        teamplayer = TeamPlayer.objects.get(player=player)
+    except TeamPlayer.DoesNotExist:
+        return HttpResponseRedirect('/admin/')
     
     if timezone.now() < game.start:
         # Pre game
