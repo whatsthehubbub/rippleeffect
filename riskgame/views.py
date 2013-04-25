@@ -179,7 +179,8 @@ def player_profile_edit(request):
         profileform = ProfileForm(instance=player)
 
     c = RequestContext(request, {
-        'profileform': profileform
+        'profileform': profileform,
+        "title": "profile"
     })
 
     return HttpResponse(t.render(c))
