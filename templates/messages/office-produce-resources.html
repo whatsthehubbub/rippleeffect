@@ -17,7 +17,7 @@
                 <div class="coin production no">0</div>
             {% endif %}
         {% endfor %}
-        {% if not forloop.last %}<div class="divider"></div>{% endif %}
+        {% if not forloop.last %}<div class="step-divider"></div>{% endif %}
     {% endfor %}
 
     <p class="text-center gutter-pad-top">
@@ -45,7 +45,7 @@
                 <div class="coin safety yes">{{ coin }}</div>
             {% endif %}
         {% endfor %}
-    {% if not forloop.last %}<div class="divider"></div>{% endif %}
+    {% if not forloop.last %}<div class="step-divider"></div>{% endif %}
     {% endfor %}
 
     <p class="text-center gutter-pad-top">
