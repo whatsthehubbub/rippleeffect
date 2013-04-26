@@ -1,27 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<h3 class="text-center triple-gutter-pad-top">How to play</h3>
 
-	<header>
-	    <h5 class="text-center pad-left">
-	        A header
-	    </h5>
-	</header>
+<section class="modal message" id="message-list">
+    <div class="row">
+        <div class="sheet large-12 columns">
 
-	<p class="narrow">klja sdlja dlkj alkdjas lkj aslkdjsa ldkj dlakjd asldkjsa dlkajd saldkjs lskajd ljka dljkasl d</p>
+			<h3 class="text-center triple-gutter-pad-top">How to play</h3>
 
-	<!-- // -->
+			<header>
+			    <h5 class="text-center pad-left">
+			        A header
+			    </h5>
+			</header>
 
-	<header>
-	    <h5 class="text-center pad-left">
-	        A header
-	    </h5>
-	</header>
+			<p class="narrow">klja sdlja dlkj alkdjas lkj aslkdjsa ldkj dlakjd asldkjsa dlkajd saldkjs lskajd ljka dljkasl d</p>
 
-	<p class="narrow">klja sdlja dlkj alkdjas lkj aslkdjsa ldkj dlakjd asldkjsa dlkajd saldkjs lskajd ljka dljkasl d</p>
+			<!-- // -->
 
-	<!-- // -->
+			<header>
+			    <h5 class="text-center pad-left">
+			        A header
+			    </h5>
+			</header>
 
-	<a href="{% url 'home' %}" class='triple-gutter-margin-top quad-gutter-margin-bot medium grey centered dismiss btn js-continue'>Continue</a>
+			<p class="narrow">klja sdlja dlkj alkdjas lkj aslkdjsa ldkj dlakjd asldkjsa dlkajd saldkjs lskajd ljka dljkasl d</p>
+
+			<!-- // -->
+
+			<a href="{% url 'home' %}" class='triple-gutter-margin-top quad-gutter-margin-bot medium grey centered dismiss btn js-continue'>Continue</a>
+		</div>
+	</div>
+</section>
+
 {% endblock %}
