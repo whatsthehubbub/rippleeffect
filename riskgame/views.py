@@ -697,6 +697,15 @@ def play_confirm_pump(request):
 
     return HttpResponseRedirect(reverse('home'))
 
+@login_required
+def how_to_play(request):
+    t = loader.get_template('messages/how-to-play.html')
+    c = RequestContext(request, {
+
+    })
+
+    messages.add_message(request, messages.INFO, t.render(c))
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 def play_pump(request):
