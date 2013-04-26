@@ -85,14 +85,14 @@
                             </form>
 
                             <form class="relative" method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
-                                <input type="submit" class="tiny plan action btn has-tip" value="Plan production" data-tooltip title="Reserves a resource production slot. Each slot allows you to take one token from your production quality stack. Costs one action.">
+                                <input type="submit" class="tiny plan action btn has-tip" value="Plan production" data-tooltip title="Plans a resource production unit. Each unit allows you to take one token from your production quality stack. Costs one action.">
                                 <span class="production badge">{{ current_teamplayer.gather_markers }}</span>
                             </form>
                     </div>
 
                     <div class="production-produce">
                         {% if current_teamplayer.gather_markers < 1 %}
-                            <a href="javascript:void(0)" class="tiny disabled produce btn has-tip" data-tooltip title="Reserve at least one resource production slot first.">Confirm production</a>
+                            <a href="javascript:void(0)" class="tiny disabled produce btn has-tip" data-tooltip title="Plan at least one resource production unit first.">Confirm production</a>
                         {% else %}
                             <a href="{% url 'play_confirm_pump' %}" class="tiny produce btn has-tip" data-tooltip title="Starts production. All temporary barriers and planned production units will be used up. Costs no actions.">Confirm production</a>
                         {% endif %}
