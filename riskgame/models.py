@@ -15,7 +15,6 @@ import random
 import datetime
 import math
 import hashlib, hmac
-import pytz
 
 import logging
 logger = logging.getLogger('ripple')
@@ -957,9 +956,6 @@ class Game(models.Model):
 
         if not start:
             start = timezone.now()
-
-        GMT = pytz.timezone("GMT")
-        start.replace(tzinfo=GMT)
 
         self.start = start
 
