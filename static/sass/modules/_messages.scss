@@ -38,6 +38,32 @@ a.medium.dismiss.btn, input.medium.dismiss.btn {
   padding-right: $gutter;
 }
 
+.sheet ul {
+  font-size: 14px;
+  font-family: $ff-medium;
+  padding: 0 52px;
+
+  li {
+    line-height: 24px;
+
+
+  }
+
+}
+
+.sheet h6, .sheet h7, .sheet h8 {
+  //text-align: center;
+  display: block;
+  padding: $gutter*2 $gutter*3 0 $gutter*3;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: $black; //color: $dark-grey;
+  font-family: $ff-bold;
+  text-transform: uppercase;
+
+}
+
 // blockquotes are used for character copy
 blockquote {
 
@@ -101,6 +127,14 @@ blockquote {
 p.narrow {
   padding-left: $gutter*3;
   padding-right: $gutter*3;
+}
+
+p.caption {
+  font-size: 16px;
+  padding: $gutter*0.5 $gutter*3 0 $gutter*3;
+  color: $dark-grey;
+  //text-align: justify;
+  font-style: italic;
 }
 
 p.stat-row {
