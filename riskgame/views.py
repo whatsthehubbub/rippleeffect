@@ -333,6 +333,21 @@ def message_seen(request, message):
     return HttpResponseRedirect(reverse('home'))
 
 @login_required
+def message_unseen(request, message):
+    # TODO should be post
+    player = request.user.get_or_create_player()
+    teamplayer = TeamPlayer.objects.get(player=player)
+
+    if message == 'game':
+        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_game_start=True)
+    elif message == 'episode':
+        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_episode_start=True)
+    elif message == 'turn':
+        TeamPlayer.objects.filter(pk=teamplayer.pk).update(show_turn_start=True)
+
+    return HttpResponseRedirect(reverse('home'))
+
+@login_required
 def teams(request):
     t = loader.get_template('riskgame/teams.html')
 
