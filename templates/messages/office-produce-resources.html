@@ -59,8 +59,8 @@
 
 <header>
     <h5 class="text-center pad-left">
-        Barriers
-        <span data-tooltip class="help has-tip" title="Each barrier you've placed prevents a<br />risk from turning into an incident.">?</span>
+        Temporary Barriers
+        <span data-tooltip class="help has-tip" title="Each temporary barrier you've placed prevents a<br />risk from turning into an incident.">?</span>
     </h5>
 </header>
 
@@ -87,7 +87,7 @@
         {% elif incident_count > barrier_count and incident_count > 0 %} <!-- More risks than barriers, incident. -->
             Without barriers, the {{ incident_count }} risk{{ incident_count|pluralize }} turned into an incident.
         {% elif barrier_count > 0 and incident_count == 0 %} <!-- Barriers set but no risks. -->
-            There were no risks, so your {{ barrier_count }} barrier{{ barrier_count|pluralize }} turned out to be unnecesary.
+            There were no risks, so your {{ barrier_count }} barrier{{ barrier_count|pluralize }} turned out to be unnecessary.
         {% else %} <!-- No risks, so no incident, regardless of number of barriers. -->
             You didn't encounter any risks.
         {% endif %}

@@ -68,7 +68,7 @@
                 <header>
                     <h5>
                         Resource Production
-                        <span data-tooltip class="help has-tip" title="Plan the desired amount of production units, place<br />barriers to block risks, then produce resources.">?</span>
+                        <span data-tooltip class="help has-tip" title="Plan the desired amount of production units, place<br />temporary barriers to block risks, then produce resources.">?</span>
                     </h5>
                 </header>
 
@@ -80,7 +80,7 @@
                 {% else %}
                     <div class="production-plan">
                             <form class="relative" method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
-                                <input type="submit" class="tiny barrier action btn has-tip" value="Place barrier" data-tooltip title="Places a barrier. Each barrier cancels out one risk encountered during production. Costs one action.">
+                                <input type="submit" class="tiny barrier action btn has-tip" value="Place barrier" data-tooltip title="Places a temporary barrier. Each barrier prevents one risk encountered during production from turning into an incident. Costs one action.">
                                 <span class="barrier badge">{{ current_teamplayer.prevent_markers }}</span>
                             </form>
 
@@ -94,7 +94,7 @@
                         {% if current_teamplayer.gather_markers < 1 %}
                             <a href="javascript:void(0)" class="tiny disabled produce btn has-tip" data-tooltip title="Reserve at least one resource production slot first.">Confirm production</a>
                         {% else %}
-                            <a href="{% url 'play_confirm_pump' %}" class="tiny produce btn has-tip" data-tooltip title="Starts production. All barriers and reserved production slots will be used up. Costs no actions.">Confirm production</a>
+                            <a href="{% url 'play_confirm_pump' %}" class="tiny produce btn has-tip" data-tooltip title="Starts production. All temporary barriers and planned production units will be used up. Costs no actions.">Confirm production</a>
                         {% endif %}
                     </div>
                 {% endif %}

@@ -22,12 +22,12 @@
 
 </div>
 
-<!-- barriers -->
+<!-- temporary barriers -->
 
 <header>
     <h5 class="text-center pad-left">
-        Barriers
-        <span data-tooltip class="help has-tip" title="Barriers prevent risks from turning into incidents.">?</span>
+        Temporary Barriers
+        <span data-tooltip class="help has-tip" title="Temporary barriers prevent risks from turning into incidents.">?</span>
     </h5>
 </header>
 
@@ -44,21 +44,21 @@
 
     <blockquote class="half-gutter-margin-top">
         <div class="large character large-harry-concerned">Harry</div>
-        <p>You're starting resource production without any barriers in place. Are you nuts?</p>
+        <p>You're starting resource production without any temporary barriers in place. Are you nuts?</p>
     </blockquote>
 
 {% elif current_teamplayer.prevent_markers == 1 %}
 
     <blockquote class="half-gutter-margin-top">
         <div class="large character large-harry-neutral">Harry</div>
-        <p>You're starting production with only one barrier in place. Are you sure about this?</p>
+        <p>You're starting production with only one temporary barrier in place. Are you sure about this?</p>
     </blockquote>
 
 {% else %}
 
     <blockquote class="half-gutter-margin-top">
         <div class="large character large-harry-happy">Harry</div>
-        <p>You've placed {{ current_teamplayer.prevent_markers }} barriers. This looks quite solid!</p>
+        <p>You've placed {{ current_teamplayer.prevent_markers }} temporary barriers. This looks quite solid!</p>
     </blockquote>
 
 {% endif %}

@@ -291,7 +291,7 @@ class Notification(models.Model):
         elif self.identifier == 'player-gather':
             return 'planned resource production'
         elif self.identifier == 'player-prevent':
-            return 'placed a barrier'
+            return 'placed a temporary barrier'
         elif self.identifier == 'frontline-safety':
             return "inspected %s's safety" % unicode(self.target)
         elif self.identifier == 'frontline-event':
