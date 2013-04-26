@@ -495,7 +495,8 @@ class TeamPlayer(models.Model):
                         oil += 1
                         new_steps += 1
 
-            result_production.append(result_step)
+            if result_step:
+                result_production.append(result_step)
 
             if new_steps:
                 gathersteps = new_steps
@@ -529,7 +530,8 @@ class TeamPlayer(models.Model):
                         risks += 1
                         new_steps += 1
 
-            result_safety.append(result_step)
+            if result_step:
+                result_safety.append(result_step)
 
             if new_steps:
                 risksteps = new_steps
