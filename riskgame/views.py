@@ -222,6 +222,10 @@ def notifications(request):
 
         return HttpResponse('\n'.join([t.render(RequestContext(request, {'notification': n})) for n in notifications]))
 
+@login_required
+def how_to_play(request):
+    return render(request, 'riskgame/how_to_play.html', {
+    })
 
 @login_required
 def home(request):
@@ -695,16 +699,6 @@ def play_confirm_pump(request):
 
     messages.add_message(request, messages.INFO, t.render(c))
 
-    return HttpResponseRedirect(reverse('home'))
-
-@login_required
-def how_to_play(request):
-    t = loader.get_template('messages/how-to-play.html')
-    c = RequestContext(request, {
-
-    })
-
-    messages.add_message(request, messages.INFO, t.render(c))
     return HttpResponseRedirect(reverse('home'))
 
 @login_required

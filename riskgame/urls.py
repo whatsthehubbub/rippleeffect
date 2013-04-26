@@ -28,6 +28,7 @@ urlpatterns = patterns('',
 
     url(r'^home/$', 'riskgame.views.home', name='home'),
     url(r'^home/message/seen/(?P<message>\S+)/$', 'riskgame.views.message_seen', name='message_seen'),
+    url(r'^home/how_to_play/$', 'riskgame.views.how_to_play', name='how_to_play'),
 
     url(r'^game/start/$', 'riskgame.views.game_start', name='game_start'),
 
@@ -37,8 +38,6 @@ urlpatterns = patterns('',
     url(r'^play/barrier/$', 'riskgame.views.play_prevent', name='play_prevent'),
     url(r'^play/confirm-production/$', 'riskgame.views.play_confirm_pump', name='play_confirm_pump'),
     url(r'^play/produce/$', 'riskgame.views.play_pump', name='play_pump'),
-
-    url(r'^play/how-to-play/$', 'riskgame.views.how_to_play', name='how_to_play'),
 
     url(r'^frontline/safety/$', 'riskgame.views.inspect_risks', name='frontline_risks'),
     url(r'^frontline/event/$', 'riskgame.views.inspect_event', name='frontline_event'),
