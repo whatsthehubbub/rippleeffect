@@ -340,7 +340,7 @@ def teams(request):
     return HttpResponse(t.render(c))
 
 class GameStartForm(forms.Form):
-    start = forms.DateTimeField(initial=timezone.now())
+    start = forms.DateTimeField(initial=timezone.now)
     turn_minutes = forms.IntegerField(initial=10)
     csv = forms.FileField(label="Teams and players (CSV)", required=False)
 
