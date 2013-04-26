@@ -1,0 +1,80 @@
+
+
+#help-nubbin {
+
+  div.container {
+    @extend .tiny-type;
+    color: $black;
+    text-align: center;
+    width: inherit;
+    height: inherit;
+    background: url('../img/help-icon.png') no-repeat center 10px;
+    @include image-2x('../img/help-icon@2x.png', 16px, 16px);
+    padding-top: 32px;
+  }
+
+  @extend .white-bg;
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  bottom: $gutter;
+  right: $gutter;
+  z-index: 3147483647;
+}
+
+#help-content {
+  background: url('../img/help-popout.png') no-repeat left top;
+  @include image-2x('../img/help-popout@2x.png', 157px, 102px);
+  display:none;
+  width: 157px;
+  height: 102px;
+  position: fixed;
+  bottom: 52px;
+  right: 25px;
+
+  a {
+    @extend .small-type;
+    text-decoration: none;
+    display: block;
+    height: 30px;
+    line-height: 36px;
+    padding-left:38px;
+    color: $off-white;
+    background-repeat: no-repeat;
+    background-position: 7px 3px;
+
+    &:hover {
+      color: $red;
+    }
+
+    &.help-introduction {
+      background-image: url('../img/help-welcom.png');
+      @include image-2x('../img/help-welcom@2x.png', 27px, 30px);
+    }
+
+    &.help-howtoplay {
+      background-image: url('../img/help-howtoplay.png');
+      @include image-2x('../img/help-howtoplay@2x.png', 27px, 30px);
+    }
+
+    &.help-support {
+      background-image: url('../img/help-support.png');
+      @include image-2x('../img/help-support@2x.png', 27px, 30px);
+    }
+  }
+}
+
+#help-nubbin:hover #help-content, #help-nubbin #help-content:hover {
+  display: block;
+}
+
+
+#Intercom {
+  display: inline-block;
+  text-decoration: underline;
+  padding: 0;
+}
+
+#Intercom em {
+  display: inline-block;
+}

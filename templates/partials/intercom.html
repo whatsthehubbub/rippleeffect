@@ -5,7 +5,8 @@
     name: "{{ current_player.name }}",
     user_hash: "{{ current_player.get_intercom_hash }}",
     widget: {
-    	activator: '#IntercomDefaultWidget'
+        activator: '#Intercom',
+        use_counter: true
   	},
     role: "{{ current_teamplayer.role }}",
     team: "{{ current_teamplayer.team.name }}",
