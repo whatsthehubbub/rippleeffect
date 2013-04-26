@@ -39,14 +39,12 @@ $ ->
 
   handleMoreMessages: (e) ->
     e.preventDefault()
-    console.log('hier')
 
     currentPage = $('#message-list').data('current-page')
     lastPage = $('#message-list').data('last-page')
     endpoint = $('#message-list').data('endpoint')
 
     if(currentPage < lastPage)
-      console.log('going')
       newPage = currentPage + 1
       $.get( endpoint+(newPage) ).done (data) ->
         $('#message-list').data('current-page', newPage)
@@ -69,7 +67,6 @@ $ ->
     return false
 
   pulse:(el) ->
-    console.log (el)
     $(el).animate({backgroundColor: '#FE944E'}, 1000, 'swing').animate({backgroundColor: '#FEB94E'}, 1000, 'swing', ->
       RE.pulse(this)
     )

@@ -38,12 +38,10 @@
     handleMoreMessages: function(e) {
       var currentPage, endpoint, lastPage, newPage;
       e.preventDefault();
-      console.log('hier');
       currentPage = $('#message-list').data('current-page');
       lastPage = $('#message-list').data('last-page');
       endpoint = $('#message-list').data('endpoint');
       if (currentPage < lastPage) {
-        console.log('going');
         newPage = currentPage + 1;
         $.get(endpoint + newPage).done(function(data) {
           $('#message-list').data('current-page', newPage);
@@ -65,7 +63,6 @@
       return false;
     },
     pulse: function(el) {
-      console.log(el);
       return $(el).animate({
         backgroundColor: '#FE944E'
       }, 1000, 'swing').animate({
