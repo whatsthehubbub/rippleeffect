@@ -224,7 +224,7 @@ def notifications(request):
 
 @login_required
 def how_to_play(request):
-    return render(request, 'riskgame/how_to_play.html', {
+    return render(request, 'riskgame/how-to-play.html', {
     })
 
 @login_required

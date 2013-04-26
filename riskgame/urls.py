@@ -28,7 +28,7 @@ urlpatterns = patterns('',
 
     url(r'^home/$', 'riskgame.views.home', name='home'),
     url(r'^home/message/seen/(?P<message>\S+)/$', 'riskgame.views.message_seen', name='message_seen'),
-    url(r'^home/how_to_play/$', 'riskgame.views.how_to_play', name='how_to_play'),
+    url(r'^home/how-to-play/$', 'riskgame.views.how_to_play', name='how-to-play'),
 
     url(r'^game/start/$', 'riskgame.views.game_start', name='game_start'),
 
