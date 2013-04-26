@@ -99,6 +99,30 @@ $sidebar-width: 270px;
     #game-progress {
       margin-top: $gutter;
 
+      #turn-countdown {
+        padding: 9px $gutter*0.5 0 0;
+        font-family: $ff-bold;
+        margin: 0;
+        line-height:18px;
+        height: 16px;
+        font-size: 14px;
+        float:right;
+        color: $black;
+
+        .icon {
+          display: block !important;
+          float: left;
+          margin-right: 3px;
+        }
+
+        .time-colon {
+          padding: 0 1px;
+          font-family: 'trebuchet ms', verdana, sans-serif;
+          font-weight:bold;
+          line-height: 10px;
+        }
+      }
+
       #scorecard {
         margin: 0 $gutter*0.5;
         background: $off-white;
@@ -109,35 +133,66 @@ $sidebar-width: 270px;
         font-family: $ff-medium;
         font-size: 14px;
 
-        .inline-list {
-          padding: 0 $gutter*0.5;
-          font-family: $ff-bold;
-          margin: 0;
-          li {
-            width: 25%;
-            margin: 0 !important;
-            line-height:18px;
-            height: 16px;
+        #left-scorecard-wrapper {
+          width: 93px;
+          float: left;
+        }
 
-            .icon {
-              display: block !important;
-              float: left;
-              margin-right: 3px;
-            }
+        #right-scorecard-wrapper {
+          width: 147px;
+          float: left;
 
-            .time-colon {
-              padding: 0 1px;
-              font-family: 'trebuchet ms', verdana, sans-serif;
-              font-weight:bold;
-              line-height: 10px;
+          .inline-list {
+            padding: 8px 0 0 $gutter;
+            font-family: $ff-bold;
+            margin: 0;
+            li {
+              width: 50%;
+              margin: 0 !important;
+              line-height:18px;
+              height: 16px;
+
+              .icon {
+                display: block !important;
+                float: left;
+                margin-right: 3px;
+              }
+
+              .time-colon {
+                padding: 0 1px;
+                font-family: 'trebuchet ms', verdana, sans-serif;
+                font-weight:bold;
+                line-height: 10px;
+              }
             }
           }
+
         }
 
         #goal-zero {
-          width: 73px;
-          height: 79px;
-          margin-top: $gutter - 4px;
+          height: 50px;
+          margin-top: $gutter*0.5;
+          .score {
+            line-height: 20px;
+          }
+
+        }
+
+        #available-actions {
+          background-image: url('../img/icon-small-action.png');
+          @include image-2x('../img/icon-small-action@2x.png', 13px, 13px);
+          background-position: 4px 4px;
+          background-repeat: no-repeat;
+          height: 50px;
+          margin-top: 0;
+          .score {
+            line-height: 28px !important;
+          }
+        }
+
+        #goal-zero, #available-actions {
+          width: 93px;
+          background-color: $light-grey;
           text-align: center;
           font-family: $ff-bold;
           float: left;
@@ -163,19 +218,19 @@ $sidebar-width: 270px;
           }
 
           .score {
-            font-size: 36px;
-            line-height:38px;
-            height: 34px;
+            font-size: 24px;
+            height: 26px;
             letter-spacing: 0;
+
           }
 
         }
 
         #points {
-          width: 167px;
+          width: 147px;
           height: 79px;
           background: $light-grey;
-          margin-top: $gutter - 4px;
+          margin-top: 0;
           margin-left: $gutter*0.5;
           float: left;
           font-family: $ff-bold;
@@ -193,7 +248,7 @@ $sidebar-width: 270px;
 
           .score {
             font-size: 36px;
-            line-height:38px;
+            line-height:36px;
             height: 34px;
             letter-spacing: 0;
           }
