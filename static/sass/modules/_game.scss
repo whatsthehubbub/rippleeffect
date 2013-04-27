@@ -139,18 +139,22 @@ $sidebar-width: 270px;
         }
 
         #right-scorecard-wrapper {
-          width: 147px;
+          width: 153px;
           float: left;
 
           .inline-list {
-            padding: 8px 0 0 $gutter;
+            padding: 3px 0 8px 18px;
             font-family: $ff-bold;
             margin: 0;
             li {
-              width: 50%;
+              width: 60px;
               margin: 0 !important;
               line-height:18px;
               height: 16px;
+
+              &.turn {
+                width: 72px;
+              }
 
               .icon {
                 display: block !important;

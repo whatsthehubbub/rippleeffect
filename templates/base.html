@@ -93,17 +93,17 @@
 
                     <div id="right-scorecard-wrapper">
 
+                        <ul class="inline-list">
+                            <li class="turn"><span data-tooltip title="Current episode / Total episodes." class="has-tip icon episode"></span>{{ current_day.episode.number }}<span class="dark-grey"> / 2</span></li>
+
+                            <li><span data-tooltip title="Current turn / Total turns in this episode." class="has-tip icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
+                        </ul>
+
                         <div id="points" data-tooltip title="Points scored so far / Points<br />scored during the current turn." class="has-tip">
                             <span class="h-top">Points</span>
                             <span class="score">{{ current_teamplayer.team.victory_points }}</span>
                             <span class="h-bot dark-grey"><span class="small icon turn"></span>{{ current_teamplayer.team.victory_points_turn }}</span>
                         </div>
-
-                        <ul class="inline-list">
-                            <li><span data-tooltip title="Current episode / Total episodes." class="has-tip icon episode"></span>{{ current_day.episode.number }}<span class="dark-grey"> / 2</span></li>
-
-                            <li><span data-tooltip title="Current turn / Total turns in this episode." class="has-tip icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
-                        </ul>
 
                     </div>
 
