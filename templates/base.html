@@ -70,17 +70,25 @@
 
             <div id="game-progress">
                 <header>
-                    <h5 class="off-white-line tight">Game Progress <span id="turn-countdown" style="display:none;" data-seconds-left="{{ current_day.secondsleft }}"><span data-tooltip title="Time left for this turn." class="has-tip icon time"></span><span class="hours"></span><span class="dark-grey time-colon" style="visibility: hidden">:</span><span class="minutes"></span></span></h5>
+                    <h5 class="off-white-line tight">Game Progress</h5>
 
                 </header>
                 <div id="scorecard">
+
+                    <ul class="inline-list">
+                        <li class="turn"><span data-tooltip title="Current episode / Total episodes." class="has-tip icon episode"></span>{{ current_day.episode.number }}<span class="dark-grey"> / 2</span></li>
+
+                        <li><span data-tooltip title="Current turn / Total turns in this episode." class="has-tip icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
+
+                        <li id="turn-countdown" style="display:none;" data-seconds-left="{{ current_day.secondsleft }}"><span data-tooltip title="Time left for this turn." class="has-tip icon time"></span><span class="hours"></span><span class="dark-grey time-colon" style="visibility: hidden">:</span><span class="minutes"></span></li>
+                    </ul>
 
                     <div id="left-scorecard-wrapper">
 
                         <div id="available-actions" data-tooltip title="Number of {{ current_teamplayer.role }} actions left. Actions are<br />shared by the team. They replenish each turn." class="has-tip">
                             <span class="h-top">Actions</span>
                             <span class="score">
-                                {% ifequal current_teamplayer.role "office" %}{{ current_teamplayer.team.action_points }}{% else %}{{ current_teamplayer.team.frontline_action_points }}{% endifequal %}<!--<span class="dark-grey small-type">/12</span>-->
+                                <span class="icon action"></span>{% ifequal current_teamplayer.role "office" %}{{ current_teamplayer.team.action_points }}{% else %}{{ current_teamplayer.team.frontline_action_points }}{% endifequal %}<!--<span class="dark-grey small-type">/12</span>-->
                             </span>
                         </div>
 
@@ -91,20 +99,10 @@
 
                     </div>
 
-                    <div id="right-scorecard-wrapper">
-
-                        <ul class="inline-list">
-                            <li class="turn"><span data-tooltip title="Current episode / Total episodes." class="has-tip icon episode"></span>{{ current_day.episode.number }}<span class="dark-grey"> / 2</span></li>
-
-                            <li><span data-tooltip title="Current turn / Total turns in this episode." class="has-tip icon turn"></span>{{ current_day.number }}<span class="dark-grey"> / 7</span></li>
-                        </ul>
-
-                        <div id="points" data-tooltip title="Points scored so far / Points<br />scored during the current turn." class="has-tip">
-                            <span class="h-top">Points</span>
-                            <span class="score">{{ current_teamplayer.team.victory_points }}</span>
-                            <span class="h-bot dark-grey"><span class="small icon turn"></span>{{ current_teamplayer.team.victory_points_turn }}</span>
-                        </div>
-
+                    <div id="points" data-tooltip title="Points scored so far / Points<br />scored during the current turn." class="has-tip">
+                        <span class="h-top">Points</span>
+                        <span class="score">{{ current_teamplayer.team.victory_points }}</span>
+                        <span class="h-bot dark-grey"><span class="small icon turn"></span>{{ current_teamplayer.team.victory_points_turn }}</span>
                     </div>
 
                 </div>
