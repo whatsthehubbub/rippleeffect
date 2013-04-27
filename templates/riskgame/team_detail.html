@@ -42,10 +42,9 @@
                         <div class="small avatar" title="{{ tp.player.get_teamplayer.role }}" style="background-color: {{ tp.team|team_color }};"><div title="{{ tp.player.get_teamplayer.role }}" class="{{ tp.player.get_teamplayer.role }}" style="border-color: {{ tp.player|player_color }}; background-color: {{ tp.team|team_color }}"></div></div>
                         <div class="message clearfix">
                             <span class="timestamp">{{ tp.role }}</span>
-                            <a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a>
-                            {% ifequal current_player tp.player %}
-                                (you!)
-                            {% endifequal %}
+                            <a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a> – 
+                            <span>{{ tp.player.user.email }}</span>
+                            {% ifequal current_player tp.player %}(You!){% endifequal %}
                         </div>
                     </div>
 
