@@ -38,7 +38,7 @@
 
                     <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
                         <input type="hidden" name="pile" value="risk">
-                        <input type="submit" class="tiny safety action btn has-tip" value="Improve" data-tooltip title="Adds a blank token to your safety stack, shuffles it, then removes a random token. Costs one action.">
+                        <input type="submit" class="tiny safety action btn has-tip" value="Improve" data-tooltip title="Adds a blank token to your safety stack, shuffles it,<br />then removes a random token. Costs one action.">
                     </form>
                 </div>
             </div>
@@ -59,7 +59,7 @@
 
                     <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
                         <input type="hidden" name="pile" value="gather">
-                        <input type="submit" class="tiny production action btn has-tip" value="Improve" data-tooltip title="Adds a resource token to your production quality stack, shuffles it, then removes a random token. Costs one action.">
+                        <input type="submit" class="tiny production action btn has-tip" value="Improve" data-tooltip title="Adds a resource token to your production quality stack,<br />shuffles it, then removes a random token. Costs one action.">
                     </form>
                 </div>
             </div>
@@ -80,21 +80,21 @@
                 {% else %}
                     <div class="production-plan">
                             <form class="relative" method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
-                                <input type="submit" class="tiny barrier action btn has-tip" value="Place barrier" data-tooltip title="Places a temporary barrier. Each barrier prevents one risk encountered during production from turning into an incident. Costs one action.">
+                                <input type="submit" class="tiny barrier action btn has-tip" value="Place barrier" data-tooltip title="Places a temporary barrier. Each barrier prevents one<br />risk from turning into an incident. Costs one action.">
                                 <span class="barrier badge">{{ current_teamplayer.prevent_markers }}</span>
                             </form>
 
                             <form class="relative" method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
-                                <input type="submit" class="tiny plan action btn has-tip" value="Plan production" data-tooltip title="Plans a resource production unit. Each unit allows you to take one token from your production quality stack. Costs one action.">
+                                <input type="submit" class="tiny plan action btn has-tip" value="Plan production" data-tooltip title="Plans a resource production unit. Each unit allows you to take<br />one token from your production quality stack. Costs one action.">
                                 <span class="production badge">{{ current_teamplayer.gather_markers }}</span>
                             </form>
                     </div>
 
                     <div class="production-produce">
                         {% if current_teamplayer.gather_markers < 1 %}
-                            <a href="javascript:void(0)" class="tiny disabled produce btn has-tip" data-tooltip title="Plan at least one resource production unit first.">Confirm production</a>
+                            <a href="javascript:void(0)" class="tiny disabled produce btn has-tip" data-tooltip title="You have to plan at least one resource<br />production unit to confirm production.">Confirm production</a>
                         {% else %}
-                            <a href="{% url 'play_confirm_pump' %}" class="tiny produce btn has-tip" data-tooltip title="Starts production. All temporary barriers and planned production units will be used up. Costs no actions.">Confirm production</a>
+                            <a href="{% url 'play_confirm_pump' %}" class="tiny produce btn has-tip" data-tooltip title="Starts production. All temporary barriers and planned<br />production units will be used up. Costs no actions.">Confirm production</a>
                         {% endif %}
                     </div>
                 {% endif %}

@@ -77,7 +77,7 @@
 
                     <div id="left-scorecard-wrapper">
 
-                        <div id="available-actions" data-tooltip title="Number of {{ current_teamplayer.role }} actions left. Actions are shared by the team and replenish every turn." class="has-tip">
+                        <div id="available-actions" data-tooltip title="Number of {{ current_teamplayer.role }} actions left. Actions are<br />shared by the team. They replenish each turn." class="has-tip">
                             <span class="h-top">Actions</span>
                             <span class="score">
                                 {% ifequal current_teamplayer.role "office" %}{{ current_teamplayer.team.action_points }}{% else %}{{ current_teamplayer.team.frontline_action_points }}{% endifequal %}<!--<span class="dark-grey small-type">/12</span>-->
