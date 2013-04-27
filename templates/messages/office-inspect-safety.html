@@ -1,8 +1,8 @@
 <h4 class="action-cost">Spent <span>1</span> Action</h4>
 <h3 class="text-center double-gutter-pad-top">Safety Inspection Report</h3>
-<!-- Niels, please review.—KA -->
+
 {% if poorvision %}
-    <p class="text-center small-type">Shuffling your stack and revealing one less than half because of Poor Vision.</p>
+    <p class="text-center small-type">Shuffling your stack and revealing less than half of it, because of the Poor Vision event.</p>
 {% else %}
     <p class="text-center small-type">Shuffling your stack and revealing half of it.</p>
 {% endif %}
@@ -120,7 +120,7 @@
 
     {% endifequal %}
 {% endif %}
-<!-- Niels, please review.—KA -->
-<p class="text-center double-gutter-pad-top tiny-type">You might want to make a note of these results as they aren't recallable later.</p>
+
+<p class="text-center double-gutter-pad-top tiny-type">Please take note of these results. You can't review them later.</p>
 
 <a href="{% url 'home' %}" class='triple-gutter-margin-top quad-gutter-margin-bot medium grey centered dismiss btn js-continue'>Continue</a>
