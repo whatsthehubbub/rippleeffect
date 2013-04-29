@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load riskgame_extras %}
+
+{% block pagetitle %}{{ title|capfirst }}{% endblock pagetitle %}
+
+{% block content %}
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+            	{% for message in messages %}
+            		{{ message|safe }}
+			    {% endfor %}
+
+                <h3 class="text-center triple-gutter-pad-top">{{ player.get_teamplayer.player }}&rsquo;s profile</h3>
+
+                <div class="huge avatar margin-center triple-gutter-margin-bot" title="{{ player.get_teamplayer.role }}" style="background-color: {{ player.get_teamplayer.team|team_color }};"><div title="{{ player.get_teamplayer.role }}" class="{{ player.get_teamplayer.role }}" style="border-color: {{ player|player_color }}; background-color: {{ player.get_teamplayer.team|team_color }}"></div></div>
+
+                <header>
+                    <h5 class="text-center">
+                        Current information
+                    </h5>
+                </header>
+
+                <p class="stat-row">Email address <span>{{ player.user.email }}</span></p>
+                <p class="stat-row">Receive emails? <span>{% if player.receive_email %}Yes{% else %}No{% endif %}</span></p>
+                <p class="stat-row">Team <span><a href="{{ player.get_teamplayer.team.get_absolute_url }}">{{ player.get_teamplayer.team }}</a></span></p>
+                <p class="stat-row">Team role <span>{{ player.get_teamplayer.role|capfirst }} player</span></p>
+                <p class="stat-row triple-gutter-margin-bot">Active events <span>
+                    {% for event in player.get_teamplayer.get_active_events %}
+                        {{ event|event_name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        None
+                    {% endfor %}
+                </span></p>
+
+                {% ifequal player.user user %}
+                    <a href="{% url 'player_profile_edit' %}" class='triple-gutter-margin-top quad-gutter-margin-bot medium yellow centered dismiss btn'>Edit profile</a>
+                {% endifequal %}
+
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}

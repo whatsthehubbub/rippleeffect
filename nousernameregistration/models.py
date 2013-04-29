@@ -1,11 +1,4 @@
-import datetime
-import hashlib
-import random
-import re
-
 from django.conf import settings
-
-from django.contrib.auth.models import User
 
 try:
     from django.contrib.auth import get_user_model
@@ -17,6 +10,11 @@ from django.db import models
 from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
+
+import datetime
+import hashlib
+import random
+import re
 
 try:
     from django.utils.timezone import now as datetime_now

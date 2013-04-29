@@ -21,6 +21,15 @@ import os
 # os.environ["DJANGO_SETTINGS_MODULE"] = "rippleeffect.settings"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rippleeffect.settings")
 
+# read environment variables from .env file
+env_file = '.env'
+try:
+    env_vars = dict(line.strip('\n').split('=') for line in open(env_file,'rb'))
+    for name, val in env_vars.items():
+        os.environ.setdefault(name, val)
+except:
+    pass
+
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.

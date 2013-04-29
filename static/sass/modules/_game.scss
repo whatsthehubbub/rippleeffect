@@ -1,0 +1,544 @@
+
+$sidebar-width: 270px;
+
+#game {
+  background:transparent;
+
+
+
+  #sidebar {
+    width: $sidebar-width;
+    background: white;
+    position: fixed;
+    height: 600px;
+    top: 0;
+
+    // Sidebar logo header /w home link
+    header {
+      width: $sidebar-width;
+      margin: 0 auto;
+
+      h1 {
+        margin: 0;
+        padding: $gutter 0 $gutter*2 0;
+
+        a {
+          display:block;
+          background: url('../img/logo-game.png') no-repeat top center;
+          @include image-2x('../img/logo-game@2x.png', 168px, 99px);
+          text-indent: -9999em;
+          margin: 0;
+          padding: 0;
+          height: 99px
+
+        }
+      }
+    }
+
+    // Current player badge and main navigation
+    #player {
+      margin: 0 $gutter*0.5;
+      background: $off-white;
+      width: $sidebar-width - $gutter;
+      overflow: hidden;
+
+      .avatar {
+        margin: $gutter 0 $gutter $gutter;
+        float: left;
+      }
+
+      .name {
+        float: right;
+        width: $sidebar-width - $gutter*3 - 50;
+        min-height: 50px + $gutter*0.5;
+        margin-top: $gutter * 1.5;
+
+        h3 {
+          font-size: 22px;
+          line-height: 24px;
+          font-family: $ff-regular;
+          margin: 0;
+        }
+
+        h4 {
+          font-size: 14px;
+          line-height: 16px;
+          font-family: $ff-regular;
+          margin: 0;
+        }
+
+      }
+
+
+      nav {
+        height: 72px;
+        margin-left: 6px;
+
+        .btn {
+          float: left;
+          display: block;
+          margin-right: $gutter*0.5;
+          width: 78px;
+        }
+
+        .signout.btn {
+          color: $dark-grey;
+          background-color: transparent;
+          border-color: transparent;
+        }
+
+        // IE friendly way of doing nth-child(3)
+        .btn.row-end {
+          margin-right: 0;
+        }
+      }
+
+    }
+
+
+    #game-progress {
+      margin-top: $gutter*0.5;
+
+      #scorecard {
+        margin: 0 $gutter*0.5;
+        background: $off-white;
+        padding: $gutter*0.5;
+        width: $sidebar-width - $gutter;
+        overflow: hidden;
+
+        font-family: $ff-medium;
+        font-size: 14px;
+
+        .inline-list {
+          padding: 0 $gutter*0.5 8px $gutter*0.5;
+          font-family: $ff-bold;
+          margin: 0;
+          li {
+            width: 33%;
+            margin: 0 !important;
+            line-height:18px;
+            height: 16px;
+
+            &.turn {
+              width: 72px;
+            }
+
+            .icon {
+              display: block !important;
+              float: left;
+              margin-right: 3px;
+            }
+
+            .time-colon {
+              padding: 0 1px;
+              font-family: 'trebuchet ms', verdana, sans-serif;
+              font-weight:bold;
+              line-height: 10px;
+            }
+          }
+        }
+
+        #left-scorecard-wrapper {
+          width: 93px;
+          float: left;
+        }
+
+        #goal-zero {
+          height: 46px;
+          margin-top: $gutter*0.5;
+
+          .score {
+            line-height: 22px !important;
+          }
+        }
+
+        #available-actions {
+          //background-image: url('../img/icon-small-action.png');
+          //@include image-2x('../img/icon-small-action@2x.png', 13px, 13px);
+          background-position: 4px 4px;
+          background-repeat: no-repeat;
+          height: 46px;
+          margin-top: 0;
+          .score {
+            line-height: 22px !important;
+          }
+        }
+
+        #goal-zero, #available-actions {
+          width: 93px;
+          background-color: $light-grey;
+          text-align: center;
+          font-family: $ff-bold;
+          float: left;
+
+          &.gz-0 {
+            background: indianred;
+            color: darkred;
+          }
+
+          &.gz-1 {
+            background: #67c977;
+            color: #195723;
+          }
+
+          .h-top, .h-bot, .score {
+
+            display:block;
+            text-transform: uppercase;
+            font-size: 11px;
+            height: 22px;
+            line-height:26px;
+            letter-spacing: 1px;
+          }
+
+          .score {
+            height: 26px;
+            letter-spacing: 0;
+            font-size: 22px !important;
+
+            .icon {
+              margin-right: 4px;
+            }
+          }
+
+        }
+
+        #points {
+          width: 147px;
+          height: 98px;
+          background: $light-grey;
+          margin-top: 0;
+          margin-left: $gutter*0.5;
+          float: left;
+          font-family: $ff-bold;
+          padding-left: $gutter*0.5;
+
+          .h-top, .h-bot, .score {
+            display:block;
+            text-transform: uppercase;
+            font-size: 11px;
+            height: 22px;
+            line-height:26px;
+            letter-spacing: 1px;
+
+          }
+
+          .score {
+            font-size: 36px;
+            line-height:34px;
+            height: 29px;
+            letter-spacing: 0;
+          }
+
+          .small.icon.turn {
+            height: 15px !important;
+            background-position-y: 5px !important;
+          }
+
+        }
+      }
+    }
+
+    #events {
+      overflow: hidden;
+      margin-top: $gutter*0.5;
+
+      .event {
+        padding: $gutter*0.5 65px $gutter*0.5 $gutter;
+        margin: 0 $gutter*0.5 $gutter*0.5 $gutter*0.5;
+        height: 38px;
+
+        text-align: right;
+
+        background-color: $orange;
+        background-repeat: no-repeat;
+        background-position: right bottom;
+
+        font-size: 14px;
+        font-family: $ff-medium;
+        line-height: 28px;
+
+        span {
+          text-align: left;
+          float:left;
+          font-size: 11px;
+          font-family: $ff-bold;
+          display: block;
+          height: 24px;
+          line-height: 30px;
+          text-transform: uppercase;
+          color: #62481e; // dark yellow
+        }
+
+        &.caution {
+          background-image: url('../img/event-caution.png');
+          @include image-2x('../img/event-caution@2x.png', 60px, 38px);
+        }
+
+        &.tornado {
+          background-image: url('../img/event-tornado.png');
+          @include image-2x('../img/event-tornado@2x.png', 60px, 38px);
+        }
+
+        &.lightning {
+          background-image: url('../img/event-lightning.png');
+          @include image-2x('../img/event-lightning@2x.png', 60px, 38px);
+        }
+
+        &.high-market {
+          background-image: url('../img/event-high-market.png');
+          @include image-2x('../img/event-high-market@2x.png', 60px, 38px);
+        }
+
+        &.poor-vision {
+          background-image: url('../img/event-poor-vision.png');
+          @include image-2x('../img/event-poor-vision@2x.png', 60px, 38px);
+        }
+
+
+      }
+
+
+    }
+
+  }
+
+  #main {
+    margin-left: $sidebar-width + $gutter * 2;
+    width: 424px;
+    padding-top: 29px;
+    overflow: hidden;
+
+    .sheet {
+      @extend .white-bg;
+      margin-top: 24px;
+      margin-bottom: 24px;
+      padding: 0;
+    }
+
+    .ui-box {
+      margin-top: 0;
+      float: left;
+      width: 424px;
+    }
+
+    .ui-box-content {
+      //padding-left: $gutter;
+      //padding-top: $gutter*0.5;
+      //width: 271px;
+      //float:left;
+    }
+
+    // generic game UI styles
+    .game-ui {
+      margin-top: 82px !important;
+
+      form {
+        margin: 0;
+      }
+
+      .action.btn {
+        background-image: url('../img/action-recessed.png');
+        @include image-2x('../img/action-recessed@2x.png', 16px, 16px);
+        background-repeat: no-repeat;
+        background-position: 1px 6px;
+        padding-left: 15px;
+      }
+
+      #safety-box {
+
+        width: 206px;
+        height: 124px;
+        float: left;
+
+        .safety-stack {
+          padding-left: 72px;
+          background: url('../img/safety-stack.png') no-repeat;
+          @include image-2x('../img/safety-stack@2x.png', 50px, 70px);
+          background-position: $gutter 3px;
+
+          .safety.btn {
+            width: 122px;
+          }
+        }
+      }
+
+      #quality-box {
+        width: 206px;
+        height: 124px;
+        float: left;
+        margin-left: $gutter;
+
+        .quality-stack {
+          padding-left: 72px;
+          background: url('../img/production-stack.png') no-repeat;
+          @include image-2x('../img/production-stack@2x.png', 50px, 70px);
+          background-position: $gutter 3px;
+
+          .production.btn {
+            width: 122px;
+          }
+        }
+      }
+
+      #production-box {
+        margin-top: 0;
+        float: left;
+        height: 125px;
+        width: 424px;
+
+        &.no-production-possible {
+          height: 160px;
+        }
+
+        .barrier.btn, .plan.btn {
+          width: 194px;
+          padding-right: 51px;
+        }
+
+        .badge {
+          position: absolute;
+          left: 148px;
+          width: 39px;
+          height: 23px;
+          top: 3px;
+          background: #fff;
+          text-align: center;
+          font-family: $ff-bold;
+          font-size: 21px;
+          line-height: 27px;
+
+          background: #fff url('../img/production-count-box.png') no-repeat;
+          @include image-2x('../img/production-count-box@2x.png', 39px, 23px);
+
+        }
+
+        .barrier.badge {
+          color: #a34d4d;
+        }
+
+        .production.badge {
+          color: #3f4861;
+        }
+
+        .production-plan {
+          padding-left: $gutter;
+          padding-top: $gutter*0.5;
+          width: 271px;
+          float:left;
+
+          background: url('../img/production-flow.png') no-repeat 212px 22px;
+          @include image-2x('../img/production-flow@2x.png', 52px, 36px);
+        }
+
+        .production-produce {
+          padding-top: $gutter*0.5;
+
+          a.btn {
+            width: 141px;
+            height: 66px;
+            line-height:70px;
+          }
+
+        }
+
+      }
+
+      #messages-box {
+        margin-top: 0;
+        margin-bottom: $gutter*4;
+        float: left;
+
+        width: 424px;
+        overflow: hidden;
+      }
+
+      #team-box {
+        float: left;
+        width: 424px;
+
+        .roster {
+          width: 235px;
+          border-right: 1px solid $mid-grey;
+          margin-bottom: $gutter*0.5;
+          padding: 0 $gutter*0.5 $gutter*0.5 $gutter;
+          overflow: hidden;
+          float: left;
+          min-height: 136px;
+
+          .avatar {
+            opacity: 0.5;
+            margin: $gutter*0.5 $gutter*0.5 0 0;
+            float: left;
+
+            &:hover, &.active {
+              opacity: 1.0;
+            }
+
+            &.active {
+              box-shadow: 0 0 4px $black;
+            }
+          }
+        }
+
+        .actions {
+          float: left;
+          width: 183px;
+        }
+
+        .actions.no-mate {
+          text-transform: uppercase;
+          color: darken($mid-grey, 30%);
+          font-family: $ff-medium;
+          font-size: 14px;
+          text-align: center;
+          padding-top: 54px;
+        }
+
+        .actions.mate {
+          padding: 10px $gutter*0.5 0 $gutter;
+
+          #team-mate-name {
+            font-size: 22px;
+            font-family: $ff-medium;
+            display:block;
+          }
+
+          #team-mate-email {
+            font-size: 14px;
+            display: block;
+            margin-bottom: $gutter*0.5;
+          }
+
+          .tiny.btn {
+            width: 165px;
+          }
+
+
+
+        }
+
+
+
+      }
+
+
+
+    }
+
+    // in game messages
+    .modal.message {
+
+      h2 {
+        font-size: 18px;
+        font-family: $ff-bold;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+    }
+
+
+  }
+
+}

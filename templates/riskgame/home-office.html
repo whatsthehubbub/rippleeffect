@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load riskgame_extras %}
+
+{% block pagetitle %}Home{% endblock %}
+
+{% block content %}
+
+	{% if messages %}
+	    {% for message in messages %}
+
+            {# {% if "brief" in message.tags %}brief message{% endif %} #}
+            <section class="modal message">
+                <div class="row">
+                    <div class="sheet large-12 columns">
+                        {{ message }}
+                    </div>
+                </div>
+            </section>
+
+	    {% endfor %}
+    {% else %}
+
+        <section class="game-ui office auto-refresh">
+
+            <div id="safety-box" class="sheet">
+                <header>
+                    <h5>
+                        Safety
+                        <span data-tooltip class="help has-tip" title="Inspect and improve your station's safety, to decrease<br />the risk that comes with resource production.">?</span>
+                    </h5>
+                </header>
+
+                <div class="safety-stack gutter-pad-h half-gutter-pad-top half-gutter-pad-bot">
+                    <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
+                        <input type="hidden" name="pile" value="risk">
+                        <input type="submit" class="tiny safety action btn has-tip" value="Inspect" data-tooltip title="Shuffles, then reveals part of your safety stack. Costs one action.">
+                    </form>
+
+                    <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
+                        <input type="hidden" name="pile" value="risk">
+                        <input type="submit" class="tiny safety action btn has-tip" value="Improve" data-tooltip title="Adds a blank token to your safety stack, shuffles it,<br />then removes a random token. Costs one action.">
+                    </form>
+                </div>
+            </div>
+
+            <div id="quality-box" class="sheet">
+                <header>
+                    <h5>
+                        Production Quality
+                        <span data-tooltip class="help has-tip" title="Inspect and improve your station's production quality,<br />to increase the yield of your resource production.">?</span>
+                    </h5>
+                </header>
+
+                <div class="quality-stack gutter-pad-h half-gutter-pad-top half-gutter-pad-bot">
+                    <form method="POST" action="{% url 'play_inspect' %}">{% csrf_token %}
+                        <input type="hidden" name="pile" value="gather">
+                        <input type="submit" class="tiny production action btn has-tip" value="Inspect" data-tooltip title="Shuffles, then reveals part of your production quality stack. Costs one action.">
+                    </form>
+
+                    <form method="POST" action="{% url 'play_invest' %}">{% csrf_token %}
+                        <input type="hidden" name="pile" value="gather">
+                        <input type="submit" class="tiny production action btn has-tip" value="Improve" data-tooltip title="Adds a resource token to your production quality stack,<br />shuffles it, then removes a random token. Costs one action.">
+                    </form>
+                </div>
+            </div>
+
+            <div id="production-box" class="sheet {% if current_teamplayer.team.goal_zero_markers == 0 %}no-production-possible{% endif %}">
+                <header>
+                    <h5>
+                        Resource Production
+                        <span data-tooltip class="help has-tip" title="Plan the desired amount of production units, place<br />temporary barriers to block risks, then produce resources.">?</span>
+                    </h5>
+                </header>
+
+                {% if current_teamplayer.team.goal_zero_markers == 0 %}
+                    <blockquote class="double-gutter-margin-top">
+                        <p>Since your team was unfortunate enough to let an incident happen, you're unable to do any resource production for the rest of the turn. I hope this will be educational for you!</p>
+                        <div class="small character small-harry-concerned">Harry</div>
+                    </blockquote>
+                {% else %}
+                    <div class="production-plan">
+                            <form class="relative" method="POST" action="{% url 'play_prevent' %}">{% csrf_token %}
+                                <input type="submit" class="tiny barrier action btn has-tip" value="Place barrier" data-tooltip title="Places a temporary barrier. Each barrier prevents one<br />risk from turning into an incident. Costs one action.">
+                                <span class="barrier badge">{{ current_teamplayer.prevent_markers }}</span>
+                            </form>
+
+                            <form class="relative" method="POST" action="{% url 'play_gather' %}">{% csrf_token %}
+                                <input type="submit" class="tiny plan action btn has-tip" value="Plan production" data-tooltip title="Plans a resource production unit. Each unit allows you to take<br />one token from your production quality stack. Costs one action.">
+                                <span class="production badge">{{ current_teamplayer.gather_markers }}</span>
+                            </form>
+                    </div>
+
+                    <div class="production-produce">
+                        {% if current_teamplayer.gather_markers < 1 %}
+                            <a href="javascript:void(0)" class="tiny disabled produce btn has-tip" data-tooltip title="You have to plan at least one resource<br />production unit to confirm production.">Confirm production</a>
+                        {% else %}
+                            <a href="{% url 'play_confirm_pump' %}" class="tiny produce btn has-tip" data-tooltip title="Starts production. All temporary barriers and planned<br />production units will be used up. Costs no actions.">Confirm production</a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            {% include "partials/game/messages.html" %}
+
+        </section>
+
+    {% endif %}
+
+	{% endblock content %}

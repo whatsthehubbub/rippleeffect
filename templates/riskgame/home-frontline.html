@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load riskgame_extras %}
+
+{% block pagetitle %}Home{% endblock %}
+
+{% block content %}
+
+	{% if messages %}
+	    {% for message in messages %}
+            <section class="modal message">
+                <div class="row">
+                    <div class="sheet large-12 columns">
+                        {{ message }}
+                    </div>
+                </div>
+            </section>
+	    {% endfor %}
+
+    {% else %}
+
+        <section class="game-ui frontline auto-refresh">
+
+            <div id="team-box" class="sheet">
+                <header>
+                    <h5>
+                        Office players
+                        <span data-tooltip class="help has-tip" title="Inspect the safety of your team members' stations and predict upcoming events.">?</span>
+                    </h5>
+                </header>
+
+                <div class="roster">
+                    {% for mate in teammates %}
+                        {% ifnotequal mate.player current_player %}
+                            {% ifnotequal mate.role "frontline" %}
+                                <div data-tooltip title="{{ mate.player }}" id="mate-{{ mate.id }}" data-id="{{ mate.id }}" data-name="{{ mate.player.name }}&nbsp;" data-email="{{ mate.player.email }}" class="small avatar has-tip" style="background-color: {{ mate.team|team_color }};"><div class="{{ mate.role }}" style="border-color: {{ mate.player|player_color }}; background-color: {{ mate.team|team_color }}"></div></div>
+                            {% endifnotequal %}
+                        {% endifnotequal %}
+                    {% endfor %}
+                </div>
+
+                <div id="team-box-inactive" class="actions no-mate">
+                    &larr; Select a player
+                </div>
+
+                <div id="team-box-active" class="actions mate" style="display:none;">
+                    <span id="team-mate-name"></span>
+                    <span id="team-mate-email"></span>
+                    <form method="POST" action="{% url 'frontline_risks' %}"> {% csrf_token %}
+                        <input type="hidden" id="team-mate-inspect-id" name="target" value="2">
+                        <input type="submit" class="tiny inspect action btn has-tip" value="Inspect safety" data-tooltip title="Shuffles, then reveals part of the selected player's safety stack. Costs one action.">
+                    </form>
+
+                    <form method="POST" action="{% url 'frontline_event' %}"> {% csrf_token %}
+                        <input type="hidden" id="team-mate-predict-id" name="target" value="2">
+                        {% if current_day.number == 7 %}
+                            <a href="javascript:void(0)" class="tiny disabled predict action btn has-tip" data-tooltip title="You can't predict events in the last turn of an episode.">Predict event</a>
+                        {%  else %}
+                            <input type="submit" data-tooltip  class="tiny predict action btn has-tip" title="Reveals the next turn's action for the selected player. Costs one action." value="Predict event">
+                        {% endif %}
+                    </form>
+                </div>
+
+
+            </div>
+
+            {% include "partials/game/messages.html" %}
+
+        </section>
+
+	{% endif %}
+	
+{% endblock content %}

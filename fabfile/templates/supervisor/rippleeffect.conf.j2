@@ -1,0 +1,18 @@
+[program:{{project_name}}]
+command={{virtualenv}}/bin/uwsgi
+    --home {{virtualenv}}
+    --module {{project_name}}.wsgi:application
+    --socket 127.0.0.1:3033
+    --master
+    --pidfile /tmp/{{project_name}}.pid
+    --workers 5
+    --harakiri 60
+    --max-requests 5000
+    --vacuum 
+directory={{home}}
+user={{app_user}}
+autostart=true
+autorestart=true
+stdout_logfile={{log_home}}/uwsgi.log
+redirect_stderr=true
+stopsignal=QUIT

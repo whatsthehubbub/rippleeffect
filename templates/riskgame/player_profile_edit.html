@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+                {% if profileform.errors %}
+                    <div class="form-errors text-center">
+                        Please enter a name.
+                    </div>
+                {% endif %}
+
+                <h3 class="text-center triple-gutter-pad-top double-gutter-pad-bot">{{ current_player }}&rsquo;s profile</h3>
+
+                <form method="post" class="gutter-double-pad">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next }}" />
+
+                    <div class="row">
+
+                        <div class="large-12 columns large-collapse placeholder-container" data-placeholder="your name">
+                            <div class="row">
+                                <div class="small-5 columns">
+                                    <label for="id_name" class="left inline">Player name</label>
+                                </div>
+                                <div class="small-7 columns">
+                                    {{ profileform.name }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="large-12 columns large-collapse placeholder-container" data-placeholder="password">
+
+                            <div class="row">
+                                <div class="small-5 columns">
+                                    <label for="id_receive_email" class="left inline">Receive emails?</label>
+                                </div>
+                                <div class="small-7 columns">
+                                    {{ profileform.receive_email }}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row gutter-pad-bot gutter-pad-top">
+                        <div class="large-4 columns large-collapse">
+                            <input type="submit" value="Save" class="medium btn" />
+                        </div>
+                        <div class="large-8 columns large-collapse">
+                            <a href="{% url 'player_profile_own' %}" class="inline left">Or cancel</a>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}

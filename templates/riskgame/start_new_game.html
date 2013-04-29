@@ -1,0 +1,74 @@
+{% extends "base-lobby.html" %}
+
+{% block content %}
+
+    {% include "partials/lobby-logo-header.html" %}
+
+
+    <div class="row">
+        <div class="sheet large-6 large-centered columns">
+
+            <h3 class="text-center">Start a new game</h3>
+
+            {% if form.errors %}
+                <div class="form-errors">
+                    Invalid email address or password. Try again.
+                </div>
+            {% endif %}
+
+            <form method="POST" class="gutter-double-pad" action="{% url 'game_start' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+
+
+                <div class="row">
+                    <div class="large-12 columns large-collapse placeholder-container" data-placeholder="start date">
+                        <div class="row">
+                            <div class="small-5 columns">
+                                <label for="id_start" class="left inline">Start date</label>
+                            </div>
+                            <div class="small-7 columns">
+                                {{ startform.start }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="large-12 columns large-collapse placeholder-container" data-placeholder="turn duration in minutes">
+                        <div class="row">
+                            <div class="small-5 columns">
+                                <label for="id_turn_minutes" class="left inline">Minutes per turn</label>
+                            </div>
+                            <div class="small-7 columns">
+                                {{ startform.turn_minutes }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="large-12 columns large-collapse placeholder-container" data-placeholder="turn length in minutes">
+                        <div class="row">
+                            <div class="small-5 columns">
+                                <label for="id_csv" class="left inline">Teams &amp; players</label>
+                            </div>
+                            <div class="small-7 columns">
+                                {{ startform.csv }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="large-6 columns large-collapse large-centered">
+                        <input type="submit" value="Start game" class="medium btn" />
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+{% endblock content %}

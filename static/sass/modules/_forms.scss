@@ -1,0 +1,134 @@
+// Form styles
+
+.form-errors {
+  background-color: $red;
+  padding: 18px 36px;
+  color: $white;
+  margin-bottom: 12px;
+}
+
+.form-success {
+  background-color: $green;
+  padding: 18px 36px;
+  color: $white;
+  margin-bottom: 12px;
+}
+
+.watermark {
+  color: $dark-grey !important;
+}
+
+input[type="text"], input[type="password"], input[type="date"],
+input[type="datetime"], input[type="datetime-local"], input[type="month"],
+input[type="week"], input[type="email"], input[type="number"], input[type="search"],
+input[type="tel"], input[type="time"], input[type="url"], input[type="button"],
+input[type="submit"], input[type="file"], .input {
+  height: 52px;
+  line-height: 20px;
+  font-size: 18px;
+  font-family: $ff-medium;
+  margin-bottom:12px;
+  margin-top: 12px;
+  padding-left: 8px;
+  padding-right: 12px;
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+input[type="file"] {
+  margin-top: 26px;
+  margin-bottom: -2px;
+}
+
+input[type="password"] {
+  // some versions of IE8 are unable to fall back to a system for in order to display the dots
+  // in the password field.
+  font-family: arial !important;
+}
+
+input[type="checkbox"] {
+  margin-top:30px;
+}
+
+input.medium.btn{
+  @include button(
+      0,
+      $green,
+      0,
+      false,
+      false,
+      true);
+  padding: 0 14px;
+  width: 100%;
+  height: 52px;
+  line-height:52px;
+  font-size: 18px;
+  margin-bottom:12px;
+  margin-top: 12px;
+  font-family: $ff-medium;
+  border-bottom: 1px solid darken($green, 20%);
+  border-right: 1px solid darken($green, 20%);
+
+  &:active {
+    border: 1px solid darken($green, 20%);
+  }
+}
+
+input.tiny.btn{
+  @include button(
+      0,
+      $mid-grey,
+      0,
+      false,
+      false,
+      true);
+  text-transform: uppercase;
+  padding: 0 6px;
+  margin-bottom:6px;
+  font-family: $ff-bold;
+  font-size: 11px;
+  height: 30px;
+  line-height: 32px;
+  border-bottom: 1px solid darken($mid-grey, 20%);
+  border-right: 1px solid darken($mid-grey, 20%);
+
+  &:active{
+    border: 1px solid darken($mid-grey, 20%);
+  }
+
+  &.disabled {
+    background-color: lighten($mid-grey, 10%) !important;
+    border-color: $mid-grey;
+    color: lighten($black, 50%);
+  }
+
+}
+
+input.yellow.btn {
+  background-color: $orange;
+  border-color: darken($orange, 20%);
+  color: $black;
+
+  &:hover {
+    background-color: darken($orange, 10%);
+    border-color: darken($orange, 20%);
+    color: $black;
+  }
+}
+
+label {
+  padding: 0 !important;
+  font-size: 18px;
+  color: $black;
+}
+
+form {
+
+  // single line
+  .inline {
+    margin-bottom:12px;
+    margin-top: 12px;
+    line-height: 52px;
+  }
+
+}

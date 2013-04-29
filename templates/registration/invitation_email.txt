@@ -1,0 +1,11 @@
+Hello there,
+
+We have activated your account for the two-week pilot of Ripple Effect. For more information, please refer to the briefing you received earlier… or just sign in and get started!
+
+Your password is: {{ password }}
+You can sign in with this password at: http://{{ site }}
+
+Kind regards,
+The Ripple Effect team
+
+{# (You're receiving this message because someone signed up for Ripple Effect using this e-mail address. If this wasn't you, you can ignore this message.) #}

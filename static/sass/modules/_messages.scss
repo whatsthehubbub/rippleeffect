@@ -1,0 +1,170 @@
+
+.episode-intro, .event-intro {
+  height: 300px;
+  //border: 6px solid transparent;
+  //border-bottom: none;
+  margin: 6px 6px 0 6px;
+}
+
+h4.action-cost {
+  @extend .tiny-type;
+  @extend .text-center;
+  margin-top: $gutter*2;
+  margin-bottom: 0;
+  color: $black;
+  text-transform: uppercase;
+  font-family: $ff-bold;
+  opacity: 0.5;
+  height: 20px;
+  line-height:20px;
+
+  span {
+    background: url('../img/icon-action.png') no-repeat 6px 1px;
+    @include image-2x('../img/icon-action@2x.png', 16px, 16px);
+    padding-left:16px;
+    height: 20px;
+    line-height:20px;
+    padding: 5px 10px 5px 20px;
+  }
+}
+
+
+a.medium.dismiss.btn, input.medium.dismiss.btn {
+  width: 160px;
+}
+
+.sheet p {
+  padding-left: $gutter;
+  padding-right: $gutter;
+}
+
+.sheet ul {
+  font-size: 14px;
+  font-family: $ff-medium;
+  padding: 0 52px;
+
+  li {
+    line-height: 24px;
+
+
+  }
+
+}
+
+.sheet h6, .sheet h7, .sheet h8 {
+  //text-align: center;
+  display: block;
+  padding: $gutter*2 $gutter*3 0 $gutter*3;
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: $black; //color: $dark-grey;
+  font-family: $ff-bold;
+  text-transform: uppercase;
+
+}
+
+// blockquotes are used for character copy
+blockquote {
+
+  position: relative;
+
+  p {
+    margin: 0 auto;
+    @extend .small-type;
+    width: 230px + $gutter*2;
+    padding: 0 $gutter;
+    background: url('../img/icon-blockquote.png') no-repeat top left;
+    @include image-2x('../img/icon-blockquote@2x.png', 16px, 16px);
+    text-align: justify;
+  }
+
+  .small.character {
+    @extend .tiny-type;
+    @extend .text-center;
+    margin-left: 4px;
+    position:absolute;
+    width: 92px;
+    height: 82px;
+    padding-top: 70px;
+    top: 0;
+    left: 0;
+    background-position: center -6px;
+    text-transform: uppercase;
+    color: $dark-grey;
+  }
+
+  .large.character {
+    @extend .tiny-type;
+    @extend .text-center;
+    height: 197px;
+    display:block;
+    background-position: center top;
+    padding-top: 173px;
+    color: $dark-grey;
+  }
+
+}
+
+.coingroup {
+  text-align: center;
+}
+
+.coin {
+  margin: 1px;
+  width: 42px;
+  height: 42px;
+  display:inline-block;
+  text-indent: -999999em;
+}
+
+.step-divider {
+  height: 13px;
+  background: url('../img/step-divider.png') no-repeat center top;
+  margin: $gutter 0;
+}
+
+p.narrow {
+  padding-left: $gutter*3;
+  padding-right: $gutter*3;
+}
+
+p.caption {
+  font-size: 16px;
+  padding: $gutter*0.5 $gutter*3 0 $gutter*3;
+  color: $dark-grey;
+  //text-align: justify;
+  font-style: italic;
+}
+
+p.stat-row {
+  @extend .small-type;
+  font-family: $ff-medium;
+  margin-bottom:0;
+  height: 24px;
+  line-height: 24px;
+
+  span {
+    float:right;
+    width: 200px;
+  }
+
+}
+
+form.confirm-production {
+  text-align: center;
+
+  a.cancel.btn {
+    margin: 0 $gutter;
+  }
+
+  input.produce.btn {
+    margin: 0;
+    margin-right: $gutter;
+  }
+
+  a.btn, input.btn {
+    display:inline-block
+  }
+
+}

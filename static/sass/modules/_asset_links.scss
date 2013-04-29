@@ -1,0 +1,231 @@
+
+// Episode banners
+.episode-1-intro {
+  background: url('../img/intro-1.jpg') no-repeat;
+  @include image-2x('../img/intro-1@2x.jpg', 424px, 300px);
+}
+
+.episode-2-intro {
+  background: url('../img/intro-2.jpg') no-repeat;
+  @include image-2x('../img/intro-2@2x.jpg', 424px, 300px);
+}
+
+// Event banners
+.event-high-market-intro {
+  background: url('../img/large-event-high-market.png') no-repeat;
+  @include image-2x('../img/large-event-high-market@2x.png', 424px, 300px);
+}
+
+.event-lightning-intro {
+  background: url('../img/large-event-lightning.png') no-repeat;
+  @include image-2x('../img/large-event-lightning@2x.png', 424px, 300px);
+}
+
+.event-caution-intro {
+  background: url('../img/large-event-caution.png') no-repeat;
+  @include image-2x('../img/large-event-caution@2x.png', 424px, 300px);
+}
+
+.event-tornado-intro {
+  background: url('../img/large-event-tornado.png') no-repeat;
+  @include image-2x('../img/large-event-tornado@2x.png', 424px, 300px);
+}
+
+.event-poor-vision-intro {
+  background: url('../img/large-event-poor-vision.png') no-repeat;
+  @include image-2x('../img/large-event-poor-vision@2x.png', 424px, 300px);
+}
+
+// Small character heads
+.small-mei-happy {
+  background: url('../img/small-mei-1.png') no-repeat;
+  @include image-2x('../img/small-mei-1@2x.png', 60px, 80px);
+}
+
+.small-abu-happy {
+  background: url('../img/small-abu-1.png') no-repeat;
+  @include image-2x('../img/small-abu-1@2x.png', 60px, 80px);
+}
+
+.small-david-happy {
+  background: url('../img/small-david-1.png') no-repeat;
+  @include image-2x('../img/small-david-1@2x.png', 60px, 80px);
+}
+
+.small-harry-happy {
+  background: url('../img/small-harry-1.png') no-repeat;
+  @include image-2x('../img/small-harry-1@2x.png', 60px, 80px);
+}
+
+.small-elin-happy {
+  background: url('../img/small-elin-1.png') no-repeat;
+  @include image-2x('../img/small-elin-1@2x.png', 60px, 80px);
+}
+
+.small-mei-neutral {
+  background: url('../img/small-mei-2.png') no-repeat;
+  @include image-2x('../img/small-mei-2@2x.png', 60px, 80px);
+}
+
+.small-abu-neutral {
+  background: url('../img/small-abu-2.png') no-repeat;
+  @include image-2x('../img/small-abu-2@2x.png', 60px, 80px);
+}
+
+.small-david-neutral {
+  background: url('../img/small-david-2.png') no-repeat;
+  @include image-2x('../img/small-david-2@2x.png', 60px, 80px);
+}
+
+.small-harry-neutral {
+  background: url('../img/small-harry-2.png') no-repeat;
+  @include image-2x('../img/small-harry-2@2x.png', 60px, 80px);
+}
+
+.small-elin-neutral  {
+  background: url('../img/small-elin-2.png') no-repeat;
+  @include image-2x('../img/small-elin-2@2x.png', 60px, 80px);
+}
+
+.small-mei-concerned {
+  background: url('../img/small-mei-3.png') no-repeat;
+  @include image-2x('../img/small-mei-3@2x.png', 60px, 80px);
+}
+
+.small-abu-concerned {
+  background: url('../img/small-abu-3.png') no-repeat;
+  @include image-2x('../img/small-abu-3@2x.png', 60px, 80px);
+}
+
+.small-david-concerned {
+  background: url('../img/small-david-3.png') no-repeat;
+  @include image-2x('../img/small-david-3@2x.png', 60px, 80px);
+}
+
+.small-harry-concerned {
+  background: url('../img/small-harry-3.png') no-repeat;
+  @include image-2x('../img/small-harry-3@2x.png', 60px, 80px);
+}
+
+.small-elin-concerned {
+  background: url('../img/small-elin-3.png') no-repeat;
+  @include image-2x('../img/small-elin-3@2x.png', 60px, 80px);
+}
+
+// Large character heads in triangles
+.large-harry-happy {
+  background: url('../img/report-harry-1.png') no-repeat;
+  @include image-2x('../img/report-harry-1@2x.png', 204px, 162px);
+}
+
+.large-harry-neutral {
+  background: url('../img/report-harry-2.png') no-repeat;
+  @include image-2x('../img/report-harry-2@2x.png', 204px, 162px);
+}
+
+.large-harry-concerned {
+  background: url('../img/report-harry-3.png') no-repeat;
+  @include image-2x('../img/report-harry-3@2x.png', 204px, 162px);
+}
+
+.large-mei-happy {
+  background: url('../img/report-mei-1.png') no-repeat;
+  @include image-2x('../img/report-mei-1@2x.png', 204px, 162px);
+}
+
+.large-mei-neutral {
+  background: url('../img/report-mei-2.png') no-repeat;
+  @include image-2x('../img/report-mei-2@2x.png', 204px, 162px);
+}
+
+.large-mei-concerned {
+  background: url('../img/report-mei-3.png') no-repeat;
+  @include image-2x('../img/report-mei-3@2x.png', 204px, 162px);
+}
+
+.large-david-happy {
+  background: url('../img/report-david-1.png') no-repeat;
+  @include image-2x('../img/report-david-1@2x.png', 204px, 162px);
+}
+
+.large-david-neutral {
+  background: url('../img/report-david-2.png') no-repeat;
+  @include image-2x('../img/report-david-2@2x.png', 204px, 162px);
+}
+
+.large-david-concerned {
+  background: url('../img/report-david-3.png') no-repeat;
+  @include image-2x('../img/report-david-3@2x.png', 204px, 162px);
+}
+
+.large-elin-happy {
+  background: url('../img/report-elin-1.png') no-repeat;
+  @include image-2x('../img/report-elin-1@2x.png', 204px, 162px);
+}
+
+.large-elin-neutral {
+  background: url('../img/report-elin-2.png') no-repeat;
+  @include image-2x('../img/report-elin-2@2x.png', 204px, 162px);
+}
+
+.large-elin-concerned {
+  background: url('../img/report-elin-3.png') no-repeat;
+  @include image-2x('../img/report-elin-3@2x.png', 204px, 162px);
+}
+
+.large-abu-happy {
+  background: url('../img/report-abu-1.png') no-repeat;
+  @include image-2x('../img/report-abu-1@2x.png', 204px, 162px);
+}
+
+.large-abu-neutral {
+  background: url('../img/report-abu-2.png') no-repeat;
+  @include image-2x('../img/report-abu-2@2x.png', 204px, 162px);
+}
+
+.large-abu-concerned {
+  background: url('../img/report-abu-3.png') no-repeat;
+  @include image-2x('../img/report-abu-3@2x.png', 204px, 162px);
+}
+
+// Coins
+
+.coin.safety.unknown {
+  background: url('../img/coin-safety.png') no-repeat;
+  @include image-2x('../img/coin-safety@2x.png', 41px, 42px);
+}
+
+.coin.safety.yes {
+  background: url('../img/coin-safety-yes.png') no-repeat;
+  @include image-2x('../img/coin-safety-yes@2x.png', 41px, 42px);
+}
+
+.coin.safety.no {
+  background: url('../img/coin-safety-no.png') no-repeat;
+  @include image-2x('../img/coin-safety-no@2x.png', 41px, 42px);
+}
+
+.coin.safety.maybe {
+  background: url('../img/coin-safety-maybe.png') no-repeat;
+  @include image-2x('../img/coin-safety-maybe@2x.png', 41px, 42px);
+}
+
+.coin.production.unknown {
+  background: url('../img/coin-production.png') no-repeat;
+  @include image-2x('../img/coin-safety@2x.png', 41px, 42px);
+}
+
+.coin.production.yes {
+  background: url('../img/coin-production-yes.png') no-repeat;
+  @include image-2x('../img/coin-safety-yes@2x.png', 41px, 42px);
+}
+
+.coin.production.no {
+  background: url('../img/coin-production-no.png') no-repeat;
+  @include image-2x('../img/coin-safety-no@2x.png', 41px, 42px);
+}
+
+.coin.barrier {
+  background: url('../img/coin-barrier.png') no-repeat;
+  @include image-2x('../img/coin-barrier@2x.png', 41px, 42px);
+}

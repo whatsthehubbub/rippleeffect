@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib import admin
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
@@ -24,17 +23,17 @@ class UserCreationForm(forms.ModelForm):
 
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords don't match")
-        
+
         return password2
 
     def save(self, commit=True):
         # Save the provided password in hashed format
         user = super(UserCreationForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
-        
+
         if commit:
             user.save()
-        
+
         return user
 
 
@@ -71,14 +70,14 @@ class EmailUserAdmin(UserAdmin):
         ('Permissions', {'fields': ('is_admin',)}),
         ('Important dates', {'fields': ('last_login',)}),
     )
-    
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'password1', 'password2')}
         ),
     )
-    
+
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
@@ -87,12 +86,38 @@ admin.site.register(EmailUser, EmailUserAdmin)
 
 
 
-class ValidEmailDomainAdmin(admin.ModelAdmin):
-    list_display = ('datecreated', 'name')
-admin.site.register(ValidEmailDomain, ValidEmailDomainAdmin)
+# class ValidEmailDomainAdmin(admin.ModelAdmin):
+#     list_display = ('datecreated', 'name')
+# admin.site.register(ValidEmailDomain, ValidEmailDomainAdmin)
 
+class TeamPlayerAdmin(admin.ModelAdmin):
+    list_display = ('role', 'team', 'player', 'gather_pile', 'risk_pile', 'episode_events', 'active_events')
+admin.site.register(TeamPlayer, TeamPlayerAdmin)
+
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ('name', 'victory_points', 'resources_collected', 'action_points', 'frontline_action_points', 'goal_zero_markers', 'goal_zero_streak', 'active_events', 'get_rank')
+admin.site.register(Team, TeamAdmin)
+
+class PlayerAdmin(admin.ModelAdmin):
+    list_display = ('user', 'name', 'email')
+admin.site.register(Player, PlayerAdmin)
+
+# class TeamJoinRequestAdmin(admin.ModelAdmin):
+#     list_display = ('team', 'player')
+# admin.site.register(TeamJoinRequest, TeamJoinRequestAdmin)
 
 class GameAdmin(admin.ModelAdmin):
-    list_display = ('datecreated', 'started')
+    list_display = ('datecreated', 'start', 'end', 'started', 'over', 'active')
 admin.site.register(Game, GameAdmin)
 
+class EpisodeAdmin(admin.ModelAdmin):
+    list_display = ('datecreated', 'first_day', 'number')
+admin.site.register(Episode, EpisodeAdmin)
+
+class EpisodeDayAdmin(admin.ModelAdmin):
+    list_display = ('datecreated', 'episode', 'number', 'current', 'end', 'next', 'secondsleft')
+admin.site.register(EpisodeDay, EpisodeDayAdmin)
+
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ('datecreated', 'team', 'player', 'identifier', 'target')
+admin.site.register(Notification, NotificationAdmin)

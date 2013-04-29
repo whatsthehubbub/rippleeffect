@@ -1,0 +1,17 @@
+server {
+    listen      80;
+    server_name {{project_domain}} www.{{project_domain}};
+    access_log  /var/log/nginx/{{project_name}}.log;
+    
+    if ($http_x_forwarded_proto != https) {
+        rewrite        ^ https://www.playrippleeffect.com$request_uri? permanent;
+    }
+    
+    location /static {
+        alias {{home}}/staticroot/;
+    }
+    location / {
+        include uwsgi_params;
+        uwsgi_pass 127.0.0.1:3033;
+    }
+}

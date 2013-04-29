@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+                <h3 class="text-center triple-gutter-pad-top">Game Over</h3>
+
+                <p class="half-gutter-pad-top narrow">Thanks a lot for playing the pilot of Ripple Effect, a game of resources and risks. We hope you found the experience enjoyable and instructive. Please let us know what you think via <a href="mailto:feedback@playrippleeffect.com">feedback@playrippleeffect.com</a>. We will use all comments to improve the full version of the game, which will be longer and deeper, offering new events along the way.</p>
+
+                <header>
+                    <h5 class="text-center">
+                        Game Results
+                    </h5>
+                </header>
+
+                <p class="stat-row">Team ranking <span>{{ team.get_rank }}</span></p>
+                <p class="stat-row">Points scored <span>{{ team.victory_points }}</span></p>
+                <p class="stat-row">Resources produced <span>{{ team.resources_collected }}</span></p>
+                <p class="stat-row triple-gutter-margin-bot">Longest Goal Zero streak<span>{{ team.get_goal_zero_streak }}</span></p>
+            </div>
+        </div>
+    </section>
+
+	
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% load riskgame_extras %}
+{% if episode.number == 1 %}
+
+    <div class="episode-intro episode-1-intro"></div>
+
+    <h3 class="text-center triple-gutter-pad-top">Episode 1: Time to get rocking</h3>
+
+    <blockquote class="half-gutter-pad-top double-gutter-pad-bot">
+        <p>Welcome to the first episode, team! The weather’s great as you can see, which releases you from your right to procrastinate. In other words, time to get rocking! Crank up your stations' production, and of course, don’t forget about safety. Go!</p>
+        <div class="small character small-mei-happy">Mei</div>
+    </blockquote>
+
+{% endif %}
+
+{% if episode.number == 2 %}
+
+    <div class="episode-intro episode-2-intro"></div>
+
+    <h3 class="text-center triple-gutter-pad-top">Episode 2: Don't be angry with the rain</h3>
+
+    <blockquote class="half-gutter-pad-top double-gutter-pad-bot">
+        <p>Welcome to episode two, team! Did you know that your production quality and safety are reshuffled at the start of each episode? And that everyone's stations vary wildly? It means that past performance is no guarantee of future results. By the way, the weather's pretty terrible right now. Don’t let this distract you… in fact, you ought to get started right now, so I can get inside and put on some dry clothes.</p>
+        <div class="small character small-harry-happy">Harry</div>
+    </blockquote>
+
+    {% if action_players %}
+
+        <header>
+            <h5 class="text-center">
+                Active team members in the previous episode
+            </h5>
+        </header>
+
+        {% for player in action_players %}
+            <div class="notification clearfix">
+                <div class="small avatar" title="{{ player.get_teamplayer.role }}" style="background-color: {{ player.get_teamplayer.team|team_color }};"><div title="{{ player.get_teamplayer.role }}" class="{{ player.get_teamplayer.role }}" style="border-color: {{ player|player_color }}; background-color: {{ player.get_teamplayer.team|team_color }}"></div></div>
+                <div class="message clearfix single-line">
+                    {{ player }}
+                    {% ifequal current_player tp.player %}
+                        (you!)
+                    {% endifequal %}
+                </div>
+            </div>
+
+        {% endfor %}
+        <p class="double-gutter-margin-bot">&nbsp;</p>
+
+
+    {% endif %}
+
+{% endif %}
+
+<a href="{% url 'message_seen' "episode" %}" class='quad-gutter-margin-bot medium grey centered dismiss btn js-continue'>Continue</a>

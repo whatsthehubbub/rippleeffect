@@ -1,0 +1,45 @@
+{% load url from future %}
+<!DOCTYPE html>
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}img/apple-touch-icon-precomposed@2x.png" />
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon" />
+
+    <title>Ripple Effect</title>
+
+    <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/normalize.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}stylesheets/app.css" />
+
+    <script src="{{ STATIC_URL }}javascripts/vendor/custom.modernizr.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/vendor/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}javascripts/site.js"></script>
+
+    {% block extrahead %}{% endblock extrahead %}
+
+</head>
+
+<body id="pregame-landing">
+<div>
+    <header>
+        <h1>Ripple Effect</h1>
+        <h2>A Game of Resources and Risks</h2>
+    </header>
+
+    <article class="white-bg">Page not found</article>
+</div>
+
+<footer id="pregame-footer" class="white-bg clearfix">
+    <h3 id="hubbub">A <a href="http://hubbub.eu">Hubbub</a> game, commissioned by <a href="http://shell.com">Shell</a></h3>
+</footer>
+
+{% include "partials/analytics.html" %}
+</body>
+</html>

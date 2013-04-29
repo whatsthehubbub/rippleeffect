@@ -1,0 +1,8 @@
+{% load riskgame_extras %}
+<div class="notification clearfix">
+    <div class="small avatar" title="{{ notification.player.get_teamplayer.role }}" style="background-color: {{ notification.team|team_color }};"><div title="{{ notification.player.get_teamplayer.role }}" class="{{ notification.player.get_teamplayer.role }}" style="border-color: {{ notification.player|player_color }}; background-color: {{ notification.team|team_color }}"></div></div>
+    <div class="message clearfix">
+        <span class="timestamp">{{ notification.datecreated|timesince }} ago</span>
+        {{ notification.player }} {{ notification.get_message }}
+    </div>
+</div>

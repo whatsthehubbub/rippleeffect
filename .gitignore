@@ -1,3 +1,12 @@
 venv
 *.pyc
 .DS_Store
+.vagrant
+celerybeat.pid
+.coffeescript-cache
+.sass-cache
+.env
+fire_app_log.txt
+celerybeat-schedule
+
+codekit-config.json

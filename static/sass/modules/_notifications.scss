@@ -1,0 +1,59 @@
+
+.notification {
+  clear:both;
+  padding-top: $gutter*0.5;
+  padding-left: $gutter;
+  overflow: hidden;
+  margin-bottom: $gutter;
+
+
+
+  .avatar {
+    float: left;
+
+  }
+
+  .message {
+    float: right;
+    width: 376px;
+    padding-right: $gutter;
+    overflow: hidden;
+
+    font-size: 14px;
+    font-family: $ff-medium;
+    line-height: 13px;
+
+    &.single-line {
+      line-height: 30px;
+    }
+  }
+
+  &.ranking .message {
+    width: 316px;
+  }
+
+
+  .timestamp {
+    font-size: 11px;
+    font-family: $ff-bold;
+    display: block;
+    height: 16px;
+    line-height:18px;
+    text-transform: uppercase;
+    color: $dark-grey;
+
+  }
+
+  .rank-points-box {
+    width: 60px;
+    float:left;
+    height: 30px;
+    line-height: 32px;
+    font-family: $ff-bold;
+    font-size: 16px;
+    text-align: right;
+    padding-right: $gutter;
+
+  }
+
+}

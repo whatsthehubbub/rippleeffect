@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load riskgame_extras %}
+{% load i18n %}
+
+{% block pagetitle %}{{ title|capfirst }} {{ team.name }}{% endblock pagetitle %}
+
+{% block content %}
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+                <h3 class="text-center triple-gutter-pad-top">Team {{ team.name }}</h3>
+
+                <div class="huge avatar margin-center triple-gutter-margin-bot" style="background-color: {{ team|team_color }};"></div>
+
+                <header>
+                    <h5 class="text-center">
+                        Game results
+                    </h5>
+                </header>
+
+                <p class="stat-row">Team ranking <span>{{ team.get_rank }}</span></p>
+                <p class="stat-row">Points scored so far<span>{{ team.victory_points }}</span></p>
+                <p class="stat-row">Resources produced so far<span>{{ team.resources_collected }}</span></p>
+                <p class="stat-row">Goal Zero<span>{{ team.goal_zero_markers }} currently / {{ team.get_goal_zero_streak }} longest</span></p>
+                <p class="stat-row triple-gutter-margin-bot">Active events<span>
+                    {% for event in team.get_active_events %}
+                        {{ event|event_name }}{% if not forloop.last %},{% endif %}
+                    {% empty %}
+                        None
+                {% endfor %}</span></p>
+
+                <header>
+                    <h5 class="text-center">
+                        Team Members
+                    </h5>
+                </header>
+
+                {% for tp in team.teamplayer_set.all %}
+                    <div class="notification clearfix">
+                        <div class="small avatar" title="{{ tp.player.get_teamplayer.role }}" style="background-color: {{ tp.team|team_color }};"><div title="{{ tp.player.get_teamplayer.role }}" class="{{ tp.player.get_teamplayer.role }}" style="border-color: {{ tp.player|player_color }}; background-color: {{ tp.team|team_color }}"></div></div>
+                        <div class="message clearfix">
+                            <span class="timestamp">{{ tp.role }}</span>
+                            <a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a> – 
+                            <span>{{ tp.player.user.email }}</span>
+                            {% ifequal current_player tp.player %}(you!){% endifequal %}
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+                <p class="double-gutter-margin-bot">&nbsp;</p>
+
+
+            </div>
+        </div>
+    </section>
+{% endblock content %}
