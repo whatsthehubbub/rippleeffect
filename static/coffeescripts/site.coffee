@@ -28,6 +28,12 @@ $ ->
   catchKey: (event) ->
     if event.keyCode == 68
       $('.debug').show();
+    if event.keyCode == 27
+      RE.dismissMessage()
+
+  dismissMessage:(e) ->
+    if $('a.js-continue').length > 0
+      window.location.assign($('a.js-continue').first().attr('href'))
 
   handleButtonClick:(e) ->
     # nothing, for now

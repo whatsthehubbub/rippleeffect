@@ -26,7 +26,15 @@
     },
     catchKey: function(event) {
       if (event.keyCode === 68) {
-        return $('.debug').show();
+        $('.debug').show();
+      }
+      if (event.keyCode === 27) {
+        return RE.dismissMessage();
+      }
+    },
+    dismissMessage: function(e) {
+      if ($('a.js-continue').length > 0) {
+        return window.location.assign($('a.js-continue').first().attr('href'));
       }
     },
     handleButtonClick: function(e) {},
