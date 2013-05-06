@@ -459,7 +459,7 @@ def game_start(request):
 
                 # Starting a game with current team and players, so reset stats
                 Team.objects.all().update(goal_zero_markers=0)
-                Team.objects.all().update(goal_zero_streak=0)
+                Team.objects.all().update(goal_zero_streak=1)
                 Team.objects.all().update(action_points=0)
                 Team.objects.all().update(frontline_action_points=0)
                 Team.objects.all().update(rank_points=0)
