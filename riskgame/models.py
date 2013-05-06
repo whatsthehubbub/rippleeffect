@@ -604,7 +604,7 @@ class Team(models.Model):
     open = models.BooleanField(default=True)
 
     goal_zero_markers = models.IntegerField(default=0)
-    goal_zero_streak = models.IntegerField(default=0)
+    goal_zero_streak = models.IntegerField(default=1)
 
     action_points = models.IntegerField(default=0)
     frontline_action_points = models.IntegerField(default=0)
@@ -812,7 +812,7 @@ class Team(models.Model):
         Team.objects.filter(pk=self.pk).update(action_points=new_actions)
         Team.objects.filter(pk=self.pk).update(frontline_action_points=2*playerCount)
 
-        # Reset the per episode victory points counter
+        # Reset the per turn victory points counter
         Team.objects.filter(pk=self.pk).update(victory_points_turn=0)
 
         Team.objects.filter(pk=self.pk).update(goal_zero_markers=F('goal_zero_markers')+1)
