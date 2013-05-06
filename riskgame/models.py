@@ -745,7 +745,6 @@ class Team(models.Model):
         # Set the per episode scores to 0 again
         Team.objects.filter(pk=self.pk).update(resources_collected_episode=0)
         Team.objects.filter(pk=self.pk).update(victory_points_episode=0)
-        Team.objects.filter(pk=self.pk).update(rank_points=0)
 
 
     def start_day(self, day):
