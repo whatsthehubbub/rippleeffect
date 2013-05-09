@@ -40,48 +40,44 @@ def index(request):
 #     return HttpResponse(t.render(c))
 
 
-# class CreateTeamform(forms.ModelForm):
-#     class Meta:
-#         model = Team
-#         fields = ('name', )
+class CreateTeamform(forms.ModelForm):
+    class Meta:
+        model = Team
+        fields = ('name', )
 
-#     def __init__(self, *args, **kwargs):
-#         self.helper = FormHelper()
+    # def __init__(self, *args, **kwargs):
+    #     self.helper = FormHelper()
 
-#         self.helper.form_class = 'form'
-#         self.helper.form_action = reverse('team_create')
-#         self.helper.form_method = 'post'
+    #     self.helper.form_class = 'form'
+    #     self.helper.form_action = reverse('team_create')
+    #     self.helper.form_method = 'post'
 
-#         self.helper.layout = Layout(
-#             Field('name', css_class='input-block-level', placeholder='Name'),
-#             FormActions(
-#                 Submit('submit', _('Send'), css_class='btn')
-#             )
-#         )
+    #     self.helper.layout = Layout(
+    #         Field('name', css_class='input-block-level', placeholder='Name'),
+    #         FormActions(
+    #             Submit('submit', _('Send'), css_class='btn')
+    #         )
+    #     )
 
-#         super(CreateTeamform, self).__init__(*args, **kwargs)
+    #     super(CreateTeamform, self).__init__(*args, **kwargs)
 
-# @login_required
-# def team_create(request):
-#     if request.method == "POST":
-#         name = request.POST.get('name', '')
+@login_required
+@require_POST
+def team_create(request):
+    name = request.POST.get('name', '')
 
-#         player = request.user.get_or_create_player()
-#         Team.objects.create(name=name, leader=player)
+    player = request.user.get_or_create_player()
+    team = Team.objects.create(name=name, leader=player)
 
-#         return HttpResponseRedirect(reverse('index'))
+    return HttpResponseRedirect(reverse('team_detail', args=[team.pk]))
 
 
 @login_required
 def team_detail(request, pk):
-    t = loader.get_template('riskgame/team_detail.html')
-
-    c = RequestContext(request, {
+    return render_to_response('riskgame/team_detail.html', {
         'team': Team.objects.get(pk=pk),
         'title': "team"
-    })
-
-    return HttpResponse(t.render(c))
+    }, context_instance=RequestContext(request))
 
 # @login_required
 # @require_POST
@@ -226,7 +222,9 @@ def home(request):
     try:
         teamplayer = TeamPlayer.objects.get(player=player)
     except TeamPlayer.DoesNotExist:
-        return render_to_response('riskgame/home-alone.html', {}, context_instance=RequestContext(request))
+        return render_to_response('riskgame/home-alone.html', {
+            'teamform': CreateTeamform()
+        }, context_instance=RequestContext(request))
     
     if timezone.now() < game.start:
         # Pre game

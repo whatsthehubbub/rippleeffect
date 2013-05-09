@@ -10,6 +10,14 @@
 
                 <p class="half-gutter-pad-top narrow">Either create or join a team.</p>
 
+                <form action="{% url 'team_create' %}" method="POST">
+                	{% csrf_token %}
+                	
+                	{{ teamform.as_p }}
+
+                	<input type="submit">
+                </form>
+
             </div>
         </div>
     </section>
