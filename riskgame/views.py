@@ -14,15 +14,11 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.contrib.sites.models import get_current_site
 
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 
 from django.views.decorators.http import require_POST
 
 # from django.utils.translation import ugettext_lazy as _
-
-# from crispy_forms.helper import FormHelper
-# from crispy_forms.layout import Layout, Submit, Field
-# from crispy_forms.bootstrap import FormActions
 
 from riskgame.models import *
 from riskgame.tasks import change_days, invite_user
@@ -30,13 +26,8 @@ from riskgame.tasks import change_days, invite_user
 def index(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect(reverse('home'))
-
-    t = loader.get_template('riskgame/index.html')
-
-    c = RequestContext(request, {
-    })
-
-    return HttpResponse(t.render(c))
+    else:
+        return render_to_response('riskgame/index.html', {}, context_instance=RequestContext(request))
 
 
 # def pre_launch(request):
@@ -224,8 +215,7 @@ def notifications(request):
 
 @login_required
 def how_to_play(request):
-    return render(request, 'riskgame/how-to-play.html', {
-    })
+    return render_to_response('riskgame/how-to-play.html', {}, context_instance=RequestContext(request))
 
 @login_required
 def home(request):
@@ -236,7 +226,7 @@ def home(request):
     try:
         teamplayer = TeamPlayer.objects.get(player=player)
     except TeamPlayer.DoesNotExist:
-        return HttpResponseRedirect('/admin/')
+        return render_to_response('riskgame/home-alone.html', {}, context_instance=RequestContext(request))
     
     if timezone.now() < game.start:
         # Pre game
