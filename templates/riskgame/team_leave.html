@@ -1,0 +1,26 @@
+
+{% extends "base.html" %}
+{% load riskgame_extras %}
+{% load i18n %}
+
+{% block pagetitle %}{{ title|capfirst }} {{ team.name }}{% endblock pagetitle %}
+
+{% block content %}
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+            	<p>Are you sure you want to leave team {{ current_teamplayer.team }}?</p>
+
+            	<form method="POST" action="">
+                    {% csrf_token %}
+                    <input type="submit" value="Leave team">
+                </form>
+
+                <p><a href="{% url 'team_detail' current_teamplayer.team.pk %}">Cancel and go back</a></p>
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}

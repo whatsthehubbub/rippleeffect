@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.contrib.sites.models import get_current_site
 
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 
 from django.views.decorators.http import require_POST
 
@@ -80,6 +80,20 @@ def team_detail(request, pk):
         'team': Team.objects.get(pk=pk),
         'title': "team"
     }, context_instance=RequestContext(request))
+
+@login_required
+def team_leave(request):
+    if request.method == "POST":
+        player = request.user.get_or_create_player()
+        teamplayer = TeamPlayer.objects.get(player=player)
+
+        teamplayer.delete()
+
+        return redirect(reverse('home'))
+    else:
+        return render_to_response('riskgame/team_leave.html', {
+
+        }, context_instance=RequestContext(request))
 
 # @login_required
 # @require_POST

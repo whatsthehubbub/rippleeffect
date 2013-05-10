@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     
     url(r'^teams/create/$', 'riskgame.views.team_create', name='team_create'),
 
+    url(r'^teams/leave/$', 'riskgame.views.team_leave', name="team_leave"),
+
     # url(r'^team/(?P<pk>\d+)/join/request/$', 'riskgame.views.request_team_join', name='request_team_join'),
     # url(r'^team/(?P<pk>\d+)/join/accept/$', 'riskgame.views.accept_team_join', name='accept_team_join'),
 

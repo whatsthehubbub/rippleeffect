@@ -52,6 +52,20 @@
 
                 <p class="double-gutter-margin-bot">&nbsp;</p>
 
+                {% if current_game.before %}
+                <header>
+                    <h5 class="text-center">Invite team members</h5>
+                </header>
+
+                <header>
+                    <h5 class="text-center">Leave team</h5>
+                </header>
+
+                <a href="{% url 'team_leave' %}">Leave your team</a>
+
+
+                {% endif %}
+
 
             </div>
         </div>

@@ -937,6 +937,9 @@ class Game(models.Model):
     def __unicode__(self):
         return str(self.pk)
 
+    def before(self):
+        return timezone.now() < self.start
+
     def started(self):
         return timezone.now() > self.start
 
