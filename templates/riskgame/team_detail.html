@@ -45,6 +45,7 @@
                             <a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a> – 
                             <span>{{ tp.player.user.email|lower }}</span>
                             {% ifequal current_player tp.player %}(you!){% endifequal %}
+                            {% ifequal current_player team.leader %}(leader){% endifequal %}
                         </div>
                     </div>
 
