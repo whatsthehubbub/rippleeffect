@@ -69,6 +69,8 @@ def team_create(request):
     player = request.user.get_or_create_player()
     team = Team.objects.create(name=name, leader=player)
 
+    TeamPlayer.objects.create(player=player, team=team)
+
     return HttpResponseRedirect(reverse('team_detail', args=[team.pk]))
 
 
