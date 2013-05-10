@@ -133,7 +133,11 @@
         </footer>
 
 <!---->
-        {% if current_player %}{% include "partials/intercom.html" %}{% endif %}
+        {% if not debug %}
+            {% if current_player %}
+                {% include "partials/intercom.html" %}
+            {% endif %}
+        {% endif %}
 
         {% include "partials/analytics.html" %}
 
