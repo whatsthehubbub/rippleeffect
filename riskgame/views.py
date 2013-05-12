@@ -95,6 +95,20 @@ def team_leave(request):
 
         }, context_instance=RequestContext(request))
 
+@login_required
+@require_POST
+def team_kick(request):
+    playerid = request.POST.get('playerid', '')
+
+    if playerid:
+        player = Player.objects.get(pk=playerid)
+        teamplayer = TeamPlayer.objects.get(player=player)
+        team = teamplayer.team
+
+        teamplayer.delete()
+
+        return redirect(reverse('team_detail', args=[team.pk]))
+
 # @login_required
 # @require_POST
 # def request_team_join(request, pk):
