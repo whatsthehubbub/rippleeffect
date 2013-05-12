@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django import forms
 
-from django.db.models import F
+from django.db.models import F, Q
 
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -134,13 +134,16 @@ def team_your(request):
 
 @login_required
 def players(request):
-    t = loader.get_template('riskgame/players.html')
+    players = Player.objects.all().order_by('name', 'user__email')
 
-    c = RequestContext(request, {
-        'players': Player.objects.all()
-    })
+    query = request.GET.get('s', '')
 
-    return HttpResponse(t.render(c))
+    if query:
+        players = players.filter(Q(name__icontains=query) | Q(user__email__icontains=query))
+
+    return render_to_response('riskgame/players.html', {
+        'players': players
+    }, context_instance=RequestContext(request))
 
 def player_profile(request, pk):
     player = Player.objects.get(pk=pk)
