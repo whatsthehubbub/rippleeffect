@@ -141,6 +141,16 @@ def players(request):
     if query:
         players = players.filter(Q(name__icontains=query) | Q(user__email__icontains=query))
 
+    page = request.GET.get('page', '')
+
+    paginator = Paginator(players, 50)
+    try:
+        players = paginator.page(page)
+    except PageNotAnInteger:
+        players = paginator.page(1)
+    except EmptyPage:
+        players = paginator.page(paginator.num_pages)
+
     return render_to_response('riskgame/players.html', {
         'players': players
     }, context_instance=RequestContext(request))
