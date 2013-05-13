@@ -70,7 +70,13 @@
                     <h5 class="text-center">Leave team</h5>
                 </header>
 
-                <a href="{% url 'team_leave' %}">Leave your team</a>
+                {% if current_player|team_member:team %}
+                    <a href="{% url 'team_leave' %}">Leave your team</a>
+                {% else %}
+                    You are not a member of this team.
+                {% endif %}
+
+                
 
 
                 {% endif %}

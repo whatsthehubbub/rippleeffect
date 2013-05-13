@@ -1,6 +1,6 @@
 from django import template
 
-from riskgame.models import TeamJoinRequest, Events
+from riskgame.models import TeamJoinRequest, Events, TeamPlayer
 
 import hashlib
 import colorsys
@@ -15,6 +15,14 @@ def requested_join(player, team):
         TeamJoinRequest.objects.get(player=player, team=team)
         return True
     except TeamJoinRequest.DoesNotExist:
+        return False
+
+@register.filter
+def team_member(player, team):
+    try:
+        TeamPlayer.objects.get(team=team, player=player)
+        return True
+    except TeamPlayer.DoesNotExist:
         return False
 
 @register.filter
