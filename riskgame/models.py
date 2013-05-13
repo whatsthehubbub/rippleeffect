@@ -900,6 +900,13 @@ class Player(models.Model):
     def get_teamplayer(self):
         return TeamPlayer.objects.get(player=self)
 
+    def is_team_member(self):
+        try:
+            TeamPlayer.objects.get(player=self)
+            return True
+        except TeamPlayer.DoesNotExist:
+            return False
+
 
 class TeamJoinRequest(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
