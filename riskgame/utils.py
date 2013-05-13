@@ -1,3 +1,7 @@
+import hashlib
+import colorsys
+import math
+
 def colorify(str, s, v):
     m = hashlib.md5()
     m.update(str)

@@ -39,7 +39,7 @@
 
                 {% for tp in team.teamplayer_set.all %}
                     <div class="notification clearfix">
-                        <div class="small avatar" title="{{ tp.player.get_teamplayer.role }}" style="background-color: {{ tp.team.get_color }};"><div title="{{ tp.player.get_teamplayer.role }}" class="{{ tp.player.get_teamplayer.role }}" style="border-color: {{ tp.player|player_color }}; background-color: {{ tp.team.get_color }}"></div></div>
+                        <div class="small avatar" title="{{ tp.player.get_teamplayer.role }}" style="background-color: {{ tp.team.get_color }};"><div title="{{ tp.player.get_teamplayer.role }}" class="{{ tp.player.get_teamplayer.role }}" style="border-color: {{ tp.player.get_color }}; background-color: {{ tp.team.get_color }}"></div></div>
                         <div class="message clearfix">
                             <span class="timestamp">{{ tp.role }}</span>
                             <a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a> – 

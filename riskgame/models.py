@@ -884,6 +884,11 @@ class Player(models.Model):
     def get_absolute_url(self):
         return ('player_profile', [self.pk])
 
+    def get_color(self):
+        if self.email():
+            return colorify(self.email() + str(self.user.id) + self.get_teamplayer().role, 0.3602, 0.6314)
+        return "#CFC59F"
+
     def update_unsubscribe_hash(self):
         import uuid
         self.emails_unsubscribe_hash = uuid.uuid4().hex
