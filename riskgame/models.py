@@ -855,7 +855,10 @@ class Team(models.Model):
         from redis_cache import get_redis_connection
 
         con = get_redis_connection('default')
-        return con.zrevrank('teamrank', self.pk)+1
+        rank = con.zrevrank('teamrank', self.pk)
+
+        if rank:
+            return rank+1
 
 
 class Player(models.Model):
