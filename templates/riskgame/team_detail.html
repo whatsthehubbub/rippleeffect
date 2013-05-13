@@ -91,6 +91,10 @@
                         <header>
                             <h5 class="text-center">Review requests to join</h5>
                         </header>
+
+                        {% for jr in join_requests %}
+                            {{ jr.player }} {{ jr.player.email }} {{ jr.datecreated }}
+                        {% endfor %}
                     {% endif %}
 
                 {% endif %}

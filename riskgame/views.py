@@ -76,9 +76,12 @@ def team_create(request):
 
 @login_required
 def team_detail(request, pk):
+    team = Team.objects.get(pk=pk)
+
     return render_to_response('riskgame/team_detail.html', {
-        'team': Team.objects.get(pk=pk),
-        'title': "team"
+        'team': team,
+        'title': "team",
+        'join_requests': TeamJoinRequest.objects.filter(team=team, invite=False).order_by('-datecreated')
     }, context_instance=RequestContext(request))
 
 @login_required
