@@ -109,15 +109,15 @@ def team_kick(request):
 
         return redirect(reverse('team_detail', args=[team.pk]))
 
-# @login_required
-# @require_POST
-# def request_team_join(request, pk):
-#     player = request.user.get_or_create_player()
-#     team = Team.objects.get(id=pk)
+@login_required
+@require_POST
+def request_team_join(request, pk):
+    player = request.user.get_or_create_player()
+    team = Team.objects.get(id=pk)
 
-#     TeamJoinRequest.objects.create(team=team, player=player)
+    TeamJoinRequest.objects.create(team=team, player=player)
 
-#     return HttpResponseRedirect(reverse('team_detail', args=[player.team.id]))
+    return HttpResponseRedirect(reverse('team_detail', args=[team.pk]))
 
 # @login_required
 # @require_POST

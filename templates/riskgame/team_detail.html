@@ -62,19 +62,37 @@
                 <p class="double-gutter-margin-bot">&nbsp;</p>
 
                 {% if current_game.before %}
-                    <header>
-                        <h5 class="text-center">Invite team members</h5>
-                    </header>
 
-                    <header>
-                        <h5 class="text-center">Leave team</h5>
-                    </header>
+                    {% if not current_player.is_team_member %}
+                        <p>You're not a member of any team yet.
+
+                        {% if not current_player|requested_join:team %}
+                            <form method="POST" action="{% url 'request_team_join' team.pk %}">
+                                {% csrf_token %}
+                                <input type="submit" value="Ask to join">
+                            </form>
+                        {% else %}
+                            <p>You've already requested to join this team.</p>
+                        {% endif %}
+                    {% endif %}
 
                     {% if current_player|team_member:team %}
-                        <a href="{% url 'team_leave' %}">Leave your team</a>
-                    {% else %}
-                        You are not a member of this team.
+                        <header>
+                            <h5 class="text-center">Leave team</h5>
+                        </header>
+                        
+                        You're a member of this team. <a href="{% url 'team_leave' %}">Leave your team?</a>
+
+
+                        <header>
+                            <h5 class="text-center">Invite team members</h5>
+                        </header>
+
+                        <header>
+                            <h5 class="text-center">Review requests to join</h5>
+                        </header>
                     {% endif %}
+
                 {% endif %}
 
             </div>

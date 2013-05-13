@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^teams/leave/$', 'riskgame.views.team_leave', name="team_leave"),
     url(r'^teams/kick/$', 'riskgame.views.team_kick', name='team_kick'),
 
-    # url(r'^team/(?P<pk>\d+)/join/request/$', 'riskgame.views.request_team_join', name='request_team_join'),
+    url(r'^team/(?P<pk>\d+)/join/request/$', 'riskgame.views.request_team_join', name='request_team_join'),
     # url(r'^team/(?P<pk>\d+)/join/accept/$', 'riskgame.views.accept_team_join', name='accept_team_join'),
 
     url(r'^players/$', 'riskgame.views.players', name='players'),

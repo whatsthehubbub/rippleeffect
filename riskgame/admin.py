@@ -102,9 +102,9 @@ class PlayerAdmin(admin.ModelAdmin):
     list_display = ('user', 'name', 'email')
 admin.site.register(Player, PlayerAdmin)
 
-# class TeamJoinRequestAdmin(admin.ModelAdmin):
-#     list_display = ('team', 'player')
-# admin.site.register(TeamJoinRequest, TeamJoinRequestAdmin)
+class TeamJoinRequestAdmin(admin.ModelAdmin):
+    list_display = ('team', 'player', 'invite')
+admin.site.register(TeamJoinRequest, TeamJoinRequestAdmin)
 
 class GameAdmin(admin.ModelAdmin):
     list_display = ('datecreated', 'start', 'end', 'started', 'over', 'active')

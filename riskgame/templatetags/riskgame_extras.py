@@ -12,7 +12,7 @@ register = template.Library()
 @register.filter
 def requested_join(player, team):
     try:
-        TeamJoinRequest.objects.get(player=player, team=team)
+        TeamJoinRequest.objects.get(player=player, team=team, invite=False)
         return True
     except TeamJoinRequest.DoesNotExist:
         return False
