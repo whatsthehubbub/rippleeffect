@@ -19,6 +19,8 @@ import hashlib, hmac
 import logging
 logger = logging.getLogger('ripple')
 
+from riskgame.utils import colorify
+
 
 # Events have integer values
 # 0 = No event
@@ -634,6 +636,12 @@ class Team(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('team_detail', [self.pk])
+
+    def get_color(self):
+        if self.name:
+            return colorify(self.name + str(self.id) + "", 0.1518, 0.8784)
+
+        return "#CFC59F"
 
     def get_join_requests(self):
         return TeamJoinRequest.objects.filter(team=self, invite=False)

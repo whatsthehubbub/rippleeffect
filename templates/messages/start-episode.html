@@ -33,7 +33,7 @@
 
         {% for player in action_players %}
             <div class="notification clearfix">
-                <div class="small avatar" title="{{ player.get_teamplayer.role }}" style="background-color: {{ player.get_teamplayer.team|team_color }};"><div title="{{ player.get_teamplayer.role }}" class="{{ player.get_teamplayer.role }}" style="border-color: {{ player|player_color }}; background-color: {{ player.get_teamplayer.team|team_color }}"></div></div>
+                <div class="small avatar" title="{{ player.get_teamplayer.role }}" style="background-color: {{ player.get_teamplayer.team.get_color }};"><div title="{{ player.get_teamplayer.role }}" class="{{ player.get_teamplayer.role }}" style="border-color: {{ player|player_color }}; background-color: {{ player.get_teamplayer.team.get_color }}"></div></div>
                 <div class="message clearfix single-line">
                     {{ player }}
                     {% ifequal current_player tp.player %}
