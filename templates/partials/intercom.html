@@ -10,6 +10,7 @@
   	},
     role: "{{ current_teamplayer.role }}",
     team: "{{ current_teamplayer.team.name }}",
+    development: {{ debug|yesno:"True,False" }},
     app_id: "a7af8a497dc2485b4c3cca4b011160715ea89921",
     unsubscribed_from_emails: {% if not current_player.receive_email %}true{% else %}false{% endif %},
   };
