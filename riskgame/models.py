@@ -931,6 +931,10 @@ class TeamJoinRequest(models.Model):
     # If this is true, it is an invitation, otherwise a player has requested to join themselves
     invite = models.BooleanField(default=False)
 
+    accepted = models.BooleanField(default=False)
+    rejected = models.BooleanField(default=False)
+    datedecided = models.DateTimeField(null=True, blank=True)
+
     def __unicode__(self):
         return 'Request from %s to %s' % (unicode(self.player), self.team)
 

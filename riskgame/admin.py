@@ -103,7 +103,7 @@ class PlayerAdmin(admin.ModelAdmin):
 admin.site.register(Player, PlayerAdmin)
 
 class TeamJoinRequestAdmin(admin.ModelAdmin):
-    list_display = ('team', 'player', 'invite')
+    list_display = ('team', 'player', 'invite', 'accepted', 'rejected')
 admin.site.register(TeamJoinRequest, TeamJoinRequestAdmin)
 
 class GameAdmin(admin.ModelAdmin):

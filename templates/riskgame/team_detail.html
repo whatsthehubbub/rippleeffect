@@ -94,6 +94,18 @@
 
                         {% for jr in join_requests %}
                             {{ jr.player }} {{ jr.player.email }} {{ jr.datecreated }}
+
+                            <form method="POST" action="{% url 'accept_team_join' team.pk %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="tjr_id" value="{{ jr.pk }}">
+                                <input type="submit" value="Accept">
+                            </form>
+
+                            <form method="POST" action="{% url 'reject_team_join' team.pk %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="tjr_id" value="{{ jr.pk }}">
+                                <input type="submit" value="Decline">
+                            </form>
                         {% endfor %}
                     {% endif %}
 

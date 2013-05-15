@@ -81,7 +81,7 @@ def team_detail(request, pk):
     return render_to_response('riskgame/team_detail.html', {
         'team': team,
         'title': "team",
-        'join_requests': TeamJoinRequest.objects.filter(team=team, invite=False).order_by('-datecreated')
+        'join_requests': TeamJoinRequest.objects.filter(team=team, invite=False, accepted=False, rejected=False).order_by('-datecreated')
     }, context_instance=RequestContext(request))
 
 @login_required
@@ -116,30 +116,51 @@ def team_kick(request):
 @require_POST
 def request_team_join(request, pk):
     player = request.user.get_or_create_player()
-    team = Team.objects.get(id=pk)
+    team = Team.objects.get(pk=pk)
 
     TeamJoinRequest.objects.create(team=team, player=player)
 
     return HttpResponseRedirect(reverse('team_detail', args=[team.pk]))
 
-# @login_required
-# @require_POST
-# def accept_team_join(request, pk):
-#     join_request = TeamJoinRequest.objects.get(id=request.POST.get('join_request_id', ''))
+@login_required
+@require_POST
+def accept_team_join(request, pk):
+    join_request = TeamJoinRequest.objects.get(pk=request.POST.get('tjr_id'))
 
-#     print join_request
+    player = request.user.get_or_create_player()
 
-#     print request.user.get_or_create_player()
-#     print join_request.team.leader
+    try:
+        # Permission check if the player doing this is a member of the team of the request
+        TeamPlayer.objects.get(player=player, team=join_request.team)
 
-#     if request.user.get_or_create_player() == join_request.team.leader:
-#         player = join_request.player
-#         player.team = join_request.team
-#         player.save()
+        join_request.accepted = True
+        join_request.datedecided = timezone.now()
+        join_request.save()
 
-#         join_request.delete()
+        return HttpResponseRedirect(reverse('team_detail', args=[join_request.team.pk]))
+    except TeamPlayer.DoesNotExist:
+        pass
 
-#         return HttpResponseRedirect(reverse('team_detail', args=[player.team.id]))
+@login_required
+@require_POST
+def reject_team_join(request, pk):
+    join_request = TeamJoinRequest.objects.get(pk=request.POST.get('tjr_id'))
+
+    player = request.user.get_or_create_player()
+
+    try:
+        # Permission check if the player doing this is a member of the team of the request
+        TeamPlayer.objects.get(player=player, team=join_request.team)
+
+        join_request.rejected = True
+        join_request.datedecided = timezone.now()
+        join_request.save()
+
+        return HttpResponseRedirect(reverse('team_detail', args=[join_request.team.pk]))
+    except TeamPlayer.DoesNotExist:
+        pass
+
+        
 
 @login_required
 def team_your(request):
