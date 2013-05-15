@@ -92,21 +92,38 @@
                             <h5 class="text-center">Review requests to join</h5>
                         </header>
 
-                        {% for jr in join_requests %}
-                            {{ jr.player }} {{ jr.player.email }} {{ jr.datecreated }}
+                        {% for r in join_requests %}
+                            {{ r.player }} {{ r.player.email }} {{ r.datecreated }}
 
                             <form method="POST" action="{% url 'accept_team_join' team.pk %}">
                                 {% csrf_token %}
-                                <input type="hidden" name="tjr_id" value="{{ jr.pk }}">
+                                <input type="hidden" name="tjr_id" value="{{ r.pk }}">
                                 <input type="submit" value="Accept">
                             </form>
 
                             <form method="POST" action="{% url 'reject_team_join' team.pk %}">
                                 {% csrf_token %}
-                                <input type="hidden" name="tjr_id" value="{{ jr.pk }}">
+                                <input type="hidden" name="tjr_id" value="{{ r.pk }}">
                                 <input type="submit" value="Decline">
                             </form>
                         {% endfor %}
+
+                        <header>
+                            <h5 class="text-center">Accepted requests pending confirmation</h5>
+                        </header>
+
+                        {% for r in pending_requests %}
+                            {{ r.datedecided }} {{ r.player }} {{ r.player.email }}
+                        {% endfor %}
+
+                        <header>
+                            <h5 class="text-center">Denied requests</h5>
+                        </header>
+
+                        {% for r in denied_requests %}
+                            {{ r.datedecided }} {{ r.player }} {{ r.player.email }}
+                        {% endfor %}
+
                     {% endif %}
 
                 {% endif %}

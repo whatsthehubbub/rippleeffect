@@ -935,6 +935,8 @@ class TeamJoinRequest(models.Model):
     rejected = models.BooleanField(default=False)
     datedecided = models.DateTimeField(null=True, blank=True)
 
+    confirmed = models.BooleanField(default=False)
+
     def __unicode__(self):
         return 'Request from %s to %s' % (unicode(self.player), self.team)
 

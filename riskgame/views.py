@@ -81,7 +81,9 @@ def team_detail(request, pk):
     return render_to_response('riskgame/team_detail.html', {
         'team': team,
         'title': "team",
-        'join_requests': TeamJoinRequest.objects.filter(team=team, invite=False, accepted=False, rejected=False).order_by('-datecreated')
+        'join_requests': TeamJoinRequest.objects.filter(team=team, invite=False, accepted=False, rejected=False).order_by('-datecreated'),
+        'pending_requests': TeamJoinRequest.objects.filter(team=team, invite=False, accepted=True).order_by('-datedecided'),
+        'denied_requests': TeamJoinRequest.objects.filter(team=team, invite=False, rejected=True)
     }, context_instance=RequestContext(request))
 
 @login_required
@@ -137,6 +139,8 @@ def accept_team_join(request, pk):
         join_request.datedecided = timezone.now()
         join_request.save()
 
+        messages.add_message(request, messages.INFO, '<div class="form-success text-center">Team join request accepted.</div>')
+
         return HttpResponseRedirect(reverse('team_detail', args=[join_request.team.pk]))
     except TeamPlayer.DoesNotExist:
         pass
@@ -155,6 +159,8 @@ def reject_team_join(request, pk):
         join_request.rejected = True
         join_request.datedecided = timezone.now()
         join_request.save()
+
+        messages.add_message(request, messages.INFO, '<div class="form-success text-center">Team join request declined.</div>')
 
         return HttpResponseRedirect(reverse('team_detail', args=[join_request.team.pk]))
     except TeamPlayer.DoesNotExist:
