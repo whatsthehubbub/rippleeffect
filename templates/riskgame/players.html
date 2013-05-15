@@ -6,7 +6,7 @@
 
 <ul>
 	{% for player in players %}
-	<li>{{ player }}</li>
+	<li><a href="{{ player.get_absolute_url }}">{{ player }}</a></li>
 	{% endfor %}
 </ul>
 
