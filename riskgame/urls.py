@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^teams/(?P<pk>\d+)/join/request/$', 'riskgame.views.request_team_join', name='request_team_join'),
     url(r'^teams/(?P<pk>\d+)/join/accept/$', 'riskgame.views.accept_team_join', name='accept_team_join'),
     url(r'^teams/(?P<pk>\d+)/join/reject/$', 'riskgame.views.reject_team_join', name='reject_team_join'),
+    url(r'^teams/(?P<pk>\d+)/join/confirm/$', 'riskgame.views.confirm_team_join', name='confirm_team_join'),
 
     url(r'^players/$', 'riskgame.views.players', name='players'),
 

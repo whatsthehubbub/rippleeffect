@@ -166,6 +166,28 @@ def reject_team_join(request, pk):
     except TeamPlayer.DoesNotExist:
         pass
 
+
+@login_required
+@require_POST
+def confirm_team_join(request, pk):
+    join_request = TeamJoinRequest.objects.get(pk=request.POST.get('tjr_id'))
+
+    player = request.user.get_or_create_player()
+
+    try:
+        TeamPlayer.objects.get(player=player, team=join_request.team)
+
+        # This player is already a member of this team
+        # something that should not happen
+    except TeamPlayer.DoesNotExist:
+        # Confirm this player joining this team
+        role = request.POST.get('role', 'office')
+
+        TeamPlayer.objects.create(player=player, team=join_request.team, role=role)
+
+        messages.add_message(request, messages.INFO, '<div class="form-success text-center">You are now a member of team %s.</div>' % join_request.team.name)
+
+        return HttpResponseRedirect(reverse('home'))
         
 
 @login_required
@@ -316,7 +338,8 @@ def home(request):
             t = loader.get_template('riskgame/home-alone.html')
 
             c = RequestContext(request, {
-                'teamform': CreateTeamform()
+                'teamform': CreateTeamform(),
+                'accepted_requests': TeamJoinRequest.objects.filter(accepted=True, confirmed=False).order_by('-datedecided')
             })
     elif game.over():
         t = loader.get_template('riskgame/home-postgame.html')

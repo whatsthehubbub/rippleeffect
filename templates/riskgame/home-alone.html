@@ -6,17 +6,40 @@
         <div class="row">
             <div class="sheet large-12 columns">
 
-                <h3 class="text-center triple-gutter-pad-top">Find yourself a team</h3>
+                {% for r in accepted_requests %}
+                    <h3 class="text-center triple-gutter-pad-top">Requests that have been accepted</h3>
 
-                <p class="half-gutter-pad-top narrow">Either create or join a team.</p>
+                    <p>{{ r }}</p>
 
-                <form action="{% url 'team_create' %}" method="POST">
-                	{% csrf_token %}
-                	
-                	{{ teamform.as_p }}
+                    <p class="half-gutter-pad-top narrow">Join this team</p>
 
-                	<input type="submit">
-                </form>
+                    <form method="POST" action="{% url 'confirm_team_join' r.team.pk %}">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="tjr_id" value="{{ r.id }}">
+
+                        <label for="role">Pick your role</label>
+                        <select name="role" id="role">
+                            <option value="office">Office</option>
+                            <option value="frontline">Frontline</option>
+                        </select>
+                        
+                        <input type="submit" value="Join">
+                    </form>
+
+                {% empty %}
+                    <h3 class="text-center triple-gutter-pad-top">Find yourself a team</h3>
+
+                    <p class="half-gutter-pad-top narrow">Either create or join a team.</p>
+
+                    <form action="{% url 'team_create' %}" method="POST">
+                    	{% csrf_token %}
+                    	
+                    	{{ teamform.as_p }}
+
+                    	<input type="submit">
+                    </form>
+                {% endfor %}
 
             </div>
         </div>
