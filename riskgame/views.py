@@ -153,7 +153,7 @@ def accept_team_join(request, pk):
             'team': join_request.team
         })
 
-        join_request.player.user.send_email(subject, body)
+        join_request.player.user.email_user(subject, body)
 
         messages.add_message(request, messages.INFO, '<div class="form-success text-center">Team join request accepted.</div>')
 
@@ -186,7 +186,7 @@ def reject_team_join(request, pk):
             'team': join_request.team
         })
 
-        join_request.player.user.send_email(subject, body)
+        join_request.player.user.email_user(subject, body)
 
         messages.add_message(request, messages.INFO, '<div class="form-success text-center">Team join request declined.</div>')
 
