@@ -188,7 +188,18 @@ def confirm_team_join(request, pk):
         messages.add_message(request, messages.INFO, '<div class="form-success text-center">You are now a member of team %s.</div>' % join_request.team.name)
 
         return HttpResponseRedirect(reverse('home'))
-        
+
+@login_required
+@require_POST
+def reconsider_team_join(request, pk):
+    """Method where somebody accepted into a team doesn't actually want to confirm. Also used to reject invitations."""
+    join_request = TeamJoinRequest.objects.get(pk=request.POST.get('tjr_id'))
+    join_request.delete()
+
+    messages.add_message(request, messages.INFO, '<div class="form-success text-center">Request elided.</div>')
+
+    return HttpResponseRedirect(reverse('home'))
+
 
 @login_required
 def team_your(request):

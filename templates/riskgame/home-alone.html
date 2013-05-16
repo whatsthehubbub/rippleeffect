@@ -15,7 +15,6 @@
 
                     <form method="POST" action="{% url 'confirm_team_join' r.team.pk %}">
                         {% csrf_token %}
-
                         <input type="hidden" name="tjr_id" value="{{ r.id }}">
 
                         <label for="role">Pick your role</label>
@@ -25,6 +24,12 @@
                         </select>
                         
                         <input type="submit" value="Join">
+                    </form>
+
+                    <form method="POST" action="{% url 'reconsider_team_join' r.team.pk %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="tjr_id" value="{{ r.id }}">
+                        <input type="submit" value="Reconsider">
                     </form>
 
                 {% empty %}
