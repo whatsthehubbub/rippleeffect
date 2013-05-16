@@ -292,20 +292,32 @@ def home(request):
 
     player = request.user.get_or_create_player()
 
+    member_of_a_team = False
+
     try:
         teamplayer = TeamPlayer.objects.get(player=player)
+
+        member_of_a_team = True
     except TeamPlayer.DoesNotExist:
-        return render_to_response('riskgame/home-alone.html', {
-            'teamform': CreateTeamform()
-        }, context_instance=RequestContext(request))
-    
+        member_of_a_team = False
+
+    # TODO What to do about people without a team after the game has started?
+
     if timezone.now() < game.start:
         # Pre game
-        t = loader.get_template('riskgame/home-pregame.html')
+        if member_of_a_team:
+            t = loader.get_template('riskgame/home-pregame.html')
 
-        c = RequestContext(request, {
-            'game': game
-        })
+            c = RequestContext(request, {
+                'game': game
+            })
+        else:
+            # Show home alone only for people before the game starts
+            t = loader.get_template('riskgame/home-alone.html')
+
+            c = RequestContext(request, {
+                'teamform': CreateTeamform()
+            })
     elif game.over():
         t = loader.get_template('riskgame/home-postgame.html')
 
