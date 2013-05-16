@@ -558,6 +558,7 @@ def game_start(request):
             logger.info("Starting a game of %d minutes starting on %s", minutes, str(start))
 
             if players:
+                # TODO this has probably got to go
                 logger.info("Starting game with players passed.")
 
                 # Delete all non admin users
@@ -612,6 +613,9 @@ def game_start(request):
                 TeamPlayer.objects.all().update(active_events='')
 
                 Game.objects.get_latest_game().initialize(start=start, dayLengthInMinutes=minutes)
+
+                for team in Team.objects.all():
+                    team.update_rank()
 
             change_days()
 
