@@ -857,15 +857,16 @@ class Team(models.Model):
         from redis_cache import get_redis_connection
 
         con = get_redis_connection('default')
-        con.zadd('teamrank', self.pk, self.rank_points)
+        return con.zadd('teamrank', self.pk, self.rank_points)
 
     def get_rank(self):
         from redis_cache import get_redis_connection
 
+        # Ex aequo ranks are ranked secondarily on the primary key
         con = get_redis_connection('default')
         rank = con.zrevrank('teamrank', self.pk)
 
-        if rank:
+        if rank is not None:
             return rank+1
 
 
