@@ -1,0 +1,3 @@
+Your request to join team {{ team }} has been rejected.
+
+Please go back home and find another team to join.

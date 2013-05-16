@@ -1,7 +1,10 @@
 import itertools
 
 from django.http import HttpResponse, HttpResponseRedirect
+
 from django.template import RequestContext, loader
+from django.template.loader import render_to_string
+
 from django.core.urlresolvers import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -129,6 +132,7 @@ def request_team_join(request, pk):
 def accept_team_join(request, pk):
     join_request = TeamJoinRequest.objects.get(pk=request.POST.get('tjr_id'))
 
+    # The player doing the accepting, NOT the player being accepted
     player = request.user.get_or_create_player()
 
     try:
@@ -138,6 +142,18 @@ def accept_team_join(request, pk):
         join_request.accepted = True
         join_request.datedecided = timezone.now()
         join_request.save()
+
+        subject = render_to_string('emails/accepted_subject.txt', {
+            'site': get_current_site(request)
+        })
+        subject = ''.join(subject.splitlines())
+
+        body = render_to_string('emails/accepted_body.txt', {
+            'site': get_current_site(request),
+            'team': join_request.team
+        })
+
+        join_request.player.user.send_email(subject, body)
 
         messages.add_message(request, messages.INFO, '<div class="form-success text-center">Team join request accepted.</div>')
 
@@ -159,6 +175,18 @@ def reject_team_join(request, pk):
         join_request.rejected = True
         join_request.datedecided = timezone.now()
         join_request.save()
+
+        subject = render_to_string('emails/rejected_subject.txt', {
+            'site': get_current_site(request)
+        })
+        subject = ''.join(subject.splitlines())
+
+        body = render_to_string('emails/rejected_body.txt', {
+            'site': get_current_site(request),
+            'team': join_request.team
+        })
+
+        join_request.player.user.send_email(subject, body)
 
         messages.add_message(request, messages.INFO, '<div class="form-success text-center">Team join request declined.</div>')
 
