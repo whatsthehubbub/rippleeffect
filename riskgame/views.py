@@ -215,7 +215,7 @@ def confirm_team_join(request, pk):
 
         messages.add_message(request, messages.INFO, '<div class="form-success text-center">You are now a member of team %s.</div>' % join_request.team.name)
 
-        return HttpResponseRedirect(reverse('home'))
+    return HttpResponseRedirect(reverse('home'))
 
 @login_required
 @require_POST
