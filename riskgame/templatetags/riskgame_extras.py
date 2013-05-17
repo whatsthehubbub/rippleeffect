@@ -1,6 +1,6 @@
 from django import template
 
-from riskgame.models import TeamJoinRequest, Events, TeamPlayer
+from riskgame.models import TeamJoinRequest, Events, TeamPlayer, Team
 
 
 register = template.Library()
@@ -20,6 +20,13 @@ def team_member(player, team):
         return True
     except TeamPlayer.DoesNotExist:
         return False
+
+@register.filter
+def team_for_pk(pk):
+    try:
+        return Team.objects.get(pk=pk)
+    except Team.DoesNotExist:
+        return None
 
 @register.filter
 def event_name(event_code):

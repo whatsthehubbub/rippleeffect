@@ -514,14 +514,24 @@ def message_unseen(request, message):
 
 @login_required
 def teams(request):
-    t = loader.get_template('riskgame/teams.html')
+    player = request.user.get_or_create_player()
+    teamplayer = TeamPlayer.objects.get(player=player)
 
-    c = RequestContext(request, {
-        'teams': Team.objects.all().order_by('-rank_points', '-pk'),
+    # Catch neigboring teams from the redis
+    from redis_cache import get_redis_connection
+
+    con = get_redis_connection('default')
+    
+    teamrank = con.zrevrank('teamrank', teamplayer.team.pk)
+    neighboring_teams = con.zrevrange('teamrank', max(0, teamrank-2), teamrank+2)
+
+    return render_to_response('riskgame/teams.html', {
+        # 'teams': Team.objects.all().order_by('-rank_points', '-pk'),
+        'neighbors': neighboring_teams,
         'title': 'rankings'
-    })
+    }, context_instance=RequestContext(request))
 
-    return HttpResponse(t.render(c))
+
 
 class GameStartForm(forms.Form):
     start = forms.DateTimeField(initial=timezone.now)
