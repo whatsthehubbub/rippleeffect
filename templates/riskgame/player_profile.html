@@ -37,6 +37,8 @@
 
                 {% ifequal player.user user %}
                     <a href="{% url 'player_profile_edit' %}" class='triple-gutter-margin-top quad-gutter-margin-bot medium yellow centered dismiss btn'>Edit profile</a>
+
+                    <a href="{% url 'account_close' %}">Close profile</a>
                 {% endifequal %}
 
             </div>

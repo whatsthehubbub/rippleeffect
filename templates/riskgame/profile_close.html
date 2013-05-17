@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}{{ title|capfirst }}{% endblock pagetitle %}
+
+{% block content %}
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+            	<p>Are you sure you want to close your Ripple Effect account? All your data will be deleted. This cannot be undone.</p>
+
+            	<form method="POST" action="{% url 'account_close' %}">
+            		{% csrf_token %}
+            		{{ form.as_p }}
+
+            		<input type="submit" value="Close my account">
+            	</form>
+
+
+            	<a href="{% url 'player_profile_own' %}">Cancel and go back to your profile</a>
+            </div>
+
+        </div>
+
+    </section>
+
+{% endblock %}

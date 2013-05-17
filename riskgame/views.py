@@ -260,6 +260,7 @@ def players(request):
         'players': players
     }, context_instance=RequestContext(request))
 
+@login_required
 def player_profile(request, pk):
     player = Player.objects.get(pk=pk)
 
@@ -272,6 +273,7 @@ def player_profile(request, pk):
 
     return HttpResponse(t.render(c))
 
+@login_required
 def player_profile_own(request):
     player = request.user.get_or_create_player()
 
@@ -282,6 +284,7 @@ class ProfileForm(forms.ModelForm):
         model = Player
         fields = ('name', 'receive_email')
 
+@login_required
 def player_profile_edit(request):
     t = loader.get_template('riskgame/player_profile_edit.html')
 
@@ -306,11 +309,32 @@ def player_profile_edit(request):
 
     return HttpResponse(t.render(c))
 
-class FrontLineForm(forms.Form):
-    def __init__(self, teamplayer, *args, **kwargs):
-        super(FrontLineForm, self).__init__(*args, **kwargs)
+class CloseAccountForm(forms.Form):
+    confirm = forms.BooleanField()
 
-        self.fields['target'] = forms.ModelChoiceField(queryset=teamplayer.team.teamplayer_set.filter(role='office'))
+@login_required
+def player_profile_close(request):
+    if request.method == 'GET':
+        form = CloseAccountForm()
+    elif request.method == 'POST':
+        form = CloseAccountForm(request.POST)
+
+        if form.is_valid():
+            request.user.delete()
+
+            return HttpResponseRedirect(reverse('account_close_confirm'))
+        else:
+            pass
+
+    return render_to_response('riskgame/profile_close.html', {
+        'form': form
+    }, context_instance=RequestContext(request))
+
+@login_required
+def profile_close_confirm(request):
+    return render_to_response('riskgame/profile_close_confirm.html', {
+    }, context_instance=RequestContext(request))
+
 
 @login_required
 def notifications(request):
@@ -346,6 +370,12 @@ def notifications(request):
 @login_required
 def how_to_play(request):
     return render_to_response('riskgame/how-to-play.html', {}, context_instance=RequestContext(request))
+
+class FrontLineForm(forms.Form):
+    def __init__(self, teamplayer, *args, **kwargs):
+        super(FrontLineForm, self).__init__(*args, **kwargs)
+
+        self.fields['target'] = forms.ModelChoiceField(queryset=teamplayer.team.teamplayer_set.filter(role='office'))
 
 @login_required
 def home(request):

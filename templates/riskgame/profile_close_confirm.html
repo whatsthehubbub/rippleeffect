@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block pagetitle %}{{ title|capfirst }}{% endblock pagetitle %}
+
+{% block content %}
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+            	<p>Your account has been deleted.</p>
+
+            	<a href="{% url 'index' %}">Go home</a>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
