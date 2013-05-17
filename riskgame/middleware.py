@@ -35,4 +35,9 @@ class ImpersonateMiddleware(object):
             del request.session['impersonate_email']
 
         if request.user.is_authenticated() and request.user.is_admin and 'impersonate_email' in request.session:
-            request.user = get_user_model().objects.get(email=request.session['impersonate_email'])
+
+            UserModel = get_user_model()
+            try:
+                request.user = UserModel.objects.get(email=request.session['impersonate_email'])
+            except UserModel.DoesNotExist:
+                del request.session['impersonate_email']
