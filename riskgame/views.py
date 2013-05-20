@@ -417,68 +417,75 @@ def home(request):
             'team': teamplayer.team
         })
     elif game.active():
-        c = RequestContext(request, {
-            'teammates': teamplayer.team.teamplayer_set.all(),
-            'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')[:15],
-            'title': "game"
-        })
+        if member_of_a_team:
+            c = RequestContext(request, {
+                'teammates': teamplayer.team.teamplayer_set.all(),
+                'notifications': Notification.objects.filter(team=teamplayer.team).order_by('-datecreated')[:15],
+                'title': "game"
+            })
 
-        if teamplayer.role == 'office':
-            t = loader.get_template('riskgame/home-office.html')
-        elif teamplayer.role == 'frontline':
-            t = loader.get_template('riskgame/home-frontline.html')
-
-            c['targetform'] = FrontLineForm(teamplayer)
-
-        if teamplayer.show_game_start:
             if teamplayer.role == 'office':
-                mt = loader.get_template('messages/start-game-office.html')
+                t = loader.get_template('riskgame/home-office.html')
             elif teamplayer.role == 'frontline':
-                mt = loader.get_template('messages/start-game-frontline.html')
+                t = loader.get_template('riskgame/home-frontline.html')
 
-            mc = RequestContext(request, {})
-            messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
-        elif teamplayer.show_episode_start:
-            mt = loader.get_template('messages/start-episode.html')
+                c['targetform'] = FrontLineForm(teamplayer)
 
-            episode = EpisodeDay.objects.get(current=True).episode
+            if teamplayer.show_game_start:
+                if teamplayer.role == 'office':
+                    mt = loader.get_template('messages/start-game-office.html')
+                elif teamplayer.role == 'frontline':
+                    mt = loader.get_template('messages/start-game-frontline.html')
 
-            if episode.number != 1:
-                previousEpisode = Episode.objects.get(number=episode.number-1)
-                startDateTime = EpisodeDay.objects.filter(episode=previousEpisode).order_by('-end')[0].end
-                endDateTime = EpisodeDay.objects.filter(episode=episode).order_by('-end')[0].end
-                players = Player.objects.filter(notification__datecreated__gte=startDateTime, notification__datecreated__lte=endDateTime, notification__action=True, notification__team=teamplayer.team).distinct()
-            else:
-                players = []
+                mc = RequestContext(request, {})
+                messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
+            elif teamplayer.show_episode_start:
+                mt = loader.get_template('messages/start-episode.html')
 
-            mc = RequestContext(request, {
-                'episode': episode,
-                'action_players': players
+                episode = EpisodeDay.objects.get(current=True).episode
+
+                if episode.number != 1:
+                    previousEpisode = Episode.objects.get(number=episode.number-1)
+                    startDateTime = EpisodeDay.objects.filter(episode=previousEpisode).order_by('-end')[0].end
+                    endDateTime = EpisodeDay.objects.filter(episode=episode).order_by('-end')[0].end
+                    players = Player.objects.filter(notification__datecreated__gte=startDateTime, notification__datecreated__lte=endDateTime, notification__action=True, notification__team=teamplayer.team).distinct()
+                else:
+                    players = []
+
+                mc = RequestContext(request, {
+                    'episode': episode,
+                    'action_players': players
+                })
+                messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
+            elif teamplayer.show_turn_start:
+                turn = EpisodeDay.objects.get(current=True)
+
+                if turn.number > 1 or turn.episode.number > 1:
+                    previousTurn = EpisodeDay.objects.filter(end__lt=turn.end).order_by('-end')[0]
+
+                    startDateTime = previousTurn.end - (turn.end - previousTurn.end)
+                    endDateTime = previousTurn.end
+
+                    players = Player.objects.filter(notification__datecreated__gte=startDateTime, notification__datecreated__lte=endDateTime, notification__action=True, notification__team=teamplayer.team).distinct()
+                else:
+                    players = []
+
+                mt = loader.get_template('messages/start-turn.html')
+
+                # Team events are returned for both roles
+                mc = RequestContext(request, {
+                    'event': teamplayer.get_event_for_day(turn),
+                    'lightninghit': teamplayer.lightning_hit,
+                    'action_players': players
+                })
+                    
+                messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
+        else:
+            # If in game and player not a member of a team
+            t = loader.get_template('riskgame/home-alone-in-game.html')
+
+            c = RequestContext(request, {
             })
-            messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
-        elif teamplayer.show_turn_start:
-            turn = EpisodeDay.objects.get(current=True)
-
-            if turn.number > 1 or turn.episode.number > 1:
-                previousTurn = EpisodeDay.objects.filter(end__lt=turn.end).order_by('-end')[0]
-
-                startDateTime = previousTurn.end - (turn.end - previousTurn.end)
-                endDateTime = previousTurn.end
-
-                players = Player.objects.filter(notification__datecreated__gte=startDateTime, notification__datecreated__lte=endDateTime, notification__action=True, notification__team=teamplayer.team).distinct()
-            else:
-                players = []
-
-            mt = loader.get_template('messages/start-turn.html')
-
-            # Team events are returned for both roles
-            mc = RequestContext(request, {
-                'event': teamplayer.get_event_for_day(turn),
-                'lightninghit': teamplayer.lightning_hit,
-                'action_players': players
-            })
-                
-            messages.add_message(request, messages.INFO, mt.render(mc), extra_tags="modal")
 
     return HttpResponse(t.render(c))
 

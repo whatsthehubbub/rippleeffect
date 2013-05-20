@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <section class="modal message">
+        <div class="row">
+            <div class="sheet large-12 columns">
+
+                {% for message in messages %}
+                    {{ message|safe }}
+                {% endfor %}
+
+                <p>A game is currently in progress. Please wait for the next episode to join…</p>
+
+            </div>
+        </div>
+    </section>
+    
+{% endblock content %}
