@@ -51,13 +51,13 @@
                             {% ifequal current_player tp.player %}(you!){% endifequal %}
                         </div>
 
-                        {% ifequal current_player team.leader %}
+                        {% if current_player|team_member:team %}
                             <form action="{% url 'team_kick' %}" method="POST">
                                 {% csrf_token %}
                                 <input type="hidden" name="playerid" value="{{ tp.player.pk }}">
                                 <input type="submit" value="Kick">
                             </form>
-                        {% endifequal %}
+                        {% endif %}
                     </div>
 
                 {% endfor %}
