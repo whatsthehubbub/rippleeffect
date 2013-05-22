@@ -85,7 +85,6 @@ def team_detail(request, pk):
         'team': team,
         'title': "team",
         'join_requests': TeamJoinRequest.objects.filter(team=team, invite=False, accepted=False, rejected=False).order_by('-datecreated'),
-        'pending_requests': TeamJoinRequest.objects.filter(team=team, invite=False, accepted=True).order_by('-datedecided'),
         'denied_requests': TeamJoinRequest.objects.filter(team=team, invite=False, rejected=True)
     }, context_instance=RequestContext(request))
 
@@ -123,7 +122,9 @@ def request_team_join(request, pk):
     player = request.user.get_or_create_player()
     team = Team.objects.get(pk=pk)
 
-    TeamJoinRequest.objects.create(team=team, player=player)
+    role = request.POST.get('role', 'office')
+
+    TeamJoinRequest.objects.create(team=team, player=player, role=role)
 
     return HttpResponseRedirect(reverse('team_detail', args=[team.pk]))
 
@@ -143,6 +144,8 @@ def accept_team_join(request, pk):
         join_request.datedecided = timezone.now()
         join_request.save()
 
+        TeamPlayer.objects.create(player=join_request.player, team=join_request.team, role=join_request.role)
+
         subject = render_to_string('emails/accepted_subject.txt', {
             'site': get_current_site(request)
         })
@@ -157,9 +160,10 @@ def accept_team_join(request, pk):
 
         messages.add_message(request, messages.INFO, '<div class="form-success text-center">Team join request accepted.</div>')
 
-        return HttpResponseRedirect(reverse('team_detail', args=[join_request.team.pk]))
     except TeamPlayer.DoesNotExist:
         pass
+
+    return HttpResponseRedirect(reverse('team_detail', args=[join_request.team.pk]))
 
 @login_required
 @require_POST
@@ -193,40 +197,6 @@ def reject_team_join(request, pk):
         return HttpResponseRedirect(reverse('team_detail', args=[join_request.team.pk]))
     except TeamPlayer.DoesNotExist:
         pass
-
-
-@login_required
-@require_POST
-def confirm_team_join(request, pk):
-    join_request = TeamJoinRequest.objects.get(pk=request.POST.get('tjr_id'))
-
-    player = request.user.get_or_create_player()
-
-    try:
-        TeamPlayer.objects.get(player=player, team=join_request.team)
-
-        # This player is already a member of this team
-        # something that should not happen
-    except TeamPlayer.DoesNotExist:
-        # Confirm this player joining this team
-        role = request.POST.get('role', 'office')
-
-        TeamPlayer.objects.create(player=player, team=join_request.team, role=role)
-
-        messages.add_message(request, messages.INFO, '<div class="form-success text-center">You are now a member of team %s.</div>' % join_request.team.name)
-
-    return HttpResponseRedirect(reverse('home'))
-
-@login_required
-@require_POST
-def reconsider_team_join(request, pk):
-    """Method where somebody accepted into a team doesn't actually want to confirm. Also used to reject invitations."""
-    join_request = TeamJoinRequest.objects.get(pk=request.POST.get('tjr_id'))
-    join_request.delete()
-
-    messages.add_message(request, messages.INFO, '<div class="form-success text-center">Request elided.</div>')
-
-    return HttpResponseRedirect(reverse('home'))
 
 
 @login_required
@@ -407,8 +377,7 @@ def home(request):
             t = loader.get_template('riskgame/home-alone.html')
 
             c = RequestContext(request, {
-                'teamform': CreateTeamform(),
-                'accepted_requests': TeamJoinRequest.objects.filter(accepted=True, confirmed=False).order_by('-datedecided')
+                'teamform': CreateTeamform()
             })
     elif game.over():
         t = loader.get_template('riskgame/home-postgame.html')
@@ -522,18 +491,22 @@ def message_unseen(request, message):
 @login_required
 def teams(request):
     player = request.user.get_or_create_player()
-    teamplayer = TeamPlayer.objects.get(player=player)
 
-    # Catch neigboring teams from the redis
-    from redis_cache import get_redis_connection
+    try:
+        teamplayer = TeamPlayer.objects.get(player=player)
 
-    con = get_redis_connection('default')
+        # Catch neigboring teams from the redis
+        from redis_cache import get_redis_connection
+
+        con = get_redis_connection('default')
     
-    teamrank = con.zrevrank('teamrank', teamplayer.team.pk)
-    neighboring_teams = con.zrevrange('teamrank', max(0, teamrank-2), teamrank+2)
+        teamrank = con.zrevrank('teamrank', teamplayer.team.pk)
+        neighboring_teams = con.zrevrange('teamrank', max(0, teamrank-2), teamrank+2)
+    except TeamPlayer.DoesNotExist:
+        neighboring_teams = []
 
     return render_to_response('riskgame/teams.html', {
-        # 'teams': Team.objects.all().order_by('-rank_points', '-pk'),
+        'teams': Team.objects.all().order_by('-rank_points', '-pk'),
         'neighbors': neighboring_teams,
         'title': 'rankings'
     }, context_instance=RequestContext(request))

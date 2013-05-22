@@ -49,7 +49,6 @@
                             <a href="{{ tp.player.get_absolute_url }}">{{ tp }}</a> – 
                             <span>{{ tp.player.user.email|lower }}</span>
                             {% ifequal current_player tp.player %}(you!){% endifequal %}
-                            {% ifequal current_player team.leader %}(leader){% endifequal %}
                         </div>
 
                         {% ifequal current_player team.leader %}
@@ -73,6 +72,12 @@
                         {% if not current_player|requested_join:team %}
                             <form method="POST" action="{% url 'request_team_join' team.pk %}">
                                 {% csrf_token %}
+
+                                <select name="role" id="role">
+                                    <option value="office">Office</option>
+                                    <option value="frontline">Frontline</option>
+                                </select>
+
                                 <input type="submit" value="Ask to join">
                             </form>
                         {% else %}
@@ -87,17 +92,12 @@
                         
                         You're a member of this team. <a href="{% url 'team_leave' %}">Leave your team?</a>
 
-
-                        <header>
-                            <h5 class="text-center">Invite team members</h5>
-                        </header>
-
                         <header>
                             <h5 class="text-center">Review requests to join</h5>
                         </header>
 
                         {% for r in join_requests %}
-                            {{ r.player }} {{ r.player.email }} {{ r.datecreated }}
+                            {{ r.player }} with e-mail: {{ r.player.email }} request to join as <b>{{ r.role }}</b> on {{ r.datecreated }}
 
                             <form method="POST" action="{% url 'accept_team_join' team.pk %}">
                                 {% csrf_token %}
@@ -110,14 +110,8 @@
                                 <input type="hidden" name="tjr_id" value="{{ r.pk }}">
                                 <input type="submit" value="Decline">
                             </form>
-                        {% endfor %}
-
-                        <header>
-                            <h5 class="text-center">Accepted requests pending confirmation</h5>
-                        </header>
-
-                        {% for r in pending_requests %}
-                            {{ r.datedecided }} {{ r.player }} {{ r.player.email }}
+                        {% empty %}
+                            <p>No current requests to join.</p>
                         {% endfor %}
 
                         <header>
@@ -125,7 +119,7 @@
                         </header>
 
                         {% for r in denied_requests %}
-                            {{ r.datedecided }} {{ r.player }} {{ r.player.email }}
+                            {{ r.datedecided }} {{ r.player }} {{ r.role }} {{ r.player.email }}
                         {% endfor %}
 
                     {% endif %}

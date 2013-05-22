@@ -34,6 +34,17 @@
                     {% endwith %}
                 {% endfor %}
 
+                {% for team in teams %}
+                    <div class="ranking notification clearfix" >
+                        <div class="rank-points-box">{{ team.get_rank }}</div>
+                        <div class="small avatar" style="background-color: {{ team.get_color }};"></div>
+                        <div data-tooltip class="has-tip message clearfix" title="{{ team.get_office_players.count }} office players, {{ team.get_frontline_players.count }} frontline players">
+                            <span class="timestamp">Points: {{ team.victory_points }}, Current Goal Zero: {{ team.goal_zero_markers }}<!--, Resources: {{ team.resources_collected }}--></span>
+                            <a href="{{ team.get_absolute_url }}">{{ team.name }}</a> {% ifequal team current_teamplayer.team %}(your team!){% endifequal %}
+                        </div>
+                    </div>
+                {% endfor %}
+
                 <p class="double-gutter-margin-bot">&nbsp;</p>
 
             </div>

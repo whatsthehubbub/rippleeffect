@@ -39,6 +39,8 @@ def enum(**enums):
 
 Events = enum(NO_EVENT='0', POOR_VISION='1', TORNADO='2', HIGH_MARKET='3', INCREASED_RISK='4', LIGHTNING='5')
 
+ROLE_CHOICES = (('office', 'office'), ('frontline', 'frontline'))
+
 
 class EmailUserManager(BaseUserManager):
     def create_user(self, email, password=None):
@@ -359,7 +361,7 @@ class TeamPlayer(models.Model):
     datecreated = models.DateTimeField(auto_now_add=True)
     datechanged = models.DateTimeField(auto_now=True)
 
-    role = models.CharField(max_length=255, default='office', choices=(('office', 'office'), ('frontline', 'frontline')))
+    role = models.CharField(max_length=255, default='office', choices=ROLE_CHOICES)
 
     # 0 = no resource
     # 1 = resource
@@ -932,11 +934,12 @@ class TeamJoinRequest(models.Model):
     # If this is true, it is an invitation, otherwise a player has requested to join themselves
     invite = models.BooleanField(default=False)
 
+    # The role requested to join as
+    role = models.CharField(max_length=255, default='office', choices=ROLE_CHOICES)
+
     accepted = models.BooleanField(default=False)
     rejected = models.BooleanField(default=False)
     datedecided = models.DateTimeField(null=True, blank=True)
-
-    confirmed = models.BooleanField(default=False)
 
     def __unicode__(self):
         return 'Request from %s to %s' % (unicode(self.player), self.team)
