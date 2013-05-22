@@ -5,4 +5,4 @@ To activate your Ripple Effect account, please go here: http://{{ site }}{% url 
 Kind regards,
 The Ripple Effect team
 
-(You're receiving this message because someone signed up for Ripple Effect using this e-mail address. If this wasn't you, you can ignore this message.)
+(You're receiving this message because someone signed up for Ripple Effect using the e-mail address {{ user.email }}. If this wasn't you, you can ignore this message.)
