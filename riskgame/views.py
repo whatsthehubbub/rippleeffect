@@ -282,7 +282,7 @@ def home(request):
                 previousEpisode = Episode.objects.get(number=episode.number-1)
                 startDateTime = EpisodeDay.objects.filter(episode=previousEpisode).order_by('-end')[0].end
                 endDateTime = EpisodeDay.objects.filter(episode=episode).order_by('-end')[0].end
-                players = Player.objects.filter(notification__datecreated__gte=startDateTime, notification__datecreated__lte=endDateTime, notification__action=True).distinct()
+                players = Player.objects.filter(notification__datecreated__gte=startDateTime, notification__datecreated__lte=endDateTime, notification__action=True, notification__team=teamplayer.team).distinct()
             else:
                 players = []
 
@@ -300,7 +300,7 @@ def home(request):
                 startDateTime = previousTurn.end - (turn.end - previousTurn.end)
                 endDateTime = previousTurn.end
 
-                players = Player.objects.filter(notification__datecreated__gte=startDateTime, notification__datecreated__lte=endDateTime, notification__action=True).distinct()
+                players = Player.objects.filter(notification__datecreated__gte=startDateTime, notification__datecreated__lte=endDateTime, notification__action=True, notification__team=teamplayer.team).distinct()
             else:
                 players = []
 
@@ -459,7 +459,7 @@ def game_start(request):
 
                 # Starting a game with current team and players, so reset stats
                 Team.objects.all().update(goal_zero_markers=0)
-                Team.objects.all().update(goal_zero_streak=0)
+                Team.objects.all().update(goal_zero_streak=1)
                 Team.objects.all().update(action_points=0)
                 Team.objects.all().update(frontline_action_points=0)
                 Team.objects.all().update(rank_points=0)

@@ -16,6 +16,7 @@ You can interface with your VM using the [vagrant](http://docs.vagrantup.com/v2/
 To be up and running do this:
 
 * git pull (or sync in your Github.app)
+* git checkout develop (we work in branch develop)
 * vagrant up
 * fab app.install_requirements (only when new packages have been added)
 * fab syncdb (only once on every new database)
@@ -88,8 +89,8 @@ To deploy more complex updates:
 
     fab staging git_pull migrate reload  # pull code, run migrations, reload app in staging
     
-    # pull develop branch, install requirements & reload app in staging
-    fab staging git_pull:develop app.install_requirements migrate collectstatic reload
+    # pull release branch, install requirements & reload app in staging
+    fab staging git_pull:release app.install_requirements migrate collectstatic reload
 
 To tail the application logs:
     
@@ -137,6 +138,12 @@ Tech Trial Deployment
 * < do other actions >
 * sudo service rippleeffect stop; sudo service rippleeffect start;
 
+Branches
+========
+
+* develop is mainline development
+* release is the version currently on playrippleeffect.com
+* master is currently unused
 
 Editing CSS and Javascript
 ==========================
