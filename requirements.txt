@@ -2,6 +2,7 @@ Django==1.5
 South==0.7.6
 distribute==0.6.28
 dj-database-url==0.2.1
+psycopg2==2.4.6
 django-crispy-forms==1.2.3
 # django-registration==0.8
 -e hg+https://bitbucket.org/alper/django-registration#egg=Package
