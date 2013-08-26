@@ -1,2 +1,2 @@
 web: gunicorn rippleeffect.wsgi
-celery: python manage.py celery -B worker --loglevel=info
+celery: python manage.py celery worker -B -E --loglevel=info
