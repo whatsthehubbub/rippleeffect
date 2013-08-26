@@ -382,9 +382,12 @@ def home(request):
     elif game.over():
         t = loader.get_template('riskgame/home-postgame.html')
 
-        c = RequestContext(request, {
-            'team': teamplayer.team
-        })
+        if member_of_a_team:
+            c = RequestContext(request, {
+                'team': teamplayer.team
+            })
+        else:
+            c = RequestContext(request, {})
     elif game.active():
         if member_of_a_team:
             c = RequestContext(request, {
