@@ -143,7 +143,7 @@ Branches
 ========
 
 * develop is mainline development
-* release is the version currently on playrippleeffect.com
+* develop is the version currently on playrippleeffect.com Heroku
 * master is currently unused
 
 Editing CSS and Javascript
