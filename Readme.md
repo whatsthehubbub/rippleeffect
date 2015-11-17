@@ -1,3 +1,9 @@
+# Ripple Effect
+
+For more details on Ripple Effect see: http://whatsthehubbub.nl/projects/ripple-effect/
+
+Ripple Effect is released under a MIT License as detailed in the LICENSE file in this same directory.
+
 Dev Environment Setup
 =====================
 1. Download and install [VirtualBox for OSX](http://download.virtualbox.org/virtualbox/4.2.10/VirtualBox-4.2.10-84104-OSX.dmg)
